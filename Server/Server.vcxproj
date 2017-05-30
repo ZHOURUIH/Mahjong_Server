@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5F77568F-159F-49D1-8348-D5F536CAA0E1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Server</RootNamespace>
+    <ProjectName>Server</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(MYSQL_HOME)/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MYSQL_HOME)/lib/32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(MYSQL_HOME)/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MYSQL_HOME)/lib/32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../MySQLDLL/32</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libmysql.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../MySQLDLL/32</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Character\CharacterData.cpp" />
+    <ClCompile Include="Character\CharacterFactoryManager.cpp" />
+    <ClCompile Include="Character\CharacterManager.cpp" />
+    <ClCompile Include="Character\CharacterNPC.cpp" />
+    <ClCompile Include="Character\CharacterPlayer.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp" />
+    <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp" />
+    <ClCompile Include="CommandSystem\txCommand.cpp" />
+    <ClCompile Include="CommandSystem\txCommandReceiver.cpp" />
+    <ClCompile Include="CommandSystem\txCommandSystem.cpp" />
+    <ClCompile Include="Common\ServerBase.cpp" />
+    <ClCompile Include="Common\ServerConfig.cpp" />
+    <ClCompile Include="Common\txThreadLock.cpp" />
+    <ClCompile Include="Common\txMemeryTrace.cpp" />
+    <ClCompile Include="Common\txSerializedData.cpp" />
+    <ClCompile Include="Common\txSerializer.cpp" />
+    <ClCompile Include="Common\txShareMemeryServer.cpp" />
+    <ClCompile Include="Common\txUtility.cpp" />
+    <ClCompile Include="Component\BaseComponent\txComponent.cpp" />
+    <ClCompile Include="Component\txComponentFactoryManager.cpp" />
+    <ClCompile Include="Component\txComponentOwner.cpp" />
+    <ClCompile Include="DataBase\Data.cpp" />
+    <ClCompile Include="DataBase\DataBase.cpp" />
+    <ClCompile Include="DataBase\MySQLDataBase.cpp" />
+    <ClCompile Include="FileSystem\txDataElem.cpp" />
+    <ClCompile Include="FileSystem\txDataManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Net\NetManagerServer.cpp" />
+    <ClCompile Include="Net\NetManagerClient.cpp" />
+    <ClCompile Include="Room\Room.cpp" />
+    <ClCompile Include="Room\RoomManager.cpp" />
+    <ClCompile Include="ServerFramework\ServerFramework.cpp" />
+    <ClCompile Include="Socket\PacketFactoryManager.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSCheckName.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSLogin.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\CharacterData.h" />
+    <ClInclude Include="Character\CharacterDefine.h" />
+    <ClInclude Include="Character\CharacterFactory.h" />
+    <ClInclude Include="Character\CharacterFactoryManager.h" />
+    <ClInclude Include="Character\CharacterManager.h" />
+    <ClInclude Include="Character\CharacterNPC.h" />
+    <ClInclude Include="Character\CharacterPlayer.h" />
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.h" />
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h" />
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h" />
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
+    <ClInclude Include="CommandSystem\CommandDefine.h" />
+    <ClInclude Include="CommandSystem\CommandHeader.h" />
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h" />
+    <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h" />
+    <ClInclude Include="CommandSystem\txCommand.h" />
+    <ClInclude Include="CommandSystem\txCommandReceiver.h" />
+    <ClInclude Include="CommandSystem\txCommandSystem.h" />
+    <ClInclude Include="Common\GameLog.h" />
+    <ClInclude Include="Common\ServerBase.h" />
+    <ClInclude Include="Common\ServerConfig.h" />
+    <ClInclude Include="Common\ServerDefine.h" />
+    <ClInclude Include="Common\txThreadLock.h" />
+    <ClInclude Include="Common\txFactoryManager.h" />
+    <ClInclude Include="Common\txMemeryTrace.h" />
+    <ClInclude Include="Common\txSerializedData.h" />
+    <ClInclude Include="Common\txSerializer.h" />
+    <ClInclude Include="Common\txShareMemeryServer.h" />
+    <ClInclude Include="Common\txSingleton.h" />
+    <ClInclude Include="Common\txUtility.h" />
+    <ClInclude Include="Component\BaseComponent\txComponent.h" />
+    <ClInclude Include="Component\txComponentFactory.h" />
+    <ClInclude Include="Component\txComponentFactoryManager.h" />
+    <ClInclude Include="Component\txComponentHeader.h" />
+    <ClInclude Include="Component\txComponentOwner.h" />
+    <ClInclude Include="DataBase\Data.h" />
+    <ClInclude Include="DataBase\DataBase.h" />
+    <ClInclude Include="DataBase\DataDefine.h" />
+    <ClInclude Include="DataBase\DataFactory.h" />
+    <ClInclude Include="DataBase\DataPlayerInfo.h" />
+    <ClInclude Include="DataBase\MySQLDataBase.h" />
+    <ClInclude Include="FileSystem\txDataElem.h" />
+    <ClInclude Include="FileSystem\txDataManager.h" />
+    <ClInclude Include="Net\NetManagerServer.h" />
+    <ClInclude Include="Net\NetManagerClient.h" />
+    <ClInclude Include="Room\Room.h" />
+    <ClInclude Include="Room\RoomManager.h" />
+    <ClInclude Include="ServerFramework\ServerFramework.h" />
+    <ClInclude Include="Socket\PacketDefine.h" />
+    <ClInclude Include="Socket\PacketFactory.h" />
+    <ClInclude Include="Socket\PacketFactoryManager.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSCheckAccount.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSCheckName.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSHeartBeat.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSLogin.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h" />
+    <ClInclude Include="Socket\Packet\Packet.h" />
+    <ClInclude Include="Socket\Packet\PacketHeader.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCCheckNameRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCHeartBeatRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCLoginRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerOffline.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Character">
+      <UniqueIdentifier>{c636cf25-44ba-44aa-b3c3-6b4c88586f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem">
+      <UniqueIdentifier>{4dfe3eaa-5b4e-4e77-88f9-a63bbbe72e3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{a044c63a-78c4-457b-aacc-25869893b460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataBase">
+      <UniqueIdentifier>{15a52ba3-9673-426a-82a1-ca2b9dc2cfa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerFramework">
+      <UniqueIdentifier>{5f0ed812-4bd3-47bc-bc12-d4b4058d3171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket">
+      <UniqueIdentifier>{a3d7229f-7c28-4072-9fae-657a38528b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket\Packet">
+      <UniqueIdentifier>{fc456ebe-85d8-4ce5-90da-7887816bb20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\BaseComponent">
+      <UniqueIdentifier>{224a9c2c-66a4-4623-8f49-2a9cc96aebbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket\Packet\ClientServer">
+      <UniqueIdentifier>{09845bca-338f-4cf5-aa1e-a32b40f3cb7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket\Packet\ServerClient">
+      <UniqueIdentifier>{579cb9fe-1f86-4ccb-9a97-d1e231b04f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Room">
+      <UniqueIdentifier>{24c07ab3-5bb2-4cf3-8f58-a499c6ab1c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{345ff81f-526e-4c6a-a4d6-b6d7ca8e8921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileSystem">
+      <UniqueIdentifier>{072d9c2c-32b4-4e2a-8c89-89592d47371f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{0766192b-3fa8-4e04-b652-591c94d26d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem\CommandCharacterManager">
+      <UniqueIdentifier>{ab3a1eda-4b25-4893-ac61-bc5dcf6f9457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem\CommandRoomManager">
+      <UniqueIdentifier>{b270f1b5-b814-4022-9689-204b1220b6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem\CommandCharacter">
+      <UniqueIdentifier>{bda0b299-f12e-4631-b28e-118eccd74082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem\CommandRoom">
+      <UniqueIdentifier>{6da336b9-c2ab-448f-be55-89de37fa3bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandSystem\CommandServer">
+      <UniqueIdentifier>{0b0839af-7b85-417b-aa92-d60a592dc7e9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Character\Character.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterData.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterManager.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterNPC.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterPlayer.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\txCommand.cpp">
+      <Filter>CommandSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\txCommandReceiver.cpp">
+      <Filter>CommandSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\txCommandSystem.cpp">
+      <Filter>CommandSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\Data.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\DataBase.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSLogin.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\PacketFactoryManager.cpp">
+      <Filter>Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ServerFramework\ServerFramework.cpp">
+      <Filter>ServerFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\Room.cpp">
+      <Filter>Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\RoomManager.cpp">
+      <Filter>Room</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem\txDataElem.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem\txDataManager.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ServerConfig.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txMemeryTrace.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txSerializedData.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txSerializer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txShareMemeryServer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txUtility.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ServerBase.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterFactoryManager.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\BaseComponent\txComponent.cpp">
+      <Filter>Component\BaseComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\txComponentFactoryManager.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\txComponentOwner.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.cpp">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\MySQLDataBase.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp">
+      <Filter>CommandSystem\CommandServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSCheckName.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetManagerClient.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\txThreadLock.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetManagerServer.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.cpp">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character\Character.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterData.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterDefine.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterFactory.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterManager.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterNPC.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterPlayer.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandDefine.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandHeader.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\txCommand.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\txCommandReceiver.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\txCommandSystem.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\Data.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\DataBase.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\DataDefine.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\DataFactory.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\DataPlayerInfo.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\Packet.h">
+      <Filter>Socket\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\PacketHeader.h">
+      <Filter>Socket\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSHeartBeat.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSLogin.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCLoginRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\PacketDefine.h">
+      <Filter>Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\PacketFactory.h">
+      <Filter>Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\PacketFactoryManager.h">
+      <Filter>Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCHeartBeatRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFramework\ServerFramework.h">
+      <Filter>ServerFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\Room.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\RoomManager.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem\txDataElem.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem\txDataManager.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\GameLog.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerConfig.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerDefine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txFactoryManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txMemeryTrace.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txSerializedData.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txSerializer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txShareMemeryServer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txSingleton.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txUtility.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterFactoryManager.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\BaseComponent\txComponent.h">
+      <Filter>Component\BaseComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\txComponentFactory.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\txComponentFactoryManager.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\txComponentOwner.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\txComponentHeader.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.h">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerOffline.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\MySQLDataBase.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h">
+      <Filter>CommandSystem\CommandServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCCheckNameRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSCheckName.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSCheckAccount.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetManagerClient.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txThreadLock.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetManagerServer.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.h">
+      <Filter>CommandSystem\CommandRoomManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

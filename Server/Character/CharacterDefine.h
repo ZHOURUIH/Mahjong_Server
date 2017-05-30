@@ -1,0 +1,12 @@
+﻿#ifndef _CHARACTER_DEFINE_H_
+#define _CHARACTER_DEFINE_H_
+
+enum CHARACTER_TYPE
+{
+	CT_NONE,
+	CT_NPC,
+	CT_PLAYER,
+	CT_MAX,
+};
+
+#endif

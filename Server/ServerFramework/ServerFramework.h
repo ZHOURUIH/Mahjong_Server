@@ -1,0 +1,57 @@
+﻿#ifndef _SERVER_FRAMEWORK_H_
+#define _SERVER_FRAMEWORK_H_
+
+#include "txSingleton.h"
+
+class DataBaseServer;
+class ComponentFactoryBase;
+class NetManagerServer;
+class txCommandSystem;
+class CharacterManager;
+class txDataManager;
+class ServerConfig;
+class RoomManager;
+class MySQLDataBase;
+class txComponentFactoryManager;
+class ServerFramework : public txSingleton<ServerFramework>
+{
+public:
+	ServerFramework();
+	virtual ~ServerFramework();
+	bool init();
+	void update(const float& elapsedTime);
+	void destroy();
+	void launch();
+	const bool& isStop() { return mStop; }
+	void stop() { mStop = true; }
+	// 获得成员变量
+#if RUN_PLATFORM == PLATFORM_LINUX
+	const unsigned long& getStartMiliTime() {return mStartMiliTime;}
+#endif
+	ServerConfig* getServerConfig() { return mServerConfig; }
+	txDataManager* getDataManager() { return mDataManager; }
+	txCommandSystem* getCommandSystem() { return mCommandSystem; }
+	NetManagerServer* getNetManagerServer(){ return mNetManagerServer; }
+	CharacterManager* getCharacterManager() { return mCharacterManager; }
+	RoomManager* getRoomManager() { return mRoomManager; }
+	MySQLDataBase* getMySQLDataBase() { return mMySQLDataBase; }
+	txComponentFactoryManager* getComponentFactoryManager() { return mComponentFactoryManager; }
+protected:
+	void initComponentFactory();
+	void destroyComponentFactory();
+protected:
+#if RUN_PLATFORM == PLATFORM_LINUX
+	unsigned long mStartMiliTime;
+#endif
+	bool mStop;
+	MySQLDataBase* mMySQLDataBase;
+	txDataManager* mDataManager;
+	ServerConfig* mServerConfig;
+	txCommandSystem* mCommandSystem;
+	NetManagerServer* mNetManagerServer;
+	CharacterManager* mCharacterManager;
+	RoomManager* mRoomManager;
+	txComponentFactoryManager* mComponentFactoryManager;
+};
+
+#endif
