@@ -12,9 +12,8 @@ void CSLogin::execute()
 #ifdef _SERVER
 	// 玩家登陆成功后,通知网络管理器有玩家登陆
 	// 查询数据库
-	std::string playerName;
 	CHAR_GUID guid;
-	bool qeuryRet = mMySQLDataBase->queryLogin(mAccount, mPassword, playerName, guid);
+	bool qeuryRet = mMySQLDataBase->queryLogin(mAccount, mPassword, guid);
 	int ret = 1;
 	// 账号不存在或者密码错误
 	if (!qeuryRet)
@@ -36,10 +35,16 @@ void CSLogin::execute()
 	// 登陆成功,则先创建角色,角色创建完成后再发送消息
 	else
 	{
+		std::string playerName;
+		int money = 0;
+		short head = 0;
+		mMySQLDataBase->queryCharacterData(guid, playerName, money, head);
 		CommandCharacterManagerPlayerLogin cmdLogin(COMMAND_PARAM);
 		cmdLogin.mClient = mClient;
 		cmdLogin.mGUID = guid;
 		cmdLogin.mName = playerName;
+		cmdLogin.mMoney = money;
+		cmdLogin.mHead = head;
 		mCommandSystem->pushCommand(&cmdLogin, mCharacterManager);
 	}
 #endif

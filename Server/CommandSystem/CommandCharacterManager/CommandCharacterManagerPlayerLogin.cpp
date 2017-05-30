@@ -19,6 +19,9 @@ void CommandCharacterManagerPlayerLogin::execute()
 	SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetManagerServer->createPacket(PT_SC_LOGIN_RET));
 	loginRet->mLoginRet = 1;
 	loginRet->mGUID = mGUID;
+	loginRet->mMoney = mMoney;
+	loginRet->mHead = mHead;
+	loginRet->setName(mName);
 	mNetManagerServer->sendMessage(loginRet, mClient);
 
 	NetManagerClient* client = mNetManagerServer->getClient(mClient);

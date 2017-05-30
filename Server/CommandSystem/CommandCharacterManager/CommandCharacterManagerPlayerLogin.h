@@ -10,12 +10,16 @@ public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerPlayerLogin)
 		, mGUID(~0)
 		, mClient(~0)
+		, mMoney(0)
+		, mHead(0)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
 	CHAR_GUID mGUID;
 	std::string mName;
 	CLIENT_GUID mClient;
+	int mMoney;
+	short mHead;
 };
 
 #endif

@@ -16,7 +16,9 @@ public:
 	virtual void update(const float& elapsedTime){}
 	void destroy();
 	// 查询登陆
-	bool queryLogin(const std::string& account, const std::string& password, std::string& playerName, CHAR_GUID& guid);
+	bool queryLogin(const std::string& account, const std::string& password, CHAR_GUID& guid);
+	// 查询角色信息
+	bool queryCharacterData(const CHAR_GUID& guid, std::string& name, int& money, short& head);
 	// 账号是否存在
 	bool isAccountExist(const std::string& account);
 	// 名字是否存在
@@ -26,20 +28,22 @@ public:
 protected:
 	bool connectDataBase(const std::string& dataBase);
 	int getMaxGUID();
+	const std::string& getColumn(std::map<std::string, std::string>& rowData, const std::string& col, const std::string& table);
 protected:
 	MYSQL* mMySQL;
 	std::string mConnectedDataBase; // 已经连接的数据库
 	std::string mUser;
 	std::string mPassword;
 	std::string mHost;
-	static std::string mDataBase;
-	static std::string mAccountTable;
-	static std::string mCharacterDataTable;
-	static std::string mAccountColumnName;
-	static std::string mPasswordColumnName;
-	static std::string mGUIDColumnName;
-	static std::string mNameColumnName;
-	static std::string mModelColumnName;
+	static std::string DATABASE;
+	static std::string TABLE_ACCOUNT;
+	static std::string TABLE_CHARACTER_DATA;
+	static std::string COL_ACCOUNT;
+	static std::string COL_PASSWORD;
+	static std::string COL_GUID;
+	static std::string COL_NAME;
+	static std::string COL_MONEY;
+	static std::string COL_HEAD;
 	int mPort;
 };
 
