@@ -63,9 +63,6 @@
     <ClCompile Include="Character\Character.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="Character\CharacterData.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
     <ClCompile Include="Character\CharacterManager.cpp">
       <Filter>Character</Filter>
     </ClCompile>
@@ -175,14 +172,8 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp">
       <Filter>CommandSystem\CommandRoom</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
       <Filter>CommandSystem\CommandRoom</Filter>
@@ -214,8 +205,29 @@
     <ClCompile Include="Net\NetManagerServer.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.cpp">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClCompile Include="Socket\Packet\ClientServer\CSCreateRoom.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSJoinRoom.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -378,9 +390,6 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerOffline.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
-    </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
@@ -396,14 +405,8 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerLeave.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
-    </ClInclude>
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h">
       <Filter>CommandSystem\CommandRoom</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyPlayerOffline.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
       <Filter>CommandSystem\CommandRoom</Filter>
@@ -444,8 +447,47 @@
     <ClInclude Include="Net\NetManagerServer.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerNotifyPlayerOffline.h">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClInclude Include="Socket\Packet\ClientServer\CSCreateRoom.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCCreateRoomRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyBanker.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerLeaveRoom.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerOffline.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCJoinRoomRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSJoinRoom.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

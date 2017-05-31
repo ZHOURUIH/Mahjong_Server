@@ -20,7 +20,7 @@ public:
 	bool isLocked() { return mLockUpdate; }
 	void lock() { mLockUpdate = true; }
 	void unlock() { mLockUpdate = false; }
-	Character* createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& id, const CLIENT_GUID& client);
+	Character* createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& guid, const CLIENT_GUID& client);
 	void destroyCharacter(const std::string& name);
 	void destroyCharacter(const CHAR_GUID& guid);
 	Character* getCharacter(const std::string& name)

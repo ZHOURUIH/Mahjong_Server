@@ -51,7 +51,7 @@ void CharacterManager::destroy()
 	mCharacterTypeList.clear();
 }
 
-Character* CharacterManager::createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& id, const CLIENT_GUID& client)
+Character* CharacterManager::createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& guid, const CLIENT_GUID& client)
 {
 	if (mCharacterList.find(name) != mCharacterList.end())
 	{
@@ -72,7 +72,7 @@ Character* CharacterManager::createCharacter(const std::string& name, const CHAR
 		{
 			static_cast<CharacterPlayer*>(newChar)->setClientGUID(client);
 		}
-		newChar->init(id);
+		newChar->init(guid);
 		addCharacterToList(newChar);
 	}
 	return newChar;

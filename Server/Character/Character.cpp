@@ -9,17 +9,18 @@ Character::Character(const CHARACTER_TYPE& type, const std::string& name)
 txComponentOwner(name),
 mCharacterType(type),
 mCharacterData(NULL),
-mGUID(~0)
+mGUID(INVALID_ID)
 {}
 
 void Character::init(const CHAR_GUID& guid)
 {
-	if (NULL == mCharacterData)
+	if (mCharacterData == NULL)
 	{
 		mCharacterData = TRACE_NEW(CharacterData, mCharacterData);
 	}
 	mGUID = guid;
 	mCharacterData->mName = mName;
+	mCharacterData->mGUID = mGUID;
 	initComponents();
 }
 

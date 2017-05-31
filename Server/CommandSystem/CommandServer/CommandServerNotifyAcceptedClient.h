@@ -7,7 +7,7 @@ class CommandServerNotifyAcceptedClient : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandServerNotifyAcceptedClient)
-		, mSocket(~0)
+		, mSocket(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

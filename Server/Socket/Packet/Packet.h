@@ -17,7 +17,7 @@ public:
 	Packet(const PACKET_TYPE& type)
 		:
 		mType(type),
-		mClient(~0)
+		mClient(INVALID_ID)
 	{}
 	const PACKET_TYPE& getPacketType() { return mType; }
 	virtual void execute() = 0;

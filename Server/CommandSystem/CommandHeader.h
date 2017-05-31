@@ -11,15 +11,18 @@
 
 #include "CommandRoomManagerCreateRoom.h"
 #include "CommandRoomManagerDestroyRoom.h"
-#include "CommandRoomManagerNotifyPlayerOffline.h"
 
+#include "CommandCharacterNotifyBanker.h"
 #include "CommandCharacterJoinRoom.h"
 #include "CommandCharacterLeaveRoom.h"
 #include "CommandCharacterStartGame.h"
-#include "CommandCharacterNotifyPlayerOffline.h"
+#include "CommandCharacterNotifyOtherPlayerOffline.h"
+#include "CommandCharacterNotifyOtherPlayerLeaveRoom.h"
+#include "CommandCharacterNotifyOtherPlayerJoinRoom.h"
 
 #include "CommandRoomPlayerReady.h"
-#include "CommandRoomPlayerLeave.h"
+#include "CommandRoomNotifyPlayerLeave.h"
+#include "CommandRoomNotifyPlayerJoin.h"
 #include "CommandRoomStartGame.h"
 #include "CommandRoomNotifyPlayerOffline.h"
 

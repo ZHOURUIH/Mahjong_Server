@@ -8,8 +8,8 @@ class CommandCharacterManagerPlayerLogin : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerPlayerLogin)
-		, mGUID(~0)
-		, mClient(~0)
+		, mGUID(INVALID_ID)
+		, mClient(INVALID_ID)
 		, mMoney(0)
 		, mHead(0)
 	{}

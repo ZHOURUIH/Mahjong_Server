@@ -6,6 +6,7 @@
 #include "txCommandReceiver.h"
 #include "txUtility.h"
 
+class CharacterPlayer;
 class Room : public ServerBase, public txCommandReceiver
 {
 public:
@@ -14,15 +15,20 @@ public:
 		txCommandReceiver("room" + txUtility::intToString(id)),
 		mID(id),
 		mMaxPlayer(MAX_PLAYER),
-		mMapID(~0)
-	{}
+		mLockRoom(false)
+	{
+		for (int i = 0; i < mMaxPlayer; ++i)
+		{
+			mPlayerPositionList.insert(std::make_pair(i, (CharacterPlayer*)NULL));
+		}
+	}
 	virtual ~Room(){ destroy(); }
 	virtual void init(){}
 	virtual void update(const float& elapsedTime){}
 	void destroy(){}
 	const int& getID() { return mID; }
-	bool joinRoom(CharacterPlayer* player);
-	bool leaveRoom(CharacterPlayer* player);
+	void joinRoom(CharacterPlayer* player);
+	void leaveRoom(CharacterPlayer* player);
 	void notifyEnterGame();
 	bool notifyPlayerReady(const CHAR_GUID& playerID, const bool& ready = true);
 	bool notifyPlayerContinue(const CHAR_GUID& playerID, const bool& continueGame = true);
@@ -30,15 +36,18 @@ public:
 	bool isAllPlayerContinue();
 	CharacterPlayer* getMember(const CHAR_GUID& playerID);
 	bool isRoomFull() { return (int)mPlayerList.size() >= mMaxPlayer; }
-	void setMapID(const int& mapID) { mMapID = mapID; }
-	const int& getMapID() { return mMapID; }
-	const std::map<CHAR_GUID, ROOM_PLAYER>& getPlayerList() { return mPlayerList; }
+	const std::map<CHAR_GUID, CharacterPlayer*>& getPlayerList() { return mPlayerList; }
+	const bool& isRoomLocked(){ return mLockRoom; }
+protected:
+	void addPlayer(CharacterPlayer* player);
+	void removePlayer(CharacterPlayer* player);
 protected:
 	int mID;			// 房间ID
 	int mMaxPlayer;		// 房间人数上限
-	std::map<CHAR_GUID, ROOM_PLAYER> mPlayerList;	// 房间中的玩家列表
-	int mMapID;			// 房间当前的地图ID
-	std::map<CHAR_GUID, FINISH_DATA> mFinishList;	// 完成比赛的列表,first是发送到完成比赛消息客户端角色ID
+	bool mLockRoom;		// 房间是否已锁定,房间锁定后,其他玩家不能再加入
+	std::map<CHAR_GUID, CharacterPlayer*> mPlayerList;				// 房间中的玩家列表
+	std::map<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定
+	std::map<CHAR_GUID, FINISH_DATA> mFinishList;				// 完成比赛的列表,first是发送到完成比赛消息客户端角色ID
 };
 
 #endif

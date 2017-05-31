@@ -9,8 +9,8 @@ class CommandCharacterManagerCreateCharacter : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerCreateCharacter)
-		, mCharGUID(~0),
-		mClientGUID(~0),
+		, mCharGUID(INVALID_ID),
+		mClientGUID(INVALID_ID),
 		mType(CT_NONE),
 		mResultCharacter(NULL)
 	{}

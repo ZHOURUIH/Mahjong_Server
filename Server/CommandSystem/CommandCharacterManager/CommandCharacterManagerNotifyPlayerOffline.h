@@ -8,7 +8,7 @@ class CommandCharacterManagerNotifyPlayerOffline : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerNotifyPlayerOffline)
-		, mPlayerID(~0)
+		, mPlayerID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

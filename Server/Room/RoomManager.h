@@ -23,10 +23,6 @@ public:
 	void destroyRoom(const int& id);
 	void destroyAllRoom();
 	const std::map<int, Room*>& getRoomList() { return mRoomList; }
-	bool requestMatch(CharacterPlayer* player);
-	bool requestMatch(const CHAR_GUID& playerID);
-	bool cancelMatch(CharacterPlayer* player);
-	bool cancelMatch(const CHAR_GUID& playerID);
 protected:
 	std::map<int, Room*> mRoomList;
 	static int mRoomIDSeed;

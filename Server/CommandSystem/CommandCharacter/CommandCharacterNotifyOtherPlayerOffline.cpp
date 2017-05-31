@@ -3,16 +3,16 @@
 #include "NetManagerServer.h"
 #include "PacketHeader.h"
 
-void CommandCharacterNotifyPlayerOffline::execute()
+void CommandCharacterNotifyOtherPlayerOffline::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	// 发送有玩家离线的消息
-	SCPlayerOffline* playerOffline = static_cast<SCPlayerOffline*>(mNetManagerServer->createPacket(PT_SC_PLAYER_OFFLINE));
-	playerOffline->mUserID = mPlayerGUID;
+	SCOtherPlayerOffline* playerOffline = static_cast<SCOtherPlayerOffline*>(mNetManagerServer->createPacket(PT_SC_OTHER_PLAYER_OFFLINE));
+	playerOffline->mPlayerID = mPlayerGUID;
 	mNetManagerServer->sendMessage(playerOffline, player->getClientGUID());
 }
 
-std::string CommandCharacterNotifyPlayerOffline::showDebugInfo()
+std::string CommandCharacterNotifyOtherPlayerOffline::showDebugInfo()
 {
 	COMMAND_DEBUG("offline player id : %d", (int)mPlayerGUID);
 }

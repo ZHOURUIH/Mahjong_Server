@@ -15,6 +15,16 @@ void CommandCharacterManagerPlayerLogin::execute()
 	cmdCreate.mClientGUID = mClient;
 	mCommandSystem->pushCommand(&cmdCreate, mReceiver);
 
+	// 玩家登陆后,设置玩家属性
+	Character* player = cmdCreate.mResultCharacter;
+	CharacterData* data = player->getCharacterData();
+	data->mHead = mHead;
+	data->mMoney = mMoney;
+	data->mBanker = false;
+	data->mPosition = -1;
+	data->mRoomID = INVALID_ID;
+	data->mReady = false;
+
 	// 玩家登陆成功后, 发回登陆成功的消息
 	SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetManagerServer->createPacket(PT_SC_LOGIN_RET));
 	loginRet->mLoginRet = 1;

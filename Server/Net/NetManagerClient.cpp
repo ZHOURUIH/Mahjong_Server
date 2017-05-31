@@ -10,7 +10,7 @@ NetManagerClient::NetManagerClient(const CLIENT_GUID& clientGUID, const TX_SOCKE
 :
 mSocket(s),
 mClientGUID(clientGUID),
-mCharGUID(~0),
+mCharGUID(INVALID_ID),
 mTempBuffer1(NULL),
 mTempBuffer0(NULL),
 mRecvBuffer(NULL),
@@ -32,7 +32,7 @@ mIsDeadClient(false)
 void NetManagerClient::destroy()
 {
 	// 如果角色已经登录了,则通知角色管理器玩家已经断开连接
-	if (mCharGUID != (CHAR_GUID)~0)
+	if (mCharGUID != INVALID_ID)
 	{
 		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = txCommand::createDelayCommand<CommandCharacterManagerNotifyPlayerOffline>(COMMAND_PARAM);
 		cmdOffline->mPlayerID = mCharGUID;
@@ -155,7 +155,7 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 		return;
 	}
 	// 不需要设置消息包中的客户端ID
-	if (packet->mClient != (CLIENT_GUID)~0)
+	if (packet->mClient != INVALID_ID)
 	{
 		if (autoDestroyPacket)
 		{

@@ -8,7 +8,7 @@ class CommandRoomManagerDestroyRoom : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandRoomManagerDestroyRoom)
-		, mRoomID(~0)
+		, mRoomID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

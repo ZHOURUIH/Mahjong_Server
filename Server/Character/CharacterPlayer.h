@@ -9,14 +9,14 @@ public:
 	CharacterPlayer(const CHARACTER_TYPE& type, const std::string& name)
 		:
 		CharacterNPC(type, name),
-		mClientGUID(~0)
+		mClientGUID(INVALID_ID)
 	{}
 	virtual ~CharacterPlayer(){ destroy(); }
 	void destroy(){}
 	void setClientGUID(const CLIENT_GUID& client) { mClientGUID = client; }
 	const CLIENT_GUID& getClientGUID() { return mClientGUID; }
 protected:
-	CLIENT_GUID mClientGUID;	// 玩家的客户端GUID
+	CLIENT_GUID mClientGUID;	// 玩家所在客户端的GUID
 };
 
 #endif

@@ -8,7 +8,7 @@ class CommandRoomPlayerReady : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandRoomPlayerReady)
-		, mPlayerGUID(~0)
+		, mPlayerGUID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

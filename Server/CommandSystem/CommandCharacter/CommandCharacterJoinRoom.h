@@ -8,7 +8,7 @@ class CommandCharacterJoinRoom : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterJoinRoom)
-		, mRoomID(~0)
+		, mRoomID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

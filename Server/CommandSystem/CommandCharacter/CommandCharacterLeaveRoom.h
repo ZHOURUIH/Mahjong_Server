@@ -3,7 +3,7 @@
 
 #include "txCommand.h"
 
-// 玩家从房间中移除
+// 使玩家离开房间
 class CommandCharacterLeaveRoom : public txCommand
 {
 public:

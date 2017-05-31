@@ -8,7 +8,7 @@ class CommandCharacterManagerDestroyCharacter : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerDestroyCharacter)
-		, mGUID(~0)
+		, mGUID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:

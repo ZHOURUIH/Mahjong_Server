@@ -7,6 +7,7 @@ class CommandRoomNotifyPlayerOffline : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerOffline)
+		, mOfflinePlayer(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
