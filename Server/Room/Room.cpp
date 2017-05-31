@@ -11,7 +11,7 @@ void Room::joinRoom(CharacterPlayer* player)
 	// 第一个加入房间的玩家为庄家
 	data->mBanker = (mPlayerList.size() == 0);
 	// 并且通知玩家庄家有变化
-	CommandCharacterNotifyBanker cmdBanker(COMMAND_PARAM);
+	CommandCharacterNotifyBanker cmdBanker(CMD_PARAM);
 	cmdBanker.mBankerID = player->getGUID();
 	mCommandSystem->pushCommand(&cmdBanker, player);
 }
@@ -43,7 +43,7 @@ void Room::leaveRoom(CharacterPlayer* player)
 					std::map<CHAR_GUID, CharacterPlayer*>::iterator iterBankerEnd = mPlayerList.end();
 					for (; iterBanker != iterBankerEnd; ++iterBanker)
 					{
-						CommandCharacterNotifyBanker cmdNotifyBanker(COMMAND_PARAM);
+						CommandCharacterNotifyBanker cmdNotifyBanker(CMD_PARAM);
 						cmdNotifyBanker.mBankerID = iterNext->second->getGUID();
 						mCommandSystem->pushCommand(&cmdNotifyBanker, iterBanker->second);
 					}

@@ -22,7 +22,7 @@ typedef void(*CommandCallback) (void* user_data, txCommand* cmd);
 
 #define DEBUG_EMPTY "%s", ""
 
-#define COMMAND_PARAM __FILE__, __LINE__
+#define CMD_PARAM __FILE__, __LINE__
 
 #define COMMAND_CONSTRUCT(className, baseCommand)									\
 	className(const char* file, const int& line, const bool& showInfo = true)		\

@@ -11,7 +11,7 @@
 void CSJoinRoom::execute()
 {
 	NetManagerClient* client = mNetManagerServer->getClient(mClient);
-	CommandCharacterJoinRoom cmdJoin(COMMAND_PARAM);
+	CommandCharacterJoinRoom cmdJoin(CMD_PARAM);
 	cmdJoin.mRoomID = mRoomID;
 	mCommandSystem->pushCommand(&cmdJoin, mCharacterManager->getCharacter(client->getCharGUID()));
 }

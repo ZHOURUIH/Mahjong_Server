@@ -19,7 +19,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
 		for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
 		{
-			CommandCharacterNotifyOtherPlayerLeaveRoom cmdLeave(COMMAND_PARAM);
+			CommandCharacterNotifyOtherPlayerLeaveRoom cmdLeave(CMD_PARAM);
 			cmdLeave.mLeavePlayerID = mPlayerGUID;
 			mCommandSystem->pushCommand(&cmdLeave, iterPlayer->second);
 		}
@@ -27,7 +27,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 	// 如果房间中没有人了,则销毁房间
 	else
 	{
-		CommandRoomManagerDestroyRoom cmdDestroyRoom(COMMAND_PARAM);
+		CommandRoomManagerDestroyRoom cmdDestroyRoom(CMD_PARAM);
 		cmdDestroyRoom.mRoomID = room->getID();
 		mCommandSystem->pushCommand(&cmdDestroyRoom, mRoomManager);
 	}

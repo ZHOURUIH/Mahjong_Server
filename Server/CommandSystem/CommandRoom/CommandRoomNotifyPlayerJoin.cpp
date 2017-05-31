@@ -31,7 +31,7 @@ void CommandRoomNotifyPlayerJoin::execute()
 	{
 		if (iterPlayer->second->getGUID() != mPlayerGUID)
 		{
-			CommandCharacterNotifyOtherPlayerJoinRoom cmdJoin(COMMAND_PARAM);
+			CommandCharacterNotifyOtherPlayerJoinRoom cmdJoin(CMD_PARAM);
 			cmdJoin.mJoinPlayerID = mPlayerGUID;
 			mCommandSystem->pushCommand(&cmdJoin, iterPlayer->second);
 		}

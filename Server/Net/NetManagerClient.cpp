@@ -34,7 +34,7 @@ void NetManagerClient::destroy()
 	// 如果角色已经登录了,则通知角色管理器玩家已经断开连接
 	if (mCharGUID != INVALID_ID)
 	{
-		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = txCommand::createDelayCommand<CommandCharacterManagerNotifyPlayerOffline>(COMMAND_PARAM);
+		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = txCommand::createDelayCommand<CommandCharacterManagerNotifyPlayerOffline>(CMD_PARAM);
 		cmdOffline->mPlayerID = mCharGUID;
 		mCommandSystem->pushDelayCommand(cmdOffline, mCharacterManager);
 	}

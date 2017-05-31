@@ -22,7 +22,7 @@ void CommandCharacterJoinRoom::execute()
 		Room* room = mRoomManager->getRoom(mRoomID);
 		if (room != NULL)
 		{
-			CommandRoomNotifyPlayerJoin cmdJoin(COMMAND_PARAM);
+			CommandRoomNotifyPlayerJoin cmdJoin(CMD_PARAM);
 			cmdJoin.mPlayerGUID = player->getGUID();
 			mCommandSystem->pushCommand(&cmdJoin, room);
 			// 如果加入成功,设置房间ID号,并通知客户端加入房间的结果

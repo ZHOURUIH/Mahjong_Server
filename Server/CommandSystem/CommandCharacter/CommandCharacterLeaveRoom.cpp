@@ -12,7 +12,7 @@ void CommandCharacterLeaveRoom::execute()
 	// 清空玩家的房间ID
 	player->getCharacterData()->mRoomID = -1;
 	// 通知房间有玩家离开
-	CommandRoomNotifyPlayerLeave cmdLeave(COMMAND_PARAM);
+	CommandRoomNotifyPlayerLeave cmdLeave(CMD_PARAM);
 	cmdLeave.mPlayerGUID = player->getGUID();
 	mCommandSystem->pushCommand(&cmdLeave, room);
 }

@@ -8,7 +8,7 @@
 
 void CommandCharacterManagerPlayerLogin::execute()
 {
-	CommandCharacterManagerCreateCharacter cmdCreate(COMMAND_PARAM);
+	CommandCharacterManagerCreateCharacter cmdCreate(CMD_PARAM);
 	cmdCreate.mCharGUID = mGUID;
 	cmdCreate.mName = mName;
 	cmdCreate.mType = CT_PLAYER;

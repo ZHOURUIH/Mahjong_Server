@@ -10,7 +10,7 @@ void CommandRoomPlayerReady::execute()
 	// 所有玩家都准备完毕后,通知房间开始游戏
 	if (room->isAllPlayerReady())
 	{
-		CommandRoomStartGame cmdStartGame(COMMAND_PARAM);
+		CommandRoomStartGame cmdStartGame(CMD_PARAM);
 		mCommandSystem->pushCommand(&cmdStartGame, room);
 	}
 }

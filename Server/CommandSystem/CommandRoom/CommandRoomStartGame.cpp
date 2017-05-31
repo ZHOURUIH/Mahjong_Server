@@ -12,7 +12,7 @@ void CommandRoomStartGame::execute()
 		// 先将玩家的准备标记清空
 		room->notifyPlayerReady(iterPlayer->first, false);
 		// 通知玩家开始游戏
-		CommandCharacterStartGame cmdStartGame(COMMAND_PARAM);
+		CommandCharacterStartGame cmdStartGame(CMD_PARAM);
 		mCommandSystem->pushCommand(&cmdStartGame, iterPlayer->second);
 	}
 }
