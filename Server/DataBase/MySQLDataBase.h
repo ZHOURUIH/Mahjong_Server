@@ -23,7 +23,7 @@ public:
 	bool isAccountExist(const std::string& account);
 	// 名字是否存在
 	bool isNameExist(const std::string& name);
-	// 注册账号,0表示成功,-1表示账号已存在,-2表示名字已存在, -3表示其他错误
+	// 注册账号,0表示成功,-1表示账号已存在,-2表示名字已存在, -3代表GUID计算错误, -4表示账号插入错误, -5表示角色数据插入错误
 	int registerAccount(const std::string& account, const std::string& password, const std::string& name, const int& money, const int& head);
 protected:
 	bool connectDataBase(const std::string& dataBase);
@@ -35,15 +35,15 @@ protected:
 	std::string mUser;
 	std::string mPassword;
 	std::string mHost;
-	static std::string DATABASE;
-	static std::string TABLE_ACCOUNT;
-	static std::string TABLE_CHARACTER_DATA;
-	static std::string COL_ACCOUNT;
-	static std::string COL_PASSWORD;
-	static std::string COL_GUID;
-	static std::string COL_NAME;
-	static std::string COL_MONEY;
-	static std::string COL_HEAD;
+	static char* DATABASE;
+	static char* TABLE_ACCOUNT;
+	static char* TABLE_CHARACTER_DATA;
+	static char* COL_ACCOUNT;
+	static char* COL_PASSWORD;
+	static char* COL_GUID;
+	static char* COL_NAME;
+	static char* COL_MONEY;
+	static char* COL_HEAD;
 	int mPort;
 };
 

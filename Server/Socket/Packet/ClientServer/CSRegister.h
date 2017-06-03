@@ -18,8 +18,8 @@ public:
 	{
 		pushArrayParam(mAccount, 16, "account");
 		pushArrayParam(mPassword, 16, "password");
-		pushParam(mHead, "head");
 		pushArrayParam(mName, 16, "name");
+		pushParam(mHead, "head");
 	}
 	virtual std::string debugInfo()
 	{
@@ -28,8 +28,8 @@ public:
 public:
 	char mAccount[16];
 	char mPassword[16];
-	int mHead;
 	char mName[16];
+	int mHead;
 };
 
 #endif
