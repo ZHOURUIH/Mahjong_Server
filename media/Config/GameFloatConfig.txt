@@ -7,7 +7,7 @@
 SD_SOCKET_PORT = 60777
 
 // 心跳超时时间
-SD_HEART_BEAT_TIME_OUT = 60.0
+SD_HEART_BEAT_TIME_OUT = 600.0
 
 // 连接请求队列的最大长度
 SD_BACK_LOG = 100

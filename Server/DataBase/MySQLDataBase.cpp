@@ -33,7 +33,7 @@ bool MySQLDataBase::connectDataBase(const std::string& dataBase)
 		GAME_ERROR("can not connect DataBase %s!", dataBase.c_str());
 		return false;
 	}
-	int ret = mysql_query(mMySQL, "SET NAMES GBK"); //设置编码格式
+	int ret = mysql_query(mMySQL, "SET NAMES UTF8"); //设置编码格式
 	if (ret != 0)
 	{
 		GAME_ERROR("set names error!");
@@ -255,6 +255,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
 	if (ret != 0)
 	{
+		GAME_ERROR("insert account error!");
 		return -4;
 	}
 
@@ -266,6 +267,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	ret = mysql_query(mMySQL, insertCharacterDataBuffer);
 	if (ret != 0)
 	{
+		GAME_ERROR("insert character data error!");
 		return -5;
 	}
 	return 0;
