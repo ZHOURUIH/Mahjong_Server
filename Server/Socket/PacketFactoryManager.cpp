@@ -16,6 +16,11 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSCheckAccount, PT_CS_CHECK_ACCOUNT);
 	ADD_PACKET_FACTORY(CSCreateRoom, PT_CS_CREATE_ROOM);
 	ADD_PACKET_FACTORY(CSJoinRoom, PT_CS_JOIN_ROOM);
+	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
+	if (mFactoryList.size() != needCSCount)
+	{
+		GAME_ERROR("not all CS packet registered! cur count : %d, need count : %d", mFactoryList.size(), needCSCount);
+	}
 	// Server->Client
 	ADD_PACKET_FACTORY(SCHeartBeatRet, PT_SC_HEART_BEAT_RET);
 	ADD_PACKET_FACTORY(SCLoginRet, PT_SC_LOGIN_RET);
@@ -29,9 +34,9 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCOtherPlayerLeaveRoom, PT_SC_OTHER_PLAYER_LEAVE_ROOM);
 	ADD_PACKET_FACTORY(SCOtherPlayerJoinRoom, PT_SC_OTHER_PLAYER_JOIN_ROOM);
 	ADD_PACKET_FACTORY(SCJoinRoomRet, PT_SC_JOIN_ROOM_RET);
-	int needCount = PT_CS_MAX - PT_CS_MIN - 1 + PT_SC_MAX - PT_SC_MIN - 1;
-	if (mFactoryList.size() != needCount)
+	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
+	if (mFactoryList.size() - needCSCount != needSCCount)
 	{
-		GAME_ERROR("error : packet factory not init success! factory count : %d, need count : %d", mFactoryList.size(), needCount);
+		GAME_ERROR("not all CS packet registered! cur count : %d, need count : %d", (mFactoryList.size() - needCSCount), needSCCount);
 	}
 }
