@@ -15,15 +15,31 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mPlayerID, "guid");
+		pushParam(mPlayerGUID, "player guid");
+		pushArrayParam(mName, 16, "name");
+		pushParam(mMoney, "money");
+		pushParam(mHead, "head");
+		pushParam(mPosition, "position");
+		pushParam(mReady, "ready");
+		pushParam(mBanker, "banker");
 	}
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("player id : %d", mPlayerID);
+		COMMAND_DEBUG("player guid : %d, name : %s", mPlayerGUID, mName);
+	}
+	void setName(const std::string& name)
+	{
+		memcpy(mName, name.c_str(), name.length() < NAME_LENGTH ? name.length() : NAME_LENGTH);
 	}
 public:
-	int mPlayerID;
+	int mPlayerGUID;
+	char mName[16];
+	int mMoney;
+	int mHead;
+	int mPosition;
+	bool mReady;
+	bool mBanker;
 };
 
 #endif

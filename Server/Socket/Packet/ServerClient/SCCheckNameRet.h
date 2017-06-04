@@ -1,5 +1,5 @@
-﻿#ifndef _SC_CHECK_NAME_H_
-#define _SC_CHECK_NAME_H_
+﻿#ifndef _SC_CHECK_NAME_RET_H_
+#define _SC_CHECK_NAME_RET_H_
 
 #include "Packet.h"
 

@@ -37,6 +37,6 @@ void PacketFactoryManager::init()
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{
-		GAME_ERROR("not all CS packet registered! cur count : %d, need count : %d", (mFactoryList.size() - needCSCount), needSCCount);
+		GAME_ERROR("not all SC packet registered! cur count : %d, need count : %d", (mFactoryList.size() - needCSCount), needSCCount);
 	}
 }

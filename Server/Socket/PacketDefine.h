@@ -33,7 +33,7 @@ enum PACKET_TYPE
 	PT_SC_OTHER_PLAYER_JOIN_ROOM,			// 通知客户端有其他玩家加入房间
 	PT_SC_JOIN_ROOM_RET,					// 通知客户端加入房间的结果
 	PT_SC_MAX,
-	
+
 	PT_MAX,
 };
 

@@ -47,7 +47,25 @@ void CommandCharacterJoinRoom::execute()
 	{
 		joinRet->mRoomID = INVALID_ID;
 	}
+	// 因为要保证消息发送的顺序,并且在消息发送后会被自动销毁,所以在发送消息之前判断是否成功
+	JOIN_ROOM_RESULT result = (JOIN_ROOM_RESULT)joinRet->mResult;
 	mNetManagerServer->sendMessage(joinRet, player->getClientGUID());
+
+	// 如果加入成功,则发送当前房间的所有玩家的数据
+	if (result == JRR_SUCC)
+	{
+		// 房间需要再次获取一次
+		Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
+		const std::map<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iter = playerList.begin();
+		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterEnd = playerList.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			CommandCharacterNotifyOtherPlayerJoinRoom cmd(CMD_PARAM);
+			cmd.mJoinPlayerID = iter->second->getGUID();
+			mCommandSystem->pushCommand(&cmd, player);
+		}
+	}
 }
 
 std::string CommandCharacterJoinRoom::showDebugInfo()
