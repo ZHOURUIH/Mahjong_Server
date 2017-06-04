@@ -14,19 +14,19 @@ void CSLogin::execute()
 	// 查询数据库
 	CHAR_GUID guid;
 	bool qeuryRet = mMySQLDataBase->queryLogin(mAccount, mPassword, guid);
-	int ret = 1;
+	int ret = 0;
 	// 账号不存在或者密码错误
 	if (!qeuryRet)
 	{
-		ret = 0;
+		ret = 1;
 	}
 	// 已在其他地方登录
 	else if (mCharacterManager->isCharacterLogin(guid))
 	{
-		ret = -1;
+		ret = 2;
 	}
 	// 如果登陆失败,则立即发送消息
-	if (ret != 1)
+	if (ret != 0)
 	{
 		SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetManagerServer->createPacket(PT_SC_LOGIN_RET));
 		loginRet->mLoginRet = ret;

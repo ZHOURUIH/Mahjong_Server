@@ -33,7 +33,7 @@ public:
 		memcpy(mName, name.c_str(), name.length() < NAME_LENGTH ? name.length() : NAME_LENGTH);
 	}
 public:
-	char mLoginRet;			// 登录结果,1为成功,0为失败,-1表示已在其他地方登陆
+	char mLoginRet;			// 0表示登陆成功,1表示账号密码错误,2表示已经在其他地方登陆
 	char mName[NAME_LENGTH];
 	int mMoney;
 	short mHead;
