@@ -23,7 +23,7 @@ public:
 		COMMAND_DEBUG("flag : %d", mResult);
 	}
 public:
-	int mResult;			// 为0不存在,1表示已存在
+	char mResult;			// 为0不存在,1表示已存在
 };
 
 #endif

@@ -25,8 +25,8 @@ enum PACKET_TYPE
 	PT_SC_REGISTER_RET,						// 向客户端发回的注册账号的结果
 	PT_SC_LOGIN_RET,						// 向客户端发回的登录结果	
 	PT_SC_OTHER_PLAYER_OFFLINE,				// 通知客户端有其他玩家掉线
-	PT_SC_CHECK_NAME,						// 向客户端返回的检测名字的结果
-	PT_SC_CHECK_ACCOUNT,					// 向客户端返回的检测账号的结果
+	PT_SC_CHECK_NAME_RET,					// 向客户端返回的检测名字的结果
+	PT_SC_CHECK_ACCOUNT_RET,				// 向客户端返回的检测账号的结果
 	PT_SC_CREATE_ROOM_RET,					// 向客户端返回创建房间的结果
 	PT_SC_NOTIFY_BANKER,					// 通知客户端庄家变化
 	PT_SC_OTHER_PLAYER_LEAVE_ROOM,			// 通知客户端有其他玩家离开房间
