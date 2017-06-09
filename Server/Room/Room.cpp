@@ -6,7 +6,7 @@
 void Room::joinRoom(CharacterPlayer* player)
 {
 	CharacterData* data = player->getCharacterData();
-	// 加入房间的玩家列表
+	// 加入房间的玩家列表,并且在其中设置玩家的位置
 	addPlayer(player);
 	// 第一个加入房间的玩家为庄家
 	data->mBanker = (mPlayerList.size() == 0);
@@ -108,10 +108,22 @@ void Room::addPlayer(CharacterPlayer* player)
 	int playerID = player->getGUID();
 	CharacterData* data = player->getCharacterData();
 	mPlayerList.insert(std::make_pair(playerID, player));
-	std::map<int, CharacterPlayer*>::iterator iterPosition = mPlayerPositionList.find(data->mPosition);
-	if (iterPosition != mPlayerPositionList.end())
+	data->mPosition = -1;
+	// 找到一个空的位置,将玩家设置到该位置上
+	std::map<int, CharacterPlayer*>::iterator iterPosition = mPlayerPositionList.begin();
+	std::map<int, CharacterPlayer*>::iterator iterPositionEnd = mPlayerPositionList.end();
+	for (; iterPosition != iterPositionEnd; ++iterPosition)
 	{
-		iterPosition->second = player;
+		if (iterPosition->second == NULL)
+		{
+			iterPosition->second = player;
+			data->mPosition = iterPosition->first;
+			break;
+		}
+	}
+	if (data->mPosition == -1)
+	{
+		GAME_ERROR("can not find an available position!");
 	}
 }
 
@@ -126,6 +138,14 @@ void Room::removePlayer(CharacterPlayer* player)
 	std::map<int, CharacterPlayer*>::iterator iterPosition = mPlayerPositionList.find(data->mPosition);
 	if (iterPosition != mPlayerPositionList.end())
 	{
-		iterPosition->second = NULL;
+		if (iterPosition->second == player)
+		{
+			iterPosition->second = NULL;
+		}
+		else
+		{
+			GAME_ERROR("player not match position!");
+		}
 	}
+	data->mPosition = -1;
 }

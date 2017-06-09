@@ -4,15 +4,16 @@
 #include "txCommand.h"
 
 // 通知玩家房间中有其他玩家离开
+class Character;
 class CommandCharacterNotifyOtherPlayerJoinRoom : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerJoinRoom)
-		, mJoinPlayerID(INVALID_ID)
+		, mJoinPlayer(NULL)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	CHAR_GUID mJoinPlayerID;
+	Character* mJoinPlayer;
 };
 
 #endif

@@ -23,16 +23,17 @@ void CommandRoomNotifyPlayerJoin::execute()
 		return;
 	}
 	// 将玩家加入房间中
-	room->joinRoom(static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mPlayerGUID)));
+	CharacterPlayer* joinPlayer = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mPlayerGUID));
+	room->joinRoom(joinPlayer);
 	// 通知房间中的其他玩家有玩家加入
 	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayer = room->getPlayerList().begin();
 	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
 	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		if (iterPlayer->second->getGUID() != mPlayerGUID)
+		if (iterPlayer->second != joinPlayer)
 		{
 			CommandCharacterNotifyOtherPlayerJoinRoom cmdJoin(CMD_PARAM);
-			cmdJoin.mJoinPlayerID = mPlayerGUID;
+			cmdJoin.mJoinPlayer = joinPlayer;
 			mCommandSystem->pushCommand(&cmdJoin, iterPlayer->second);
 		}
 	}

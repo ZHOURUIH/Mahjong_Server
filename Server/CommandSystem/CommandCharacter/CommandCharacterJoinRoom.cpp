@@ -25,11 +25,6 @@ void CommandCharacterJoinRoom::execute()
 			CommandRoomNotifyPlayerJoin cmdJoin(CMD_PARAM);
 			cmdJoin.mPlayerGUID = player->getGUID();
 			mCommandSystem->pushCommand(&cmdJoin, room);
-			// 如果加入成功,设置房间ID号,并通知客户端加入房间的结果
-			if (cmdJoin.mResult == JRR_SUCC)
-			{
-				player->getCharacterData()->mRoomID = mRoomID;
-			}
 			joinRet->mResult = cmdJoin.mResult;
 		}
 		else
@@ -37,10 +32,12 @@ void CommandCharacterJoinRoom::execute()
 			joinRet->mResult = JRR_NO_ROOM;
 		}
 	}
-	// 加入成功则设置消息中的房间号
+	// 加入成功则设置消息中的房间号,玩家在房间中的位置,玩家的房间号
 	if (joinRet->mResult == JRR_SUCC)
 	{
 		joinRet->mRoomID = mRoomID;
+		joinRet->mServerPosition = player->getCharacterData()->mPosition;
+		player->getCharacterData()->mRoomID = mRoomID;
 	}
 	// 否则设置消息中的房间号为无效值
 	else
@@ -61,9 +58,13 @@ void CommandCharacterJoinRoom::execute()
 		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterEnd = playerList.end();
 		for (; iter != iterEnd; ++iter)
 		{
-			CommandCharacterNotifyOtherPlayerJoinRoom cmd(CMD_PARAM);
-			cmd.mJoinPlayerID = iter->second->getGUID();
-			mCommandSystem->pushCommand(&cmd, player);
+			// 玩家自己不再通知
+			if (iter->second != player)
+			{
+				CommandCharacterNotifyOtherPlayerJoinRoom cmd(CMD_PARAM);
+				cmd.mJoinPlayer = iter->second;
+				mCommandSystem->pushCommand(&cmd, player);
+			}
 		}
 	}
 }
