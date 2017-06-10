@@ -63,34 +63,21 @@ void Room::notifyEnterGame()
 	mFinishList.clear();
 }
 
-bool Room::notifyPlayerReady(const CHAR_GUID& playerID, const bool& ready)
+void Room::notifyPlayerReady(const CHAR_GUID& playerGUID, const bool& ready)
 {
-	std::map<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerID);
+	std::map<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerGUID);
 	if (iterPlayer == mPlayerList.end())
 	{
-		return false;
+		return;
 	}
-	if (iterPlayer->second->getCharacterData()->mReady == ready)
+	if (ready)
 	{
-		return false;
+		++mReadyCount;
 	}
-	iterPlayer->second->getCharacterData()->mReady = ready;
-	return true;
-}
-
-bool Room::isAllPlayerReady()
-{
-	std::map<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.begin();
-	std::map<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
-	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	else
 	{
-		if (!iterPlayer->second->getCharacterData()->mReady)
-		{
-			return false;
-		}
+		--mReadyCount;
 	}
-	// 玩家数量大于0,并且所有玩家已经准备完毕
-	return mPlayerList.size() > 0;
 }
 
 CharacterPlayer* Room::getMember(const CHAR_GUID& playerID)

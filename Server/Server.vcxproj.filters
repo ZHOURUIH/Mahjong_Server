@@ -160,9 +160,6 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
@@ -228,6 +225,18 @@
     </ClCompile>
     <ClCompile Include="Socket\Packet\ClientServer\CSJoinRoom.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSReady.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReady.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -393,9 +402,6 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
-    </ClInclude>
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
@@ -488,6 +494,24 @@
     </ClInclude>
     <ClInclude Include="Socket\Packet\ClientServer\CSJoinRoom.h">
       <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSReady.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerReady.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCReadyRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReady.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

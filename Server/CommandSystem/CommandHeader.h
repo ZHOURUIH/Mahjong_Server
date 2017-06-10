@@ -19,8 +19,10 @@
 #include "CommandCharacterNotifyOtherPlayerOffline.h"
 #include "CommandCharacterNotifyOtherPlayerLeaveRoom.h"
 #include "CommandCharacterNotifyOtherPlayerJoinRoom.h"
+#include "CommandCharacterReady.h"
+#include "CommandCharacterNotifyOtherPlayerReady.h"
 
-#include "CommandRoomPlayerReady.h"
+#include "CommandRoomNotifyPlayerReady.h"
 #include "CommandRoomNotifyPlayerLeave.h"
 #include "CommandRoomNotifyPlayerJoin.h"
 #include "CommandRoomStartGame.h"

@@ -106,13 +106,15 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReady.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp" />
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp" />
     <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp" />
     <ClCompile Include="CommandSystem\txCommand.cpp" />
@@ -147,6 +149,7 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSJoinRoom.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSLogin.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSReady.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +171,8 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReady.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
     <ClInclude Include="CommandSystem\CommandDefine.h" />
     <ClInclude Include="CommandSystem\CommandHeader.h" />
@@ -176,7 +181,7 @@
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h" />
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomPlayerReady.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h" />
     <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h" />
     <ClInclude Include="CommandSystem\txCommand.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="Socket\Packet\ClientServer\CSHeartBeat.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSJoinRoom.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSLogin.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSReady.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h" />
     <ClInclude Include="Socket\Packet\Packet.h" />
     <ClInclude Include="Socket\Packet\PacketHeader.h" />
@@ -234,6 +240,8 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerLeaveRoom.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerOffline.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerReady.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCReadyRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h" />
   </ItemGroup>
