@@ -9,6 +9,7 @@
 #include "CSCreateRoom.h"
 #include "CSJoinRoom.h"
 #include "CSReady.h"
+#include "CSLeaveRoom.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -24,5 +25,6 @@
 #include "SCJoinRoomRet.h"
 #include "SCReadyRet.h"
 #include "SCOtherPlayerReady.h"
+#include "SCLeaveRoomRet.h"
 
 #endif

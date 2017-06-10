@@ -148,6 +148,7 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSCreateRoom.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSJoinRoom.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSLeaveRoom.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSLogin.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSReady.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Socket\Packet\ClientServer\CSCreateRoom.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSHeartBeat.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSJoinRoom.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSLeaveRoom.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSLogin.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSReady.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h" />
@@ -235,6 +237,7 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCCreateRoomRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCHeartBeatRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCJoinRoomRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCLeaveRoomRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCLoginRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyBanker.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h" />

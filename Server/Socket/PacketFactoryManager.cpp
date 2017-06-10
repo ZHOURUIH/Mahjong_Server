@@ -17,6 +17,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSCreateRoom, PT_CS_CREATE_ROOM);
 	ADD_PACKET_FACTORY(CSJoinRoom, PT_CS_JOIN_ROOM);
 	ADD_PACKET_FACTORY(CSReady, PT_CS_READY);
+	ADD_PACKET_FACTORY(CSLeaveRoom, PT_CS_LEAVE_ROOM);
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{
@@ -37,6 +38,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCJoinRoomRet, PT_SC_JOIN_ROOM_RET);
 	ADD_PACKET_FACTORY(SCOtherPlayerReady, PT_SC_OTHER_PLAYER_READY);
 	ADD_PACKET_FACTORY(SCReadyRet, PT_SC_READY_RET);
+	ADD_PACKET_FACTORY(SCLeaveRoomRet, PT_SC_LEAVE_ROOM_RET);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{

@@ -6,10 +6,10 @@
 void Room::joinRoom(CharacterPlayer* player)
 {
 	CharacterData* data = player->getCharacterData();
-	// 加入房间的玩家列表,并且在其中设置玩家的位置
-	addPlayer(player);
 	// 第一个加入房间的玩家为庄家
 	data->mBanker = (mPlayerList.size() == 0);
+	// 加入房间的玩家列表,并且在其中设置玩家的位置
+	addPlayer(player);
 	// 并且通知玩家庄家有变化
 	CommandCharacterNotifyBanker cmdBanker(CMD_PARAM);
 	cmdBanker.mBankerID = player->getGUID();
@@ -19,6 +19,7 @@ void Room::joinRoom(CharacterPlayer* player)
 void Room::leaveRoom(CharacterPlayer* player)
 {
 	CharacterData* data = player->getCharacterData();
+	int prePosition = data->mPosition;
 	removePlayer(player);
 	// 如果是庄家离开了房间
 	if (data->mBanker)
@@ -27,7 +28,7 @@ void Room::leaveRoom(CharacterPlayer* player)
 		// 找到下一个玩家设置为庄家
 		if (mPlayerList.size() > 0)
 		{
-			int nextPos = (data->mPosition + 1) % mMaxPlayer;
+			int nextPos = (prePosition + 1) % mMaxPlayer;
 			std::map<int, CharacterPlayer*>::iterator iterNext = mPlayerPositionList.find(nextPos);
 			while (true)
 			{

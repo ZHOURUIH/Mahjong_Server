@@ -238,6 +238,9 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSLeaveRoom.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -512,6 +515,12 @@
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSLeaveRoom.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCLeaveRoomRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
