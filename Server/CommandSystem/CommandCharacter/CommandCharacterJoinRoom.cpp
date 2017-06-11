@@ -37,6 +37,7 @@ void CommandCharacterJoinRoom::execute()
 	{
 		joinRet->mRoomID = mRoomID;
 		joinRet->mServerPosition = player->getCharacterData()->mPosition;
+		joinRet->mBanker = player->getCharacterData()->mBanker;
 		player->getCharacterData()->mRoomID = mRoomID;
 	}
 	// 否则设置消息中的房间号为无效值

@@ -10,10 +10,6 @@ void Room::joinRoom(CharacterPlayer* player)
 	data->mBanker = (mPlayerList.size() == 0);
 	// 加入房间的玩家列表,并且在其中设置玩家的位置
 	addPlayer(player);
-	// 并且通知玩家庄家有变化
-	CommandCharacterNotifyBanker cmdBanker(CMD_PARAM);
-	cmdBanker.mBankerID = player->getGUID();
-	mCommandSystem->pushCommand(&cmdBanker, player);
 }
 
 void Room::leaveRoom(CharacterPlayer* player)
@@ -21,10 +17,14 @@ void Room::leaveRoom(CharacterPlayer* player)
 	CharacterData* data = player->getCharacterData();
 	int prePosition = data->mPosition;
 	removePlayer(player);
+	// 如果是已经准备的玩家离开房间,则需要减少已经准备的玩家计数
+	if (data->mReady)
+	{
+		--mReadyCount;
+	}
 	// 如果是庄家离开了房间
 	if (data->mBanker)
 	{
-		data->mBanker = false;
 		// 找到下一个玩家设置为庄家
 		if (mPlayerList.size() > 0)
 		{

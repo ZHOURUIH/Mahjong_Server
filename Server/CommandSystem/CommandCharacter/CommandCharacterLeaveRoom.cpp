@@ -9,16 +9,19 @@
 void CommandCharacterLeaveRoom::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
+	CharacterData* data = player->getCharacterData();
 	SCLeaveRoomRet* leaveRet = static_cast<SCLeaveRoomRet*>(mNetManagerServer->createPacket(PT_SC_LEAVE_ROOM_RET));
-	Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
+	Room* room = mRoomManager->getRoom(data->mRoomID);
 	if (room != NULL)
 	{
-		// 清空玩家的房间ID
-		player->getCharacterData()->mRoomID = INVALID_ID;
 		// 通知房间有玩家离开
 		CommandRoomNotifyPlayerLeave cmdLeave(CMD_PARAM);
 		cmdLeave.mPlayerGUID = player->getGUID();
 		mCommandSystem->pushCommand(&cmdLeave, room);
+		// 清空玩家的房间ID,庄家标记,准备标记
+		data->mRoomID = INVALID_ID;
+		data->mReady = false;
+		data->mBanker = false;
 		leaveRet->mResult = true;
 	}
 	else

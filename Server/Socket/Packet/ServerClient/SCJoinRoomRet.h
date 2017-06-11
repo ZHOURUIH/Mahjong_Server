@@ -18,6 +18,7 @@ public:
 		pushParam(mResult, "result");
 		pushParam(mRoomID, "room id");
 		pushParam(mServerPosition, "server position");
+		pushParam(mBanker, "banker");
 	}
 	virtual void execute(){}
 	virtual std::string debugInfo()
@@ -28,6 +29,7 @@ public:
 	char mResult;	// 0表示成功,1表示失败
 	int mRoomID;
 	char mServerPosition;
+	bool mBanker;
 };
 
 #endif
