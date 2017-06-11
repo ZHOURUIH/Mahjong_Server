@@ -10,7 +10,13 @@ public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterStartGame)
 	{}
 	COMMAND_DECLARE_FUNCTION;
+	void setDice(char dice0, char dice1)
+	{
+		mDice[0] = dice0;
+		mDice[1] = dice1;
+	}
 public:
+	char mDice[2];
 };
 
 #endif

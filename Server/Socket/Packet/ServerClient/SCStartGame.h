@@ -13,13 +13,22 @@ public:
 		fillParams();
 		zeroParams();
 	}
-	virtual void fillParams(){}
+	virtual void fillParams()
+	{
+		pushArrayParam(mDice, 2, "dice");
+	}
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG(DEBUG_EMPTY);
+		COMMAND_DEBUG("dice : %d, %d", (int)mDice[0], (int)mDice[1]);
+	}
+	void setDice(char dice0, char dice1)
+	{
+		mDice[0] = dice0;
+		mDice[1] = dice1;
 	}
 public:
+	char mDice[2];
 };
 
 #endif
