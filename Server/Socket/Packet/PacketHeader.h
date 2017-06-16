@@ -10,6 +10,7 @@
 #include "CSJoinRoom.h"
 #include "CSReady.h"
 #include "CSLeaveRoom.h"
+#include "CSDiceDone.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -26,5 +27,10 @@
 #include "SCReadyRet.h"
 #include "SCOtherPlayerReady.h"
 #include "SCLeaveRoomRet.h"
+#include "SCDiceDoneRet.h"
+#include "SCNotifyGetStartMahjong.h"
+#include "SCNotifyReorderMahjong.h"
+#include "SCNotifyGetStartDone.h"
+#include "SCAskDrop.h"
 
 #endif

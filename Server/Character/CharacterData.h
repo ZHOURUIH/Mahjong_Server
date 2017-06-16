@@ -2,6 +2,7 @@
 #define _CHARACTER_DATA_H_
 
 #include "ServerDefine.h"
+#include "GameDefine.h"
 
 class CharacterData
 {

@@ -20,7 +20,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("flag : %d", mResult);
+		PACKET_DEBUG("flag : %d", mResult);
 	}
 public:
 	char mResult;			// 为0不存在,1表示已存在

@@ -26,7 +26,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("player guid : %d, name : %s", mPlayerGUID, mName);
+		PACKET_DEBUG("player guid : %d, name : %s", mPlayerGUID, mName);
 	}
 	void setName(const std::string& name)
 	{

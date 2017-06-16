@@ -152,100 +152,19 @@ enum SERVER_DEFINE
 	SD_MAX,
 };
 
-// 加入房间的结果
-enum JOIN_ROOM_RESULT
-{
-	JRR_SUCC,			// 加入成功
-	JRR_FULL,			// 房间已满
-	JRR_ROOM_LOCKED,	// 房间已锁定,拒绝加入
-	JRR_NO_ROOM,		// 房间不存在
-	JRR_PLAYER_IN_ROOM,	// 玩家已在房间中
-};
 
-// 麻将行为
-enum ACTION_TYPE
-{
-	AT_HU,
-	AT_GANG,
-	AT_PENG,
-	AT_PASS,
-	AT_MAX,
-};
-
-// 麻将
-enum MAHJONG
-{
-	// 7个风
-	M_FENG_DONG,
-	M_FENG_NAN,
-	M_FENG_XI,
-	M_FENG_BEI,
-	M_FENG_ZHONG,
-	M_FENG_FA,
-	M_FENG_BAI,
-	// 9个筒
-	M_TONG1,
-	M_TONG2,
-	M_TONG3,
-	M_TONG4,
-	M_TONG5,
-	M_TONG6,
-	M_TONG7,
-	M_TONG8,
-	M_TONG9,
-	// 9个条
-	M_TIAO1,
-	M_TIAO2,
-	M_TIAO3,
-	M_TIAO4,
-	M_TIAO5,
-	M_TIAO6,
-	M_TIAO7,
-	M_TIAO8,
-	M_TIAO9,
-	// 9个万
-	M_WAN1,
-	M_WAN2,
-	M_WAN3,
-	M_WAN4,
-	M_WAN5,
-	M_WAN6,
-	M_WAN7,
-	M_WAN8,
-	M_WAN9,
-
-	M_MAX,
-};
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 结构体定义
-struct FINISH_DATA
-{
-	CHAR_GUID mPlayerGUID;	// 玩家ID
-	float mCalories;		// 卡路里
-	float mBestTime;		// 单圈最佳时间
-	float mTotalTime;		// 骑行总时间
-	float mHighSpeed;		// 最高速度
-	float mAvgSpeed;		// 平均速度
-	float mPercent;			// 当前路线的完成百分比
-	int mRouteIndex;		// 当前路线的下标
-};
-
-struct PengGangInfo
-{
-	ACTION_TYPE mType;
-	MAHJONG mMahjong;
-};
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// 常量定义
-const int MAX_DICE = 6;						// 骰子的最大值
-const int MAX_PLAYER = 4;					// 房间中最大的玩家数量
+// 常量数字定义
 const int MAX_LOAD_FILE_COUNT = 1024;			// 内存中同时存在的加载的文件的数量
 const int CLIENT_TEMP_BUFFER_SIZE = 2 * 1024;	// 客户端临时缓冲区大小,应该不小于单个消息包最大的大小
 const int CLIENT_BUFFER_SIZE = 512 * 1024;		// 客户端发送和接收数据缓冲区大小
 const int HEADER_SIZE = sizeof(short) + sizeof(short);
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量字符串定义
 const std::string MEDIA_PATH = "../media";
 const std::string GAME_DATA_PATH = "GameDataFile/";

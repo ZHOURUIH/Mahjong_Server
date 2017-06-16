@@ -1,12 +1,12 @@
-﻿#ifndef _CS_CREATE_ROOM_H_
-#define _CS_CREATE_ROOM_H_
+﻿#ifndef _CS_DICE_DONE_H_
+#define _CS_DICE_DONE_H_
 
 #include "Packet.h"
 
-class CSCreateRoom : public Packet
+class CSDiceDone : public Packet
 {
 public:
-	CSCreateRoom(const PACKET_TYPE& type)
+	CSDiceDone(const PACKET_TYPE& type)
 		:
 		Packet(type)
 	{
@@ -14,10 +14,7 @@ public:
 		zeroParams();
 	}
 	virtual void execute();
-	virtual void fillParams()
-	{
-		;
-	}
+	virtual void fillParams(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG(PACKET_EMPTY);

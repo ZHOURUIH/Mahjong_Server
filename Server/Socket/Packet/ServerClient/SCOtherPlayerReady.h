@@ -21,7 +21,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("ready : %s, player guid : %d", mReady ? "true" : "false", mPlayerGUID);
+		PACKET_DEBUG("ready : %s, player guid : %d", mReady ? "true" : "false", mPlayerGUID);
 	}
 public:
 	bool mReady;

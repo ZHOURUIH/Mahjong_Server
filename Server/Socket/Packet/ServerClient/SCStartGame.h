@@ -20,7 +20,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("dice : %d, %d", (int)mDice[0], (int)mDice[1]);
+		PACKET_DEBUG("dice : %d, %d", (int)mDice[0], (int)mDice[1]);
 	}
 	void setDice(char dice0, char dice1)
 	{

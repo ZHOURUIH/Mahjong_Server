@@ -21,7 +21,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("result : %d", (int)mResult);
+		PACKET_DEBUG("result : %d", (int)mResult);
 	}
 public:
 	char mResult;	// 0表示成功,1表示失败

@@ -241,6 +241,33 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSLeaveRoom.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSDiceDone.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ServerUtility.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -521,6 +548,54 @@
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCLeaveRoomRet.h">
       <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\MahjongAction.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSDiceDone.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCDiceDoneRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartMahjong.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyReorderMahjong.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\GameDefine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerUtility.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartDone.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCAskDrop.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("banker guid : %d", mGUID);
+		PACKET_DEBUG("banker guid : %d", mGUID);
 	}
 public:
 	int mGUID;	// 庄家ID

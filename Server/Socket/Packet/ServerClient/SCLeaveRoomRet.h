@@ -20,7 +20,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("result : %s", mResult ? "true" : "false");
+		PACKET_DEBUG("result : %s", mResult ? "true" : "false");
 	}
 public:
 	bool mResult;

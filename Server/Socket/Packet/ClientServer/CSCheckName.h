@@ -20,7 +20,7 @@ public:
 	virtual void execute();
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("name : %s", mName);
+		PACKET_DEBUG("name : %s", mName);
 	}
 public:
 	char mName[16];

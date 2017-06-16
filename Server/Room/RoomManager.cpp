@@ -9,7 +9,12 @@
 int RoomManager::mRoomIDSeed = 0;
 void RoomManager::update(const float& elapsedTime)
 {
-	;
+	std::map<int, Room*>::iterator iter = mRoomList.begin();
+	std::map<int, Room*>::iterator iterEnd = mRoomList.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		iter->second->update(elapsedTime);
+	}
 }
 
 Room* RoomManager::createRoom()

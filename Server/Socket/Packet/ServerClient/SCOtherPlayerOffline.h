@@ -20,7 +20,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("player id : %d", mPlayerID);
+		PACKET_DEBUG("player id : %d", mPlayerID);
 	}
 public:
 	int mPlayerID;

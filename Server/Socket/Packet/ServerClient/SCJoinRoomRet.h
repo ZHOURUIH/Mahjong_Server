@@ -23,7 +23,7 @@ public:
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
-		COMMAND_DEBUG("result : %d, room id :%d", (int)mResult, mRoomID);
+		PACKET_DEBUG("result : %d, room id :%d", (int)mResult, mRoomID);
 	}
 public:
 	char mResult;	// 0表示成功,1表示失败
