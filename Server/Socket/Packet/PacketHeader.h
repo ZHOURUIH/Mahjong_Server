@@ -11,6 +11,7 @@
 #include "CSReady.h"
 #include "CSLeaveRoom.h"
 #include "CSDiceDone.h"
+#include "CSRequestDrop.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -32,5 +33,9 @@
 #include "SCNotifyReorderMahjong.h"
 #include "SCNotifyGetStartDone.h"
 #include "SCAskDrop.h"
+#include "SCNotifyGetMahjong.h"
+#include "SCAskAction.h"
+#include "SCOtherPlayerDrop.h"
+#include "SCRequestDropRet.h"
 
 #endif

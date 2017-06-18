@@ -29,7 +29,7 @@ public:
 	bool mReady;								// 玩家是否已准备
 	std::vector<MAHJONG> mHandIn;				// 手里的牌
 	std::vector<MAHJONG> mDropList;				// 打出的牌
-	std::vector<PengGangInfo> mPengGangList;	// 碰或者杠的牌
+	std::vector<PengGangInfo*> mPengGangList;	// 碰或者杠的牌
 };
 
 #endif

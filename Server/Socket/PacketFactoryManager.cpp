@@ -19,6 +19,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSReady, PT_CS_READY);
 	ADD_PACKET_FACTORY(CSLeaveRoom, PT_CS_LEAVE_ROOM);
 	ADD_PACKET_FACTORY(CSDiceDone, PT_CS_DICE_DONE);
+	ADD_PACKET_FACTORY(CSRequestDrop, PT_CS_REQUEST_DROP);
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{
@@ -45,6 +46,10 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCNotifyReorderMahjong, PT_SC_NOTIFY_REORDER_MAHJONG);
 	ADD_PACKET_FACTORY(SCNotifyGetStartDone, PT_SC_NOTIFY_GET_START_DONE);
 	ADD_PACKET_FACTORY(SCAskDrop, PT_SC_ASK_DROP);
+	ADD_PACKET_FACTORY(SCNotifyGetMahjong, PT_SC_NOTIFY_GET_MAHJONG);
+	ADD_PACKET_FACTORY(SCAskAction, PT_SC_ASK_ACTION);
+	ADD_PACKET_FACTORY(SCOtherPlayerDrop, PT_SC_OTHER_PLAYER_DROP); 
+	ADD_PACKET_FACTORY(SCRequestDropRet, PT_SC_REQUEST_DROP_RET);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{

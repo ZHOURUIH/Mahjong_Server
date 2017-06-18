@@ -27,6 +27,12 @@
 #include "CommandCharacterNotifyGetStartDone.h"
 #include "CommandCharacterAskDrop.h"
 #include "CommandCharacterNotifyDiceDone.h"
+#include "CommandCharacterGetMahjong.h"
+#include "CommandCharacterNotifyOtherPlayerGetMahjong.h"
+#include "CommandCharacterAskAction.h"
+#include "CommandCharacterNotifyOtherPlayerReorderMahjong.h"
+#include "CommandCharacterDrop.h"
+#include "CommandCharacterNotifyOtherPlayerDrop.h"
 
 #include "CommandRoomNotifyPlayerReady.h"
 #include "CommandRoomNotifyPlayerLeave.h"
@@ -34,6 +40,7 @@
 #include "CommandRoomStartGame.h"
 #include "CommandRoomNotifyPlayerOffline.h"
 #include "CommandRoomNotifyDiceDone.h"
+#include "CommandRoomRequestDrop.h"
 
 #include "CommandServerNotifyAcceptedClient.h"
 

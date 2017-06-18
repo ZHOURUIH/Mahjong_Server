@@ -100,18 +100,24 @@
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterDrop.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReady.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
@@ -122,6 +128,7 @@
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp" />
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp" />
     <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp" />
     <ClCompile Include="CommandSystem\txCommand.cpp" />
@@ -161,6 +168,7 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSDiceDone.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSReady.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSRequestDrop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h" />
@@ -175,18 +183,24 @@
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h" />
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h" />
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterDrop.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReady.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
@@ -199,6 +213,7 @@
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h" />
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h" />
     <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h" />
     <ClInclude Include="CommandSystem\txCommand.h" />
@@ -236,6 +251,7 @@
     <ClInclude Include="Room\MahjongAction.h" />
     <ClInclude Include="Room\Room.h" />
     <ClInclude Include="Room\RoomManager.h" />
+    <ClInclude Include="Room\WaitActionInfo.h" />
     <ClInclude Include="ServerFramework\ServerFramework.h" />
     <ClInclude Include="Socket\PacketDefine.h" />
     <ClInclude Include="Socket\PacketFactory.h" />
@@ -250,8 +266,10 @@
     <ClInclude Include="Socket\Packet\ClientServer\CSDiceDone.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSReady.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSRequestDrop.h" />
     <ClInclude Include="Socket\Packet\Packet.h" />
     <ClInclude Include="Socket\Packet\PacketHeader.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCAskAction.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCAskDrop.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCCheckNameRet.h" />
@@ -262,15 +280,18 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCLeaveRoomRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCLoginRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyBanker.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetMahjong.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartDone.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartMahjong.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyReorderMahjong.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerDrop.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerLeaveRoom.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerOffline.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerReady.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCReadyRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCRequestDropRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

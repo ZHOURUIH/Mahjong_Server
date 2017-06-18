@@ -62,12 +62,12 @@ public:
 	virtual void fillParams() = 0;
 	void zeroParams();
 	template<typename T>
-	void pushParam(const T& param, const std::string& describe)
+	void pushParam(const T& param, const std::string& describe = EMPTY_STRING)
 	{
 		mDataParameterList.push_back(DataParameter((char*)&param, sizeof(param), typeid(T).name(), describe));
 	}
 	template<typename T>
-	void pushArrayParam(const T* param, const int& count, const std::string& describe)
+	void pushArrayParam(const T* param, const int& count, const std::string& describe = EMPTY_STRING)
 	{
 		if (count > 0)
 		{

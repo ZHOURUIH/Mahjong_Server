@@ -1,13 +1,14 @@
 ﻿#ifndef _ROOM_H_
 #define _ROOM_H_
 
-#include "ServerDefine.h"
+#include "GameDefine.h"
 #include "ServerBase.h"
 #include "txCommandReceiver.h"
 #include "txUtility.h"
-#include "MahjongAction.h"
 
 class CharacterPlayer;
+class WaitActionInfo;
+class MahjongAction;
 class Room : public ServerBase, public txCommandReceiver
 {
 public:
@@ -39,9 +40,13 @@ public:
 	void notifyEnterGame();
 	void notifyPlayerReady(const CHAR_GUID& playerGUID, const bool& ready);
 	void notifyDiceDone(const CHAR_GUID& playerGUID);
+	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
+	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<MahjongAction*>& actionList);
 	CharacterPlayer* getMember(const CHAR_GUID& playerID);
+	CharacterPlayer* getMemberByPosition(const CHAR_GUID& playerID);
 	// 麻将相关
 	void setMahjongState(const MAHJONG_PLAY_STATE& state);
+	void requestDrop(CharacterPlayer* player, const int& index);
 	void notifyAllPlayerDiceDone();
 	const int& getID()												{ return mID; }
 	bool isAllPlayerReady()											{ return mReadyCount == mMaxPlayer; }
@@ -55,10 +60,11 @@ protected:
 	void removePlayer(CharacterPlayer* player);
 	void resetMahjongPool();
 	MAHJONG requestGet();
-	void notifyOtherPlayerGetStartMahjong(CharacterPlayer* exceptPlayer, MAHJONG mah);
-	void notifyAlPlayerGetStartDone();
-	void notifyOtherPlayerReorder(CharacterPlayer* exceptPlayer);
-	void notifyAllPlayerBanker(CHAR_GUID banker);
+	void endGame(CharacterPlayer* player, const MAHJONG& mahjong, const std::vector<HU_TYPE>& huList);
+	void notifyAllPlayerGetStartDone();
+	void notifyAllPlayerBanker(const CHAR_GUID& banker);
+	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
+	void playerReorderMahjong(CharacterPlayer* player);
 protected:
 	int mID;												// 房间ID
 	int mMaxPlayer;											// 房间人数上限

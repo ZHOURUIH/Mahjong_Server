@@ -8,11 +8,9 @@ class CommandCharacterReorderMahjong : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandCharacterReorderMahjong)
-		, mPlayerGUID(INVALID_ID)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	CHAR_GUID mPlayerGUID;
 };
 
 #endif

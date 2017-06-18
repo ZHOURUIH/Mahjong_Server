@@ -90,6 +90,16 @@ enum MAHJONG_PLAY_STATE
 	MPS_ENDING,					// 本局麻将结束
 };
 
+// 花色类型
+enum MAHJONG_HUASE
+{
+	MH_FENG,	// 风牌
+	MH_TONG,	// 筒
+	MH_TIAO,	// 条
+	MH_WAN,		// 万
+	MH_MAX,
+};
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 结构体定义
 struct PengGangInfo
@@ -98,15 +108,10 @@ struct PengGangInfo
 	MAHJONG mMahjong;
 };
 
-class CharacterPlayer;
-class MahjongAction;
-struct WaitActionInfo
+struct MahInfo
 {
-	CharacterPlayer* mPlayer;				// 等待确认操作的玩家
-	std::vector<MahjongAction*> mActionList;	// 玩家可选择的操作
-	CharacterPlayer* mDroppedPlayer;			// 打出这张牌的玩家
-	MAHJONG mMahjong;						// 当前麻将
-	MahjongAction* mConfirmedAction;			// 玩家确认选择的一种操作
+	MAHJONG mMah;
+	int mCount;
 };
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -116,6 +121,7 @@ const int MAX_PLAYER = 4;					// 房间中最大的玩家数量
 const float ASSIGN_MAHJONG_INTERVAL = 0.1f;
 const int MAX_SINGLE_COUNT = 4;
 const int MAX_HAND_IN_COUNT = 14;	// 每名玩家手里最多有14张牌,不包含碰,吃,杠
+const int MAX_HU_COUNT = 16;		// 胡牌类型的最大数量
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量字符串定义

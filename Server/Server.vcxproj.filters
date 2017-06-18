@@ -268,6 +268,30 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSRequestDrop.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterDrop.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -596,6 +620,45 @@
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSRequestDrop.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetMahjong.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCAskAction.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterDrop.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerDrop.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCRequestDropRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\WaitActionInfo.h">
+      <Filter>Room</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,7 +3,6 @@
 
 #include "txCommand.h"
 
-// 向玩家发送开始游戏(进入倒数)的消息
 class CommandCharacterAskDrop : public txCommand
 {
 public:

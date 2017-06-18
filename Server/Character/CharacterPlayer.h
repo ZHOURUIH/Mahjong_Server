@@ -17,7 +17,8 @@ public:
 	void setClientGUID(const CLIENT_GUID& client) { mClientGUID = client; }
 	const CLIENT_GUID& getClientGUID() { return mClientGUID; }
 	void reorderMahjong();
-	void getMahjongStart(MAHJONG mah);
+	void getMahjongStart(const MAHJONG& mah);
+	void dropMahjong(const int& index);
 protected:
 	CLIENT_GUID mClientGUID;	// 玩家所在客户端的GUID
 };
