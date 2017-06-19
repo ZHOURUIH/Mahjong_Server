@@ -16,9 +16,9 @@ public:
 	MahjongAction(const ACTION_TYPE& type, CharacterPlayer* actionPlayer, CharacterPlayer* droppedPlayer, MAHJONG mah, const std::vector<HU_TYPE>& huList = std::vector<HU_TYPE>())
 	{
 		mType = type;
-		mActionPlayer = NULL;
-		mDroppedPlayer = NULL;
-		mMah = M_MAX;
+		mActionPlayer = actionPlayer;
+		mDroppedPlayer = droppedPlayer;
+		mMah = mah;
 		for (int i = 0; i < MAX_HU_COUNT; ++i)
 		{
 			if (mType == AT_HU && i < (int)huList.size())

@@ -41,6 +41,7 @@ public:
 	void notifyPlayerReady(const CHAR_GUID& playerGUID, const bool& ready);
 	void notifyDiceDone(const CHAR_GUID& playerGUID);
 	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
+	void notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah);
 	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<MahjongAction*>& actionList);
 	CharacterPlayer* getMember(const CHAR_GUID& playerID);
 	CharacterPlayer* getMemberByPosition(const CHAR_GUID& playerID);
@@ -64,6 +65,7 @@ protected:
 	void notifyAllPlayerGetStartDone();
 	void notifyAllPlayerBanker(const CHAR_GUID& banker);
 	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
+	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
 protected:
 	int mID;												// 房间ID

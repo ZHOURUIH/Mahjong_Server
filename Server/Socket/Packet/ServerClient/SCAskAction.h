@@ -19,6 +19,10 @@ public:
 	virtual void fillParams()
 	{
 		pushArrayParam(mAction, 4);
+		pushArrayParam(mActionPlayer, 4);
+		pushArrayParam(mDroppedPlayer, 4);
+		pushArrayParam(mMahjong, 4);
+		pushArrayParam(mHuList, 4);
 	}
 	virtual void execute(){}
 	virtual std::string debugInfo()

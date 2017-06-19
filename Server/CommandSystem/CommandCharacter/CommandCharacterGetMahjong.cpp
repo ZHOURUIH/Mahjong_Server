@@ -8,7 +8,7 @@ void CommandCharacterGetMahjong::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->getMahjongStart(mMahjong);
-	SCNotifyGetMahjong* getStartMahjong = static_cast<SCNotifyGetMahjong*>(mNetManagerServer->createPacket(PT_SC_NOTIFY_GET_START_MAHJONG));
+	SCNotifyGetMahjong* getStartMahjong = static_cast<SCNotifyGetMahjong*>(mNetManagerServer->createPacket(PT_SC_NOTIFY_GET_MAHJONG));
 	getStartMahjong->mPlayerGUID = player->getGUID();
 	getStartMahjong->mMahjong = mMahjong;
 	mNetManagerServer->sendMessage(getStartMahjong, player->getClientGUID());

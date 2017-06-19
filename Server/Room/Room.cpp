@@ -181,9 +181,10 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
 			{
 				int nextPosition = (player->getCharacterData()->mPosition + 1) % MAX_PLAYER;
 				CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
-				CommandCharacterGetMahjong cmdGet(CMD_PARAM);
-				cmdGet.mMahjong = requestGet();
-				mCommandSystem->pushCommand(&cmdGet, nextPlayer);
+				MAHJONG mahjong = requestGet();
+				playerGetMahjong(mahjong, nextPlayer);
+				// 判断摸牌后的操作
+				notifyPlayerGet(nextPlayer, mahjong);
 			}
 			// 牌已经摸完了,则本局为平局
 			else
@@ -191,6 +192,54 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
 				endGame(NULL, M_MAX, std::vector<HU_TYPE>());
 			}
 		}
+	}
+}
+
+void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
+{
+	// 判断是否可胡或者可杠
+	CharacterData* data = player->getCharacterData();
+	std::vector<MahjongAction*> actionList;
+	// 是否可胡
+	if (ServerUtility::canHu(data->mHandIn))
+	{
+		std::vector<HU_TYPE> huList = ServerUtility::generateHuType(data->mHandIn, mah, data->mPengGangList, true, true);
+		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_HU, player, player, mah, huList);
+		actionList.push_back(action);
+	}
+	// 是否可以杠
+	else if (ServerUtility::canGang(data->mHandIn))
+	{
+		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_GANG, player, player, mah);
+		actionList.push_back(action);
+	}
+	// 摸了一张自己碰的牌,可以开杠
+	else
+	{
+		int pengGangCount = data->mPengGangList.size();
+		for (int i = 0; i < pengGangCount; ++i)
+		{
+			if (data->mPengGangList[i]->mMahjong == mah
+				&& data->mPengGangList[i]->mType == AT_PENG)
+			{
+				MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_GANG, player, player, mah);
+				actionList.push_back(action);
+				break;
+			}
+		}
+	}
+	if (actionList.size() > 0)
+	{
+		// 如果有可以操作的行为,则还需要添加Pass行为
+		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_PASS, player, NULL, M_MAX);
+		actionList.push_back(action);
+		askPlayerAction(player, player, mah, actionList);
+	}
+	else
+	{
+		// 没有任何操作则通知玩家需要打一张牌出来
+		CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
+		mCommandSystem->pushCommand(&cmdAskDrop, player);
 	}
 }
 
@@ -451,6 +500,26 @@ void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
 		if (iterPlayer->second != player)
 		{
 			CommandCharacterNotifyOtherPlayerGetStartMahjong cmdNotifyGetStart(CMD_PARAM);
+			cmdNotifyGetStart.mPlayerGUID = player->getGUID();
+			cmdNotifyGetStart.mMahjong = mah;
+			mCommandSystem->pushCommand(&cmdNotifyGetStart, iterPlayer->second);
+		}
+	}
+}
+
+void Room::playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player)
+{
+	CommandCharacterGetMahjong cmdGetStart(CMD_PARAM);
+	cmdGetStart.mMahjong = mah;
+	mCommandSystem->pushCommand(&cmdGetStart, player);
+	// 通知其他玩家
+	std::map<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
+	std::map<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	{
+		if (iterPlayer->second != player)
+		{
+			CommandCharacterNotifyOtherPlayerGetMahjong cmdNotifyGetStart(CMD_PARAM);
 			cmdNotifyGetStart.mPlayerGUID = player->getGUID();
 			cmdNotifyGetStart.mMahjong = mah;
 			mCommandSystem->pushCommand(&cmdNotifyGetStart, iterPlayer->second);
