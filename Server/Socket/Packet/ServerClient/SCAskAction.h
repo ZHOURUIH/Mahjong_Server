@@ -22,7 +22,7 @@ public:
 		pushArrayParam(mActionPlayer, 4);
 		pushArrayParam(mDroppedPlayer, 4);
 		pushArrayParam(mMahjong, 4);
-		pushArrayParam(mHuList, 4);
+		pushArrayParam(mHuList, MAX_HU_COUNT);
 	}
 	virtual void execute(){}
 	virtual std::string debugInfo()
