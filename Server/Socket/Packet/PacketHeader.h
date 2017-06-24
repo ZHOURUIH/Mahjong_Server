@@ -12,6 +12,7 @@
 #include "CSLeaveRoom.h"
 #include "CSDiceDone.h"
 #include "CSRequestDrop.h"
+#include "CSConfirmAction.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -37,5 +38,13 @@
 #include "SCAskAction.h"
 #include "SCOtherPlayerDrop.h"
 #include "SCRequestDropRet.h"
+#include "SCPlayerHu.h"
+#include "SCPlayerGang.h"
+#include "SCPlayerPeng.h"
+#include "SCPlayerPass.h"
+#include "SCOtherPlayerHu.h"
+#include "SCOtherPlayerGang.h"
+#include "SCOtherPlayerPeng.h"
+#include "SCOtherPlayerPass.h"
 
 #endif

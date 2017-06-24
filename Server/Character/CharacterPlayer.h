@@ -19,6 +19,8 @@ public:
 	void reorderMahjong();
 	void getMahjongStart(const MAHJONG& mah);
 	void dropMahjong(const int& index);
+	void gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropPlayer);
+	void pengMahjong(const MAHJONG& mahjong);
 protected:
 	CLIENT_GUID mClientGUID;	// 玩家所在客户端的GUID
 };

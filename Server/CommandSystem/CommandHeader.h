@@ -33,6 +33,14 @@
 #include "CommandCharacterNotifyOtherPlayerReorderMahjong.h"
 #include "CommandCharacterDrop.h"
 #include "CommandCharacterNotifyOtherPlayerDrop.h"
+#include "CommandCharacterHu.h"
+#include "CommandCharacterNotifyOtherPlayerHu.h"
+#include "CommandCharacterGang.h"
+#include "CommandCharacterNotifyOtherPlayerGang.h"
+#include "CommandCharacterPeng.h"
+#include "CommandCharacterNotifyOtherPlayerPeng.h"
+#include "CommandCharacterPass.h"
+#include "CommandCharacterNotifyOtherPlayerPass.h"
 
 #include "CommandRoomNotifyPlayerReady.h"
 #include "CommandRoomNotifyPlayerLeave.h"
@@ -41,6 +49,7 @@
 #include "CommandRoomNotifyPlayerOffline.h"
 #include "CommandRoomNotifyDiceDone.h"
 #include "CommandRoomRequestDrop.h"
+#include "CommandRoomConfirmAction.h"
 
 #include "CommandServerNotifyAcceptedClient.h"
 

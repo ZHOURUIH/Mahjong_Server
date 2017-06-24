@@ -42,7 +42,7 @@ public:
 				mMahjong[i] = actionList[i]->mMah;
 				if (actionList[i]->mType == AT_HU)
 				{
-					setHuList(actionList[i]->mHuList, MAX_HU_COUNT);
+					setHuList(actionList[i]->mHuList);
 				}
 			}
 			else
@@ -52,8 +52,9 @@ public:
 		}
 	}
 protected:
-	void setHuList(HU_TYPE* huList, int count)
+	void setHuList(const std::vector<HU_TYPE>& huList)
 	{
+		int count = huList.size();
 		for (int i = 0; i < MAX_HU_COUNT; ++i)
 		{
 			if (mType == AT_HU && i < count)

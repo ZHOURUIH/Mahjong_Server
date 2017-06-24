@@ -43,6 +43,7 @@ public:
 	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
 	void notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah);
 	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<MahjongAction*>& actionList);
+	void playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type);
 	CharacterPlayer* getMember(const CHAR_GUID& playerID);
 	CharacterPlayer* getMemberByPosition(const CHAR_GUID& playerID);
 	// 麻将相关
@@ -67,6 +68,10 @@ protected:
 	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
+	void playerHu(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<HU_TYPE>& huList);
+	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
+	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
+	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 protected:
 	int mID;												// 房间ID
 	int mMaxPlayer;											// 房间人数上限
