@@ -20,7 +20,6 @@ public:
 		pushParam(mMahjong);
 		pushArrayParam(mHuList, MAX_HU_COUNT);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG(PACKET_EMPTY);

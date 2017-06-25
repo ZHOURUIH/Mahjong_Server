@@ -14,12 +14,7 @@ public:
 		zeroParams();
 	}
 	virtual void execute();
-	virtual void fillParams()
-	{}
-	virtual std::string debugInfo()
-	{
-		PACKET_DEBUG(PACKET_EMPTY);
-	}
+	virtual void fillParams(){}
 public:
 };
 

@@ -15,12 +15,11 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mResult, "result");
-		pushParam(mRoomID, "room id");
-		pushParam(mServerPosition, "server position");
-		pushParam(mBanker, "banker");
+		pushParam(mResult);
+		pushParam(mRoomID);
+		pushParam(mServerPosition);
+		pushParam(mBanker);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("result : %d, room id :%d", (int)mResult, mRoomID);

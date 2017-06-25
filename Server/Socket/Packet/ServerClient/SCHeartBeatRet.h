@@ -13,10 +13,9 @@ public:
 		fillParams();
 		zeroParams();
 	}
-	virtual void execute(){}
 	virtual void fillParams()
 	{
-		pushParam(mHeartBeatTimes, "heart beat times");
+		pushParam(mHeartBeatTimes);
 	}
 	virtual std::string debugInfo()
 	{

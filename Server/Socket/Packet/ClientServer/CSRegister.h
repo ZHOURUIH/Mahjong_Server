@@ -16,10 +16,10 @@ public:
 	virtual void execute();
 	virtual void fillParams()
 	{
-		pushArrayParam(mAccount, 16, "account");
-		pushArrayParam(mPassword, 16, "password");
-		pushArrayParam(mName, 16, "name");
-		pushParam(mHead, "head");
+		pushArrayParam(mAccount, 16);
+		pushArrayParam(mPassword, 16);
+		pushArrayParam(mName, 16);
+		pushParam(mHead);
 	}
 	virtual std::string debugInfo()
 	{

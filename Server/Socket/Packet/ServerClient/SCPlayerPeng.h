@@ -18,7 +18,6 @@ public:
 		pushParam(mDroppedPlayerGUID);
 		pushParam(mMahjong);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG(PACKET_EMPTY);

@@ -24,11 +24,6 @@ public:
 		pushArrayParam(mMahjong, 4);
 		pushArrayParam(mHuList, MAX_HU_COUNT);
 	}
-	virtual void execute(){}
-	virtual std::string debugInfo()
-	{
-		PACKET_DEBUG(PACKET_EMPTY);
-	}
 	void setActionList(const std::vector<MahjongAction*>& actionList)
 	{
 		int count = actionList.size();

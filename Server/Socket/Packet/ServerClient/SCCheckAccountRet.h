@@ -15,9 +15,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mResult, "result");
+		pushParam(mResult);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("flag : %d", mResult);

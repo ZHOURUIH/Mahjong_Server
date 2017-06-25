@@ -15,9 +15,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushArrayParam(mDice, 2, "dice");
+		pushArrayParam(mDice, 2);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("dice : %d, %d", (int)mDice[0], (int)mDice[1]);

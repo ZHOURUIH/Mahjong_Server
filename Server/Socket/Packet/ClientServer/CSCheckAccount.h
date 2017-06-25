@@ -15,7 +15,7 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushArrayParam(mAccount, 16, "check account");
+		pushArrayParam(mAccount, 16);
 	}
 	virtual void execute();
 	virtual std::string debugInfo()

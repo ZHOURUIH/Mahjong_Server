@@ -15,9 +15,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mPlayerID, "guid");
+		pushParam(mPlayerID);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("player id : %d", mPlayerID);

@@ -20,8 +20,11 @@ public:
 		mClient(INVALID_ID)
 	{}
 	const PACKET_TYPE& getPacketType() { return mType; }
-	virtual void execute() = 0;
-	virtual std::string debugInfo() = 0;
+	virtual void execute(){}
+	virtual std::string debugInfo()
+	{
+		PACKET_DEBUG(PACKET_EMPTY);
+	}
 public:
 	PACKET_TYPE mType;
 	CLIENT_GUID mClient;	// 客户端ID

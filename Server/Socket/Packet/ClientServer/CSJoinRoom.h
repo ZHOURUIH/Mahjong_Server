@@ -16,7 +16,7 @@ public:
 	virtual void execute();
 	virtual void fillParams()
 	{
-		pushParam(mRoomID, "room id");
+		pushParam(mRoomID);
 	}
 	virtual std::string debugInfo()
 	{

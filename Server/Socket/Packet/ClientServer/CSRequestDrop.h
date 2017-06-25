@@ -16,7 +16,7 @@ public:
 	virtual void execute();
 	virtual void fillParams()
 	{
-		pushParam(mIndex, "index");
+		pushParam(mIndex);
 	}
 	virtual std::string debugInfo()
 	{

@@ -16,10 +16,9 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mPlayerGUID, "player guid");
-		pushParam(mMahjong, "mahjong");
+		pushParam(mPlayerGUID);
+		pushParam(mMahjong);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("player guid : %d, mahjong : %s", mPlayerGUID, MAHJONG_NAME[mMahjong].c_str());

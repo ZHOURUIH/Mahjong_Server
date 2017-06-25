@@ -27,8 +27,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushArrayParam(mAccount, ACCOUNT_LENGTH, "account");
-		pushArrayParam(mPassword, PASSOWRD_LENGTH, "password");
+		pushArrayParam(mAccount, ACCOUNT_LENGTH);
+		pushArrayParam(mPassword, PASSOWRD_LENGTH);
 	}
 	virtual std::string debugInfo()
 	{

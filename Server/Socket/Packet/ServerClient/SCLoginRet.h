@@ -15,14 +15,13 @@ public:
 		fillParams();
 		zeroParams();
 	}
-	virtual void execute(){}
 	virtual void fillParams()
 	{
-		pushParam(mLoginRet, "login ret");
-		pushArrayParam(mName, NAME_LENGTH, "login ret");
-		pushParam(mMoney, "money");
-		pushParam(mHead, "head");
-		pushParam(mGUID, "guid");
+		pushParam(mLoginRet);
+		pushArrayParam(mName, NAME_LENGTH);
+		pushParam(mMoney);
+		pushParam(mHead);
+		pushParam(mGUID);
 	}
 	virtual std::string debugInfo()
 	{

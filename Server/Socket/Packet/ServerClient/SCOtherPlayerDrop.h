@@ -19,7 +19,6 @@ public:
 		pushParam(mIndex);
 		pushParam(mMahjong);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("player guid : %d, index : %d, mahjong : %d", mPlayerGUID, mIndex, mMahjong);

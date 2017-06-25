@@ -15,15 +15,14 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mPlayerGUID, "player guid");
-		pushArrayParam(mName, 16, "name");
-		pushParam(mMoney, "money");
-		pushParam(mHead, "head");
-		pushParam(mPosition, "position");
-		pushParam(mReady, "ready");
-		pushParam(mBanker, "banker");
+		pushParam(mPlayerGUID);
+		pushArrayParam(mName, 16);
+		pushParam(mMoney);
+		pushParam(mHead);
+		pushParam(mPosition);
+		pushParam(mReady);
+		pushParam(mBanker);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("player guid : %d, name : %s", mPlayerGUID, mName);

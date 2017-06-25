@@ -16,7 +16,7 @@ public:
 	virtual void execute();
 	virtual void fillParams()
 	{
-		pushParam(mReady, "ready");
+		pushParam(mReady);
 	}
 	virtual std::string debugInfo()
 	{

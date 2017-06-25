@@ -15,10 +15,9 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mReady, "ready");
-		pushParam(mPlayerGUID, "player guid");
+		pushParam(mReady);
+		pushParam(mPlayerGUID);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("ready : %s, player guid : %d", mReady ? "true" : "false", mPlayerGUID);

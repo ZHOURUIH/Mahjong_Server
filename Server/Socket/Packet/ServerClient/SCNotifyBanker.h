@@ -15,9 +15,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mGUID, "guid");
+		pushParam(mGUID);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("banker guid : %d", mGUID);

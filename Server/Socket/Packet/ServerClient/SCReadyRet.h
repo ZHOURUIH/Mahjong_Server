@@ -15,9 +15,8 @@ public:
 	}
 	virtual void fillParams()
 	{
-		pushParam(mReady, "ready");
+		pushParam(mReady);
 	}
-	virtual void execute(){}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG("ready : %s", mReady ? "true" : "false");
