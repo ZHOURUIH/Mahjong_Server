@@ -13,7 +13,7 @@ public:
 		mClientGUID(INVALID_ID)
 	{}
 	virtual ~CharacterPlayer(){ destroy(); }
-	void destroy(){}
+	void destroy();
 	void setClientGUID(const CLIENT_GUID& client) { mClientGUID = client; }
 	const CLIENT_GUID& getClientGUID() { return mClientGUID; }
 	void reorderMahjong();
@@ -21,6 +21,11 @@ public:
 	void dropMahjong(const int& index);
 	void gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropPlayer);
 	void pengMahjong(const MAHJONG& mahjong);
+protected:
+	void addPeng(const MAHJONG& mahjong);
+	void addGang(const MAHJONG& mahjong);
+	void pengToGang(const MAHJONG& mahjong);
+	bool hasPeng(const MAHJONG& mahjong, int& pengIndex);
 protected:
 	CLIENT_GUID mClientGUID;	// 玩家所在客户端的GUID
 };

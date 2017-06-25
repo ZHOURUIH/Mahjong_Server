@@ -298,12 +298,6 @@
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp">
       <Filter>CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterHu.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerHu.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGang.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
@@ -320,6 +314,18 @@
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPeng.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
   </ItemGroup>
@@ -696,12 +702,6 @@
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomConfirmAction.h">
       <Filter>CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterHu.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerHu.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGang.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
@@ -723,9 +723,6 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerGang.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerHu.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
-    </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPeng.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
@@ -743,6 +740,27 @@
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPass.h">
       <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerAskAction.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerAskDrop.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyMahjongEnd.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

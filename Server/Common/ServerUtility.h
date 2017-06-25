@@ -1,6 +1,8 @@
 #ifndef _SERVER_UTILITY_H_
 #define _SERVER_UTILITY_H_
 
+#include "txUtility.h"
+
 #include "GameDefine.h"
 
 class ServerUtility

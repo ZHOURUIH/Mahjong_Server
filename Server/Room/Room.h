@@ -68,10 +68,13 @@ protected:
 	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
-	void playerHu(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<HU_TYPE>& huList);
+	// 可能同时会有多个玩家可以胡牌
+	void playerHu(const std::vector<CharacterPlayer*>& playerList, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<std::vector<HU_TYPE>>& huList);
 	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
+	void playerAskDrop(CharacterPlayer* player);
+	void playerAskAction(CharacterPlayer* player, const std::vector<MahjongAction*>& actionList);
 protected:
 	int mID;												// 房间ID
 	int mMaxPlayer;											// 房间人数上限

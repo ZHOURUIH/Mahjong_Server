@@ -42,9 +42,11 @@
 #include "SCPlayerGang.h"
 #include "SCPlayerPeng.h"
 #include "SCPlayerPass.h"
-#include "SCOtherPlayerHu.h"
 #include "SCOtherPlayerGang.h"
 #include "SCOtherPlayerPeng.h"
 #include "SCOtherPlayerPass.h"
+#include "SCOtherPlayerAskDrop.h"
+#include "SCOtherPlayerAskAction.h"
+#include "SCNotifyMahjongEnd.h"
 
 #endif

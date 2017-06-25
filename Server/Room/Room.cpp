@@ -50,8 +50,7 @@ void Room::update(const float& elapsedTime)
 					setMahjongState(MPS_NORMAL_GAMING);
 
 					// 通知玩家打出一张牌
-					CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
-					mCommandSystem->pushCommand(&cmdAskDrop, curPlayer);
+					playerAskDrop(curPlayer);
 					return;
 				}
 			}
@@ -219,8 +218,7 @@ void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
 		int pengGangCount = data->mPengGangList.size();
 		for (int i = 0; i < pengGangCount; ++i)
 		{
-			if (data->mPengGangList[i]->mMahjong == mah
-				&& data->mPengGangList[i]->mType == AT_PENG)
+			if (data->mPengGangList[i]->mMahjong == mah && data->mPengGangList[i]->mType == AT_PENG)
 			{
 				MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_GANG, player, player, mah);
 				actionList.push_back(action);
@@ -231,15 +229,14 @@ void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
 	if (actionList.size() > 0)
 	{
 		// 如果有可以操作的行为,则还需要添加Pass行为
-		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_PASS, player, NULL, M_MAX);
+		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_PASS, player, player, M_MAX);
 		actionList.push_back(action);
 		askPlayerAction(player, player, mah, actionList);
 	}
 	else
 	{
 		// 没有任何操作则通知玩家需要打一张牌出来
-		CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
-		mCommandSystem->pushCommand(&cmdAskDrop, player);
+		playerAskDrop(player);
 	}
 }
 
@@ -249,6 +246,7 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 	if (iterWait == mWaitList.end())
 	{
 		GAME_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
+		return;
 	}
 	MahjongAction* action = NULL;
 	std::vector<MahjongAction*>& actionList = iterWait->second->mActionList;
@@ -269,10 +267,24 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 	// 胡牌的优先级最高,如果有玩家选择胡牌,则忽略其他玩家的操作
 	if (action->mType == AT_HU)
 	{
-		// 游戏状态设置为正常游戏
-		setMahjongState(MPS_NORMAL_GAMING);
-		playerHu(player, action->mDroppedPlayer, action->mMah, action->mHuList);
-
+		// 查找可以胡牌的玩家
+		std::vector<CharacterPlayer*> huPlayer;
+		std::vector<std::vector<HU_TYPE>> huList;
+		std::map<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
+		std::map<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			int count = iter->second->mActionList.size();
+			for (int i = 0; i < count; ++i)
+			{
+				if (iter->second->mActionList[i]->mType == AT_HU)
+				{
+					huPlayer.push_back(iter->first);
+					huList.push_back(iter->second->mActionList[i]->mHuList);
+				}
+			}
+		}
+		playerHu(huPlayer, action->mDroppedPlayer, action->mMah, huList);
 		// 有玩家胡牌后则结束游戏
 		endGame(player, action->mMah, action->mHuList);
 	}
@@ -307,7 +319,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 			if (highestAction->mType == AT_GANG)
 			{
 				playerGang(info->mPlayer, info->mDroppedPlayer, info->mMahjong);
-
+				// 杠完牌需要重新排列
+				playerReorderMahjong(info->mPlayer);
 				// 还有牌,玩家杠了一张牌以后需要再摸一张
 				if (mMahjongPool.size() > 0)
 				{
@@ -324,17 +337,14 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 			else if (highestAction->mType == AT_PENG)
 			{
 				playerPeng(info->mPlayer, info->mDroppedPlayer, info->mMahjong);
-
-				CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
-				mCommandSystem->pushCommand(&cmdAskDrop, info->mPlayer);
+				playerAskDrop(info->mPlayer);
 			}
 			else if (highestAction->mType == AT_PASS)
 			{
 				// 如果是自己摸了一张牌,选择了pass,则需要自己打一张牌出来
 				if (info->mDroppedPlayer == info->mPlayer)
 				{
-					CommandCharacterAskDrop cmd(CMD_PARAM);
-					mCommandSystem->pushCommand(&cmd, info->mPlayer);
+					playerAskDrop(info->mPlayer);
 				}
 				else
 				{
@@ -360,16 +370,15 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 
 void Room::endGame(CharacterPlayer* player, const MAHJONG& mahjong, const std::vector<HU_TYPE>& huList)
 {
-	std::map<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
-	std::map<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
-	for (; iter != iterEnd; ++iter)
+	// 设置为结束状态
+	setMahjongState(MPS_ENDING);
+	// 通知所有玩家本局结束
+	std::map<int, CharacterPlayer*>::iterator iterPos = mPlayerPositionList.begin();
+	std::map<int, CharacterPlayer*>::iterator iterPosEnd = mPlayerPositionList.end();
+	for (; iterPos != iterPosEnd; ++iterPos)
 	{
-		int actionCount = iter->second->mActionList.size();
-		for (int i = 0; i < actionCount; ++i)
-		{
-			TRACE_DELETE(iter->second->mActionList[i]);
-		}
-		TRACE_DELETE(iter->second);
+		CommandCharacterMahjongEnd cmd(CMD_PARAM);
+		mCommandSystem->pushCommand(&cmd, iterPos->second);
 	}
 }
 
@@ -387,9 +396,7 @@ void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlay
 	// 设置状态为等待玩家确认操作
 	setMahjongState(MPS_WAIT_FOR_ACTION);
 	// 询问玩家进行什么操作
-	CommandCharacterAskAction cmd(CMD_PARAM);
-	cmd.mActionList = actionList;
-	mCommandSystem->pushCommand(&cmd, player);
+	playerAskAction(player, actionList);
 }
 
 CharacterPlayer* Room::getMember(const CHAR_GUID& playerID)
@@ -503,7 +510,17 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 	}
 	else if (mPlayState == MPS_ENDING)
 	{
-		;
+		std::map<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
+		std::map<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			int actionCount = iter->second->mActionList.size();
+			for (int i = 0; i < actionCount; ++i)
+			{
+				TRACE_DELETE(iter->second->mActionList[i]);
+			}
+			TRACE_DELETE(iter->second);
+		}
 	}
 }
 
@@ -671,27 +688,19 @@ void Room::playerReorderMahjong(CharacterPlayer* player)
 	}
 }
 
-void Room::playerHu(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<HU_TYPE>& huList)
+void Room::playerHu(const std::vector<CharacterPlayer*>& playerList, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<std::vector<HU_TYPE>>& huList)
 {
-	CommandCharacterHu cmdHu(CMD_PARAM);
-	cmdHu.mMahjong = mah;
-	cmdHu.mDroppedPlayer = droppedPlayer;
-	cmdHu.mHuList = huList;
-	mCommandSystem->pushCommand(&cmdHu, player);
-	// 通知其他玩家
+	// 通知所有玩家
 	std::map<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	std::map<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
 	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		if (iterPlayer->second != player)
-		{
-			CommandCharacterNotifyOtherPlayerHu cmdOtherHu(CMD_PARAM);
-			cmdOtherHu.mOtherPlayer = player;
-			cmdOtherHu.mMahjong = mah;
-			cmdOtherHu.mDroppedPlayer = droppedPlayer;
-			cmdOtherHu.mHuList = huList;
-			mCommandSystem->pushCommand(&cmdOtherHu, iterPlayer->second);
-		}
+		CommandCharacterPlayerHu cmdOtherHu(CMD_PARAM);
+		cmdOtherHu.mMahjong = mah;
+		cmdOtherHu.mHuPlayerList = playerList;
+		cmdOtherHu.mDroppedPlayer = droppedPlayer;
+		cmdOtherHu.mHuList = huList;
+		mCommandSystem->pushCommand(&cmdOtherHu, iterPlayer->second);
 	}
 }
 
@@ -757,6 +766,43 @@ void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 			cmdOtherPass.mDroppedPlayer = droppedPlayer;
 			cmdOtherPass.mMahjong = mah;
 			mCommandSystem->pushCommand(&cmdOtherPass, iterPlayer->second);
+		}
+	}
+}
+
+void Room::playerAskDrop(CharacterPlayer* player)
+{
+	CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
+	mCommandSystem->pushCommand(&cmdAskDrop, player);
+	// 通知其他玩家
+	std::map<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
+	std::map<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	{
+		if (iterPlayer->second != player)
+		{
+			CommandCharacterNotifyOtherPlayerAskDrop cmdOtherAskDrop(CMD_PARAM);
+			cmdOtherAskDrop.mOtherPlayer = player;
+			mCommandSystem->pushCommand(&cmdOtherAskDrop, iterPlayer->second);
+		}
+	}
+}
+
+void Room::playerAskAction(CharacterPlayer* player, const std::vector<MahjongAction*>& actionList)
+{
+	CommandCharacterAskAction cmdAskAction(CMD_PARAM);
+	cmdAskAction.mActionList = actionList;
+	mCommandSystem->pushCommand(&cmdAskAction, player);
+	// 通知其他玩家
+	std::map<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
+	std::map<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	{
+		if (iterPlayer->second != player)
+		{
+			CommandCharacterNotifyOtherPlayerAskAction cmdOtherAskAction(CMD_PARAM);
+			cmdOtherAskAction.mOtherPlayer = player;
+			mCommandSystem->pushCommand(&cmdOtherAskAction, iterPlayer->second);
 		}
 	}
 }

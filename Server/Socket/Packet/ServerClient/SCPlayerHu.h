@@ -3,6 +3,7 @@
 
 #include "Packet.h"
 #include "GameDefine.h"
+#include "CharacterPlayer.h"
 
 class SCPlayerHu : public Packet
 {
@@ -16,33 +17,53 @@ public:
 	}
 	virtual void fillParams()
 	{
+		pushArrayParam(mHuPlayerGUID, MAX_PLAYER - 1);
 		pushParam(mDroppedPlayerGUID);
 		pushParam(mMahjong);
-		pushArrayParam(mHuList, MAX_HU_COUNT);
+		pushArrayParam(mHuList, MAX_HU_COUNT * (MAX_PLAYER - 1));
 	}
 	virtual std::string debugInfo()
 	{
 		PACKET_DEBUG(PACKET_EMPTY);
 	}
-	void setHuList(const std::vector<HU_TYPE>& huList)
+	void setHuPlayer(const std::vector<CharacterPlayer*>& huPlayerList)
 	{
-		int count = huList.size();
-		for (int i = 0; i < MAX_HU_COUNT; ++i)
+		for (int i = 0; i < MAX_PLAYER; ++i)
 		{
-			if (mType == AT_HU && i < count)
+			if (i < (int)huPlayerList.size())
 			{
-				mHuList[i] = huList[i];
+				mHuPlayerGUID[i] = huPlayerList[i]->getGUID();
 			}
 			else
 			{
-				mHuList[i] = HT_NONE;
+				mHuPlayerGUID[i] = INVALID_ID;
+			}
+		}
+	}
+	void setHuList(const std::vector<std::vector<HU_TYPE>>& huList)
+	{
+		int playerCount = huList.size();
+		for (int i = 0; i < MAX_PLAYER - 1; ++i)
+		{
+			int huCount = i < playerCount ? huList[i].size() : 0;
+			for (int j = 0; j < MAX_HU_COUNT; ++j)
+			{
+				if (mType == AT_HU && j < huCount && i < huCount)
+				{
+					mHuList[i * MAX_HU_COUNT + j] = huList[i][j];
+				}
+				else
+				{
+					mHuList[i * MAX_HU_COUNT + j] = HT_NONE;
+				}
 			}
 		}
 	}
 public:
+	int mHuPlayerGUID[MAX_PLAYER - 1];
 	int mDroppedPlayerGUID;
 	char mMahjong;
-	char mHuList[MAX_HU_COUNT];
+	char mHuList[MAX_HU_COUNT * (MAX_PLAYER - 1)];
 };
 
 #endif

@@ -274,7 +274,7 @@ void ServerUtility::pengMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& 
 	int mahCount = handInMah.size();
 	for (int i = 0; i < mahCount - 1; ++i)
 	{
-		if (handInMah[i] == mah)
+		if (handInMah[i] == mah && handInMah[i + 1] == mah)
 		{
 			// ´ÓºóÍùÇ°É¾³ý
 			handInMah.erase(handInMah.begin() + i + 1);
@@ -290,7 +290,7 @@ void ServerUtility::gangMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& 
 	int mahCount = handInMah.size();
 	for (int i = 0; i < mahCount - 2; ++i)
 	{
-		if (handInMah[i] == mah)
+		if (handInMah[i] == mah && handInMah[i + 1] == mah && handInMah[i + 2] == mah)
 		{
 			handInMah.erase(handInMah.begin() + i + 2);
 			handInMah.erase(handInMah.begin() + i + 1);
