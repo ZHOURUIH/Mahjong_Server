@@ -7,7 +7,7 @@
 void CommandCharacterNotifyOtherPlayerHu::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerHu* hu = static_cast<SCOtherPlayerHu*>(mNetManagerServer->createPacket(PT_SC_PLAYER_HU));
+	SCOtherPlayerHu* hu = static_cast<SCOtherPlayerHu*>(mNetManagerServer->createPacket(PT_SC_OTHER_PLAYER_HU));
 	hu->mOtherPlayerGUID = mOtherPlayer->getClientGUID();
 	hu->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	hu->mMahjong = mMahjong;
