@@ -54,7 +54,7 @@ public:
 				}
 				else
 				{
-					mHuList[i * MAX_HU_COUNT + j] = HT_NONE;
+					mHuList[i * MAX_HU_COUNT + j] = HT_MAX;
 				}
 			}
 		}

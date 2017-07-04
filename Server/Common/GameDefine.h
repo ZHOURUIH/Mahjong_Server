@@ -29,9 +29,22 @@ enum ACTION_TYPE
 // 胡牌类型
 enum HU_TYPE
 {
-	HT_NONE,		// 没有人胡
 	HT_NORMAL,		// 平胡
 	HT_QINGYISE,	// 清一色
+	HT_QUESE,		// 缺一门
+	HT_HUA,			// 花牌
+	HT_GANG,		// 杠牌
+	HT_ANGANG,		// 暗杠
+	HT_MENQING,		// 门清
+	HT_DUIDUIHU,	// 对对胡
+	HT_ANQIDUI,		// 暗七对
+	HT_LONGQIDUI,	// 龙七对
+	HT_GANGSHANGHUA,// 杠上花
+	HT_GANGSHANGPAO,// 杠上炮
+	HT_HAIDIHUA,	// 海底花
+	HT_HAIDIPAO,	// 海底炮
+	HT_TIANHU,		// 天胡
+	HT_MAX,
 };
 
 // 麻将

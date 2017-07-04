@@ -190,7 +190,7 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 		return;
 	}
 	int offset = 0;
-	short shortType = (short)packet->getPacketType();
+	const short& shortType = (short)packet->getPacketType();
 	// 写入类型(short)
 	Packet::writeByte(mTempBuffer0, (char*)(&shortType), offset, sendSize, sizeof(shortType));
 	// 写入数据长度(short)

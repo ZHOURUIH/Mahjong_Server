@@ -58,7 +58,7 @@ protected:
 			}
 			else
 			{
-				mHuList[i] = HT_NONE;
+				mHuList[i] = HT_MAX;
 			}
 		}
 	}

@@ -377,7 +377,7 @@ void NetManagerServer::disconnectSocket(const CLIENT_GUID& client)
 	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
-		CHAR_GUID guid = iterClient->second->getCharGUID();
+		const CHAR_GUID& guid = iterClient->second->getCharGUID();
 		TRACE_DELETE(iterClient->second);
 		mClientList.erase(iterClient);
 		if (mOutputLog)
