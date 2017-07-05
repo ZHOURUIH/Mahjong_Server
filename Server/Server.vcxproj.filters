@@ -762,5 +762,8 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClInclude>
+    <ClInclude Include="Room\HuInfo.h">
+      <Filter>Room</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

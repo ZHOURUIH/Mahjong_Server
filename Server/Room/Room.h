@@ -9,6 +9,7 @@
 class CharacterPlayer;
 class WaitActionInfo;
 class MahjongAction;
+class HuInfo;
 class Room : public ServerBase, public txCommandReceiver
 {
 public:
@@ -62,19 +63,22 @@ protected:
 	void removePlayer(CharacterPlayer* player);
 	void resetMahjongPool();
 	MAHJONG requestGet();
-	void endGame(CharacterPlayer* player, const MAHJONG& mahjong, const std::vector<HU_TYPE>& huList);
+	void endGame(const std::map<CharacterPlayer*, HuInfo*>& huPlayerList);
+	// 向所有玩家发送消息
 	void notifyAllPlayerGetStartDone();
 	void notifyAllPlayerBanker(const CHAR_GUID& banker);
+	void notifyAllPlayerMahjongEnd(const std::map<CharacterPlayer*, int>& moneyDeltaList);
 	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
 	// 可能同时会有多个玩家可以胡牌
-	void playerHu(const std::vector<CharacterPlayer*>& playerList, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<std::vector<HU_TYPE>>& huList);
+	void playerHu(const std::map<CharacterPlayer*, HuInfo*>& huInfoList);
 	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerAskDrop(CharacterPlayer* player);
 	void playerAskAction(CharacterPlayer* player, const std::vector<MahjongAction*>& actionList);
+	
 protected:
 	int mID;												// 房间ID
 	int mMaxPlayer;											// 房间人数上限

@@ -9,8 +9,6 @@ void CommandCharacterPlayerHu::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	SCPlayerHu* hu = static_cast<SCPlayerHu*>(mNetManagerServer->createPacket(PT_SC_PLAYER_HU));
-	hu->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
-	hu->mMahjong = mMahjong;
 	hu->setHuList(mHuList);
 	hu->setHuPlayer(mHuPlayerList);
 	mNetManagerServer->sendMessage(hu, player->getClientGUID());

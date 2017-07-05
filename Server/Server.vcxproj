@@ -271,6 +271,7 @@
     <ClInclude Include="FileSystem\txDataManager.h" />
     <ClInclude Include="Net\NetManagerServer.h" />
     <ClInclude Include="Net\NetManagerClient.h" />
+    <ClInclude Include="Room\HuInfo.h" />
     <ClInclude Include="Room\MahjongAction.h" />
     <ClInclude Include="Room\Room.h" />
     <ClInclude Include="Room\RoomManager.h" />

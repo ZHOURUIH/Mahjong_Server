@@ -18,8 +18,6 @@ public:
 	virtual void fillParams()
 	{
 		pushArrayParam(mHuPlayerGUID, MAX_PLAYER - 1);
-		pushParam(mDroppedPlayerGUID);
-		pushParam(mMahjong);
 		pushArrayParam(mHuList, MAX_HU_COUNT * (MAX_PLAYER - 1));
 	}
 	virtual std::string debugInfo()
@@ -61,8 +59,6 @@ public:
 	}
 public:
 	int mHuPlayerGUID[MAX_PLAYER - 1];
-	int mDroppedPlayerGUID;
-	char mMahjong;
 	char mHuList[MAX_HU_COUNT * (MAX_PLAYER - 1)];
 };
 
