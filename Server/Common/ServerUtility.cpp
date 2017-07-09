@@ -1,5 +1,7 @@
 #include "ServerUtility.h"
 
+std::map<HU_TYPE, int> ServerUtility::mMultipleList;
+
 // handInMah必须是从小到大的有序数组
 bool ServerUtility::canHu(const std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
 {

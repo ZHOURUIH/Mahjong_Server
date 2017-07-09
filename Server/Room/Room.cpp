@@ -379,13 +379,47 @@ void Room::endGame(const std::map<CharacterPlayer*, HuInfo*>& huPlayerList)
 {
 	// 设置为结束状态
 	setMahjongState(MPS_ENDING);
-	// 通知所有玩家本局结束,计算所有玩家的输赢
+	// 通知所有玩家本局结束,计算所有玩家的输赢,暂时不计算杠的牌
 	std::map<CharacterPlayer*, int> moneyDeltaList;
 	std::map<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.begin();
 	std::map<int, CharacterPlayer*>::iterator iterEnd = mPlayerPositionList.end();
 	for (int i = 0; iter != iterEnd; ++iter, ++i)
 	{
-		moneyDeltaList.insert(std::make_pair(iter->second, -100 + i * 50));
+		moneyDeltaList.insert(std::make_pair(iter->second, 0));
+	}
+	std::map<CharacterPlayer*, HuInfo*>::const_iterator iterHu = huPlayerList.begin();
+	std::map<CharacterPlayer*, HuInfo*>::const_iterator iterHuEnd = huPlayerList.end();
+	for (; iterHu != iterHuEnd; ++iterHu)
+	{
+		int huCount = iterHu->second->mHuList.size();
+		for (int i = 0; i < huCount; ++i)
+		{
+			huCount += ServerUtility::getHuMultiple(iterHu->second->mHuList[i]);
+		}
+		int money = 100 * huCount;
+		// 自摸,所有人都一样
+		if (iterHu->second->mDroppedPlayer == NULL)
+		{
+			std::map<CharacterPlayer*, int>::iterator iterMoney = moneyDeltaList.begin();
+			std::map<CharacterPlayer*, int>::iterator iterMoneyEnd = moneyDeltaList.end();
+			for (; iterMoney != iterMoneyEnd; ++iterMoney)
+			{
+				if (iterMoney->first != iterHu->first)
+				{
+					iterMoney->second -= money;
+				}
+				else
+				{
+					iterMoney->second += (mPlayerPositionList.size() - 1)* money;
+				}
+			}
+		}
+		// 别人点的炮
+		else
+		{
+			moneyDeltaList[iterHu->first] += money;
+			moneyDeltaList[iterHu->second->mDroppedPlayer] -= money;
+		}
 	}
 	notifyAllPlayerMahjongEnd(moneyDeltaList);
 }

@@ -26,7 +26,7 @@ public:
 	}
 	void setHuPlayer(const std::vector<CharacterPlayer*>& huPlayerList)
 	{
-		for (int i = 0; i < MAX_PLAYER; ++i)
+		for (int i = 0; i < MAX_PLAYER - 1; ++i)
 		{
 			if (i < (int)huPlayerList.size())
 			{
@@ -46,7 +46,7 @@ public:
 			int huCount = i < playerCount ? huList[i].size() : 0;
 			for (int j = 0; j < MAX_HU_COUNT; ++j)
 			{
-				if (mType == AT_HU && j < huCount && i < huCount)
+				if (j < huCount && i < playerCount)
 				{
 					mHuList[i * MAX_HU_COUNT + j] = huList[i][j];
 				}
