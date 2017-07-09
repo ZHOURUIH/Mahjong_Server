@@ -398,7 +398,7 @@ void Room::endGame(const std::map<CharacterPlayer*, HuInfo*>& huPlayerList)
 		}
 		int money = 100 * huCount;
 		// 自摸,所有人都一样
-		if (iterHu->second->mDroppedPlayer == NULL)
+		if (iterHu->second->mDroppedPlayer == iterHu->second->mHuPlayer)
 		{
 			std::map<CharacterPlayer*, int>::iterator iterMoney = moneyDeltaList.begin();
 			std::map<CharacterPlayer*, int>::iterator iterMoneyEnd = moneyDeltaList.end();
