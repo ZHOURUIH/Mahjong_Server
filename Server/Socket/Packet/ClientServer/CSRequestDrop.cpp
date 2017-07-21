@@ -1,8 +1,8 @@
 ﻿#include "PacketHeader.h"
 #include "MySQLDataBase.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CommandHeader.h"
-#include "NetManagerClient.h"
+#include "NetClient.h"
 #include "CharacterManager.h"
 #include "CharacterPlayer.h"
 #include "RoomManager.h"
@@ -11,7 +11,7 @@
 
 void CSRequestDrop::execute()
 {
-	NetManagerClient* client = mNetManagerServer->getClient(mClient);
+	NetClient* client = mNetServer->getClient(mClient);
 	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
 	CommandRoomRequestDrop cmd(CMD_PARAM);
 	cmd.mPlayerGUID = client->getCharGUID();

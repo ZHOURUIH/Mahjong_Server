@@ -5,7 +5,7 @@ class ServerFramework;
 class ServerConfig;
 class txDataManager;
 class txCommandSystem;
-class NetManagerServer;
+class NetServer;
 class CharacterManager;
 class RoomManager;
 class MySQLDataBase;
@@ -20,7 +20,7 @@ public:
 	static ServerConfig* mServerConfig;
 	static txDataManager* mDataManager;
 	static txCommandSystem* mCommandSystem;
-	static NetManagerServer* mNetManagerServer;
+	static NetServer* mNetServer;
 	static CharacterManager* mCharacterManager;
 	static RoomManager* mRoomManager;
 	static MySQLDataBase* mMySQLDataBase;

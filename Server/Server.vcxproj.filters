@@ -193,14 +193,8 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="Net\NetManagerClient.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
     <ClCompile Include="Common\txThreadLock.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\NetManagerServer.cpp">
-      <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Socket\Packet\ClientServer\CSCreateRoom.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
@@ -327,6 +321,12 @@
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetClient.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\NetServer.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -534,14 +534,8 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Net\NetManagerClient.h">
-      <Filter>Net</Filter>
-    </ClInclude>
     <ClInclude Include="Common\txThreadLock.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Net\NetManagerServer.h">
-      <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="Socket\Packet\ClientServer\CSCreateRoom.h">
       <Filter>Socket\Packet\ClientServer</Filter>
@@ -776,6 +770,12 @@
     </ClInclude>
     <ClInclude Include="Common\txVector.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetClient.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetServer.h">
+      <Filter>Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

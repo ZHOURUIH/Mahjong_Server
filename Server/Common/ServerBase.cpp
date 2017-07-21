@@ -5,7 +5,7 @@ ServerFramework* ServerBase::mServerFramework = NULL;
 ServerConfig* ServerBase::mServerConfig = NULL;
 txDataManager* ServerBase::mDataManager = NULL;
 txCommandSystem* ServerBase::mCommandSystem = NULL;
-NetManagerServer* ServerBase::mNetManagerServer = NULL;
+NetServer* ServerBase::mNetServer = NULL;
 CharacterManager* ServerBase::mCharacterManager = NULL;
 RoomManager* ServerBase::mRoomManager = NULL;
 MySQLDataBase* ServerBase::mMySQLDataBase = NULL;
@@ -17,7 +17,7 @@ void ServerBase::notifyConstructDone()
 	mServerConfig = mServerFramework->getServerConfig();
 	mDataManager = mServerFramework->getDataManager();
 	mCommandSystem = mServerFramework->getCommandSystem();
-	mNetManagerServer = mServerFramework->getNetManagerServer();
+	mNetServer = mServerFramework->getNetManagerServer();
 	mCharacterManager = mServerFramework->getCharacterManager();
 	mRoomManager = mServerFramework->getRoomManager();
 	mMySQLDataBase = mServerFramework->getMySQLDataBase();

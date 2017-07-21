@@ -4,7 +4,7 @@
 #include "Room.h"
 #include "RoomManager.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 
 void CommandCharacterReady::execute()
 {
@@ -16,9 +16,9 @@ void CommandCharacterReady::execute()
 	}
 	data->mReady = mReady;
 	// 发消息通知客户端
-	SCReadyRet* readyRet = static_cast<SCReadyRet*>(mNetManagerServer->createPacket(PT_SC_READY_RET));
+	SCReadyRet* readyRet = static_cast<SCReadyRet*>(mNetServer->createPacket(PT_SC_READY_RET));
 	readyRet->mReady = mReady;
-	mNetManagerServer->sendMessage(readyRet, player->getClientGUID());
+	mNetServer->sendMessage(readyRet, player->getClientGUID());
 	// 通知房间有玩家准备
 	Room* room = mRoomManager->getRoom(data->mRoomID);
 	if (room != NULL)

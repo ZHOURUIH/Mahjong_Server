@@ -5,7 +5,7 @@
 
 class DataBaseServer;
 class ComponentFactoryBase;
-class NetManagerServer;
+class NetServer;
 class txCommandSystem;
 class CharacterManager;
 class txDataManager;
@@ -31,7 +31,7 @@ public:
 	ServerConfig* getServerConfig() { return mServerConfig; }
 	txDataManager* getDataManager() { return mDataManager; }
 	txCommandSystem* getCommandSystem() { return mCommandSystem; }
-	NetManagerServer* getNetManagerServer(){ return mNetManagerServer; }
+	NetServer* getNetManagerServer(){ return mNetServer; }
 	CharacterManager* getCharacterManager() { return mCharacterManager; }
 	RoomManager* getRoomManager() { return mRoomManager; }
 	MySQLDataBase* getMySQLDataBase() { return mMySQLDataBase; }
@@ -48,7 +48,7 @@ protected:
 	txDataManager* mDataManager;
 	ServerConfig* mServerConfig;
 	txCommandSystem* mCommandSystem;
-	NetManagerServer* mNetManagerServer;
+	NetServer* mNetServer;
 	CharacterManager* mCharacterManager;
 	RoomManager* mRoomManager;
 	txComponentFactoryManager* mComponentFactoryManager;

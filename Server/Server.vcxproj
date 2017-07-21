@@ -163,8 +163,8 @@
     <ClCompile Include="FileSystem\txDataElem.cpp" />
     <ClCompile Include="FileSystem\txDataManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Net\NetManagerServer.cpp" />
-    <ClCompile Include="Net\NetManagerClient.cpp" />
+    <ClCompile Include="Net\NetServer.cpp" />
+    <ClCompile Include="Net\NetClient.cpp" />
     <ClCompile Include="Room\Room.cpp" />
     <ClCompile Include="Room\RoomManager.cpp" />
     <ClCompile Include="ServerFramework\ServerFramework.cpp" />
@@ -273,8 +273,8 @@
     <ClInclude Include="DataBase\MySQLDataBase.h" />
     <ClInclude Include="FileSystem\txDataElem.h" />
     <ClInclude Include="FileSystem\txDataManager.h" />
-    <ClInclude Include="Net\NetManagerServer.h" />
-    <ClInclude Include="Net\NetManagerClient.h" />
+    <ClInclude Include="Net\NetServer.h" />
+    <ClInclude Include="Net\NetClient.h" />
     <ClInclude Include="Room\HuInfo.h" />
     <ClInclude Include="Room\MahjongAction.h" />
     <ClInclude Include="Room\Room.h" />

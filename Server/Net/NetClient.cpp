@@ -1,12 +1,12 @@
-﻿#include "NetManagerClient.h"
+﻿#include "NetClient.h"
 #include "txMemeryTrace.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CommandHeader.h"
 #include "CharacterManager.h"
 #include "PacketFactoryManager.h"
 
-NetManagerClient::NetManagerClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip)
+NetClient::NetClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip)
 :
 mSocket(s),
 mClientGUID(clientGUID),
@@ -29,7 +29,7 @@ mIsDeadClient(false)
 	mTempBuffer1 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer1);
 }
 
-void NetManagerClient::destroy()
+void NetClient::destroy()
 {
 	// 如果角色已经登录了,则通知角色管理器玩家已经断开连接
 	if (mCharGUID != INVALID_ID)
@@ -52,7 +52,7 @@ void NetManagerClient::destroy()
 #endif
 }
 
-void NetManagerClient::update(const float& elapsedTime)
+void NetClient::update(const float& elapsedTime)
 {
 	txVector<Packet*> packetList;
 	LOCK(mRecvLock, LT_WRITE);
@@ -90,7 +90,7 @@ void NetManagerClient::update(const float& elapsedTime)
 		if (index + packetSize <= mRecvDataCount)
 		{
 			// 执行该消息包
-			Packet* packetReply = NetManagerServer::createPacket(type);
+			Packet* packetReply = NetServer::createPacket(type);
 			packetReply->read(mRecvBuffer + index, packetSize);
 			packetReply->mClient = mClientGUID;
 			packetList.push_back(packetReply);
@@ -127,31 +127,31 @@ void NetManagerClient::update(const float& elapsedTime)
 	FOR_STL(packetList, int i = 0; i < packetCount; ++i)
 	{
 		Packet* packetReply = packetList[i];
-		if (NetManagerServer::getOutputLog())
+		if (NetServer::getOutputLog())
 		{
 			LOG_INFO("%s | execute : type : %d, desc : %s", txUtility::getTime(), (int)packetReply->getPacketType(), packetReply->debugInfo().c_str());
 		}
 		packetReply->execute();
-		NetManagerServer::destroyPacket(packetReply);
+		NetServer::destroyPacket(packetReply);
 	}
 	END_FOR_STL(packetList);
 
 	mHeartBeatTime += elapsedTime;
 	mConnectTime += elapsedTime;
-	if (mHeartBeatTime >= NetManagerServer::getHeartBeatTimeOut())
+	if (mHeartBeatTime >= NetServer::getHeartBeatTimeOut())
 	{
 		mIsDeadClient = true;
 	}
 }
 
-void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
+void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 {
 	// 检查客户端是否还连接
 	if (mIsDeadClient)
 	{
 		if (autoDestroyPacket)
 		{
-			NetManagerServer::destroyPacket(packet);
+			NetServer::destroyPacket(packet);
 		}
 		return;
 	}
@@ -160,7 +160,7 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	{
 		if (autoDestroyPacket)
 		{
-			NetManagerServer::destroyPacket(packet);
+			NetServer::destroyPacket(packet);
 		}
 		GAME_ERROR("error : packet's client ID should be none!");
 		return;
@@ -173,7 +173,7 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	{
 		if (autoDestroyPacket)
 		{
-			NetManagerServer::destroyPacket(packet);
+			NetServer::destroyPacket(packet);
 		}
 		GAME_ERROR("temp buffer is too small! send size : %d, temp buffer size : %d", sendSize, CLIENT_TEMP_BUFFER_SIZE);
 		return;
@@ -183,11 +183,11 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	{
 		if (autoDestroyPacket)
 		{
-			NetManagerServer::destroyPacket(packet);
+			NetServer::destroyPacket(packet);
 		}
 		// 缓冲区已堆满,客户端网络阻塞严重,断开客户端
 		LOG_INFO("client socket buffer is full!");
-		mNetManagerServer->disconnectSocket(mClientGUID);
+		mNetServer->disconnectSocket(mClientGUID);
 		return;
 	}
 	int offset = 0;
@@ -209,11 +209,11 @@ void NetManagerClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	// 销毁消息包
 	if (autoDestroyPacket)
 	{
-		NetManagerServer::destroyPacket(packet);
+		NetServer::destroyPacket(packet);
 	}
 }
 
-void NetManagerClient::notifyDataSended(const int& sendedCount)
+void NetClient::notifyDataSended(const int& sendedCount)
 {
 	LOCK(mSendLock, LT_WRITE);
 	if (sendedCount < mSendDataCount)
@@ -225,7 +225,7 @@ void NetManagerClient::notifyDataSended(const int& sendedCount)
 	UNLOCK(mSendLock, LT_WRITE);
 }
 
-void NetManagerClient::notifyRecvData(const char* data, const int& dataCount)
+void NetClient::notifyRecvData(const char* data, const int& dataCount)
 {
 	// 检查还是否能接收数据
 	if (mRecvDataCount + dataCount > CLIENT_BUFFER_SIZE)
@@ -238,7 +238,7 @@ void NetManagerClient::notifyRecvData(const char* data, const int& dataCount)
 	memcpy(mRecvBuffer + mRecvDataCount, data, dataCount);
 	mRecvDataCount += dataCount;
 	UNLOCK(mRecvLock, LT_WRITE);
-	if (NetManagerServer::getOutputLog())
+	if (NetServer::getOutputLog())
 	{
 		LOG_INFO("%s | recv : ip : %s, size : %d", txUtility::getTime(), mIP, dataCount);
 	}

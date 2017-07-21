@@ -1,7 +1,6 @@
 ﻿#include "CommandHeader.h"
 #include "Room.h"
 #include "CharacterPlayer.h"
-#include "NetManagerServer.h"
 #include "PacketHeader.h"
 #include "CharacterManager.h"
 #include "CharacterPlayer.h"

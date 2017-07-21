@@ -1,6 +1,6 @@
 #include "PacketHeader.h"
 #ifdef _SERVER
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "DataPlayerInfo.h"
 #include "CharacterManager.h"
 #include "CommandHeader.h"
@@ -28,9 +28,9 @@ void CSLogin::execute()
 	// 如果登陆失败,则立即发送消息
 	if (ret != 0)
 	{
-		SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetManagerServer->createPacket(PT_SC_LOGIN_RET));
+		SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetServer->createPacket(PT_SC_LOGIN_RET));
 		loginRet->mLoginRet = ret;
-		mNetManagerServer->sendMessage(loginRet, mClient);
+		mNetServer->sendMessage(loginRet, mClient);
 	}
 	// 登陆成功,则先创建角色,角色创建完成后再发送消息
 	else

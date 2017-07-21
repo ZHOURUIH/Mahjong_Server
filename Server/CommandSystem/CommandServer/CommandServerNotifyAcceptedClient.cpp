@@ -1,9 +1,9 @@
 ﻿#include "CommandHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 
 void CommandServerNotifyAcceptedClient::execute()
 {
-	NetManagerServer* gameServer = static_cast<NetManagerServer*>(mReceiver);
+	NetServer* gameServer = static_cast<NetServer*>(mReceiver);
 	gameServer->notifyAcceptClient(mSocket, mIP.c_str());
 }
 

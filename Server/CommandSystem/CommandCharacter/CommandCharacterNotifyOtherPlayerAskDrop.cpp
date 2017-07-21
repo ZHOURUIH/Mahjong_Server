@@ -1,15 +1,15 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterPlayer.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CharacterData.h"
 
 void CommandCharacterNotifyOtherPlayerAskDrop::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerAskDrop* otherAskDrop = static_cast<SCOtherPlayerAskDrop*>(mNetManagerServer->createPacket(PT_SC_OTHER_PLAYER_ASK_DROP));
+	SCOtherPlayerAskDrop* otherAskDrop = static_cast<SCOtherPlayerAskDrop*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_ASK_DROP));
 	otherAskDrop->mOtherPlayerGUID = mOtherPlayer->getGUID();
-	mNetManagerServer->sendMessage(otherAskDrop, player->getClientGUID());
+	mNetServer->sendMessage(otherAskDrop, player->getClientGUID());
 }
 
 std::string CommandCharacterNotifyOtherPlayerAskDrop::showDebugInfo()

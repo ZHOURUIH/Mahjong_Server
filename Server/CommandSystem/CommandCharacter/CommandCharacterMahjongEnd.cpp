@@ -1,7 +1,7 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterPlayer.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CharacterData.h"
 #include "MahjongAction.h"
 
@@ -16,9 +16,9 @@ void CommandCharacterMahjongEnd::execute()
 		infoList.insert(iter->first->getGUID(), iter->second);
 	}
 	END_FOR_STL(mMoneyDeltaList);
-	SCNotifyMahjongEnd* mahjongEnd = static_cast<SCNotifyMahjongEnd*>(mNetManagerServer->createPacket(PT_SC_NOTIFY_MAHJONG_END));
+	SCNotifyMahjongEnd* mahjongEnd = static_cast<SCNotifyMahjongEnd*>(mNetServer->createPacket(PT_SC_NOTIFY_MAHJONG_END));
 	mahjongEnd->setList(infoList);
-	mNetManagerServer->sendMessage(mahjongEnd, player->getClientGUID());
+	mNetServer->sendMessage(mahjongEnd, player->getClientGUID());
 }
 
 std::string CommandCharacterMahjongEnd::showDebugInfo()

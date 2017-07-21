@@ -1,16 +1,16 @@
-﻿#include "NetManagerServer.h"
+﻿#include "NetServer.h"
 #include "GameLog.h"
 #include "CommandHeader.h"
 #include "ServerConfig.h"
 #include "PacketFactoryManager.h"
-#include "NetManagerClient.h"
+#include "NetClient.h"
 
-CLIENT_GUID NetManagerServer::mSocketGUIDSeed = 0;
-PacketFactoryManager* NetManagerServer::mPacketFactoryManager = NULL;
-float NetManagerServer::mHeartBeatTimeOut = 0.0f;
-bool NetManagerServer::mOutputLog = true;
+CLIENT_GUID NetServer::mSocketGUIDSeed = 0;
+PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
+float NetServer::mHeartBeatTimeOut = 0.0f;
+bool NetServer::mOutputLog = true;
 
-NetManagerServer::NetManagerServer()
+NetServer::NetServer()
 :
 txCommandReceiver("NetManagerServer")
 {
@@ -25,10 +25,10 @@ txCommandReceiver("NetManagerServer")
 	mPacketFactoryManager = NULL;
 }
 
-void NetManagerServer::destroy()
+void NetServer::destroy()
 {
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		TRACE_DELETE(iterClient->second);
@@ -67,7 +67,7 @@ void NetManagerServer::destroy()
 #endif
 }
 
-void NetManagerServer::init(int port, int backLog)
+void NetServer::init(int port, int backLog)
 {
 #if RUN_PLATFORM == PLATFORM_LINUX
 	signal(SIGPIPE, signalProcess);
@@ -123,8 +123,8 @@ void NetManagerServer::init(int port, int backLog)
 		return;
 	}
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-	mReceiveThread = CreateThread(NULL, 0, NetManagerServer::receiveSendSocket, this, 0, NULL);
-	mAcceptThread = CreateThread(NULL, 0, NetManagerServer::acceptSocket, this, 0, NULL);
+	mReceiveThread = CreateThread(NULL, 0, NetServer::receiveSendSocket, this, 0, NULL);
+	mAcceptThread = CreateThread(NULL, 0, NetServer::acceptSocket, this, 0, NULL);
 #elif RUN_PLATFORM == PLATFORM_LINUX
 	pthread_create(&mReceiveThread, NULL, NetManagerServer::receiveSendSocket, this);
 	pthread_create(&mAcceptThread, NULL, NetManagerServer::acceptSocket, this);
@@ -132,15 +132,15 @@ void NetManagerServer::init(int port, int backLog)
 }
 
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-DWORD WINAPI NetManagerServer::acceptSocket(LPVOID lpParameter)
+DWORD WINAPI NetServer::acceptSocket(LPVOID lpParameter)
 #elif RUN_PLATFORM == PLATFORM_LINUX
-void* NetManagerServer::acceptSocket(void* args)
+void* NetServer::acceptSocket(void* args)
 #endif
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-	NetManagerServer* netManager = (NetManagerServer*)(lpParameter);
+	NetServer* netManager = (NetServer*)(lpParameter);
 #elif RUN_PLATFORM == PLATFORM_LINUX
-	NetManagerServer* netManager = (NetManagerServer*)(args);
+	NetServer* netManager = (NetServer*)(args);
 #endif
 	sockaddr_in addr;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
@@ -179,15 +179,15 @@ void* NetManagerServer::acceptSocket(void* args)
 }
 
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-DWORD WINAPI NetManagerServer::receiveSendSocket(LPVOID lpParameter)
+DWORD WINAPI NetServer::receiveSendSocket(LPVOID lpParameter)
 #elif RUN_PLATFORM == PLATFORM_LINUX
-void* NetManagerServer::receiveSendSocket(void* args)
+void* NetServer::receiveSendSocket(void* args)
 #endif
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-	NetManagerServer* netManager = (NetManagerServer*)(lpParameter);
+	NetServer* netManager = (NetServer*)(lpParameter);
 #elif RUN_PLATFORM == PLATFORM_LINUX
-	NetManagerServer* netManager = (NetManagerServer*)(args);
+	NetServer* netManager = (NetServer*)(args);
 #endif
 	while (true)
 	{
@@ -202,15 +202,15 @@ void* NetManagerServer::receiveSendSocket(void* args)
 	return 0;
 }
 
-void NetManagerServer::processSend()
+void NetServer::processSend()
 {
-	txVector<NetManagerClient*> selectedClient;
+	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdwrite;
 	// 等待发送列表解锁,然后锁定发送列表
 	LOCK(mClientLock, LT_READ);
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdwrite);
@@ -267,16 +267,16 @@ void NetManagerServer::processSend()
 	UNLOCK(mClientLock, LT_READ);
 }
 
-void NetManagerServer::processRecv()
+void NetServer::processRecv()
 {
 	char buff[CLIENT_BUFFER_SIZE];
-	txVector<NetManagerClient*> selectedClient;
+	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock, LT_READ);
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdread);
@@ -325,13 +325,13 @@ void NetManagerServer::processRecv()
 	UNLOCK(mClientLock, LT_READ);
 }
 
-void NetManagerServer::update(const float& elapsedTime)
+void NetServer::update(const float& elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
 	LOCK(mClientLock, LT_READ);
 	txVector<CLIENT_GUID> logoutClientList;
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
@@ -352,14 +352,14 @@ void NetManagerServer::update(const float& elapsedTime)
 	END_FOR_STL(logoutClientList);
 }
 
-CLIENT_GUID NetManagerServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)
+CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock, LT_WRITE);
 	CLIENT_GUID clientGUID = generateSocketGUID();
 	if (mClientList.find(clientGUID) == mClientList.end())
 	{
-		NetManagerClient* client = TRACE_NEW(NetManagerClient, client, clientGUID, socket, ip);
+		NetClient* client = TRACE_NEW(NetClient, client, clientGUID, socket, ip);
 		mClientList.insert(clientGUID, client);
 		if (mOutputLog)
 		{
@@ -379,11 +379,11 @@ CLIENT_GUID NetManagerServer::notifyAcceptClient(const TX_SOCKET& socket, const 
 	return clientGUID;
 }
 
-void NetManagerServer::disconnectSocket(const CLIENT_GUID& client)
+void NetServer::disconnectSocket(const CLIENT_GUID& client)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
 	LOCK(mClientLock, LT_WRITE);
-	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(client);
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
 		const CHAR_GUID& guid = iterClient->second->getCharGUID();
@@ -398,12 +398,12 @@ void NetManagerServer::disconnectSocket(const CLIENT_GUID& client)
 	UNLOCK(mClientLock, LT_WRITE);
 }
 
-void NetManagerServer::sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend)
+void NetServer::sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend)
 {
 	sendMessage(packet, getClient(clientGUID), destroyPacketEndSend);
 }
 
-void NetManagerServer::sendMessage(Packet* packet, NetManagerClient* client, const bool& destroyPacketEndSend)
+void NetServer::sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend)
 {
 	if (client == NULL)
 	{
@@ -412,7 +412,7 @@ void NetManagerServer::sendMessage(Packet* packet, NetManagerClient* client, con
 	client->sendPacket(packet, destroyPacketEndSend);
 }
 
-Packet* NetManagerServer::createPacket(const PACKET_TYPE& type)
+Packet* NetServer::createPacket(const PACKET_TYPE& type)
 {
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(type);
 	if (factory == NULL)
@@ -423,7 +423,7 @@ Packet* NetManagerServer::createPacket(const PACKET_TYPE& type)
 	return factory->createPacket();
 }
 
-void NetManagerServer::destroyPacket(Packet* packet)
+void NetServer::destroyPacket(Packet* packet)
 {
 	if (packet == NULL)
 	{

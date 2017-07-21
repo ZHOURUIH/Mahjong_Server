@@ -1,8 +1,8 @@
 ﻿#include "PacketHeader.h"
 #include "MySQLDataBase.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CommandHeader.h"
-#include "NetManagerClient.h"
+#include "NetClient.h"
 #include "CharacterManager.h"
 #include "CharacterPlayer.h"
 #include "CharacterData.h"
@@ -11,7 +11,7 @@
 
 void CSDiceDone::execute()
 {
-	NetManagerClient* client = mNetManagerServer->getClient(mClient);
+	NetClient* client = mNetServer->getClient(mClient);
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(client->getCharGUID()));
 	Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
 	CommandRoomNotifyDiceDone cmd(CMD_PARAM);

@@ -4,13 +4,13 @@
 #include "Room.h"
 #include "RoomManager.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 
 void CommandCharacterLeaveRoom::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	CharacterData* data = player->getCharacterData();
-	SCLeaveRoomRet* leaveRet = static_cast<SCLeaveRoomRet*>(mNetManagerServer->createPacket(PT_SC_LEAVE_ROOM_RET));
+	SCLeaveRoomRet* leaveRet = static_cast<SCLeaveRoomRet*>(mNetServer->createPacket(PT_SC_LEAVE_ROOM_RET));
 	Room* room = mRoomManager->getRoom(data->mRoomID);
 	if (room != NULL)
 	{
@@ -29,7 +29,7 @@ void CommandCharacterLeaveRoom::execute()
 		leaveRet->mResult = false;
 	}
 	// 发送消息通知客户端离开房间的结果
-	mNetManagerServer->sendMessage(leaveRet, player->getClientGUID());
+	mNetServer->sendMessage(leaveRet, player->getClientGUID());
 }
 
 std::string CommandCharacterLeaveRoom::showDebugInfo()

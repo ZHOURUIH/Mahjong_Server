@@ -1,17 +1,17 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterPlayer.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CharacterData.h"
 
 void CommandCharacterGang::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->gangMahjong(mMahjong, mDroppedPlayer);
-	SCPlayerGang* gang = static_cast<SCPlayerGang*>(mNetManagerServer->createPacket(PT_SC_PLAYER_GANG));
+	SCPlayerGang* gang = static_cast<SCPlayerGang*>(mNetServer->createPacket(PT_SC_PLAYER_GANG));
 	gang->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	gang->mMahjong = mMahjong;
-	mNetManagerServer->sendMessage(gang, player->getClientGUID());
+	mNetServer->sendMessage(gang, player->getClientGUID());
 }
 
 std::string CommandCharacterGang::showDebugInfo()

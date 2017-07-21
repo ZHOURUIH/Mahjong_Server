@@ -1,19 +1,19 @@
 ﻿#include "PacketHeader.h"
 #ifdef _SERVER
-#include "NetManagerServer.h"
-#include "NetManagerClient.h"
+#include "NetServer.h"
+#include "NetClient.h"
 #endif
 
 void CSHeartBeat::execute()
 {
 #ifdef _SERVER
-	NetManagerClient* client = mNetManagerServer->getClient(mClient);
+	NetClient* client = mNetServer->getClient(mClient);
 	if (client != NULL)
 	{
 		client->notifyReceiveHeartBeat();
 	}
-	SCHeartBeatRet* heartBeat = static_cast<SCHeartBeatRet*>(mNetManagerServer->createPacket(PT_SC_HEART_BEAT_RET));
+	SCHeartBeatRet* heartBeat = static_cast<SCHeartBeatRet*>(mNetServer->createPacket(PT_SC_HEART_BEAT_RET));
 	heartBeat->mHeartBeatTimes = mHeartBeatTimes;
-	mNetManagerServer->sendMessage(heartBeat, mClient);
+	mNetServer->sendMessage(heartBeat, mClient);
 #endif
 }

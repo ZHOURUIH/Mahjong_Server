@@ -1,16 +1,16 @@
-﻿#ifndef _NET_MANAGER_CLIENT_H_
-#define _NET_MANAGER_CLIENT_H_
+﻿#ifndef _NET_CLIENT_H_
+#define _NET_CLIENT_H_
 
 #include "ServerDefine.h"
 #include "ServerBase.h"
 #include "txThreadLock.h"
 
 class Packet;
-class NetManagerClient : public ServerBase
+class NetClient : public ServerBase
 {
 public:
-	NetManagerClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip);
-	virtual ~NetManagerClient(){ destroy(); }
+	NetClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip);
+	virtual ~NetClient(){ destroy(); }
 	void update(const float& elapsedTime);
 	void destroy();
 	// autoDestroyPacket表示是否自动销毁该消息包

@@ -1,8 +1,8 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterManager.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
-#include "NetManagerClient.h"
+#include "NetServer.h"
+#include "NetClient.h"
 #include "CharacterPlayer.h"
 #include "CharacterData.h"
 
@@ -26,15 +26,15 @@ void CommandCharacterManagerPlayerLogin::execute()
 	data->mReady = false;
 
 	// 玩家登陆成功后, 发回登陆成功的消息
-	SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetManagerServer->createPacket(PT_SC_LOGIN_RET));
+	SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetServer->createPacket(PT_SC_LOGIN_RET));
 	loginRet->mLoginRet = 0;
 	loginRet->mGUID = mGUID;
 	loginRet->mMoney = mMoney;
 	loginRet->mHead = mHead;
 	loginRet->setName(mName);
-	mNetManagerServer->sendMessage(loginRet, mClient);
+	mNetServer->sendMessage(loginRet, mClient);
 
-	NetManagerClient* client = mNetManagerServer->getClient(mClient);
+	NetClient* client = mNetServer->getClient(mClient);
 	if (client != NULL)
 	{
 		client->notifyPlayerLogin(mGUID);

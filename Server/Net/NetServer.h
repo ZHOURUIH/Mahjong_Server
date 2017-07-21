@@ -1,5 +1,5 @@
-#ifndef _NET_MANAGER_SERVER_H_
-#define _NET_MANAGER_SERVER_H_
+#ifndef _NET_SERVER_H_
+#define _NET_SERVER_H_
 
 #include "PacketDefine.h"
 #include "ServerDefine.h"
@@ -8,13 +8,13 @@
 #include "txCommandReceiver.h"
 
 class Packet;
-class NetManagerClient;
+class NetClient;
 class PacketFactoryManager;
-class NetManagerServer : public ServerBase, public txCommandReceiver
+class NetServer : public ServerBase, public txCommandReceiver
 {
 public:
-	NetManagerServer();
-	virtual ~NetManagerServer(){ destroy(); }
+	NetServer();
+	virtual ~NetServer(){ destroy(); }
 	void destroy();
 	virtual void init(int port, int backLog);
 	virtual void update(const float& elapsedTime);
@@ -26,15 +26,15 @@ public:
 	
 	virtual CLIENT_GUID notifyAcceptClient(const SOCKET& socket, const char* ip);
 	void sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend = true);
-	void sendMessage(Packet* packet, NetManagerClient* client, const bool& destroyPacketEndSend = true);
+	void sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend = true);
 	static Packet* createPacket(const PACKET_TYPE& type);
 	static void destroyPacket(Packet* packet);
 	virtual void disconnectSocket(const CLIENT_GUID& client);	// 与客户端断开连接,只能在主线程中调用
-	NetManagerClient* getClient(const CLIENT_GUID& clientGUID)
+	NetClient* getClient(const CLIENT_GUID& clientGUID)
 	{
-		NetManagerClient* client = NULL;
+		NetClient* client = NULL;
 		LOCK(mClientLock, LT_READ);
-		txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(clientGUID);
+		txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(clientGUID);
 		if (iterClient != mClientList.end())
 		{
 			client = iterClient->second;
@@ -64,7 +64,7 @@ protected:
 	TX_THREAD mAcceptThread;
 	TX_THREAD mReceiveThread;
 	txThreadLock mClientLock;
-	txMap<CLIENT_GUID, NetManagerClient*> mClientList;	// 客户端列表
+	txMap<CLIENT_GUID, NetClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;
 	static float mHeartBeatTimeOut;

@@ -3,14 +3,14 @@
 #include "CharacterData.h"
 #include "CharacterManager.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 
 void CommandCharacterNotifyBanker::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCNotifyBanker* notifyBanker = static_cast<SCNotifyBanker*>(mNetManagerServer->createPacket(PT_SC_NOTIFY_BANKER));
+	SCNotifyBanker* notifyBanker = static_cast<SCNotifyBanker*>(mNetServer->createPacket(PT_SC_NOTIFY_BANKER));
 	notifyBanker->mGUID = mBankerID;
-	mNetManagerServer->sendMessage(notifyBanker, player->getClientGUID());
+	mNetServer->sendMessage(notifyBanker, player->getClientGUID());
 }
 
 std::string CommandCharacterNotifyBanker::showDebugInfo()

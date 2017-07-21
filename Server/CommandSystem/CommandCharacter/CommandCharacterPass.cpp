@@ -1,17 +1,17 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterPlayer.h"
 #include "PacketHeader.h"
-#include "NetManagerServer.h"
+#include "NetServer.h"
 #include "CharacterData.h"
 #include "MahjongAction.h"
 
 void CommandCharacterPass::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCPlayerPass* pass = static_cast<SCPlayerPass*>(mNetManagerServer->createPacket(PT_SC_PLAYER_PASS));
+	SCPlayerPass* pass = static_cast<SCPlayerPass*>(mNetServer->createPacket(PT_SC_PLAYER_PASS));
 	pass->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	pass->mMahjong = mMahjong;
-	mNetManagerServer->sendMessage(pass, player->getClientGUID());
+	mNetServer->sendMessage(pass, player->getClientGUID());
 }
 
 std::string CommandCharacterPass::showDebugInfo()
