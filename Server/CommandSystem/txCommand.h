@@ -49,6 +49,7 @@ public:
 	const int& getLine() { return mLine; }
 	const bool& getShowDebugInfo() { return mShowDebugInfo; }
 	const bool& isDelayCommand() { return mDelayCommand; }
+	txCommandReceiver* getReceiver() { return mReceiver; }
 	void setDelayCommand(bool delay) { mDelayCommand = delay; }
 	// 创建延时执行的命令,会由命令系统执行完后自动销毁
 	template<typename T>

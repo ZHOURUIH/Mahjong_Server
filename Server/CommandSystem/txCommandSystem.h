@@ -23,13 +23,18 @@ public:
 	// delayExecute是命令延时执行的时间,默认为0,只有new出来的命令才能延时执行
 	// 子线程中发出的命令必须是延时执行的命令!
 	void pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdReceiver, const float& delayExecute = 0.001f);
+	void interruptCommand(txCommand* cmd);
 	void destroy();
 	virtual void notifyReceiverDestroied(txCommandReceiver* receiver);
+protected:
+	void removeReceiverCommand(txCommandReceiver* receiver);
+	void syncCommandBuffer();
 protected:
 	txVector<DelayCommand> mCommandBufferProcess;	// 用于处理的命令列表
 	txVector<DelayCommand> mCommandBufferInput;		// 用于放入命令的命令列表
 	txThreadLock mBufferLock;
 	bool mShowDebugInfo;
+	txSet<txCommandReceiver*> mDestroiedReceiver;	// 已经被销毁的命令接收者列表
 };
 
 #endif

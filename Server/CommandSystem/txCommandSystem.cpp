@@ -17,17 +17,7 @@ void txCommandSystem::init(const bool& showDebug)
 void txCommandSystem::update(const float& elapsedTime)
 {
 	// 同步命令输入列表到命令处理列表中
-	// 等待解锁缓冲区,锁定缓冲区
-	LOCK(mBufferLock, LT_WRITE);
-	int inputCount = mCommandBufferInput.size();
-	FOR_STL(mCommandBufferInput, int i = 0; i < inputCount; ++i)
-	{
-		mCommandBufferProcess.push_back(mCommandBufferInput[i]);
-	}
-	END_FOR_STL(mCommandBufferInput);
-	mCommandBufferInput.clear();
-	// 解锁缓冲区
-	UNLOCK(mBufferLock, LT_WRITE);
+	syncCommandBuffer();
 
 	// 如果一帧时间大于1秒,则认为是无效更新
 	if (elapsedTime >= 1.0f)
@@ -39,7 +29,9 @@ void txCommandSystem::update(const float& elapsedTime)
 	FOR_STL(mCommandBufferProcess, ; iter != mCommandBufferProcess.end();)
 	{
 		iter->mDelayTime -= elapsedTime;
-		if (iter->mDelayTime <= 0.0f)
+		// 因为在命令执行过程中也可能会销毁接收者,所以需要多次判断
+		// 如果该命令的接收者已经被销毁,则跳过
+		if (iter->mDelayTime <= 0.0f && mDestroiedReceiver.find(iter->mReceiver) == mDestroiedReceiver.end())
 		{
 			// 命令的延迟执行时间到了,则执行命令
 			iter->mCommand->setDelayCommand(false);
@@ -53,6 +45,16 @@ void txCommandSystem::update(const float& elapsedTime)
 		}
 	}
 	END_FOR_STL(mCommandBufferProcess);
+
+	// 清空所有已经被销毁了接收者的命令
+	txSet<txCommandReceiver*>::iterator iterReceiver = mDestroiedReceiver.begin();
+	txSet<txCommandReceiver*>::iterator iterReceiverEnd = mDestroiedReceiver.end();
+	FOR_STL(mDestroiedReceiver, ; iterReceiver != iterReceiverEnd; ++iterReceiver)
+	{
+		removeReceiverCommand(*iterReceiver);
+	}
+	END_FOR_STL(mDestroiedReceiver);
+	mDestroiedReceiver.clear();
 }
 
 void txCommandSystem::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver)
@@ -107,15 +109,36 @@ command type : %s, file : %s, line : %d", typeid(*cmd).name(), cmd->getFile(), c
 	}
 }
 
+void txCommandSystem::interruptCommand(txCommand* cmd)
+{
+	if (cmd == NULL)
+	{
+		return;
+	}
+	if (!cmd->isDelayCommand())
+	{
+		GAME_ERROR("cmd is not a delay command");
+		return;
+	}
+	// 中断命令之前需要同步延迟命令列表
+	syncCommandBuffer();
+	txVector<DelayCommand>::iterator iterCommand = mCommandBufferProcess.begin();
+	FOR_STL(mCommandBufferProcess, ; iterCommand != mCommandBufferProcess.end();)
+	{
+		if (iterCommand->mCommand == cmd)
+		{
+			COMMAND_INFO("CommandSystem : interrupt command : %s, receiver : %s", cmd->showDebugInfo().c_str(), cmd->getReceiver()->getName().c_str());
+			mCommandBufferProcess.erase(iterCommand, false);
+			break;
+		}
+	}
+	END_FOR_STL(mCommandBufferProcess);
+}
+
 void txCommandSystem::destroy()
 {
-	int inputSize = mCommandBufferInput.size();
-	FOR_STL(mCommandBufferInput, int i = 0; i < inputSize; ++i)
-	{
-		TRACE_DELETE(mCommandBufferInput[i].mCommand);
-	}
-	END_FOR_STL(mCommandBufferInput);
-	mCommandBufferInput.clear();
+	// 首先同步命令缓冲区
+	syncCommandBuffer();
 
 	int processSize = mCommandBufferProcess.size();
 	FOR_STL(mCommandBufferProcess, int i = 0; i < processSize; ++i)
@@ -128,24 +151,13 @@ void txCommandSystem::destroy()
 
 void txCommandSystem::notifyReceiverDestroied(txCommandReceiver* receiver)
 {
-	// 等待解锁缓冲区,锁定缓冲区
-	LOCK(mBufferLock, LT_WRITE);
-	txVector<DelayCommand>::iterator iterCommandInput = mCommandBufferInput.begin();
-	FOR_STL(mCommandBufferInput, ; iterCommandInput != mCommandBufferInput.end();)
-	{
-		if (iterCommandInput->mReceiver == receiver)
-		{
-			TRACE_DELETE(iterCommandInput->mCommand);
-			iterCommandInput = mCommandBufferInput.erase(iterCommandInput, false);
-		}
-		else
-		{
-			++iterCommandInput;
-		}
-	}
-	END_FOR_STL(mCommandBufferInput);
-	// 解锁缓冲区
-	UNLOCK(mBufferLock, LT_WRITE);
+	mDestroiedReceiver.insert(receiver);
+}
+
+void txCommandSystem::removeReceiverCommand(txCommandReceiver* receiver)
+{
+	// 首先同步命令缓冲区
+	syncCommandBuffer();
 
 	txVector<DelayCommand>::iterator iterCommand = mCommandBufferProcess.begin();
 	FOR_STL(mCommandBufferProcess, ; iterCommand != mCommandBufferProcess.end();)
@@ -161,4 +173,19 @@ void txCommandSystem::notifyReceiverDestroied(txCommandReceiver* receiver)
 		}
 	}
 	END_FOR_STL(mCommandBufferProcess);
+}
+
+void txCommandSystem::syncCommandBuffer()
+{
+	// 等待解锁缓冲区,锁定缓冲区
+	LOCK(mBufferLock, LT_WRITE);
+	int inputCount = mCommandBufferInput.size();
+	FOR_STL(mCommandBufferInput, int i = 0; i < inputCount; ++i)
+	{
+		mCommandBufferProcess.push_back(mCommandBufferInput[i]);
+	}
+	END_FOR_STL(mCommandBufferInput);
+	mCommandBufferInput.clear();
+	// 解锁缓冲区
+	UNLOCK(mBufferLock, LT_WRITE);
 }

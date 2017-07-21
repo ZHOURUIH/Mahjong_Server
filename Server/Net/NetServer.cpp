@@ -386,7 +386,7 @@ void NetServer::disconnectSocket(const CLIENT_GUID& client)
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
-		const CHAR_GUID& guid = iterClient->second->getCharGUID();
+		CHAR_GUID guid = iterClient->second->getCharGUID();
 		TRACE_DELETE(iterClient->second);
 		mClientList.erase(iterClient);
 		if (mOutputLog)
