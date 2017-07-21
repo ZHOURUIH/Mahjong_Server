@@ -9,17 +9,19 @@ mType(typeName),
 mName(name),
 mActive(true),
 mLockOneFrame(false),
-mParent(NULL)
+mParent(NULL),
+mNeedPreUpdate(false)
 {}
 
 void txComponent::destroy()
 {
 	// 首先通知所有的子组件
 	int childCount = mChildComponentList.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->notifyParentDestroied();
 	}
+	END_FOR_STL(mChildComponentList);
 	mChildComponentList.clear();
 	mChildComponentMap.clear();
 
@@ -44,10 +46,11 @@ void txComponent::preUpdate(const float& elapsedTime)
 	}
 	// 预更新子组件
 	int childCount = mChildComponentList.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->preUpdate(elapsedTime);
 	}
+	END_FOR_STL(mChildComponentList);
 }
 
 void txComponent::update(const float& elapsedTime)
@@ -77,10 +80,11 @@ void txComponent::lateUpdate(const float& elapsedTime)
 	}
 	// 后更新子组件
 	int childCount = mChildComponentList.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->lateUpdate(elapsedTime);
 	}
+	END_FOR_STL(mChildComponentList);
 }
 
 bool txComponent::rename(const std::string& newName)
@@ -117,7 +121,7 @@ bool txComponent::addChild(txComponent* component)
 		return false;
 	}
 	mChildComponentList.push_back(component);
-	mChildComponentMap.insert(std::make_pair(component->getName(), component));
+	mChildComponentMap.insert(component->getName(), component);
 	return true;
 }
 
@@ -127,15 +131,15 @@ bool txComponent::removeChild(txComponent* component)
 	{
 		return false;
 	}
-	std::map<std::string, txComponent*>::iterator iter = mChildComponentMap.find(component->getName());
+	txMap<std::string, txComponent*>::iterator iter = mChildComponentMap.find(component->getName());
 	if (iter == mChildComponentMap.end())
 	{
 		return false;
 	}
 	mChildComponentMap.erase(iter);
-	std::vector<txComponent*>::iterator iterList = mChildComponentList.begin();
-	std::vector<txComponent*>::iterator iterListEnd = mChildComponentList.end();
-	for (; iterList != iterListEnd; ++iterList)
+	txVector<txComponent*>::iterator iterList = mChildComponentList.begin();
+	txVector<txComponent*>::iterator iterListEnd = mChildComponentList.end();
+	FOR_STL(mChildComponentList, ; iterList != iterListEnd; ++iterList)
 	{
 		if (*iterList == component)
 		{
@@ -143,6 +147,7 @@ bool txComponent::removeChild(txComponent* component)
 			break;
 		}
 	}
+	END_FOR_STL(mChildComponentList);
 	return true;
 }
 
@@ -170,10 +175,11 @@ void txComponent::detachOwnerParentComponent(const bool& detachOwnerOnly)
 	}
 	// 使自己所有的子窗口都断开与布局的联系,但是不能打断子窗口的父子关系
 	int childCount = mChildComponentList.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->detachOwnerParentComponent(true);
 	}
+	END_FOR_STL(mChildComponentList);
 }
 // 建立与布局和父窗口的联系,使该窗口成为布局中的一个窗口,该窗口下的所有子窗口也会重建与布局的联系,父子关系仍然存在
 void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, const int& childPos)
@@ -184,10 +190,11 @@ void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponen
 		mComponentOwner->notifyComponentAttached(this);
 		// 使自己所有的子窗口都建立与布局的联系
 		int childCount = mChildComponentList.size();
-		for (int i = 0; i < childCount; ++i)
+		FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 		{
 			mChildComponentList[i]->attachOwnerParentComponent(owner, NULL, -1);
 		}
+		END_FOR_STL(mChildComponentList);
 	}
 	if (parent != NULL && mParent == NULL)
 	{
@@ -203,15 +210,18 @@ int txComponent::getChildPos(txComponent* window)
 		return -1;
 	}
 	// 首先查找当前窗口的位置
+	int index = -1;
 	int childCount = mChildComponentList.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		if (window == mChildComponentList[i])
 		{
-			return i;
+			index = i;
+			break;
 		}
 	}
-	return -1;
+	END_FOR_STL(mChildComponentList);
+	return index;
 }
 
 bool txComponent::moveChildPos(txComponent* component, const int& destPos)
@@ -239,13 +249,13 @@ bool txComponent::moveChildPos(const std::string& name, const int& destPos)
 void txComponent::notifyChildNameChanged(const std::string& oldName, txComponent* component)
 {
 	// 修改全部子窗口查找列表中的名字
-	std::map<std::string, txComponent*>::iterator iterAll = mChildComponentMap.find(oldName);
+	txMap<std::string, txComponent*>::iterator iterAll = mChildComponentMap.find(oldName);
 	if (iterAll != mChildComponentMap.end())
 	{
-		std::map<std::string, txComponent*>::iterator iterNew = mChildComponentMap.find(component->mName);
+		txMap<std::string, txComponent*>::iterator iterNew = mChildComponentMap.find(component->mName);
 		if (iterNew == mChildComponentMap.end())
 		{
-			mChildComponentMap.insert(std::make_pair(component->mName, component));
+			mChildComponentMap.insert(component->mName, component);
 			mChildComponentMap.erase(iterAll);
 		}
 		else

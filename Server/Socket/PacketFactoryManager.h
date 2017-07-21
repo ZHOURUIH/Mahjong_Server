@@ -12,17 +12,18 @@ public:
 	virtual void init();
 	virtual void destory()
 	{
-		std::map<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.begin();
-		std::map<PACKET_TYPE, PacketFactoryBase*>::iterator iterEnd = mFactoryList.end();
-		for (; iter != iterEnd; ++iter)
+		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.begin();
+		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iterEnd = mFactoryList.end();
+		FOR_STL(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
 		}
+		END_FOR_STL(mFactoryList);
 		mFactoryList.clear();
 	}
 	static int getPacketSize(const PACKET_TYPE& type)
 	{
-		std::map<PACKET_TYPE, int>::iterator iter = mPacketSizeMap.find(type);
+		txMap<PACKET_TYPE, int>::iterator iter = mPacketSizeMap.find(type);
 		if (iter != mPacketSizeMap.end())
 		{
 			return iter->second;
@@ -34,36 +35,36 @@ public:
 		PacketFactoryBase* factory = getFactory(type);
 		if (factory == NULL)
 		{
-			mPacketSizeMap.insert(std::make_pair(type, -1));
+			mPacketSizeMap.insert(type, -1);
 		}
 		else
 		{
 			Packet* packet = factory->createPacket();
-			mPacketSizeMap.insert(std::make_pair(type, packet->getSize()));
+			mPacketSizeMap.insert(type, packet->getSize());
 			factory->destroyPacket(packet);
 		}
 	}
 	PacketFactoryBase* getFactory(const PACKET_TYPE& type)
 	{
-		std::map<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.find(type);
+		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;
 		}
 		return NULL;
 	}
-	std::map<PACKET_TYPE, PacketFactoryBase*>& getFactoryList() { return mFactoryList; }
+	txMap<PACKET_TYPE, PacketFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:
 	template<typename O>
 	PacketFactoryBase* addFactory(const PACKET_TYPE& type)
 	{
 		PacketFactoryBase* factory = PacketFactoryBase::createFactory<O>(type);
-		mFactoryList.insert(std::make_pair(factory->getType(), factory));
+		mFactoryList.insert(factory->getType(), factory);
 		return factory;
 	}
 protected:
-	static std::map<PACKET_TYPE, int> mPacketSizeMap;
-	std::map<PACKET_TYPE, PacketFactoryBase*> mFactoryList;
+	static txMap<PACKET_TYPE, int> mPacketSizeMap;
+	txMap<PACKET_TYPE, PacketFactoryBase*> mFactoryList;
 };
 
 #endif

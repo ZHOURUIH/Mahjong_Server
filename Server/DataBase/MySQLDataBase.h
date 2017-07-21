@@ -28,7 +28,7 @@ public:
 protected:
 	bool connectDataBase(const std::string& dataBase);
 	int getMaxGUID();
-	const std::string& getColumn(std::map<std::string, std::string>& rowData, const std::string& col, const std::string& table);
+	const std::string& getColumn(txMap<std::string, std::string>& rowData, const std::string& col, const std::string& table);
 protected:
 	MYSQL* mMySQL;
 	std::string mConnectedDataBase; // 已经连接的数据库

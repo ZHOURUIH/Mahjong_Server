@@ -28,7 +28,7 @@ public:
 #if RUN_PLATFORM == PLATFORM_LINUX
 	static bool isDirectory(const char* pszName);
 #endif
-	static void findFiles(const char * pathName, std::vector<std::string>& files, const std::vector<std::string>& patterns, const bool& recursive = true);
+	static void findFiles(const char * pathName, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive = true);
 	static void deleteFolder(const std::string& path);
 	static bool isFileExist(const std::string& fullPath);
 	// 返回media的路径,不带/
@@ -151,15 +151,15 @@ public:
 		return fileName;
 	}
 
-	static void split(std::string str, const char * deli, std::vector<std::string> *vec);
+	static void split(std::string str, const char* deli, txVector<std::string>* vec);
 
-	static std::string boolToString(bool value) { return value ? "True" : "False"; }
+	static std::string boolToString(const bool& value) { return value ? "True" : "False"; }
 	static bool stringToBool(const std::string& str) { return str == "True" || str == "true"; }
 
-	static std::string strReplace(const std::string& str, int begin, int end, const std::string& reStr);
+	static std::string strReplace(const std::string& str, const int& begin, const int& end, const std::string& reStr);
 	static float calculateFloat(std::string str);	// 以浮点数的计算法则计算一个表达式,只支持加减乘除和括号
 	static int calculateInt(std::string str);		// 以整数的计算法则计算一个表达式,支持取余,加减乘除和括号
-	static std::string intToString(int i, int limitLen = 0); // limitLen是字符串的最小长度,如果整数的位数不足最小长度,则会在前面加0
+	static std::string intToString(const int& i, const int& limitLen = 0); // limitLen是字符串的最小长度,如果整数的位数不足最小长度,则会在前面加0
 	static int stringToInt(const std::string& str)
 	{
 		return atoi(str.c_str());
@@ -264,13 +264,13 @@ public:
 	static bool findSubstr(std::string res, std::string dst, const bool& sensitive, int* pos = NULL, const int& startPose = 0, const bool& firstOrLast = true);
 	
 	template<typename T>
-	static std::vector<std::string> findSubstr(const std::map<std::string, T>& res, const std::string& dst, bool sensitive)
+	static txVector<std::string> findSubstr(txMap<std::string, T>& res, const std::string& dst, const bool& sensitive)
 	{
-		std::vector <std::string> retList;
+		txVector <std::string> retList;
 		// 循环遍历,如果匹配到放入列表
-		typename std::map<std::string, T>::const_iterator itr = res.begin();
-		typename std::map<std::string, T>::const_iterator itrEnd = res.end();
-		for (; itr != itrEnd; ++itr)
+		typename txMap<std::string, T>::const_iterator itr = res.begin();
+		typename txMap<std::string, T>::const_iterator itrEnd = res.end();
+		FOR_STL(itr, ; itr != itrEnd; ++itr)
 		{
 			const std::string& name = itr->first;
 			if (txUtility::findSubstr(name, dst, sensitive))
@@ -278,21 +278,22 @@ public:
 				retList.push_back(name);
 			}
 		}
+		END_FOR_STL(itr);
 		return retList;
 	}
 
-	static std::vector<std::string> findSubstr(const std::vector<std::string>& res, const std::string& dst, bool sensitive)
+	static txVector<std::string> findSubstr(txVector<std::string>& res, const std::string& dst, const bool& sensitive)
 	{
-		std::vector <std::string> retList;
-		std::vector<std::string>::size_type listSize = res.size();
-		for (std::vector<std::string>::size_type i = 0; i < listSize; ++i)
+		txVector <std::string> retList;
+		int listSize = res.size();
+		FOR_STL(res, int i = 0; i < listSize; ++i)
 		{
 			if (txUtility::findSubstr(res[i], dst, sensitive))
 			{
 				retList.push_back(res[i]);
 			}
 		}
-
+		END_FOR_STL(res);
 		return retList;
 	}
 	static void strToLower(std::string& str);

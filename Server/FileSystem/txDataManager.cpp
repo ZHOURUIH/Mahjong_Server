@@ -17,7 +17,7 @@ int txDataManager::LoadData(const char *name, const bool& neednull)
 {
 	// 加载文件时锁定文件
 	LOCK(mDataLock, LT_READ);
-	std::map<std::string, int>::iterator iterData = mDataNameList.find(txUtility::getFileName(name));
+	txMap<std::string, int>::iterator iterData = mDataNameList.find(txUtility::getFileName(name));
 	if (iterData != mDataNameList.end())
 	{
 		UNLOCK(mDataLock, LT_READ);
@@ -88,7 +88,7 @@ int txDataManager::LoadData(const char *name, const bool& neednull)
 
 	elems[index].setSize(nFileLen + neednull);
 	elems[index].setKey(name);
-	mDataNameList.insert(std::make_pair(txUtility::getFileName(name), index));
+	mDataNameList.insert(txUtility::getFileName(name), index);
 	throwIndexToUsedList(index);
 
 	char* data = elems[index].getValuePtr();
@@ -118,7 +118,7 @@ int txDataManager::NewData(const char *name, const int& sizeInByte)
 
 	elems[index].setSize(sizeInByte);
 	elems[index].setKey(name);
-	mDataNameList.insert(std::make_pair(txUtility::getFileName(name), index));
+	mDataNameList.insert(txUtility::getFileName(name), index);
 	throwIndexToUsedList(index);
 	UNLOCK(mDataLock, LT_WRITE);
 	return index;
@@ -179,8 +179,8 @@ void txDataManager::dump() const
 	if (mShowDebugInfo)
 	{
 		LOG_INFO("======================================Begin Data Dump====================================");
-		std::set<short>::iterator iter = mUsedIndexList.begin();
-		std::set<short>::iterator iterEnd = mUsedIndexList.end();
+		txSet<short>::iterator iter = mUsedIndexList.begin();
+		txSet<short>::iterator iterEnd = mUsedIndexList.end();
 		for (; iter != iterEnd; ++iter)
 		{
 			const int& index = *iter;
@@ -194,7 +194,7 @@ void txDataManager::dump() const
 int txDataManager::GetFileSize(const int& index) const
 {
 #ifdef LOAD_FROM_ASSETMANAGER
-	std::set<short>::iterator iter = mUsedIndexList.find(index);
+	txSet<short>::iterator iter = mUsedIndexList.find(index);
 	if (iter != mUsedIndexList.end())
 	{
 		return ASS_getFileSize(elems[*iter].getKeyPtr());
@@ -250,7 +250,7 @@ bool txDataManager::getOneUnusedIndex(int& index)
 // 将未使用列表中的一个下标放入已使用列表中,并且从未使用列表中删除该下标
 bool txDataManager::throwIndexToUsedList(const int& index)
 {
-	std::set<short>::iterator iter = mUnusedIndexList.find(index);
+	txSet<short>::iterator iter = mUnusedIndexList.find(index);
 	if(iter == mUnusedIndexList.end())
 	{
 		GAME_ERROR("error : can not find index : %d, the index is not in unusedlist.", index);
@@ -264,7 +264,7 @@ bool txDataManager::throwIndexToUsedList(const int& index)
 // 将已使用列表中的一个下标放入未使用列表中,将该下标的数据销毁并且从已使用列表中删除该下标
 bool txDataManager::throwIndexToUnusedList(const int& index)
 {
-	std::set<short>::iterator iter = mUsedIndexList.find(index);
+	txSet<short>::iterator iter = mUsedIndexList.find(index);
 	if(iter == mUsedIndexList.end())
 	{
 		GAME_ERROR("error : can not find index : %d, the index is not in usedlist.", index);
@@ -276,7 +276,7 @@ bool txDataManager::throwIndexToUnusedList(const int& index)
 	{
 		LOG_INFO("destroy data : %s, size : %d", elems[index].getKeyPtr(), elems[index].getSize());
 	}
-	std::map<std::string, int>::iterator iterData = mDataNameList.find(txUtility::getFileName(elems[index].getKeyPtr()));
+	txMap<std::string, int>::iterator iterData = mDataNameList.find(txUtility::getFileName(elems[index].getKeyPtr()));
 	if (iterData != mDataNameList.end())
 	{
 		mDataNameList.erase(iterData);

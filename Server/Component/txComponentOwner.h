@@ -12,7 +12,8 @@ class txComponentOwner : public txCommandReceiver, public ServerBase
 public:
 	txComponentOwner(const std::string& name)
 		:
-		txCommandReceiver(name)
+		txCommandReceiver(name),
+		mUsePreLateUpdate(false)
 	{}
 	virtual ~txComponentOwner(){ destroyAllComponents(); }
 	virtual void initComponents() = 0;
@@ -31,25 +32,25 @@ public:
 	void destroyAllComponents();
 	txComponent* getComponent(const std::string& name)
 	{
-		std::map<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
+		txMap<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
 		if (itrFind == mAllComponentList.end())
 		{
 			return NULL;
 		}
 		return itrFind->second;
 	}
-	const std::map<std::string, txComponent*>& getComponentsByType(const std::string& type)
+	const txMap<std::string, txComponent*>& getComponentsByType(const std::string& type)
 	{
-		std::map<std::string, std::map<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
+		txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
 		if (iterType != mAllComponentTypeList.end())
 		{
 			return iterType->second;
 		}
 		return EMPTY_COMPONENT_MAP;
 	}
-	const std::map<std::string, txComponent*>& getComponentsByBaseType(const std::string& type)
+	const txMap<std::string, txComponent*>& getComponentsByBaseType(const std::string& type)
 	{
-		std::map<std::string, std::map<std::string, txComponent*> >::iterator iterType = mAllComponentBaseTypeList.find(type);
+		txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentBaseTypeList.find(type);
 		if (iterType != mAllComponentBaseTypeList.end())
 		{
 			return iterType->second;
@@ -59,7 +60,7 @@ public:
 	txComponent* getFirstActiveComponentByBaseType(const std::string& type);
 	txComponent* getFirstComponentByBaseType(const std::string& type)
 	{
-		std::map<std::string, std::map<std::string, txComponent*> >::iterator iter = mAllComponentBaseTypeList.find(type);
+		txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentBaseTypeList.find(type);
 		if (iter != mAllComponentBaseTypeList.end() && iter->second.size() > 0)
 		{
 			return iter->second.begin()->second;
@@ -69,7 +70,7 @@ public:
 	txComponent* getFirstActiveComponent(const std::string& type);
 	txComponent* getFirstComponent(const std::string& type)
 	{
-		std::map<std::string, std::map<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
+		txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
 		if (iter != mAllComponentTypeList.end() && iter->second.size() > 0)
 		{
 			return iter->second.begin()->second;
@@ -82,7 +83,7 @@ public:
 	}
 	void removePreUpdateType(const std::string& typeName)
 	{
-		std::set<std::string>::iterator iter = mPreUpdateTypeList.find(typeName);
+		txSet<std::string>::iterator iter = mPreUpdateTypeList.find(typeName);
 		if (iter != mPreUpdateTypeList.end())
 		{
 			mPreUpdateTypeList.erase(iter);
@@ -92,23 +93,24 @@ public:
 	{
 		return mPreUpdateTypeList.find(type) != mPreUpdateTypeList.end();
 	}
-	const std::map<std::string, std::map<std::string, txComponent*> >& getComponentTypeList() { return mAllComponentTypeList; }
+	const txMap<std::string, txMap<std::string, txComponent*> >& getComponentTypeList() { return mAllComponentTypeList; }
 	virtual void notifyComponentDestroied(txComponent* component)
 	{
 		removeComponentFromList(component);
 	}
-	const std::vector<txComponent*>& getRootComponentList() { return mRootComponentList; }
+	const txVector<txComponent*>& getRootComponentList() { return mRootComponentList; }
 protected:
 	void addComponentToList(txComponent* component, const int& componentPos = -1);
 	void removeComponentFromList(txComponent* component);
 protected:
-	std::vector<txComponent*> mRootComponentList;				// 一级组件列表,保存着组件之间的更新顺序
-	std::map<std::string, txComponent*> mAllComponentList;	// 组件拥有者当前的所有组件列表
-	std::map<std::string, std::map<std::string, txComponent*> > mAllComponentTypeList;	// 组件类型列表,first时组件的类型名
+	txVector<txComponent*> mRootComponentList;				// 一级组件列表,保存着组件之间的更新顺序
+	txMap<std::string, txComponent*> mAllComponentList;	// 组件拥有者当前的所有组件列表
+	txMap<std::string, txMap<std::string, txComponent*> > mAllComponentTypeList;	// 组件类型列表,first时组件的类型名
 	// 根据组件的基础类型分组的组件列表,first是基础组件类型名
-	std::map<std::string, std::map<std::string, txComponent*> > mAllComponentBaseTypeList;
-	std::set<std::string> mPreUpdateTypeList;	// 需要提前更新的组件类型名
-	static std::map<std::string, txComponent*> EMPTY_COMPONENT_MAP;
+	txMap<std::string, txMap<std::string, txComponent*> > mAllComponentBaseTypeList;
+	txSet<std::string> mPreUpdateTypeList;	// 需要提前更新的组件类型名
+	static txMap<std::string, txComponent*> EMPTY_COMPONENT_MAP;
+	bool mUsePreLateUpdate;
 };
 
 #endif

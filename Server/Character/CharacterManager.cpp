@@ -21,9 +21,9 @@ void CharacterManager::update(const float& elapsedTime)
 	{
 		return;
 	}
-	std::map<std::string, Character*>::iterator characterBegin = mCharacterList.begin();
-	std::map<std::string, Character*>::iterator characterEnd = mCharacterList.end();
-	for (; characterBegin != characterEnd; ++characterBegin)
+	txMap<std::string, Character*>::iterator characterBegin = mCharacterList.begin();
+	txMap<std::string, Character*>::iterator characterEnd = mCharacterList.end();
+	FOR_STL(mCharacterList, ; characterBegin != characterEnd; ++characterBegin)
 	{
 		Character* character = characterBegin->second;
 		if (NULL != character)
@@ -31,22 +31,25 @@ void CharacterManager::update(const float& elapsedTime)
 			character->update(elapsedTime);
 		}
 	}
+	END_FOR_STL(mCharacterList);
 }
 
 void CharacterManager::destroy()
 {
-	std::map<CHARACTER_TYPE, std::map<std::string, Character*> >::iterator iterType = mCharacterTypeList.begin();
-	std::map<CHARACTER_TYPE, std::map<std::string, Character*> >::iterator iterTypeEnd = mCharacterTypeList.end();
-	for (; iterType != iterTypeEnd; ++iterType)
+	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.begin();
+	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterTypeEnd = mCharacterTypeList.end();
+	FOR_STL(mCharacterTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
 		CharacterFactoryBase* characterFactory = mCharacterFactoryManager->getFactory(iterType->first);
-		std::map<std::string, Character*>::iterator iterChar = iterType->second.begin();
-		std::map<std::string, Character*>::iterator iterCharEnd = iterType->second.end();
-		for (; iterChar != iterCharEnd; ++iterChar)
+		txMap<std::string, Character*>::iterator iterChar = iterType->second.begin();
+		txMap<std::string, Character*>::iterator iterCharEnd = iterType->second.end();
+		FOR_STL(iterType->second, ; iterChar != iterCharEnd; ++iterChar)
 		{
 			characterFactory->destroyCharacter(iterChar->second);
 		}
+		END_FOR_STL(iterType->second);
 	}
+	END_FOR_STL(mCharacterTypeList);
 	mCharacterList.clear();
 	mCharacterTypeList.clear();
 }
@@ -85,18 +88,18 @@ void CharacterManager::addCharacterToList(Character* character)
 		return;
 	}
 	// 加入到全部角色列表
-	mCharacterList.insert(std::make_pair(character->getName(), character));
+	mCharacterList.insert(character->getName(), character);
 	// 加入到角色分类列表
-	std::map<CHARACTER_TYPE, std::map<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
 	if (iterType != mCharacterTypeList.end())
 	{
-		iterType->second.insert(std::make_pair(character->getName(), character));
+		iterType->second.insert(character->getName(), character);
 	}
 	else
 	{
-		std::map<std::string, Character*> characterMap;
-		characterMap.insert(std::make_pair(character->getName(), character));
-		mCharacterTypeList.insert(std::make_pair(character->getType(), characterMap));
+		txMap<std::string, Character*> characterMap;
+		characterMap.insert(character->getName(), character);
+		mCharacterTypeList.insert(character->getType(), characterMap);
 	}
 	// 加入ID索引表
 	int characterID = character->getGUID();
@@ -104,7 +107,7 @@ void CharacterManager::addCharacterToList(Character* character)
 	{
 		GAME_ERROR("error : there is a character id : %d", characterID);
 	}
-	mCharacterIDList.insert(std::make_pair(characterID, character));
+	mCharacterIDList.insert(characterID, character);
 }
 
 void CharacterManager::removeCharacterFromList(Character* character)
@@ -114,23 +117,23 @@ void CharacterManager::removeCharacterFromList(Character* character)
 		return;
 	}
 	// 从全部角色列表中移除
-	std::map<std::string, Character*>::iterator iter = mCharacterList.find(character->getName());
+	txMap<std::string, Character*>::iterator iter = mCharacterList.find(character->getName());
 	if (iter != mCharacterList.end())
 	{
 		mCharacterList.erase(iter);
 	}
 	// 从角色分类列表中移除
-	std::map<CHARACTER_TYPE, std::map<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
 	if (iterType != mCharacterTypeList.end())
 	{
-		std::map<std::string, Character*>::iterator iterChar = iterType->second.find(character->getName());
+		txMap<std::string, Character*>::iterator iterChar = iterType->second.find(character->getName());
 		if (iterChar != iterType->second.end())
 		{
 			iterType->second.erase(iterChar);
 		}
 	}
 	// 从ID索引表中移除
-	std::map<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(character->getGUID());
+	txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(character->getGUID());
 	if (iterID != mCharacterIDList.end())
 	{
 		mCharacterIDList.erase(iterID);
@@ -161,35 +164,35 @@ void CharacterManager::destroyCharacter(const std::string& name)
 
 void CharacterManager::notifyCharacterIDChanged(const CHAR_GUID& oldID)
 {
-	std::map<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(oldID);
+	txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(oldID);
 	if (iterID != mCharacterIDList.end())
 	{
 		Character* character = iterID->second;
 		mCharacterIDList.erase(iterID);
-		mCharacterIDList.insert(std::pair<CHAR_GUID, Character*>(character->getGUID(), character));
+		mCharacterIDList.insert(character->getGUID(), character);
 	}
 }
 
 void CharacterManager::notifyCharacterNameChanged(const std::string& oldName)
 {
 	Character* character = NULL;
-	std::map<std::string, Character*>::iterator iterChar = mCharacterList.find(oldName);
+	txMap<std::string, Character*>::iterator iterChar = mCharacterList.find(oldName);
 	if (iterChar != mCharacterList.end())
 	{
 		character = iterChar->second;
 		mCharacterList.erase(iterChar);
-		mCharacterList.insert(std::pair<std::string, Character*>(character->getName(), character));
+		mCharacterList.insert(character->getName(), character);
 	}
 	if (character != NULL)
 	{
-		std::map<CHARACTER_TYPE, std::map<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+		txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
 		if (iterType != mCharacterTypeList.end())
 		{
-			std::map<std::string, Character*>::iterator iterTypeChar = iterType->second.find(oldName);
+			txMap<std::string, Character*>::iterator iterTypeChar = iterType->second.find(oldName);
 			if (iterTypeChar != iterType->second.end())
 			{
 				iterType->second.erase(iterTypeChar);
-				iterType->second.insert(std::pair<std::string, Character*>(character->getName(), character));
+				iterType->second.insert(character->getName(), character);
 			}
 		}
 	}

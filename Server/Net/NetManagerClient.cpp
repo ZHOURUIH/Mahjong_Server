@@ -54,7 +54,7 @@ void NetManagerClient::destroy()
 
 void NetManagerClient::update(const float& elapsedTime)
 {
-	std::vector<Packet*> packetList;
+	txVector<Packet*> packetList;
 	LOCK(mRecvLock, LT_WRITE);
 	// 解析接收到的数据
 	int index = 0;
@@ -124,7 +124,7 @@ void NetManagerClient::update(const float& elapsedTime)
 	UNLOCK(mRecvLock, LT_WRITE);
 
 	int packetCount = packetList.size();
-	for (int i = 0; i < packetCount; ++i)
+	FOR_STL(packetList, int i = 0; i < packetCount; ++i)
 	{
 		Packet* packetReply = packetList[i];
 		if (NetManagerServer::getOutputLog())
@@ -134,6 +134,7 @@ void NetManagerClient::update(const float& elapsedTime)
 		packetReply->execute();
 		NetManagerServer::destroyPacket(packetReply);
 	}
+	END_FOR_STL(packetList);
 
 	mHeartBeatTime += elapsedTime;
 	mConnectTime += elapsedTime;

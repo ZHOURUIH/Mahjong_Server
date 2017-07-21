@@ -74,6 +74,17 @@
 #define _USE_SAFE_API
 #endif
 
+#ifdef _USE_SAFE_API
+#define SPRINTF(buffer, bufferSize, ...) sprintf_s(buffer, bufferSize, __VA_ARGS__)
+#else
+#define SPRINTF(buffer, bufferSize, ...) sprintf(buffer, __VA_ARGS__)
+#endif
+
+#include "txSTLBase.h"
+#include "txVector.h"
+#include "txMap.h"
+#include "txSet.h"
+
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 #define TX_THREAD HANDLE
 #define TX_SOCKET SOCKET
@@ -105,16 +116,18 @@
 
 #define TOSTRING(t) #t
 
+// 再次封装后的容器的遍历宏
+#define FOR_STL(stl, expression)									\
+	stl.lock(__FILE__, __LINE__);									\
+	for (expression)
+
+#define END_FOR_STL(stl)											\
+	stl.unlock();
+
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节
 #define SET_BYTE(value, byte, pos) value = (value & ~(0x000000ff << (8 * pos))) | (byte << (8 * pos))
 // 获得value的指定位置pos的字节的值
 #define GET_BYTE(value, pos) (value & (0x000000ff << (8 * pos))) >> (8 * pos)
-
-#ifdef _USE_SAFE_API
-#define SPRINTF(buffer, bufferSize, ...) sprintf_s(buffer, bufferSize, __VA_ARGS__)
-#else
-#define SPRINTF(buffer, bufferSize, ...) sprintf(buffer, __VA_ARGS__)
-#endif
 
 #define _FILE_LINE_ "file : " + txUtility::getFileName(__FILE__) + ", line : " + txUtility::intToString(__LINE__)
 

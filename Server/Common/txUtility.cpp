@@ -39,7 +39,7 @@ bool txUtility::isDirectory(const char* pszName)
 	return S_ISDIR(st.st_mode);
 }
 
-void txUtility::findFiles(const char * pathName, std::vector<std::string>& files, const std::vector<std::string>& patterns, const bool& recursive)
+void txUtility::findFiles(const char * pathName, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
 {
 	struct dirent *pDirent;
 	DIR* pDir = opendir(pathName);
@@ -90,7 +90,7 @@ void txUtility::deleteFolder(const std::string& path)
 #endif
 
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-void txUtility::findFiles(const char * pathName, std::vector<std::string>& files, const std::vector<std::string>& patterns, const bool& recursive)
+void txUtility::findFiles(const char * pathName, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
 {
 	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind = INVALID_HANDLE_VALUE;
@@ -200,7 +200,7 @@ bool txUtility::isFileExist(const std::string& fullPath)
 	return ret == 0;
 }
 
-void txUtility::split(std::string str, const char* deli, std::vector<std::string>* vec)
+void txUtility::split(std::string str, const char* deli, txVector<std::string>* vec)
 {
 	while (true)
 	{
@@ -219,7 +219,7 @@ void txUtility::split(std::string str, const char* deli, std::vector<std::string
 	}
 }
 
-std::string txUtility::strReplace(const std::string& str, int begin, int end, const std::string& reStr)
+std::string txUtility::strReplace(const std::string& str, const int& begin, const int& end, const std::string& reStr)
 {
 	std::string sub1 = str.substr(0, begin);
 	std::string sub2 = str.substr(end, str.length() - end);
@@ -258,7 +258,7 @@ float txUtility::calculateFloat(std::string str)
 	if (leftBracketCount != rightBracketCount)
 	{
 		// 计算错误,左右括号数量不对应
-		return 0;
+		return 0.0f;
 	}
 
 	// 循环判断传入的字符串有没有括号
@@ -323,8 +323,8 @@ float txUtility::calculateFloat(std::string str)
 		}
 	}
 
-	std::vector<float> numbers;
-	std::vector<char> factors;
+	txVector<float> numbers;
+	txVector<char> factors;
 	// 表示上一个运算符的下标+1
 	int beginpos = 0;
 	for (int i = 0; i < (int)str.length(); ++i)
@@ -543,8 +543,8 @@ int txUtility::calculateInt(std::string str)
 		}
 	}
 
-	std::vector<int> numbers;
-	std::vector<char> factors;
+	txVector<int> numbers;
+	txVector<char> factors;
 	// 表示上一个运算符的下标+1
 	int beginpos = 0;
 	for (int i = 0; i < (int)str.length(); ++i)
@@ -669,7 +669,7 @@ int txUtility::calculateInt(std::string str)
 	}
 }
 
-std::string txUtility::intToString(int i, int limitLen)
+std::string txUtility::intToString(const int& i, const int& limitLen)
 {
 	char str[256];
 	SPRINTF(str, 256, "%d", i);

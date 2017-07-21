@@ -10,10 +10,10 @@ class WaitActionInfo
 public:
 	CharacterPlayer* mPlayer;				// 等待确认操作的玩家
 	CharacterPlayer* mDroppedPlayer;		// 打出这张牌的玩家
-	std::vector<MahjongAction*> mActionList;// 玩家可选择的操作
+	txVector<MahjongAction*> mActionList;// 玩家可选择的操作
 	MAHJONG mMahjong;						// 当前麻将
 	MahjongAction* mConfirmedAction;		// 玩家确认选择的一种操作
-	WaitActionInfo(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const std::vector<MahjongAction*>& actionList, const MAHJONG& mah)
+	WaitActionInfo(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const txVector<MahjongAction*>& actionList, const MAHJONG& mah)
 	{
 		mPlayer = player;
 		mDroppedPlayer = droppedPlayer;

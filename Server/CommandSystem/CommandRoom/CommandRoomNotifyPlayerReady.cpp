@@ -8,9 +8,10 @@ void CommandRoomNotifyPlayerReady::execute()
 	// 先通知房间有玩家准备好
 	room->notifyPlayerReady(mPlayerGUID, mReady);
 	// 通知房间中的其他玩家有玩家已经准备
-	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayer = room->getPlayerList().begin();
-	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
-	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+	FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->first != mPlayerGUID)
 		{
@@ -20,6 +21,7 @@ void CommandRoomNotifyPlayerReady::execute()
 			mCommandSystem->pushCommand(&cmd, iterPlayer->second);
 		}
 	}
+	END_FOR_STL(playerList);
 	// 所有玩家都准备完毕后,通知房间开始游戏
 	if (room->isAllPlayerReady())
 	{

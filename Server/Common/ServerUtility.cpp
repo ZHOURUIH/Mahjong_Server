@@ -1,30 +1,30 @@
 #include "ServerUtility.h"
 
-std::map<HU_TYPE, int> ServerUtility::mMultipleList;
+txMap<HU_TYPE, int> ServerUtility::mMultipleList;
 
 // handInMah必须是从小到大的有序数组
-bool ServerUtility::canHu(const std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canHu(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
 	//复制一份列表
-	std::vector<MAHJONG> temp = handInMah;
+	txVector<MAHJONG> temp = handInMah;
 	// 然后别人打出的牌加入其中
 	temp.push_back(mah);
 	return canHu(temp);
 }
 
-bool ServerUtility::canHu(const std::vector<MAHJONG>& handInMah)
+bool ServerUtility::canHu(txVector<MAHJONG>& handInMah)
 {
-	std::vector<std::vector<MAHJONG>> devide;
-	std::vector<MahInfo> group;
+	txVector<txVector<MAHJONG>> devide;
+	txVector<MahInfo> group;
 	toMahjongGroup(handInMah, group);
 	return canHu(group, devide);
 }
 
-void ServerUtility::toMahjongGroup(const std::vector<MAHJONG>& list, std::vector<MahInfo>& group)
+void ServerUtility::toMahjongGroup(txVector<MAHJONG>& list, txVector<MahInfo>& group)
 {
-	std::map<MAHJONG, MahInfo> groupMap;
+	txMap<MAHJONG, MahInfo> groupMap;
 	int listSize = list.size();
-	for (int i = 0; i < listSize; ++i)
+	FOR_STL(list, int i = 0; i < listSize; ++i)
 	{
 		const MAHJONG& mah = list[i];
 		if (groupMap.find(mah) != groupMap.end())
@@ -36,15 +36,17 @@ void ServerUtility::toMahjongGroup(const std::vector<MAHJONG>& list, std::vector
 			MahInfo info;
 			info.mMah = mah;
 			info.mCount = 1;
-			groupMap.insert(std::make_pair(mah, info));
+			groupMap.insert(mah, info);
 		}
 	}
-	std::map<MAHJONG, MahInfo>::iterator iter = groupMap.begin();
-	std::map<MAHJONG, MahInfo>::iterator iterEnd = groupMap.end();
-	for (; iter != iterEnd; ++iter)
+	END_FOR_STL(list);
+	txMap<MAHJONG, MahInfo>::iterator iter = groupMap.begin();
+	txMap<MAHJONG, MahInfo>::iterator iterEnd = groupMap.end();
+	FOR_STL(groupMap, ; iter != iterEnd; ++iter)
 	{
 		group.push_back(iter->second);
 	}
+	END_FOR_STL(groupMap);
 }
 
 // 得到指定牌的花色
@@ -61,7 +63,7 @@ MAHJONG_HUASE ServerUtility::getHuaSe(const MAHJONG& mah)
 	}
 }
 
-bool ServerUtility::isShunzi(const std::vector<MahInfo>& mahjongList, const int& startIndex)
+bool ServerUtility::isShunzi(txVector<MahInfo>& mahjongList, const int& startIndex)
 {
 	if ((int)mahjongList.size() <= startIndex + 2)
 	{
@@ -89,19 +91,19 @@ bool ServerUtility::isShunzi(const std::vector<MahInfo>& mahjongList, const int&
 	return true;
 }
 
-void ServerUtility::getHuaseList(const std::vector<MahInfo>& infoList, std::map<MAHJONG_HUASE, std::vector<MAHJONG>> huaseList, bool includeFeng)
+void ServerUtility::getHuaseList(txVector<MahInfo>& infoList, txMap<MAHJONG_HUASE, txVector<MAHJONG>> huaseList, bool includeFeng)
 {
 	int size = infoList.size();
-	for (int i = 0; i < size; ++i)
+	FOR_STL(infoList, int i = 0; i < size; ++i)
 	{
 		MAHJONG_HUASE huase = getHuaSe(infoList[i].mMah);
 		if (huaseList.find(huase) == huaseList.end())
 		{
 			if (includeFeng || huase != MH_FENG)
 			{
-				std::vector<MAHJONG> temp;
+				txVector<MAHJONG> temp;
 				temp.push_back(infoList[i].mMah);
-				huaseList.insert(std::make_pair(huase, temp));
+				huaseList.insert(huase, temp);
 			}
 		}
 		else
@@ -109,12 +111,13 @@ void ServerUtility::getHuaseList(const std::vector<MahInfo>& infoList, std::map<
 			huaseList[huase].push_back(infoList[i].mMah);
 		}
 	}
+	END_FOR_STL(infoList);
 }
 
-bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vector<MAHJONG>>& devideList)
+bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJONG>>& devideList)
 {
 	// 必须至少缺一色牌才能胡,
-	std::map<MAHJONG_HUASE, std::vector<MAHJONG>> huaseList;
+	txMap<MAHJONG_HUASE, txVector<MAHJONG>> huaseList;
 	getHuaseList(mahjongList, huaseList);
 	if (huaseList.size() > 2)
 	{
@@ -122,10 +125,11 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 	}
 	int allCount = 0;
 	int size = mahjongList.size();
-	for (int i = 0; i < size; ++i)
+	FOR_STL(mahjongList, int i = 0; i < size; ++i)
 	{
 		allCount += mahjongList[i].mCount;
 	}
+	END_FOR_STL(mahjongList);
 	if (allCount > 2)
 	{
 		// 取出所有可能的顺子和三个相同的,逐一判断是否可胡
@@ -141,7 +145,7 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 			if (mahjongList[index].mCount >= 3)
 			{
 				// 先备份列表
-				std::vector<MahInfo> beforeList = mahjongList;
+				txVector<MahInfo> beforeList = mahjongList;
 				// 移除三个相同的,判断去除后是否可胡
 				MAHJONG curMah = mahjongList[index].mMah;
 				mahjongList[index].mCount -= 3;
@@ -151,7 +155,7 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 				}
 				if (canHu(mahjongList, devideList))
 				{
-					std::vector<MAHJONG> temp;
+					txVector<MAHJONG> temp;
 					temp.push_back(curMah);
 					temp.push_back(curMah);
 					temp.push_back(curMah);
@@ -168,7 +172,7 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 			if (isShunzi(mahjongList, index))
 			{
 				// 先备份列表
-				std::vector<MahInfo> beforeList = mahjongList;
+				txVector<MahInfo> beforeList = mahjongList;
 				MAHJONG mah0 = mahjongList[index].mMah;
 				MAHJONG mah1 = mahjongList[index + 1].mMah;
 				MAHJONG mah2 = mahjongList[index + 2].mMah;
@@ -191,7 +195,7 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 				// 如果可以胡,则直接返回true
 				if (canHu(mahjongList, devideList))
 				{
-					std::vector<MAHJONG> temp;
+					txVector<MAHJONG> temp;
 					temp.push_back(mah0);
 					temp.push_back(mah1);
 					temp.push_back(mah2);
@@ -216,7 +220,7 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 		bool ret = (mahjongList.size() == 1 && mahjongList[0].mCount == 2);
 		if (ret)
 		{
-			std::vector<MAHJONG> temp;
+			txVector<MAHJONG> temp;
 			temp.push_back(mahjongList[0].mMah);
 			temp.push_back(mahjongList[0].mMah);
 			devideList.push_back(temp);
@@ -225,56 +229,65 @@ bool ServerUtility::canHu(std::vector<MahInfo> mahjongList, std::vector<std::vec
 	}
 }
 
-bool ServerUtility::canPeng(const std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canPeng(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
-	std::vector<MahInfo> infoList;
+	bool ret = false;
+	txVector<MahInfo> infoList;
 	toMahjongGroup(handInMah, infoList);
 	int count = infoList.size();
-	for (int i = 0; i < count; ++i)
+	FOR_STL(infoList, int i = 0; i < count; ++i)
 	{
 		if (infoList[i].mCount >= 2 && infoList[i].mMah == mah)
 		{
-			return true;
+			ret = true;
+			break;
 		}
 	}
-	return false;
+	END_FOR_STL(infoList);
+	return ret;
 }
 
-bool ServerUtility::canGang(const std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canGang(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
-	std::vector<MahInfo> infoList;
+	bool ret = false;
+	txVector<MahInfo> infoList;
 	toMahjongGroup(handInMah, infoList);
 	int count = infoList.size();
-	for (int i = 0; i < count; ++i)
+	FOR_STL(infoList, int i = 0; i < count; ++i)
 	{
 		if (infoList[i].mCount == MAX_SINGLE_COUNT - 1 && infoList[i].mMah == mah)
 		{
-			return true;
+			ret = true;
+			break;
 		}
 	}
+	END_FOR_STL(infoList);
 	return false;
 }
 
-bool ServerUtility::canGang(const std::vector<MAHJONG>& handInMah)
+bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
 {
-	std::vector<MahInfo> infoList;
+	bool ret = false;
+	txVector<MahInfo> infoList;
 	toMahjongGroup(handInMah, infoList);
 	int count = infoList.size();
-	for (int i = 0; i < count; ++i)
+	FOR_STL(infoList, int i = 0; i < count; ++i)
 	{
 		if (infoList[i].mCount == MAX_SINGLE_COUNT)
 		{
-			return true;
+			ret = true;
+			break;
 		}
 	}
-	return false;
+	END_FOR_STL(infoList);
+	return ret;
 }
 
-void ServerUtility::pengMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
+void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
 	// 碰的前提是之前检测过可以碰
 	int mahCount = handInMah.size();
-	for (int i = 0; i < mahCount - 1; ++i)
+	FOR_STL(handInMah, int i = 0; i < mahCount - 1; ++i)
 	{
 		if (handInMah[i] == mah && handInMah[i + 1] == mah)
 		{
@@ -284,13 +297,14 @@ void ServerUtility::pengMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& 
 			break;
 		}
 	}
+	END_FOR_STL(handInMah);
 }
 
-void ServerUtility::gangMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& mah)
+void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
 	// 杠的前提是之前检测过可以杠
 	int mahCount = handInMah.size();
-	for (int i = 0; i < mahCount - 2; ++i)
+	FOR_STL(handInMah, int i = 0; i < mahCount - 2; ++i)
 	{
 		if (handInMah[i] == mah && handInMah[i + 1] == mah && handInMah[i + 2] == mah)
 		{
@@ -300,34 +314,38 @@ void ServerUtility::gangMahjong(std::vector<MAHJONG>& handInMah, const MAHJONG& 
 			break;
 		}
 	}
+	END_FOR_STL(handInMah);
 }
 
 // handInIncludeDrop表示handInMah中是否已经包含了dropMah
-std::vector<HU_TYPE> ServerUtility::generateHuType(const std::vector<MAHJONG>& handInMah, const MAHJONG& dropMah, const std::vector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop)
+txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, const MAHJONG& dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop)
 {
 	// 将数组转换为列表
-	std::vector<MAHJONG> handInList;
-	std::vector<MAHJONG> pengs;
-	std::vector<MAHJONG> gangs;
+	txVector<MAHJONG> handInList;
+	txVector<MAHJONG> pengs;
+	txVector<MAHJONG> gangs;
 	int handInCount = handInMah.size();
-	for (int i = 0; i < handInCount; ++i)
+	FOR_STL(handInMah, int i = 0; i < handInCount; ++i)
 	{
 		handInList.push_back(handInMah[i]);
 	}
+	END_FOR_STL(handInMah);
 	// 如果handInMah中不包含dropMah,则需要加到列表中
 	if (!handInIncludeDrop)
 	{
 		int curCount = handInList.size();
-		for (int i = 0; i < curCount; ++i)
+		FOR_STL(handInList, int i = 0; i < curCount; ++i)
 		{
 			if (handInList[i] >= dropMah)
 			{
-				handInList.insert(handInList.begin() + i, dropMah);
+				handInList.insert(handInList.begin() + i, dropMah, false);
+				break;
 			}
 		}
+		END_FOR_STL(handInList);
 	}
 	int gangPengCount = gangPengList.size();
-	for (int i = 0; i < gangPengCount; ++i)
+	FOR_STL(gangPengList, int i = 0; i < gangPengCount; ++i)
 	{
 		if (gangPengList[i]->mType == AT_GANG)
 		{
@@ -338,8 +356,9 @@ std::vector<HU_TYPE> ServerUtility::generateHuType(const std::vector<MAHJONG>& h
 			gangs.push_back(gangPengList[i]->mMahjong);
 		}
 	}
+	END_FOR_STL(gangPengList);
 	// 判断胡牌类型
-	std::vector<HU_TYPE> huList;
+	txVector<HU_TYPE> huList;
 	// 是否为清一色
 	if (isQingYiSe(handInList, pengs, gangs))
 	{
@@ -353,32 +372,50 @@ std::vector<HU_TYPE> ServerUtility::generateHuType(const std::vector<MAHJONG>& h
 	return huList;
 }
 
-bool ServerUtility::isQingYiSe(const std::vector<MAHJONG>& handInMah, const std::vector<MAHJONG>& pengList, const std::vector<MAHJONG>& gangList)
+bool ServerUtility::isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& pengList, txVector<MAHJONG>& gangList)
 {
+	bool ret = true;
 	int handInCount = handInMah.size();
 	MAHJONG_HUASE curHuase = getHuaSe(handInMah[0]);
-	for (int i = 0; i < handInCount; ++i)
+	// 手牌中是否有其他花色
+	FOR_STL(handInMah, int i = 0; i < handInCount; ++i)
 	{
 		if (getHuaSe(handInMah[i]) != curHuase)
 		{
-			return false;
+			ret = false;
+			break;
 		}
 	}
+	END_FOR_STL(handInMah);
+	if (!ret)
+	{
+		return ret;
+	}
+	// 碰牌中是否有其他花色
 	int pengCount = pengList.size();
-	for (int i = 0; i < pengCount; ++i)
+	FOR_STL(pengList, int i = 0; i < pengCount; ++i)
 	{
 		if (getHuaSe(pengList[i]) != curHuase)
 		{
-			return false;
+			ret = false;
+			break;
 		}
 	}
+	END_FOR_STL(pengList);
+	if (!ret)
+	{
+		return ret;
+	}
+	// 杠牌中是否有其他花色
 	int gangCount = gangList.size();
-	for (int i = 0; i < gangCount; ++i)
+	FOR_STL(gangList, int i = 0; i < gangCount; ++i)
 	{
 		if (getHuaSe(gangList[i]) != curHuase)
 		{
-			return false;
+			ret = false;
+			break;
 		}
 	}
-	return true;
+	END_FOR_STL(gangList);
+	return ret;
 }

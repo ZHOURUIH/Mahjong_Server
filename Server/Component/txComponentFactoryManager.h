@@ -14,24 +14,25 @@ public:
 	virtual void init();
 	virtual void destory()
 	{
-		std::map<std::string, txComponentFactoryBase*>::iterator iter = mFactoryList.begin();
-		std::map<std::string, txComponentFactoryBase*>::iterator iterEnd = mFactoryList.end();
-		for (; iter != iterEnd; ++iter)
+		txMap<std::string, txComponentFactoryBase*>::iterator iter = mFactoryList.begin();
+		txMap<std::string, txComponentFactoryBase*>::iterator iterEnd = mFactoryList.end();
+		FOR_STL(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
 		}
+		END_FOR_STL(mFactoryList);
 		mFactoryList.clear();
 	}
 	txComponentFactoryBase* getFactory(const std::string& type)
 	{
-		std::map<std::string, txComponentFactoryBase*>::iterator iter = mFactoryList.find(type);
+		txMap<std::string, txComponentFactoryBase*>::iterator iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;
 		}
 		return NULL;
 	}
-	std::map<std::string, txComponentFactoryBase*>& getFactoryList() { return mFactoryList; }
+	txMap<std::string, txComponentFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:
 	template<typename O>
 	txComponentFactoryBase* addFactory(const std::string& type)
@@ -41,7 +42,7 @@ protected:
 		return factory;
 	}
 protected:
-	std::map<std::string, txComponentFactoryBase*> mFactoryList;
+	txMap<std::string, txComponentFactoryBase*> mFactoryList;
 };
 
 #endif

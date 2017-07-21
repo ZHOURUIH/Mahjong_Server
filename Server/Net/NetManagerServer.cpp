@@ -27,12 +27,13 @@ txCommandReceiver("NetManagerServer")
 
 void NetManagerServer::destroy()
 {
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
-	for (; iterClient != iterClientEnd; ++iterClient)
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		TRACE_DELETE(iterClient->second);
 	}
+	END_FOR_STL(mClientList);
 	mClientList.clear();
 	TRACE_DELETE(mPacketFactoryManager);
 
@@ -203,14 +204,14 @@ void* NetManagerServer::receiveSendSocket(void* args)
 
 void NetManagerServer::processSend()
 {
-	std::vector<NetManagerClient*> selectedClient;
+	txVector<NetManagerClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdwrite;
 	// 等待发送列表解锁,然后锁定发送列表
 	LOCK(mClientLock, LT_READ);
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
-	for (; iterClient != iterClientEnd;)
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdwrite);
 		selectedClient.clear();
@@ -230,7 +231,7 @@ void NetManagerServer::processSend()
 		if (selectRet > 0)
 		{
 			int selectedClientCount = selectedClient.size();
-			for (int i = 0; i < selectedClientCount; ++i)
+			FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
 			{
 				if (FD_ISSET(selectedClient[i]->getSocket(), &fdwrite))
 				{
@@ -257,8 +258,10 @@ void NetManagerServer::processSend()
 					}
 				}
 			}
+			END_FOR_STL(selectedClient);
 		}
 	}
+	END_FOR_STL(mClientList);
 
 	// 解锁发送列表
 	UNLOCK(mClientLock, LT_READ);
@@ -267,14 +270,14 @@ void NetManagerServer::processSend()
 void NetManagerServer::processRecv()
 {
 	char buff[CLIENT_BUFFER_SIZE];
-	std::vector<NetManagerClient*> selectedClient;
+	txVector<NetManagerClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock, LT_READ);
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
-	for (; iterClient != iterClientEnd;)
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdread);
 		selectedClient.clear();
@@ -289,7 +292,7 @@ void NetManagerServer::processRecv()
 		if (selectRet > 0)
 		{
 			int selectedClientCount = selectedClient.size();
-			for (int i = 0; i < selectedClientCount; ++i)
+			FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
 			{
 				if (!selectedClient[i]->isDeadClient() && FD_ISSET(selectedClient[i]->getSocket(), &fdread))
 				{
@@ -313,8 +316,10 @@ void NetManagerServer::processRecv()
 					}
 				}
 			}
+			END_FOR_STL(selectedClient);
 		}
 	}
+	END_FOR_STL(mClientList);
 
 	// 解锁accept列表
 	UNLOCK(mClientLock, LT_READ);
@@ -323,10 +328,11 @@ void NetManagerServer::processRecv()
 void NetManagerServer::update(const float& elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
-	std::vector<CLIENT_GUID> logoutClientList;
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
-	for (; iterClient != iterClientEnd; ++iterClient)
+	LOCK(mClientLock, LT_READ);
+	txVector<CLIENT_GUID> logoutClientList;
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.begin();
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClientEnd = mClientList.end();
+	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
 		// 将已经死亡的客户端放入列表
@@ -335,12 +341,15 @@ void NetManagerServer::update(const float& elapsedTime)
 			logoutClientList.push_back(iterClient->first);
 		}
 	}
+	END_FOR_STL(mClientList);
+	UNLOCK(mClientLock, LT_READ);
 
 	int logoutCount = logoutClientList.size();
-	for (int i = 0; i < logoutCount; ++i)
+	FOR_STL(logoutClientList, int i = 0; i < logoutCount; ++i)
 	{
 		disconnectSocket(logoutClientList[i]);
 	}
+	END_FOR_STL(logoutClientList);
 }
 
 CLIENT_GUID NetManagerServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)
@@ -351,7 +360,7 @@ CLIENT_GUID NetManagerServer::notifyAcceptClient(const TX_SOCKET& socket, const 
 	if (mClientList.find(clientGUID) == mClientList.end())
 	{
 		NetManagerClient* client = TRACE_NEW(NetManagerClient, client, clientGUID, socket, ip);
-		mClientList.insert(std::make_pair(clientGUID, client));
+		mClientList.insert(clientGUID, client);
 		if (mOutputLog)
 		{
 			LOG_INFO("%s | client : %s connect to server! connect count : %d", txUtility::getTime(), ip, (int)mClientList.size());
@@ -374,7 +383,7 @@ void NetManagerServer::disconnectSocket(const CLIENT_GUID& client)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
 	LOCK(mClientLock, LT_WRITE);
-	std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(client);
+	txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
 		const CHAR_GUID& guid = iterClient->second->getCharGUID();

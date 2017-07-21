@@ -15,9 +15,10 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 		if (room != NULL)
 		{
 			// 通知角色同房间中的其他玩家有玩家离线
-			std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayer = room->getPlayerList().begin();
-			std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
-			for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+			txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
+			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				// 已经离线的玩家不作通知
 				if (iterPlayer->first != mPlayerID)
@@ -27,6 +28,7 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 					mCommandSystem->pushCommand(&cmdPlayerOffline, iterPlayer->second);
 				}
 			}
+			END_FOR_STL(playerList);
 			// 通知房间有玩家离线
 			CommandRoomNotifyPlayerOffline cmdRoomOffline(CMD_PARAM);
 			cmdRoomOffline.mOfflinePlayer = mPlayerID;

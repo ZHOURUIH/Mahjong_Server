@@ -34,7 +34,7 @@ public:
 	{
 		NetManagerClient* client = NULL;
 		LOCK(mClientLock, LT_READ);
-		std::map<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(clientGUID);
+		txMap<CLIENT_GUID, NetManagerClient*>::iterator iterClient = mClientList.find(clientGUID);
 		if (iterClient != mClientList.end())
 		{
 			client = iterClient->second;
@@ -64,7 +64,7 @@ protected:
 	TX_THREAD mAcceptThread;
 	TX_THREAD mReceiveThread;
 	txThreadLock mClientLock;
-	std::map<CLIENT_GUID, NetManagerClient*> mClientList;	// 客户端列表
+	txMap<CLIENT_GUID, NetManagerClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;
 	static float mHeartBeatTimeOut;

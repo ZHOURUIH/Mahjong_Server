@@ -8,13 +8,14 @@
 void CommandCharacterMahjongEnd::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	std::map<CHAR_GUID, int> infoList;
-	std::map<CharacterPlayer*, int>::iterator iter = mMoneyDeltaList.begin();
-	std::map<CharacterPlayer*, int>::iterator iterEnd = mMoneyDeltaList.end();
-	for (; iter != iterEnd; ++iter)
+	txMap<CHAR_GUID, int> infoList;
+	txMap<CharacterPlayer*, int>::iterator iter = mMoneyDeltaList.begin();
+	txMap<CharacterPlayer*, int>::iterator iterEnd = mMoneyDeltaList.end();
+	FOR_STL(mMoneyDeltaList, ; iter != iterEnd; ++iter)
 	{
-		infoList.insert(std::make_pair(iter->first->getGUID(), iter->second));
+		infoList.insert(iter->first->getGUID(), iter->second);
 	}
+	END_FOR_STL(mMoneyDeltaList);
 	SCNotifyMahjongEnd* mahjongEnd = static_cast<SCNotifyMahjongEnd*>(mNetManagerServer->createPacket(PT_SC_NOTIFY_MAHJONG_END));
 	mahjongEnd->setList(infoList);
 	mNetManagerServer->sendMessage(mahjongEnd, player->getClientGUID());

@@ -34,7 +34,7 @@ public:
 	bool moveChildPos(const std::string& name, const int& destPos);
 	txComponent* getChildComponent(const std::string& childName)
 	{
-		std::map<std::string, txComponent*>::iterator iter = mChildComponentMap.find(childName);
+		txMap<std::string, txComponent*>::iterator iter = mChildComponentMap.find(childName);
 		if (iter != mChildComponentMap.end())
 		{
 			return iter->second;
@@ -49,14 +49,15 @@ public:
 
 	// 获得成员变量
 	txComponentOwner* getOwner()		{ return mComponentOwner; }
+	const bool& isNeedPreUpdate()		{ return mNeedPreUpdate; }
 	txComponent* getParentComponent()	{ return mParent; }
 	const std::string& getType()		{ return mType; }
 	const std::string& getBaseType()	{ return mBaseType; }
 	const std::string& getName()		{ return mName; }
 	const bool& isLockOneFrame()		{ return mLockOneFrame; }
 	const bool& isComponentActive()		{ return mActive; }		// 组件自己是否激活,不考虑父组件
-	const std::vector<txComponent*>& getChildComponentList() { return mChildComponentList; }
-	const std::map<std::string, txComponent*>& getChildComponentMap() { return mChildComponentMap; }
+	const txVector<txComponent*>& getChildComponentList() { return mChildComponentList; }
+	const txMap<std::string, txComponent*>& getChildComponentMap() { return mChildComponentMap; }
 
 	// 通知
 	virtual void notifyParentDestroied(){ mParent = NULL; }
@@ -101,8 +102,9 @@ protected:
 	bool mActive;						// 是否激活组件
 	bool mLockOneFrame;					// 是否将组件锁定一次
 	txComponent* mParent;				// 父级组件
-	std::map<std::string, txComponent*> mChildComponentMap;	// 用于查找组件
-	std::vector<txComponent*> mChildComponentList;			// 该组件下的子组件列表,保存了子组件之间的顺序
+	txMap<std::string, txComponent*> mChildComponentMap;	// 用于查找组件
+	txVector<txComponent*> mChildComponentList;			// 该组件下的子组件列表,保存了子组件之间的顺序
+	bool mNeedPreUpdate;				// 是否为需要预先更新的组件
 };
 
 #endif

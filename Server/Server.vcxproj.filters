@@ -765,5 +765,17 @@
     <ClInclude Include="Room\HuInfo.h">
       <Filter>Room</Filter>
     </ClInclude>
+    <ClInclude Include="Common\txMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txSet.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txSTLBase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\txVector.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

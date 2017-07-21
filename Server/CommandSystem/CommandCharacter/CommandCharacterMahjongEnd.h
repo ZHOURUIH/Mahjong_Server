@@ -10,7 +10,7 @@ public:
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	std::map<CharacterPlayer*, int> mMoneyDeltaList;
+	txMap<CharacterPlayer*, int> mMoneyDeltaList;
 };
 
 #endif

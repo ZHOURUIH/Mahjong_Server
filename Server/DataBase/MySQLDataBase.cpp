@@ -109,13 +109,13 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 		bool ret = false;
 		if (result->row_count > 0)
 		{
-			std::map<std::string, std::string> rowData;
+			txMap<std::string, std::string> rowData;
 			MYSQL_ROW sql_row = mysql_fetch_row(result);
 			int fieldCount = mysql_num_fields(result);
 			for (int i = 0; i < fieldCount; ++i)
 			{
 				MYSQL_FIELD* fd = mysql_fetch_field(result);
-				rowData.insert(std::make_pair(fd->name, sql_row[i]));
+				rowData.insert(fd->name, sql_row[i]);
 			}
 			guid = txUtility::stringToInt(getColumn(rowData, COL_GUID, TABLE_ACCOUNT));
 			ret = true;
@@ -150,13 +150,13 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 		bool ret = false;
 		if (result->row_count > 0)
 		{
-			std::map<std::string, std::string> rowData;
+			txMap<std::string, std::string> rowData;
 			MYSQL_ROW sql_row = mysql_fetch_row(result);
 			int fieldCount = mysql_num_fields(result);
 			for (int i = 0; i < fieldCount; ++i)
 			{
 				MYSQL_FIELD* fd = mysql_fetch_field(result);
-				rowData.insert(std::make_pair(fd->name, sql_row[i]));
+				rowData.insert(fd->name, sql_row[i]);
 			}
 			name = getColumn(rowData, COL_NAME, TABLE_CHARACTER_DATA);
 			money = txUtility::stringToInt(getColumn(rowData, COL_MONEY, TABLE_CHARACTER_DATA));
@@ -170,7 +170,7 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 	return false;
 }
 
-const std::string& MySQLDataBase::getColumn(std::map<std::string, std::string>& rowData, const std::string& col, const std::string& table)
+const std::string& MySQLDataBase::getColumn(txMap<std::string, std::string>& rowData, const std::string& col, const std::string& table)
 {
 	if (rowData.find(col) == rowData.end())
 	{

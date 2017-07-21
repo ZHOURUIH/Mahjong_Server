@@ -148,7 +148,7 @@ public:
 		}
 		mMemeryInfo.insert(std::make_pair(ptr, info));
 
-		std::map<std::string, MemeryType >::iterator iterType = mMemeryType.find(info.type);
+		txMap<std::string, MemeryType >::iterator iterType = mMemeryType.find(info.type);
 		if (iterType != mMemeryType.end())
 		{
 			++(iterType->second.count);
@@ -161,10 +161,10 @@ public:
 
 #ifdef _WRITE_FILE
 		// 在类型下标列表中查找该类型,如果有,则更新类型信息
-		std::map<std::string, int>::iterator iterIndex = mMemeryTypeIndex.find(info.type);
+		txMap<std::string, int>::iterator iterIndex = mMemeryTypeIndex.find(info.type);
 		if (iterIndex != mMemeryTypeIndex.end())
 		{
-			std::map<std::string, MemeryType>::iterator iterType = mMemeryType.find(info.type);
+			txMap<std::string, MemeryType>::iterator iterType = mMemeryType.find(info.type);
 			mMemeryList[iterIndex->second] = iterType->second;
 		}
 		// 如果没有,则添加类型信息
@@ -172,7 +172,7 @@ public:
 		{
 			if (mMemeryCount < MAX_COUNT)
 			{
-				std::map<std::string, MemeryType>::iterator iterType = mMemeryType.find(info.type);
+				txMap<std::string, MemeryType>::iterator iterType = mMemeryType.find(info.type);
 				mMemeryTypeIndex.insert(std::make_pair(info.type, mMemeryCount));
 				mMemeryList[mMemeryCount] = iterType->second;
 				++mMemeryCount;
@@ -195,7 +195,7 @@ public:
 		// 正在对列表进行写入操作,所以要锁定列表的读取
 		lockReadInfo();
 		
-		std::map<void*, MemeryInfo>::iterator iterTrace = mMemeryInfo.find(ptr);
+		txMap<void*, MemeryInfo>::iterator iterTrace = mMemeryInfo.find(ptr);
 		std::string type;
 		int size = 0;
 		if (iterTrace != mMemeryInfo.end())
@@ -210,7 +210,7 @@ public:
 			return;
 		}
 
-		std::map<std::string, MemeryType>::iterator iterType = mMemeryType.find(type);
+		txMap<std::string, MemeryType>::iterator iterType = mMemeryType.find(type);
 		if (iterType != mMemeryType.end())
 		{
 			--(iterType->second.count);
@@ -224,7 +224,7 @@ public:
 
 #ifdef _WRITE_FILE
 		// 在下标列表中查找该类型的下标,如果有,则将类型信息中的信息清空
-		std::map<std::string, int>::iterator iterIndex = mMemeryTypeIndex.find(type);
+		txMap<std::string, int>::iterator iterIndex = mMemeryTypeIndex.find(type);
 		if (iterIndex != mMemeryTypeIndex.end())
 		{
 			std::string type = mMemeryList[iterIndex->second].type;
@@ -241,10 +241,10 @@ public:
 		// 解锁列表的读取
 		unlockReadInfo();
 	}
-	static void setIgnoreClass(std::set<std::string>& classList){mIgnoreClass = classList;}
-	static void setIgnoreClassKeyword(std::set<std::string>& classList){mIgnoreClassKeyword = classList;}
-	static void setShowOnlyDetailClass(std::set<std::string>& classList){mShowOnlyDetailClass = classList;}
-	static void setShowOnlyStatisticsClass(std::set<std::string>& classList){mShowOnlyStatisticsClass = classList;}
+	static void setIgnoreClass(txSet<std::string>& classList){mIgnoreClass = classList;}
+	static void setIgnoreClassKeyword(txSet<std::string>& classList){mIgnoreClassKeyword = classList;}
+	static void setShowOnlyDetailClass(txSet<std::string>& classList){mShowOnlyDetailClass = classList;}
+	static void setShowOnlyStatisticsClass(txSet<std::string>& classList){mShowOnlyStatisticsClass = classList;}
 	static void setShowDetail(bool show){mShowDetail = show;}
 	static void setShowStatistics(bool show){mShowStatistics = show;}
 	static void setShowAll(bool show){mShowAll = show;}
@@ -264,17 +264,17 @@ public:
 	}
 protected:
 	// 内存申请总信息表
-	static std::map<void*, MemeryInfo> mMemeryInfo;
+	static txMap<void*, MemeryInfo> mMemeryInfo;
 	// 内存统计信息表, first是类型名,second的first是该类型名的内存个数,second是该类型占得总内存大小,单位是字节
-	static std::map<std::string, MemeryType> mMemeryType;
+	static txMap<std::string, MemeryType> mMemeryType;
 	// 不显示该列表中类型的内存详细信息以及统计信息
-	static std::set<std::string> mIgnoreClass;
+	static txSet<std::string> mIgnoreClass;
 	// 如果详细信息以及统计信息中的类型包含该列表中的关键字,则不显示
-	static std::set<std::string> mIgnoreClassKeyword;
+	static txSet<std::string> mIgnoreClassKeyword;
 	// 只显示该列表中类型的内存详细信息,如果该列表为空,则全部显示
-	static std::set<std::string> mShowOnlyDetailClass;
+	static txSet<std::string> mShowOnlyDetailClass;
 	// 只显示该列表中类型的内存统计信息,如果该列表为空,则全部显示
-	static std::set<std::string> mShowOnlyStatisticsClass;
+	static txSet<std::string> mShowOnlyStatisticsClass;
 	// 是否显示总信息表的详细内容
 	static bool mShowDetail;
 	// 是否显示内存统计信息
@@ -288,7 +288,7 @@ protected:
 	HANDLE mThread;
 
 #ifdef _WRITE_FILE
-	static std::map<std::string, int> mMemeryTypeIndex;
+	static txMap<std::string, int> mMemeryTypeIndex;
 	static MemeryType mMemeryList[MAX_COUNT];
 	static int mMemeryCount;
 #endif

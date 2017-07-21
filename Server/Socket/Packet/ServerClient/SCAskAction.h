@@ -24,7 +24,7 @@ public:
 		pushArrayParam(mMahjong, 4);
 		pushArrayParam(mHuList, MAX_HU_COUNT);
 	}
-	void setActionList(const std::vector<MahjongAction*>& actionList)
+	void setActionList(const txVector<MahjongAction*>& actionList)
 	{
 		int count = actionList.size();
 		for (int i = 0; i < 4; ++i)
@@ -47,7 +47,7 @@ public:
 		}
 	}
 protected:
-	void setHuList(const std::vector<HU_TYPE>& huList)
+	void setHuList(const txVector<HU_TYPE>& huList)
 	{
 		int count = huList.size();
 		for (int i = 0; i < MAX_HU_COUNT; ++i)

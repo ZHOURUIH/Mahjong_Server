@@ -39,9 +39,9 @@ public:
 		mDataDefineFile.clear();
 	}
 	// 得到数据列表
-	bool getDataList(const DATA_TYPE& type, std::vector<Data*>& dataList)
+	bool getDataList(const DATA_TYPE& type, txVector<Data*>& dataList)
 	{
-		std::map<DATA_TYPE, std::vector<Data*> >::iterator iter = mDataStructList.find(type);
+		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter == mDataStructList.end())
 		{
 			return false;
@@ -52,7 +52,7 @@ public:
 	// 得到数据数量
 	int getDataCount(const DATA_TYPE& type)
 	{
-		std::map<DATA_TYPE, std::vector<Data*> >::iterator iter = mDataStructList.find(type);
+		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
 		{
 			return (int)iter->second.size();
@@ -62,7 +62,7 @@ public:
 	// 查询数据
 	Data* queryData(const DATA_TYPE& type, const int& index)
 	{
-		std::map<DATA_TYPE, std::vector<Data*> >::iterator iter = mDataStructList.find(type);
+		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
 		{
 			if (index < (int)iter->second.size())
@@ -77,7 +77,7 @@ public:
 	// 根据数据名得到数据定义
 	const std::string& getDataNameByDataType(const DATA_TYPE& type)
 	{
-		std::map<DATA_TYPE, std::string>::iterator iter = mDataDefineFile.find(type);
+		txMap<DATA_TYPE, std::string>::iterator iter = mDataDefineFile.find(type);
 		if (iter != mDataDefineFile.end())
 		{
 			return iter->second;
@@ -87,7 +87,7 @@ public:
 	// 根据数据定义得到数据名
 	DATA_TYPE getDataTypeByDataName(const std::string& name)
 	{
-		std::map<std::string, DATA_TYPE>::iterator iter = mDataFileDefine.find(name);
+		txMap<std::string, DATA_TYPE>::iterator iter = mDataFileDefine.find(name);
 		if (iter != mDataFileDefine.end())
 		{
 			return iter->second;
@@ -107,7 +107,7 @@ protected:
 	void addDataFactoryToList(DataFactoryBase* factory);
 	DataFactoryBase* getDataFactory(const DATA_TYPE& type)
 	{
-		std::map<DATA_TYPE, DataFactoryBase*>::iterator itrFind = mDataFactoryList.find(type);
+		txMap<DATA_TYPE, DataFactoryBase*>::iterator itrFind = mDataFactoryList.find(type);
 		if (itrFind != mDataFactoryList.end())
 		{
 			return itrFind->second;
@@ -115,10 +115,10 @@ protected:
 		return NULL;
 	}
 protected:
-	std::map<DATA_TYPE, std::vector<Data*> > mDataStructList;
-	static std::map<DATA_TYPE, DataFactoryBase*> mDataFactoryList;
-	static std::map<std::string, DATA_TYPE> mDataFileDefine;
-	static std::map<DATA_TYPE, std::string> mDataDefineFile;
+	txMap<DATA_TYPE, txVector<Data*> > mDataStructList;
+	static txMap<DATA_TYPE, DataFactoryBase*> mDataFactoryList;
+	static txMap<std::string, DATA_TYPE> mDataFileDefine;
+	static txMap<DATA_TYPE, std::string> mDataDefineFile;
 };
 
 #endif

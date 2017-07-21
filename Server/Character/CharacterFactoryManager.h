@@ -13,34 +13,35 @@ public:
 	virtual void init();
 	virtual void destory()
 	{
-		std::map<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.begin();
-		std::map<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iterEnd = mFactoryList.end();
-		for (; iter != iterEnd; ++iter)
+		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.begin();
+		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iterEnd = mFactoryList.end();
+		FOR_STL(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
 		}
+		END_FOR_STL(mFactoryList);
 		mFactoryList.clear();
 	}
 	CharacterFactoryBase* getFactory(const CHARACTER_TYPE& type)
 	{
-		std::map<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.find(type);
+		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;
 		}
 		return NULL;
 	}
-	std::map<CHARACTER_TYPE, CharacterFactoryBase*>& getFactoryList() { return mFactoryList; }
+	txMap<CHARACTER_TYPE, CharacterFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:
 	template<typename O>
 	CharacterFactoryBase* addFactory(const CHARACTER_TYPE& type)
 	{
 		CharacterFactoryBase* factory = CharacterFactoryBase::createFactory<O>(type);
-		mFactoryList.insert(std::make_pair(factory->getType(), factory));
+		mFactoryList.insert(factory->getType(), factory);
 		return factory;
 	}
 protected:
-	std::map<CHARACTER_TYPE, CharacterFactoryBase*> mFactoryList;
+	txMap<CHARACTER_TYPE, CharacterFactoryBase*> mFactoryList;
 };
 
 #endif

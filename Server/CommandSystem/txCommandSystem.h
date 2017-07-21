@@ -26,8 +26,8 @@ public:
 	void destroy();
 	virtual void notifyReceiverDestroied(txCommandReceiver* receiver);
 protected:
-	std::vector<DelayCommand> mCommandBufferProcess;	// 用于处理的命令列表
-	std::vector<DelayCommand> mCommandBufferInput;		// 用于放入命令的命令列表
+	txVector<DelayCommand> mCommandBufferProcess;	// 用于处理的命令列表
+	txVector<DelayCommand> mCommandBufferInput;		// 用于放入命令的命令列表
 	txThreadLock mBufferLock;
 	bool mShowDebugInfo;
 };

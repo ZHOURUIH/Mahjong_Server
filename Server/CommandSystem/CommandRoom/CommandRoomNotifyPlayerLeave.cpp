@@ -15,14 +15,16 @@ void CommandRoomNotifyPlayerLeave::execute()
 	// 房间中还有人则通知房间中的其他玩家有玩家离开
 	if (room->getPlayerList().size() > 0)
 	{
-		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayer = room->getPlayerList().begin();
-		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
-		for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+		txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+		txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
+		txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+		FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 		{
 			CommandCharacterNotifyOtherPlayerLeaveRoom cmdLeave(CMD_PARAM);
 			cmdLeave.mLeavePlayerID = mPlayerGUID;
 			mCommandSystem->pushCommand(&cmdLeave, iterPlayer->second);
 		}
+		END_FOR_STL(playerList);
 	}
 	// 如果房间中没有人了,则销毁房间
 	else

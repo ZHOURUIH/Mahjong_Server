@@ -7,9 +7,10 @@ void CommandRoomStartGame::execute()
 	Room* room = static_cast<Room*>(mReceiver);
 	int dice0 = txUtility::randomInt(0, MAX_DICE - 1);
 	int dice1 = txUtility::randomInt(0, MAX_DICE - 1);
-	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayer = room->getPlayerList().begin();
-	std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterPlayerEnd = room->getPlayerList().end();
-	for (; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+	FOR_STL (playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		// 先将玩家的准备标记清空
 		room->notifyPlayerReady(iterPlayer->first, false);
@@ -18,6 +19,7 @@ void CommandRoomStartGame::execute()
 		cmdStartGame.setDice(dice0, dice1);
 		mCommandSystem->pushCommand(&cmdStartGame, iterPlayer->second);
 	}
+	END_FOR_STL(playerList);
 }
 
 std::string CommandRoomStartGame::showDebugInfo()

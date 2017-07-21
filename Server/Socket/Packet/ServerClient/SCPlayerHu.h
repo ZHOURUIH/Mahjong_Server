@@ -24,7 +24,7 @@ public:
 	{
 		PACKET_DEBUG(PACKET_EMPTY);
 	}
-	void setHuPlayer(const std::vector<CharacterPlayer*>& huPlayerList)
+	void setHuPlayer(const txVector<CharacterPlayer*>& huPlayerList)
 	{
 		for (int i = 0; i < MAX_PLAYER - 1; ++i)
 		{
@@ -38,7 +38,7 @@ public:
 			}
 		}
 	}
-	void setHuList(const std::vector<std::vector<HU_TYPE>>& huList)
+	void setHuList(const txVector<txVector<HU_TYPE>>& huList)
 	{
 		int playerCount = huList.size();
 		for (int i = 0; i < MAX_PLAYER - 1; ++i)

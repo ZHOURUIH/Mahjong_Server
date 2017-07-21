@@ -19,15 +19,15 @@ public:
 		pushArrayParam(mCharacterGUIDList, MAX_PLAYER);
 		pushArrayParam(mMoneyDeltaList, MAX_PLAYER);
 	}
-	void setList(const std::map<CHAR_GUID, int>& infoList)
+	void setList(txMap<CHAR_GUID, int>& infoList)
 	{
 		for (int i = 0; i < MAX_PLAYER; ++i)
 		{
 			mCharacterGUIDList[i] = INVALID_ID;
 			mMoneyDeltaList[i] = 0;
 		}
-		std::map<CHAR_GUID, int>::const_iterator iter = infoList.begin();
-		std::map<CHAR_GUID, int>::const_iterator iterEnd = infoList.end();
+		txMap<CHAR_GUID, int>::iterator iter = infoList.begin();
+		txMap<CHAR_GUID, int>::iterator iterEnd = infoList.end();
 		for (int i = 0; iter != iterEnd; ++iter, ++i)
 		{
 			mCharacterGUIDList[i] = iter->first;

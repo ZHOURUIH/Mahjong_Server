@@ -6,19 +6,19 @@
 #include "txSerializer.h"
 #endif
 
-std::map<void*, MemeryInfo> MemeryTrace::mMemeryInfo;
-std::map<std::string, MemeryType> MemeryTrace::mMemeryType;
-std::set<std::string> MemeryTrace::mIgnoreClass;
-std::set<std::string> MemeryTrace::mIgnoreClassKeyword;
-std::set<std::string> MemeryTrace::mShowOnlyDetailClass;
-std::set<std::string> MemeryTrace::mShowOnlyStatisticsClass;
+txMap<void*, MemeryInfo> MemeryTrace::mMemeryInfo;
+txMap<std::string, MemeryType> MemeryTrace::mMemeryType;
+txSet<std::string> MemeryTrace::mIgnoreClass;
+txSet<std::string> MemeryTrace::mIgnoreClassKeyword;
+txSet<std::string> MemeryTrace::mShowOnlyDetailClass;
+txSet<std::string> MemeryTrace::mShowOnlyStatisticsClass;
 bool MemeryTrace::mShowDetail = true;
 bool MemeryTrace::mShowStatistics = true;
 bool MemeryTrace::mShowTotalCount = true;
 int MemeryTrace::mInstanceCount = 0;
 bool MemeryTrace::mShowAll = true;
 #ifdef _WRITE_FILE
-std::map<std::string, int> MemeryTrace::mMemeryTypeIndex;
+txMap<std::string, int> MemeryTrace::mMemeryTypeIndex;
 MemeryType MemeryTrace::mMemeryList[MAX_COUNT];
 int MemeryTrace::mMemeryCount = 0;
 #endif
@@ -72,9 +72,9 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 			LOGI("\n\n---------------------------------------------memery info begin-----------------------------------------------------------\n");
 
 			// 内存详细信息
-			std::map<void*, MemeryInfo>::iterator iter = mMemeryInfo.begin();
-			std::map<void*, MemeryInfo>::iterator iterEnd = mMemeryInfo.end();
-			for (; iter != iterEnd; ++iter)
+			txMap<void*, MemeryInfo>::iterator iter = mMemeryInfo.begin();
+			txMap<void*, MemeryInfo>::iterator iterEnd = mMemeryInfo.end();
+			FOR_STL (mMemeryInfo, ; iter != iterEnd; ++iter)
 			{
 				memSize += iter->second.size;
 				if (!mShowDetail)
@@ -95,9 +95,9 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 
 				// 如果类型包含关键字,则不显示
 				bool show = true;
-				std::set<std::string>::iterator iterKeyword = mIgnoreClassKeyword.begin();
-				std::set<std::string>::iterator iterKeywordEnd = mIgnoreClassKeyword.end();
-				for (; iterKeyword != iterKeywordEnd; ++iterKeyword)
+				txSet<std::string>::iterator iterKeyword = mIgnoreClassKeyword.begin();
+				txSet<std::string>::iterator iterKeywordEnd = mIgnoreClassKeyword.end();
+				FOR_STL (mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
 				{
 					if (strstr(iter->second.type.c_str(), iterKeyword->c_str()) != NULL)
 					{
@@ -105,12 +105,14 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 						break;
 					}
 				}
+				END_FOR_STL(mIgnoreClassKeyword);
 
 				if (show)
 				{
 					LOGI("size : %d, file : %s, line : %d, class : %s\n", iter->second.size, iter->second.file.c_str(), iter->second.line, iter->second.type.c_str());
 				}
 			}
+			END_FOR_STL(mMemeryInfo);
 
 			// 解锁列表的写入
 			unlockWriteInfo();
@@ -122,9 +124,9 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 
 			if (mShowStatistics)
 			{
-				std::map<std::string, MemeryType >::iterator iterType = mMemeryType.begin();
-				std::map<std::string, MemeryType >::iterator iterTypeEnd = mMemeryType.end();
-				for (; iterType != iterTypeEnd; ++iterType)
+				txMap<std::string, MemeryType >::iterator iterType = mMemeryType.begin();
+				txMap<std::string, MemeryType >::iterator iterTypeEnd = mMemeryType.end();
+				FOR_STL (mMemeryType, ; iterType != iterTypeEnd; ++iterType)
 				{
 					// 如果该类型已忽略,则不显示
 					if (mIgnoreClass.find(iterType->first) != mIgnoreClass.end())
@@ -138,9 +140,9 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 					}
 					// 如果类型包含关键字,则不显示
 					bool show = true;
-					std::set<std::string>::iterator iterKeyword = mIgnoreClassKeyword.begin();
-					std::set<std::string>::iterator iterKeywordEnd = mIgnoreClassKeyword.end();
-					for (; iterKeyword != iterKeywordEnd; ++iterKeyword)
+					txSet<std::string>::iterator iterKeyword = mIgnoreClassKeyword.begin();
+					txSet<std::string>::iterator iterKeywordEnd = mIgnoreClassKeyword.end();
+					FOR_STL (mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
 					{
 						if (strstr(iterType->first.c_str(), iterKeyword->c_str()) != NULL)
 						{
@@ -148,11 +150,13 @@ DWORD WINAPI MemeryTrace::debugMemeryTrace(LPVOID lpParameter)
 							break;
 						}
 					}
+					END_FOR_STL(mIgnoreClassKeyword);
 					if (show)
 					{
 						LOGI("%s : %d个, %.3fKB\n", iterType->first.c_str(), iterType->second.count, iterType->second.size / 1000.0f);
 					}
 				}
+				END_FOR_STL(mMemeryType);
 			}
 			LOGI("---------------------------------------------memery info end-----------------------------------------------------------\n");
 		}
@@ -183,9 +187,9 @@ DWORD WINAPI MemeryTrace::writeMemeryTrace(LPVOID lpParameter)
 		// 写入详细信息数量
 		int infoCount = mMemeryInfo.size();
 		serializer.write(infoCount);
-		std::map<void*, MemeryInfo>::iterator iterInfo = mMemeryInfo.begin();
-		std::map<void*, MemeryInfo>::iterator iterInfoEnd = mMemeryInfo.end();
-		for (; iterInfo != iterInfoEnd; ++iterInfo)
+		txMap<void*, MemeryInfo>::iterator iterInfo = mMemeryInfo.begin();
+		txMap<void*, MemeryInfo>::iterator iterInfoEnd = mMemeryInfo.end();
+		FOR_STL (mMemeryInfo, ; iterInfo != iterInfoEnd; ++iterInfo)
 		{
 			// 写入地址
 			serializer.write(iterInfo->first);
@@ -198,13 +202,14 @@ DWORD WINAPI MemeryTrace::writeMemeryTrace(LPVOID lpParameter)
 			// 写入类型
 			serializer.writeString(iterInfo->second.type.c_str());
 		}
+		END_FOR_STL(mMemeryInfo);
 
 		// 写入类型数量
 		int typeCount = mMemeryTypeIndex.size();
 		serializer.write(typeCount);
-		std::map<std::string, int>::iterator iterIndex = mMemeryTypeIndex.begin();
-		std::map<std::string, int>::iterator iterIndexEnd = mMemeryTypeIndex.end();
-		for (; iterIndex != iterIndexEnd; ++iterIndex)
+		txMap<std::string, int>::iterator iterIndex = mMemeryTypeIndex.begin();
+		txMap<std::string, int>::iterator iterIndexEnd = mMemeryTypeIndex.end();
+		FOR_STL (mMemeryTypeIndex, ; iterIndex != iterIndexEnd; ++iterIndex)
 		{
 			// 写入类型名
 			serializer.writeString(mMemeryList[iterIndex->second].type.c_str());
@@ -213,6 +218,7 @@ DWORD WINAPI MemeryTrace::writeMemeryTrace(LPVOID lpParameter)
 			// 写入大小
 			serializer.write(mMemeryList[iterIndex->second].size);
 		}
+		END_FOR_STL(mMemeryTypeIndex);
 
 		// 解锁列表的写入
 		unlockWriteInfo();

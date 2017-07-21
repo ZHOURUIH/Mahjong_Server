@@ -12,10 +12,11 @@ bool txSerializedData::read(char* pBuffer, const int& bufferSize)
 	int bufferOffset = 0;
 	bool ret = true;
 	int parameterCount = mDataParameterList.size();
-	for (int i = 0; i < parameterCount; ++i)
+	FOR_STL(mDataParameterList, int i = 0; i < parameterCount; ++i)
 	{
 		ret = ret && readByte(mDataParameterList[i].mDataPtr, pBuffer, bufferOffset, bufferSize, mDataParameterList[i].mDataSize);
 	}
+	END_FOR_STL(mDataParameterList);
 	return ret;
 }
 
@@ -24,10 +25,11 @@ bool txSerializedData::write(char* pBuffer, const int& bufferSize)
 	int curWriteSize = 0;
 	bool ret = true;
 	int parameterCount = mDataParameterList.size();
-	for (int i = 0; i < parameterCount; ++i)
+	FOR_STL(mDataParameterList, int i = 0; i < parameterCount; ++i)
 	{
 		ret = ret && writeByte(pBuffer, mDataParameterList[i].mDataPtr, curWriteSize, bufferSize, mDataParameterList[i].mDataSize);
 	}
+	END_FOR_STL(mDataParameterList);
 	return ret;
 }
 
@@ -59,13 +61,14 @@ bool txSerializedData::writeData(const std::string& dataString, const int& param
 	}
 	else if (paramType == mIntArrayType)
 	{
-		std::vector<std::string> valueList;
+		txVector<std::string> valueList;
 		txUtility::split(dataString, ";", &valueList);
 		int valueCount = valueList.size();
-		for (int i = 0; i < valueCount; ++i)
+		FOR_STL(valueList, int i = 0; i < valueCount; ++i)
 		{
 			((int*)(dataParam.mDataPtr))[i] = txUtility::stringToInt(valueList[i]);
 		}
+		END_FOR_STL(valueList);
 	}
 	return true;
 }
@@ -124,22 +127,23 @@ void txSerializedData::zeroParams()
 	// 数据内容全部清空时,也一起计算数据大小
 	mDataSize = 0;
 	int parameterCount = mDataParameterList.size();
-	for (int i = 0; i < parameterCount; ++i)
+	FOR_STL(mDataParameterList, int i = 0; i < parameterCount; ++i)
 	{
 		memset(mDataParameterList[i].mDataPtr, 0, mDataParameterList[i].mDataSize);
 		mDataSize += mDataParameterList[i].mDataSize;
 	}
+	END_FOR_STL(mDataParameterList);
 }
 
-bool txSerializedData::readStringList(const std::vector<std::string>& dataList)
+void txSerializedData::readStringList(txVector<std::string>& dataList)
 {
 	int curIndex = 0;
 	int parameterCount = mDataParameterList.size();
-	for (int i = 0; i < parameterCount; ++i)
+	FOR_STL(mDataParameterList, int i = 0; i < parameterCount; ++i)
 	{
 		if (curIndex >= (int)dataList.size())
 		{
-			return false;
+			break;
 		}
 		const DataParameter& paramter = mDataParameterList[i];
 		if (paramter.mDataType == mIntType)
@@ -162,15 +166,16 @@ bool txSerializedData::readStringList(const std::vector<std::string>& dataList)
 		}
 		else if (paramter.mDataType == mIntArrayType)
 		{
-			std::vector<std::string> breakVec;
+			txVector<std::string> breakVec;
 			txUtility::split(dataList[curIndex], ";", &breakVec);
 			int size = breakVec.size();
-			for (int j = 0; j < size; ++j)
+			FOR_STL(breakVec, int j = 0; j < size; ++j)
 			{
 				((int*)(paramter.mDataPtr))[j] = txUtility::stringToInt(breakVec[j]);
 			}
+			END_FOR_STL(breakVec);
 		}
 		++curIndex;
 	}
-	return true;
+	END_FOR_STL(mDataParameterList);
 }

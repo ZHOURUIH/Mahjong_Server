@@ -4,7 +4,7 @@
 
 #define ADD_PACKET_FACTORY(packet, type) addFactory<PacketFactory<packet> >(type); addPacketSize(type);
 
-std::map<PACKET_TYPE, int> PacketFactoryManager::mPacketSizeMap;
+txMap<PACKET_TYPE, int> PacketFactoryManager::mPacketSizeMap;
 
 void PacketFactoryManager::init()
 {

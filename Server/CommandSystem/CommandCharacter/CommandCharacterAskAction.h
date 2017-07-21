@@ -11,7 +11,7 @@ public:
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	std::vector<MahjongAction*> mActionList;
+	txVector<MahjongAction*> mActionList;
 };
 
 #endif

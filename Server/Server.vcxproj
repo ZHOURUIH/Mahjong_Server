@@ -248,6 +248,9 @@
     <ClInclude Include="Common\ServerConfig.h" />
     <ClInclude Include="Common\ServerDefine.h" />
     <ClInclude Include="Common\ServerUtility.h" />
+    <ClInclude Include="Common\txMap.h" />
+    <ClInclude Include="Common\txSet.h" />
+    <ClInclude Include="Common\txSTLBase.h" />
     <ClInclude Include="Common\txThreadLock.h" />
     <ClInclude Include="Common\txFactoryManager.h" />
     <ClInclude Include="Common\txMemeryTrace.h" />
@@ -256,6 +259,7 @@
     <ClInclude Include="Common\txShareMemeryServer.h" />
     <ClInclude Include="Common\txSingleton.h" />
     <ClInclude Include="Common\txUtility.h" />
+    <ClInclude Include="Common\txVector.h" />
     <ClInclude Include="Component\BaseComponent\txComponent.h" />
     <ClInclude Include="Component\txComponentFactory.h" />
     <ClInclude Include="Component\txComponentFactoryManager.h" />

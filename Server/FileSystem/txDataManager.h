@@ -41,9 +41,9 @@ protected:
 	void throwAllToUnusedList();
 protected:
 	txDataElem elems[DATA_SLOTS];
-	std::map<std::string, int> mDataNameList;	// first是文件名不带路径,second是文件下标
-	std::set<short> mUsedIndexList;				// 已使用的下标列表
-	std::set<short> mUnusedIndexList;			// 未使用的下标列表
+	txMap<std::string, int> mDataNameList;	// first是文件名不带路径,second是文件下标
+	txSet<short> mUsedIndexList;				// 已使用的下标列表
+	txSet<short> mUnusedIndexList;			// 未使用的下标列表
 	bool mShowDebugInfo;
 	txThreadLock mDataLock;
 };

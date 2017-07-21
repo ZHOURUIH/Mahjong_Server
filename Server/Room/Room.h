@@ -28,7 +28,7 @@ public:
 	{
 		for (int i = 0; i < mMaxPlayer; ++i)
 		{
-			mPlayerPositionList.insert(std::make_pair(i, (CharacterPlayer*)NULL));
+			mPlayerPositionList.insert(i, (CharacterPlayer*)NULL);
 		}
 	}
 	virtual ~Room(){ destroy(); }
@@ -43,7 +43,7 @@ public:
 	void notifyDiceDone(const CHAR_GUID& playerGUID);
 	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
 	void notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah);
-	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const std::vector<MahjongAction*>& actionList);
+	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const txVector<MahjongAction*>& actionList);
 	void playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type);
 	CharacterPlayer* getMember(const CHAR_GUID& playerID);
 	CharacterPlayer* getMemberByPosition(const CHAR_GUID& playerID);
@@ -55,7 +55,7 @@ public:
 	bool isAllPlayerReady()											{ return mReadyCount == mMaxPlayer; }
 	bool isAllPlayerDiceDone()										{ return mDiceDoneCount == mMaxPlayer; }
 	bool isRoomFull()												{ return (int)mPlayerList.size() >= mMaxPlayer; }
-	const std::map<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
+	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()				{ return mPlayerList; }
 	const bool& isRoomLocked()										{ return mLockRoom; }
 protected:
 	void reset();
@@ -63,21 +63,21 @@ protected:
 	void removePlayer(CharacterPlayer* player);
 	void resetMahjongPool();
 	MAHJONG requestGet();
-	void endGame(const std::map<CharacterPlayer*, HuInfo*>& huPlayerList);
+	void endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList);
 	// 向所有玩家发送消息
 	void notifyAllPlayerGetStartDone();
 	void notifyAllPlayerBanker(const CHAR_GUID& banker);
-	void notifyAllPlayerMahjongEnd(const std::map<CharacterPlayer*, int>& moneyDeltaList);
+	void notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaList);
 	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
 	// 可能同时会有多个玩家可以胡牌
-	void playerHu(const std::map<CharacterPlayer*, HuInfo*>& huInfoList);
+	void playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList);
 	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerAskDrop(CharacterPlayer* player);
-	void playerAskAction(CharacterPlayer* player, const std::vector<MahjongAction*>& actionList);
+	void playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
 	
 protected:
 	int mID;												// 房间ID
@@ -85,14 +85,14 @@ protected:
 	bool mLockRoom;											// 房间是否已锁定,房间锁定后,其他玩家不能再加入
 	int mDiceDoneCount;										// 骰子掷完的人数
 	int mReadyCount;										// 已准备的玩家人数
-	std::map<CHAR_GUID, CharacterPlayer*> mPlayerList;		// 房间中的玩家列表
-	std::map<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定
+	txMap<CHAR_GUID, CharacterPlayer*> mPlayerList;		// 房间中的玩家列表
+	txMap<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定
 	MAHJONG_PLAY_STATE mPlayState;							// 当前麻将游戏的状态
-	std::vector<MAHJONG> mMahjongPool;						// 当前麻将池中的麻将
+	txVector<MAHJONG> mMahjongPool;						// 当前麻将池中的麻将
 	int mBankerPos;											// 本局庄家的位置
 	int mCurAssignPos;										// 开局发牌时当前发到牌的玩家的位置
 	float mCurInterval;										// 当前间隔时间计时
-	std::map<CharacterPlayer*, WaitActionInfo*> mWaitList;	// 等待列表
+	txMap<CharacterPlayer*, WaitActionInfo*> mWaitList;	// 等待列表
 };
 
 #endif

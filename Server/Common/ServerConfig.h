@@ -18,7 +18,7 @@ public:
 	}
 	static float getFloatParam(const SERVER_DEFINE& param)
 	{
-		std::map<SERVER_DEFINE, float>::iterator iterParam = mFloatParamList.find(param);
+		txMap<SERVER_DEFINE, float>::iterator iterParam = mFloatParamList.find(param);
 		if (iterParam != mFloatParamList.end())
 		{
 			return iterParam->second;
@@ -28,10 +28,10 @@ public:
 protected:
 	void setFloatParam(const SERVER_DEFINE& param, const float& value)
 	{
-		std::map<SERVER_DEFINE, float>::iterator iterParam = mFloatParamList.find(param);
+		txMap<SERVER_DEFINE, float>::iterator iterParam = mFloatParamList.find(param);
 		if (iterParam == mFloatParamList.end())
 		{
-			mFloatParamList.insert(std::make_pair(param, value));
+			mFloatParamList.insert(param, value);
 		}
 		else
 		{
@@ -39,8 +39,8 @@ protected:
 		}
 	}
 protected:
-	static std::map<std::string, SERVER_DEFINE> mFloatParamDefineList;
-	static std::map<SERVER_DEFINE, float> mFloatParamList;
+	static txMap<std::string, SERVER_DEFINE> mFloatParamDefineList;
+	static txMap<SERVER_DEFINE, float> mFloatParamList;
 };
 
 #endif

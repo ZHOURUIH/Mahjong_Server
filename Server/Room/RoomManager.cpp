@@ -9,25 +9,26 @@
 int RoomManager::mRoomIDSeed = 0;
 void RoomManager::update(const float& elapsedTime)
 {
-	std::map<int, Room*>::iterator iter = mRoomList.begin();
-	std::map<int, Room*>::iterator iterEnd = mRoomList.end();
-	for (; iter != iterEnd; ++iter)
+	txMap<int, Room*>::iterator iter = mRoomList.begin();
+	txMap<int, Room*>::iterator iterEnd = mRoomList.end();
+	FOR_STL(mRoomList, ; iter != iterEnd; ++iter)
 	{
 		iter->second->update(elapsedTime);
 	}
+	END_FOR_STL(mRoomList);
 }
 
 Room* RoomManager::createRoom()
 {
 	Room* room = TRACE_NEW(Room, room, mRoomIDSeed++);
 	room->init();
-	mRoomList.insert(std::make_pair(room->getID(), room));
+	mRoomList.insert(room->getID(), room);
 	return room;
 }
 
 Room* RoomManager::getRoom(const int& id)
 {
-	std::map<int, Room*>::iterator iterRoom = mRoomList.find(id);
+	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())
 	{
 		return iterRoom->second;
@@ -37,7 +38,7 @@ Room* RoomManager::getRoom(const int& id)
 
 void RoomManager::destroyRoom(const int& id)
 {
-	std::map<int, Room*>::iterator iterRoom = mRoomList.find(id);
+	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())
 	{
 		TRACE_DELETE(iterRoom->second);
@@ -47,11 +48,12 @@ void RoomManager::destroyRoom(const int& id)
 
 void RoomManager::destroyAllRoom()
 {
-	std::map<int, Room*>::iterator iterRoom = mRoomList.begin();
-	std::map<int, Room*>::iterator iterRoomEnd = mRoomList.end();
-	for (; iterRoom != iterRoomEnd; ++iterRoom)
+	txMap<int, Room*>::iterator iterRoom = mRoomList.begin();
+	txMap<int, Room*>::iterator iterRoomEnd = mRoomList.end();
+	FOR_STL(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 	{
 		TRACE_DELETE(iterRoom->second);
 	}
+	END_FOR_STL(mRoomList);
 	mRoomList.clear();
 }

@@ -3,32 +3,36 @@
 #include "txComponentFactoryManager.h"
 #include "GameLog.h"
 
-std::map<std::string, txComponent*> txComponentOwner::EMPTY_COMPONENT_MAP;
+txMap<std::string, txComponent*> txComponentOwner::EMPTY_COMPONENT_MAP;
 
 void txComponentOwner::updatePreComponent(const float& elapsedTime)
 {
-	if (mAllComponentList.empty())
+	if (mAllComponentList.size() == 0)
 	{
 		return;
 	}
 	int rootComponentCount = mRootComponentList.size();
-	// 预更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	if (mUsePreLateUpdate)
 	{
-		txComponent* component = mRootComponentList[i];
-		if (isPreUpdateType(component->getType()))
+		// 预更新基础类型组件
+		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
-			if (component != NULL && component->isActive() && !component->isLockOneFrame())
+			txComponent* component = mRootComponentList[i];
+			if (component->isNeedPreUpdate())
 			{
-				component->preUpdate(elapsedTime);
+				if (component != NULL && component->isActive() && !component->isLockOneFrame())
+				{
+					component->preUpdate(elapsedTime);
+				}
 			}
 		}
+		END_FOR_STL(mRootComponentList);
 	}
 	// 更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 	{
 		txComponent* component = mRootComponentList[i];
-		if (isPreUpdateType(component->getType()))
+		if (component->isNeedPreUpdate())
 		{
 			if (component != NULL && component->isActive() && !component->isLockOneFrame())
 			{
@@ -36,52 +40,61 @@ void txComponentOwner::updatePreComponent(const float& elapsedTime)
 			}
 		}
 	}
-	// 补充更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	END_FOR_STL(mRootComponentList);
+	if (mUsePreLateUpdate)
 	{
-		txComponent* component = mRootComponentList[i];
-		if (isPreUpdateType(component->getType()))
+		// 补充更新基础类型组件
+		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
-			if (component != NULL && component->isActive())
+			txComponent* component = mRootComponentList[i];
+			if (component->isNeedPreUpdate())
 			{
-				// 如果组件被锁定了一帧,则不更新,解除锁定
-				if (component->isLockOneFrame())
+				if (component != NULL && component->isActive())
 				{
-					component->setLockOneFrame(false);
-				}
-				else
-				{
-					component->lateUpdate(elapsedTime);
+					// 如果组件被锁定了一帧,则不更新,解除锁定
+					if (component->isLockOneFrame())
+					{
+						component->setLockOneFrame(false);
+					}
+					else
+					{
+						component->lateUpdate(elapsedTime);
+					}
 				}
 			}
 		}
+		END_FOR_STL(mRootComponentList);
 	}
 }
 
 void txComponentOwner::updateComponents(const float& elapsedTime)
 {
-	if (mAllComponentList.empty())
+	if (mAllComponentList.size() == 0)
 	{
 		return;
 	}
 	int rootComponentCount = mRootComponentList.size();
-	// 预更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	if (mUsePreLateUpdate)
 	{
-		txComponent* component = mRootComponentList[i];
-		if (!isPreUpdateType(component->getType()))
+		// 预更新基础类型组件
+		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
-			if (component != NULL && component->isActive() && !component->isLockOneFrame())
+			txComponent* component = mRootComponentList[i];
+			if (!component->isNeedPreUpdate())
 			{
-				component->preUpdate(elapsedTime);
+				if (component != NULL && component->isActive() && !component->isLockOneFrame())
+				{
+					component->preUpdate(elapsedTime);
+				}
 			}
 		}
+		END_FOR_STL(mRootComponentList);
 	}
 	// 更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 	{
 		txComponent* component = mRootComponentList[i];
-		if (!isPreUpdateType(component->getType()))
+		if (!component->isNeedPreUpdate())
 		{
 			if (component != NULL && component->isActive() && !component->isLockOneFrame())
 			{
@@ -89,25 +102,30 @@ void txComponentOwner::updateComponents(const float& elapsedTime)
 			}
 		}
 	}
-	// 补充更新基础类型组件
-	for (int i = 0; i < rootComponentCount; ++i)
+	END_FOR_STL(mRootComponentList);
+	if (mUsePreLateUpdate)
 	{
-		txComponent* component = mRootComponentList[i];
-		if (!isPreUpdateType(component->getType()))
+		// 补充更新基础类型组件
+		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
-			if (component != NULL && component->isActive())
+			txComponent* component = mRootComponentList[i];
+			if (!component->isNeedPreUpdate())
 			{
-				// 如果组件被锁定了一帧,则不更新,解除锁定
-				if (component->isLockOneFrame())
+				if (component != NULL && component->isActive())
 				{
-					component->setLockOneFrame(false);
-				}
-				else
-				{
-					component->lateUpdate(elapsedTime);
+					// 如果组件被锁定了一帧,则不更新,解除锁定
+					if (component->isLockOneFrame())
+					{
+						component->setLockOneFrame(false);
+					}
+					else
+					{
+						component->lateUpdate(elapsedTime);
+					}
 				}
 			}
 		}
+		END_FOR_STL(mRootComponentList);
 	}
 }
 
@@ -117,7 +135,7 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 	{
 		return;
 	}
-	std::map<std::string, txComponent*>::iterator iter = mAllComponentList.find(component->getName());
+	txMap<std::string, txComponent*>::iterator iter = mAllComponentList.find(component->getName());
 	if (iter == mAllComponentList.end())
 	{
 		addComponentToList(component);
@@ -127,13 +145,13 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 bool txComponentOwner::notifyComponentNameChanged(const std::string& oldName, txComponent* component)
 {
 	// 先查找是否有该名字的组件
-	std::map<std::string, txComponent*>::iterator it = mAllComponentList.find(oldName);
+	txMap<std::string, txComponent*>::iterator it = mAllComponentList.find(oldName);
 	if (it == mAllComponentList.end())
 	{
 		return false;
 	}
 	// 再查找改名后会不会重名
-	std::map<std::string, txComponent*>::iterator itNew = mAllComponentList.find(component->getName());
+	txMap<std::string, txComponent*>::iterator itNew = mAllComponentList.find(component->getName());
 	if (itNew != mAllComponentList.end())
 	{
 		return false;
@@ -181,19 +199,20 @@ txComponent* txComponentOwner::addComponent(const std::string& name, const std::
 void txComponentOwner::destroyComponent(txComponent* component)
 {
 	// 后序遍历销毁组件,从最底层组件开始销毁,此处不能用引用获得子组件列表,因为在销毁组件过程中会对列表进行修改
-	std::vector<txComponent*> children = component->getChildComponentList();
+	txVector<txComponent*> children = component->getChildComponentList();
 	int childCount = children.size();
-	for (int i = 0; i < childCount; ++i)
+	FOR_STL(children, int i = 0; i < childCount; ++i)
 	{
 		destroyComponent(children[i]);
 	}
+	END_FOR_STL(children);
 	mComponentFactoryManager->getFactory(component->getType())->destroyComponent(component);
 }
 
 void txComponentOwner::destroyComponent(const std::string& name)
 {
 	// 在总列表中查找
-	std::map<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
+	txMap<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
 	if (itrFind == mAllComponentList.end())
 	{
 		return;
@@ -203,9 +222,9 @@ void txComponentOwner::destroyComponent(const std::string& name)
 
 void txComponentOwner::destroyAllComponents()
 {
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.begin();
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterTypeEnd = mAllComponentTypeList.end();
-	for (; iterType != iterTypeEnd; ++iterType)
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.begin();
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterTypeEnd = mAllComponentTypeList.end();
+	FOR_STL(mAllComponentTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
 		txComponentFactoryBase* factory = mComponentFactoryManager->getFactory(iterType->first);
 		if (factory == NULL)
@@ -213,52 +232,58 @@ void txComponentOwner::destroyAllComponents()
 			continue;
 		}
 		// 因为在销毁过程中会修改列表,复制一份是为了避免迭代器失效
-		std::map<std::string, txComponent*> componentList = iterType->second;
-		std::map<std::string, txComponent*>::iterator iterCom = componentList.begin();
-		std::map<std::string, txComponent*>::iterator iterComEnd = componentList.end();
-		for (; iterCom != iterComEnd; ++iterCom)
+		txMap<std::string, txComponent*> componentList = iterType->second;
+		txMap<std::string, txComponent*>::iterator iterCom = componentList.begin();
+		txMap<std::string, txComponent*>::iterator iterComEnd = componentList.end();
+		FOR_STL(componentList, ; iterCom != iterComEnd; ++iterCom)
 		{
 			factory->destroyComponent(iterCom->second);
 		}
+		END_FOR_STL(componentList);
 	}
+	END_FOR_STL(mAllComponentTypeList);
 }
 
 txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::string& type)
 {
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(type);
+	txComponent* ret = NULL;
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(type);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		std::map<std::string, txComponent*>::iterator iterTypeCom = iterBaseType->second.begin();
-		std::map<std::string, txComponent*>::iterator iterTypeComEnd = iterBaseType->second.end();
-		for (; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
+		txMap<std::string, txComponent*>::iterator iterTypeCom = iterBaseType->second.begin();
+		txMap<std::string, txComponent*>::iterator iterTypeComEnd = iterBaseType->second.end();
+		FOR_STL(iterBaseType->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
 			if (component->isActive() && !component->isLockOneFrame())
 			{
-				return component;
+				ret = component;
 			}
 		}
+		END_FOR_STL(iterBaseType->second);
 	}
-	return NULL;
+	return ret;
 }
 
 txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 {
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
+	txComponent* ret = NULL;
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
 	if (iter != mAllComponentTypeList.end())
 	{
-		std::map<std::string, txComponent*>::iterator iterTypeCom = iter->second.begin();
-		std::map<std::string, txComponent*>::iterator iterTypeComEnd = iter->second.end();
-		for (; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
+		txMap<std::string, txComponent*>::iterator iterTypeCom = iter->second.begin();
+		txMap<std::string, txComponent*>::iterator iterTypeComEnd = iter->second.end();
+		FOR_STL(iter->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
 			if (component->isActive() && !component->isLockOneFrame())
 			{
-				return component;
+				ret = component;
 			}
 		}
+		END_FOR_STL(iter->second);
 	}
-	return NULL;
+	return ret;
 }
 
 void txComponentOwner::addComponentToList(txComponent* component, const int& componentPos)
@@ -281,32 +306,32 @@ void txComponentOwner::addComponentToList(txComponent* component, const int& com
 	}
 
 	// 添加到组件列表中
-	mAllComponentList.insert(std::make_pair(name, component));
+	mAllComponentList.insert(name, component);
 
 	// 添加到组件类型分组列表中
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
 	if (iterType != mAllComponentTypeList.end())
 	{
-		iterType->second.insert(std::make_pair(name, component));
+		iterType->second.insert(name, component);
 	}
 	else
 	{
-		std::map<std::string, txComponent*> componentList;
-		componentList.insert(std::make_pair(name, component));
-		mAllComponentTypeList.insert(std::make_pair(type, componentList));
+		txMap<std::string, txComponent*> componentList;
+		componentList.insert(name, component);
+		mAllComponentTypeList.insert(type, componentList);
 	}
 
 	// 添加到基础组件类型分组列表中
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		iterBaseType->second.insert(std::make_pair(name, component));
+		iterBaseType->second.insert(name, component);
 	}
 	else
 	{
-		std::map<std::string, txComponent*> componentList;
-		componentList.insert(std::make_pair(name, component));
-		mAllComponentBaseTypeList.insert(std::make_pair(baseType, componentList));
+		txMap<std::string, txComponent*> componentList;
+		componentList.insert(name, component);
+		mAllComponentBaseTypeList.insert(baseType, componentList);
 	}
 }
 
@@ -316,7 +341,7 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 	if (component->getParentComponent() == NULL)
 	{
 		int componentCount = mRootComponentList.size();
-		for (int i = 0; i < componentCount; ++i)
+		FOR_STL(mRootComponentList, int i = 0; i < componentCount; ++i)
 		{
 			if (mRootComponentList[i] == component)
 			{
@@ -324,11 +349,12 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 				break;
 			}
 		}
+		END_FOR_STL(mRootComponentList);
 	}
 
 	// 从所有组件列表中移除
 	const std::string& componentName = component->getName();
-	std::map<std::string, txComponent*>::iterator iterCom = mAllComponentList.find(componentName);
+	txMap<std::string, txComponent*>::iterator iterCom = mAllComponentList.find(componentName);
 	if (iterCom != mAllComponentList.end())
 	{
 		mAllComponentList.erase(iterCom);
@@ -336,10 +362,10 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 
 	// 从组件类型分组列表中移除
 	const std::string& realType = component->getType();
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(realType);
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(realType);
 	if (iterType != mAllComponentTypeList.end())
 	{
-		std::map<std::string, txComponent*>::iterator iterCom = iterType->second.find(componentName);
+		txMap<std::string, txComponent*>::iterator iterCom = iterType->second.find(componentName);
 		if (iterCom != iterType->second.end())
 		{
 			iterType->second.erase(iterCom);
@@ -348,10 +374,10 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 
 	// 从基础组件类型分组列表中移除
 	const std::string& baseType = component->getBaseType();
-	std::map<std::string, std::map<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
+	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		std::map<std::string, txComponent*>::iterator iter = iterBaseType->second.find(componentName);
+		txMap<std::string, txComponent*>::iterator iter = iterBaseType->second.find(componentName);
 		if (iter != iterBaseType->second.end())
 		{
 			iterBaseType->second.erase(iter);

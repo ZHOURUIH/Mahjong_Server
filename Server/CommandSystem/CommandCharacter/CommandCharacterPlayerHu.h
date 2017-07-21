@@ -12,8 +12,8 @@ public:
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	std::vector<CharacterPlayer*> mHuPlayerList;
-	std::vector<std::vector<HU_TYPE>> mHuList;
+	txVector<CharacterPlayer*> mHuPlayerList;
+	txVector<txVector<HU_TYPE>> mHuList;
 };
 
 #endif

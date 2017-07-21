@@ -54,10 +54,10 @@ void CommandCharacterJoinRoom::execute()
 	{
 		// 房间需要再次获取一次
 		Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
-		const std::map<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
-		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iter = playerList.begin();
-		std::map<CHAR_GUID, CharacterPlayer*>::const_iterator iterEnd = playerList.end();
-		for (; iter != iterEnd; ++iter)
+		txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
+		txMap<CHAR_GUID, CharacterPlayer*>::iterator iter = playerList.begin();
+		txMap<CHAR_GUID, CharacterPlayer*>::iterator iterEnd = playerList.end();
+		FOR_STL(playerList, ; iter != iterEnd; ++iter)
 		{
 			// 玩家自己不再通知
 			if (iter->second != player)
@@ -67,6 +67,7 @@ void CommandCharacterJoinRoom::execute()
 				mCommandSystem->pushCommand(&cmd, player);
 			}
 		}
+		END_FOR_STL(playerList);
 	}
 }
 
