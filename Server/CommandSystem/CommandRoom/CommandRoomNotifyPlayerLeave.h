@@ -4,15 +4,18 @@
 #include "txCommand.h"
 
 // 通知房间有玩家离开
+class CharacterPlayer;
 class CommandRoomNotifyPlayerLeave : public txCommand
 {
 public:
 	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerLeave)
-		, mPlayerGUID(INVALID_ID)
+		, mPlayer(NULL)
+		, mNotifyOtherPlayer(true)
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	CHAR_GUID mPlayerGUID;
+	CharacterPlayer* mPlayer;
+	bool mNotifyOtherPlayer;
 };
 
 #endif

@@ -328,6 +328,21 @@
     <ClCompile Include="Net\NetServer.cpp">
       <Filter>Net</Filter>
     </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSContinueGame.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSBackToMahjongHall.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -776,6 +791,33 @@
     </ClInclude>
     <ClInclude Include="Net\NetServer.h">
       <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSContinueGame.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h">
+      <Filter>CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCContinueGameRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerContinueGame.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSBackToMahjongHall.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCBackToMahjongHallRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

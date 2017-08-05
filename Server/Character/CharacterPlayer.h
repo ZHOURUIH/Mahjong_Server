@@ -18,9 +18,11 @@ public:
 	const CLIENT_GUID& getClientGUID() { return mClientGUID; }
 	void reorderMahjong();
 	void getMahjongStart(const MAHJONG& mah);
+	void saveHua(const int& index);
 	void dropMahjong(const int& index);
 	void gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropPlayer);
 	void pengMahjong(const MAHJONG& mahjong);
+	void clearPengGang();
 protected:
 	void addPeng(const MAHJONG& mahjong);
 	void addGang(const MAHJONG& mahjong);

@@ -22,6 +22,8 @@ enum PACKET_TYPE
 	PT_CS_DICE_DONE,                        // 向服务器发送骰子
 	PT_CS_REQUEST_DROP,                     // 向服务器请求打出一张牌
 	PT_CS_CONFIRM_ACTION,                   // 向服务器确认麻将操作
+	PT_CS_CONTINUE_GAME,                    // 向服务器请求继续游戏
+	PT_CS_BACK_TO_MAHJONG_HALL,				// 向服务器请求返回大厅
 	PT_CS_MAX,
 
 	// SC表示Server->Client
@@ -50,16 +52,20 @@ enum PACKET_TYPE
 	PT_SC_ASK_ACTION,                       // 通知客户端选择麻将行为
 	PT_SC_OTHER_PLAYER_DROP,                // 通知客户端有其他玩家打出一张牌
 	PT_SC_REQUEST_DROP_RET,                 // 通知客户端请求打出一张牌的结果
-	PT_SC_PLAYER_HU,						// 通知客户端胡牌
-	PT_SC_PLAYER_GANG,						// 通知客户端杠牌
-	PT_SC_PLAYER_PENG,						// 通知客户端碰牌
-	PT_SC_PLAYER_PASS,						// 通知客户端过
-	PT_SC_OTHER_PLAYER_GANG,				// 通知客户端其他玩家杠牌
-	PT_SC_OTHER_PLAYER_PENG,				// 通知客户端其他玩家碰牌
-	PT_SC_OTHER_PLAYER_PASS,				// 通知客户端其他玩家过
-	PT_SC_OTHER_PLAYER_ASK_DROP,			// 通知客户端等待其他玩家打出牌
-	PT_SC_OTHER_PLAYER_ASK_ACTION,			// 通知客户端等待其他玩家选择操作
-	PT_SC_NOTIFY_MAHJONG_END,				// 通知客户端本局游戏结束
+	PT_SC_PLAYER_HU,                        // 通知客户端胡牌
+	PT_SC_PLAYER_GANG,                      // 通知客户端杠牌
+	PT_SC_PLAYER_PENG,                      // 通知客户端碰牌
+	PT_SC_PLAYER_PASS,                      // 通知客户端过
+	PT_SC_OTHER_PLAYER_GANG,                // 通知客户端其他玩家杠牌
+	PT_SC_OTHER_PLAYER_PENG,                // 通知客户端其他玩家碰牌
+	PT_SC_OTHER_PLAYER_PASS,                // 通知客户端其他玩家过
+	PT_SC_OTHER_PLAYER_ASK_DROP,            // 通知客户端等待其他玩家打出牌
+	PT_SC_OTHER_PLAYER_ASK_ACTION,          // 通知客户端等待其他玩家选择操作
+	PT_SC_NOTIFY_MAHJONG_END,               // 通知客户端本局游戏结束
+	PT_SC_CONTINUE_GAME_RET,                // 通知客户端继续游戏的结果
+	PT_SC_OTHER_PLAYER_CONTINUE_GAME,		// 通知客户端有其他玩家选择继续游戏
+	PT_SC_BACK_TO_MAHJONG_HALL_RET,			// 通知客户端返回大厅的结果
+	PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL,// 通知客户端有其他玩家选择返回大厅
 	PT_SC_MAX,
 
 	PT_MAX,

@@ -43,6 +43,8 @@
 #include "CommandCharacterNotifyOtherPlayerAskAction.h"
 #include "CommandCharacterNotifyOtherPlayerAskDrop.h"
 #include "CommandCharacterMahjongEnd.h"
+#include "CommandCharacterContinueGame.h"
+#include "CommandCharacterNotifyOtherPlayerContinueGame.h"
 
 #include "CommandRoomNotifyPlayerReady.h"
 #include "CommandRoomNotifyPlayerLeave.h"
@@ -52,6 +54,7 @@
 #include "CommandRoomNotifyDiceDone.h"
 #include "CommandRoomRequestDrop.h"
 #include "CommandRoomConfirmAction.h"
+#include "CommandRoomNotifyPlayerContinueGame.h"
 
 #include "CommandServerNotifyAcceptedClient.h"
 

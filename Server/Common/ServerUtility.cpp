@@ -262,7 +262,7 @@ bool ServerUtility::canGang(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 		}
 	}
 	END_FOR_STL(infoList);
-	return false;
+	return ret;
 }
 
 bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
@@ -292,8 +292,8 @@ void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 		if (handInMah[i] == mah && handInMah[i + 1] == mah)
 		{
 			// ´ÓºóÍùÇ°É¾³ı
-			handInMah.erase(handInMah.begin() + i + 1);
-			handInMah.erase(handInMah.begin() + i);
+			handInMah.erase(handInMah.begin() + i + 1, false);
+			handInMah.erase(handInMah.begin() + i, false);
 			break;
 		}
 	}
@@ -308,9 +308,9 @@ void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 	{
 		if (handInMah[i] == mah && handInMah[i + 1] == mah && handInMah[i + 2] == mah)
 		{
-			handInMah.erase(handInMah.begin() + i + 2);
-			handInMah.erase(handInMah.begin() + i + 1);
-			handInMah.erase(handInMah.begin() + i);
+			handInMah.erase(handInMah.begin() + i + 2, false);
+			handInMah.erase(handInMah.begin() + i + 1, false);
+			handInMah.erase(handInMah.begin() + i, false);
 			break;
 		}
 	}

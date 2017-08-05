@@ -1,6 +1,7 @@
 ﻿#include "CommandHeader.h"
 #include "Room.h"
 #include "CharacterPlayer.h"
+#include "CharacterData.h"
 
 void CommandRoomStartGame::execute()
 {
@@ -12,8 +13,8 @@ void CommandRoomStartGame::execute()
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
 	FOR_STL (playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		// 先将玩家的准备标记清空
-		room->notifyPlayerReady(iterPlayer->first, false);
+		// 取消玩家的准备标记
+		iterPlayer->second->getCharacterData()->mReady = false;
 		// 通知玩家开始游戏
 		CommandCharacterStartGame cmdStartGame(CMD_PARAM);
 		cmdStartGame.setDice(dice0, dice1);

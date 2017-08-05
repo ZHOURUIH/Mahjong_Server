@@ -19,7 +19,6 @@ public:
 		mID(id),
 		mMaxPlayer(MAX_PLAYER),
 		mLockRoom(false),
-		mReadyCount(0),
 		mDiceDoneCount(0),
 		mPlayState(MPS_WAITING),
 		mBankerPos(-1),
@@ -38,8 +37,8 @@ public:
 	// 房间相关
 	void joinRoom(CharacterPlayer* player);
 	void leaveRoom(CharacterPlayer* player);
+	void chooseContinueGame(CharacterPlayer* player, bool continueGame);
 	void notifyEnterGame();
-	void notifyPlayerReady(const CHAR_GUID& playerGUID, const bool& ready);
 	void notifyDiceDone(const CHAR_GUID& playerGUID);
 	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
 	void notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah);
@@ -51,12 +50,13 @@ public:
 	void setMahjongState(const MAHJONG_PLAY_STATE& state);
 	void requestDrop(CharacterPlayer* player, const int& index);
 	void notifyAllPlayerDiceDone();
-	const int& getID()												{ return mID; }
-	bool isAllPlayerReady()											{ return mReadyCount == mMaxPlayer; }
-	bool isAllPlayerDiceDone()										{ return mDiceDoneCount == mMaxPlayer; }
-	bool isRoomFull()												{ return (int)mPlayerList.size() >= mMaxPlayer; }
-	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()				{ return mPlayerList; }
-	const bool& isRoomLocked()										{ return mLockRoom; }
+	bool isAllPlayerReady();
+	const int& getID()									{ return mID; }
+	bool isAllPlayerDiceDone()							{ return mDiceDoneCount == mMaxPlayer; }
+	bool isRoomFull()									{ return (int)mPlayerList.size() >= mMaxPlayer; }
+	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
+	const bool& isRoomLocked()							{ return mLockRoom; }
+	txMap<CharacterPlayer*, bool>& getPlayerChooseList(){ return mPlayerChooseList; }
 protected:
 	void reset();
 	void addPlayer(CharacterPlayer* player);
@@ -78,21 +78,20 @@ protected:
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerAskDrop(CharacterPlayer* player);
 	void playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
-	
 protected:
-	int mID;												// 房间ID
-	int mMaxPlayer;											// 房间人数上限
-	bool mLockRoom;											// 房间是否已锁定,房间锁定后,其他玩家不能再加入
-	int mDiceDoneCount;										// 骰子掷完的人数
-	int mReadyCount;										// 已准备的玩家人数
+	int mID;											// 房间ID
+	int mMaxPlayer;										// 房间人数上限
+	bool mLockRoom;										// 房间是否已锁定,房间锁定后,其他玩家不能再加入
+	int mDiceDoneCount;									// 骰子掷完的人数
 	txMap<CHAR_GUID, CharacterPlayer*> mPlayerList;		// 房间中的玩家列表
 	txMap<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定
-	MAHJONG_PLAY_STATE mPlayState;							// 当前麻将游戏的状态
+	MAHJONG_PLAY_STATE mPlayState;						// 当前麻将游戏的状态
 	txVector<MAHJONG> mMahjongPool;						// 当前麻将池中的麻将
-	int mBankerPos;											// 本局庄家的位置
-	int mCurAssignPos;										// 开局发牌时当前发到牌的玩家的位置
-	float mCurInterval;										// 当前间隔时间计时
+	int mBankerPos;										// 本局庄家的位置
+	int mCurAssignPos;									// 开局发牌时当前发到牌的玩家的位置
+	float mCurInterval;									// 当前间隔时间计时
 	txMap<CharacterPlayer*, WaitActionInfo*> mWaitList;	// 等待列表
+	txMap<CharacterPlayer*, bool> mPlayerChooseList;	// 玩家选择继续游戏还是离开房间
 };
 
 #endif

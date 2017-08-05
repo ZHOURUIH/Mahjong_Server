@@ -74,11 +74,6 @@ void Room::leaveRoom(CharacterPlayer* player)
 	CharacterData* data = player->getCharacterData();
 	int prePosition = data->mPosition;
 	removePlayer(player);
-	// 如果是已经准备的玩家离开房间,则需要减少已经准备的玩家计数
-	if (data->mReady)
-	{
-		--mReadyCount;
-	}
 	// 如果是庄家离开了房间
 	if (data->mBanker)
 	{
@@ -107,16 +102,26 @@ void Room::leaveRoom(CharacterPlayer* player)
 			}
 		}
 	}
+
+	// 清空玩家的房间ID,庄家标记,准备标记,麻将数据
+	data->mRoomID = INVALID_ID;
+	data->mReady = false;
+	data->mBanker = false;
+	data->mPosition = -1;
+	data->mHandIn.clear();
+	data->mDropList.clear();
+	player->clearPengGang();
 }
 
-void Room::notifyPlayerReady(const CHAR_GUID& playerGUID, const bool& ready)
+void Room::chooseContinueGame(CharacterPlayer* player, bool continueGame)
 {
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerGUID);
-	if (iterPlayer == mPlayerList.end())
+	// 通知房间中的其他玩家
+	mPlayerChooseList.insert(player, continueGame);
+	// 如果所有玩家都已经做出选择了,则设置为等待游戏开始状态
+	if (mPlayerChooseList.size() == mMaxPlayer)
 	{
-		return;
+		setMahjongState(MPS_WAITING);
 	}
-	ready ? ++mReadyCount : --mReadyCount;
 }
 
 void Room::notifyDiceDone(const CHAR_GUID& playerGUID)
@@ -385,6 +390,30 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 {
 	// 设置为结束状态
 	setMahjongState(MPS_ENDING);
+	// 计算胡牌后下一局的庄家
+	// 只有一个人胡,则胡牌的是庄家
+	if (huPlayerList.size() == 1)
+	{
+		huPlayerList.begin()->first->getCharacterData()->mBanker = true;
+		txMap<int, CharacterPlayer*>::iterator iter0 = mPlayerPositionList.begin();
+		txMap<int, CharacterPlayer*>::iterator iterEnd0 = mPlayerPositionList.end();
+		FOR_STL(mPlayerPositionList, ; iter0 != iterEnd0; ++iter0)
+		{
+			bool isBanker = (huPlayerList.begin()->first == iter0->second);
+			iter0->second->getCharacterData()->mBanker = isBanker;
+		}
+	}
+	// 多个人胡,则点炮的人是庄家
+	else if (huPlayerList.size() > 1)
+	{
+		txMap<int, CharacterPlayer*>::iterator iter0 = mPlayerPositionList.begin();
+		txMap<int, CharacterPlayer*>::iterator iterEnd0 = mPlayerPositionList.end();
+		FOR_STL(mPlayerPositionList, ; iter0 != iterEnd0; ++iter0)
+		{
+			bool isBanker = (huPlayerList.begin()->second->mDroppedPlayer == iter0->second);
+			iter0->second->getCharacterData()->mBanker = isBanker;
+		}
+	}
 	// 通知所有玩家本局结束,计算所有玩家的输赢,暂时不计算杠的牌
 	txMap<CharacterPlayer*, int> moneyDeltaList;
 	txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.begin();
@@ -612,7 +641,6 @@ void Room::reset()
 	mBankerPos = -1;
 	mCurAssignPos = -1;
 	mWaitList.clear();
-	mReadyCount = 0;
 	mDiceDoneCount = 0;
 }
 
@@ -651,6 +679,22 @@ MAHJONG Room::requestGet()
 		return mah;
 	}
 	return M_MAX;
+}
+
+bool Room::isAllPlayerReady()
+{
+	bool allReady = true;
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iter = mPlayerList.begin();
+	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterEnd = mPlayerList.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		if (!iter->second->getCharacterData()->mReady)
+		{
+			allReady = false;
+			break;
+		}
+	}
+	return allReady;
 }
 
 void Room::notifyAllPlayerGetStartDone()

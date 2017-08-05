@@ -88,6 +88,15 @@ enum MAHJONG
 	M_WAN7,
 	M_WAN8,
 	M_WAN9,
+	// »¨ÅÆ
+	M_CHUN,
+	M_XIA,
+	M_QIU,
+	M_DONG,
+	M_MEI,
+	M_LAN,
+	M_ZHU,
+	M_JU,
 
 	M_MAX,
 };

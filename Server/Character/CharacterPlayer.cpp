@@ -4,13 +4,7 @@
 
 void CharacterPlayer::destroy()
 {
-	int count = mCharacterData->mPengGangList.size();
-	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
-	{
-		TRACE_DELETE(mCharacterData->mPengGangList[i]);
-	}
-	END_FOR_STL(mCharacterData->mPengGangList);
-	mCharacterData->mPengGangList.clear();
+	clearPengGang();
 }
 
 void CharacterPlayer::reorderMahjong()
@@ -52,7 +46,7 @@ void CharacterPlayer::gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropP
 		{
 			if (mCharacterData->mHandIn[i] == mahjong)
 			{
-				mCharacterData->mHandIn.erase(mCharacterData->mHandIn.begin() + i);
+				mCharacterData->mHandIn.erase(mCharacterData->mHandIn.begin() + i, false);
 				break;
 			}
 		}
@@ -64,6 +58,17 @@ void CharacterPlayer::pengMahjong(const MAHJONG& mahjong)
 {
 	ServerUtility::pengMahjong(mCharacterData->mHandIn, mahjong);
 	addPeng(mahjong);
+}
+
+void CharacterPlayer::clearPengGang()
+{
+	int count = mCharacterData->mPengGangList.size();
+	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
+	{
+		TRACE_DELETE(mCharacterData->mPengGangList[i]);
+	}
+	END_FOR_STL(mCharacterData->mPengGangList);
+	mCharacterData->mPengGangList.clear();
 }
 
 void CharacterPlayer::addPeng(const MAHJONG& mahjong)

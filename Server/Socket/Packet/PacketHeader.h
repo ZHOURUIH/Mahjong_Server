@@ -13,6 +13,8 @@
 #include "CSDiceDone.h"
 #include "CSRequestDrop.h"
 #include "CSConfirmAction.h"
+#include "CSContinueGame.h"
+#include "CSBackToMahjongHall.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -48,5 +50,9 @@
 #include "SCOtherPlayerAskDrop.h"
 #include "SCOtherPlayerAskAction.h"
 #include "SCNotifyMahjongEnd.h"
+#include "SCContinueGameRet.h"
+#include "SCOtherPlayerContinueGame.h"
+#include "SCBackToMahjongHallRet.h"
+#include "SCOtherPlayerBackToMahjongHall.h"
 
 #endif
