@@ -343,6 +343,12 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSBackToMahjongHall.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -817,6 +823,18 @@
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCShowHua.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.h">
+      <Filter>CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerShowHua.h">
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
   </ItemGroup>

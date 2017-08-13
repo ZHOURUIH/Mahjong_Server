@@ -54,5 +54,7 @@
 #include "SCOtherPlayerContinueGame.h"
 #include "SCBackToMahjongHallRet.h"
 #include "SCOtherPlayerBackToMahjongHall.h"
+#include "SCShowHua.h"
+#include "SCOtherPlayerShowHua.h"
 
 #endif

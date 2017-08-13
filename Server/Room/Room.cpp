@@ -24,7 +24,18 @@ void Room::update(const float& elapsedTime)
 			}
 
 			// 给玩家发牌
-			playerGetStartMahjong(requestGet(), curPlayer);
+			MAHJONG curMahjong = requestGet();
+			playerGetStartMahjong(curMahjong, curPlayer);
+
+			// 检测是否是花牌,如果是花牌,则需要抽出来,重新摸一张牌
+			if (ServerUtility::isHua(curMahjong))
+			{
+				playerShowHua(curPlayer, curPlayer->getCharacterData()->mHandIn.size() - 1, curMahjong);
+
+				// 重新摸一张牌
+				curMahjong = requestGet();
+				playerGetStartMahjong(curMahjong, curPlayer);
+			}
 
 			// 判断是否已经拿够了
 			bool isDone = false;
@@ -183,13 +194,12 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
 		if (!hasAction)
 		{
 			// 该下家摸牌
-			if (mMahjongPool.size() > 0)
+			int nextPosition = (player->getCharacterData()->mPosition + 1) % MAX_PLAYER;
+			CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
+			MAHJONG mahjong = requestGet();
+			if (mahjong != M_MAX)
 			{
-				int nextPosition = (player->getCharacterData()->mPosition + 1) % MAX_PLAYER;
-				CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
-				MAHJONG mahjong = requestGet();
 				playerGetMahjong(mahjong, nextPlayer);
-				// 判断摸牌后的操作
 				notifyPlayerGet(nextPlayer, mahjong);
 			}
 			// 牌已经摸完了,则本局为平局
@@ -206,8 +216,26 @@ void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
 	// 判断是否可胡或者可杠
 	CharacterData* data = player->getCharacterData();
 	txVector<MahjongAction*> actionList;
+	// 是否是花牌
+	if (ServerUtility::isHua(mah))
+	{
+		// 刚摸的牌是放到末尾的,所以下标是最后一个
+		playerShowHua(player, data->mHandIn.size() - 1, mah);
+		// 然后再摸一张牌
+		MAHJONG mahjong = requestGet();
+		if (mahjong != M_MAX)
+		{
+			playerGetMahjong(mahjong, player);
+			notifyPlayerGet(player, mahjong);
+		}
+		// 牌已经摸完了,则本局为平局
+		else
+		{
+			endGame(txMap<CharacterPlayer*, HuInfo*>());
+		}
+	}
 	// 是否可胡
-	if (ServerUtility::canHu(data->mHandIn))
+	else if (ServerUtility::canHu(data->mHandIn))
 	{
 		txVector<HU_TYPE> huList = ServerUtility::generateHuType(data->mHandIn, mah, data->mPengGangList, true, true);
 		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_HU, player, player, mah, huList);
@@ -337,16 +365,14 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 			if (highestAction->mType == AT_GANG)
 			{
 				playerGang(info->mPlayer, info->mDroppedPlayer, info->mMahjong);
-				// 杠完牌需要重新排列
-				playerReorderMahjong(info->mPlayer);
-				// 还有牌,玩家杠了一张牌以后需要再摸一张
-				if (mMahjongPool.size() > 0)
+				// 玩家杠了一张牌以后需要再摸一张
+				MAHJONG mahjong = requestGet();
+				if (mahjong != M_MAX)
 				{
-					MAHJONG mah = requestGet();
-					playerGetMahjong(mah, info->mPlayer);
-					notifyPlayerGet(info->mPlayer, mah);
+					playerGetMahjong(mahjong, info->mPlayer);
+					notifyPlayerGet(info->mPlayer, mahjong);
 				}
-				// 没有牌了则平局
+				// 牌已经摸完了,则本局为平局
 				else
 				{
 					endGame(txMap<CharacterPlayer*, HuInfo*>());
@@ -367,15 +393,15 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 				else
 				{
 					// 还有牌则通知下一家摸牌
-					if (mMahjongPool.size() > 0)
+					int nextPosition = (info->mDroppedPlayer->getCharacterData()->mPosition + 1) % mMaxPlayer;
+					CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
+					MAHJONG mahjong = requestGet();
+					if (mahjong != M_MAX)
 					{
-						int nextPosition = (info->mDroppedPlayer->getCharacterData()->mPosition + 1) % mMaxPlayer;
-						CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
-						MAHJONG mah = requestGet();
-						playerGetMahjong(mah, nextPlayer);
-						notifyPlayerGet(nextPlayer, mah);
+						playerGetMahjong(mahjong, nextPlayer);
+						notifyPlayerGet(nextPlayer, mahjong);
 					}
-					// 没有牌了则平局
+					// 牌已经摸完了,则本局为平局
 					else
 					{
 						endGame(txMap<CharacterPlayer*, HuInfo*>());
@@ -402,6 +428,7 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 			bool isBanker = (huPlayerList.begin()->first == iter0->second);
 			iter0->second->getCharacterData()->mBanker = isBanker;
 		}
+		END_FOR_STL(mPlayerPositionList);
 	}
 	// 多个人胡,则点炮的人是庄家
 	else if (huPlayerList.size() > 1)
@@ -413,6 +440,7 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 			bool isBanker = (huPlayerList.begin()->second->mDroppedPlayer == iter0->second);
 			iter0->second->getCharacterData()->mBanker = isBanker;
 		}
+		END_FOR_STL(mPlayerPositionList);
 	}
 	// 通知所有玩家本局结束,计算所有玩家的输赢,暂时不计算杠的牌
 	txMap<CharacterPlayer*, int> moneyDeltaList;
@@ -564,7 +592,7 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 	// 开始拿牌时,需要重置麻将池
 	else if (mPlayState == MPS_GET_START)
 	{
-		resetMahjongPool();
+		resetMahjongPool(true, true);
 		// 判断当前谁是庄家
 		txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.begin();
 		txMap<int, CharacterPlayer*>::iterator iterEnd = mPlayerPositionList.end();
@@ -632,7 +660,6 @@ void Room::requestDrop(CharacterPlayer* player, const int& index)
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
-	notifyPlayerDrop(player, mahjong);
 }
 
 void Room::reset()
@@ -644,15 +671,35 @@ void Room::reset()
 	mDiceDoneCount = 0;
 }
 
-void Room::resetMahjongPool()
+void Room::resetMahjongPool(bool feng, int hua)
 {
-	for (int i = 0; i < (int)M_MAX; ++i)
+	for (int i = 0; i < MAX_MAHJONG_COUNT; ++i)
 	{
 		for (int j = 0; j < MAX_SINGLE_COUNT; ++j)
 		{
 			mMahjongPool.push_back((MAHJONG)i);
 		}
 	}
+	if (feng)
+	{
+		// 加入风牌
+		for (int i = 0; i < MAX_FENG_COUNT; ++i)
+		{
+			for (int j = 0; j < MAX_SINGLE_COUNT; ++j)
+			{
+				mMahjongPool.push_back((MAHJONG)(M_FENG_DONG + i));
+			}
+		}
+	}
+	if (hua)
+	{
+		// 加入8张花牌
+		for (int i = 0; i < MAX_HUA_COUNT; ++i)
+		{
+			mMahjongPool.push_back((MAHJONG)(M_HUA_CHUN + i));
+		}
+	}
+	
 	// 打乱麻将的顺序
 	// 复制一份麻将池,然后从中随机取出放入麻将池中,直到取完
 	int mahjongCount = mMahjongPool.size();
@@ -937,6 +984,29 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 			CommandCharacterNotifyOtherPlayerAskAction cmdOtherAskAction(CMD_PARAM);
 			cmdOtherAskAction.mOtherPlayer = player;
 			mCommandSystem->pushCommand(&cmdOtherAskAction, iterPlayer->second);
+		}
+	}
+	END_FOR_STL(mPlayerPositionList);
+}
+
+void Room::playerShowHua(CharacterPlayer* player, const int& index, const MAHJONG& mah)
+{
+	CommandCharacterShowHua cmdShowHua(CMD_PARAM);
+	cmdShowHua.mIndex = index;
+	cmdShowHua.mMahjong = mah;
+	mCommandSystem->pushCommand(&cmdShowHua, player);
+	// 通知其他玩家
+	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
+	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	{
+		if (iterPlayer->second != player)
+		{
+			CommandCharacterNotifyOtherPlayerShowHua cmdOtherShowHua(CMD_PARAM);
+			cmdOtherShowHua.mOtherPlayer = player;
+			cmdOtherShowHua.mIndex = index;
+			cmdOtherShowHua.mMahjong = mah;
+			mCommandSystem->pushCommand(&cmdOtherShowHua, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);

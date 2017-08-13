@@ -31,6 +31,7 @@ public:
 			GAME_ERROR("not all hu type added!");
 		}
 	}
+	static bool isHua(const MAHJONG& mah){ return mah >= M_HUA_CHUN && mah <= M_HUA_JU; }
 	static bool canHu(txVector<MAHJONG>& handInMah, const MAHJONG& mah);
 	static bool canHu(txVector<MAHJONG>& handInMah);
 	static void toMahjongGroup(txVector<MAHJONG>& list, txVector<MahInfo>& group);

@@ -30,6 +30,7 @@ public:
 	txVector<MAHJONG> mHandIn;				// 手里的牌
 	txVector<MAHJONG> mDropList;			// 打出的牌
 	txVector<PengGangInfo*> mPengGangList;	// 碰或者杠的牌
+	txVector<MAHJONG> mHuaList;				// 摸到的花牌
 };
 
 #endif

@@ -61,7 +61,7 @@ protected:
 	void reset();
 	void addPlayer(CharacterPlayer* player);
 	void removePlayer(CharacterPlayer* player);
-	void resetMahjongPool();
+	void resetMahjongPool(bool feng, int hua);
 	MAHJONG requestGet();
 	void endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList);
 	// 向所有玩家发送消息
@@ -78,6 +78,7 @@ protected:
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
 	void playerAskDrop(CharacterPlayer* player);
 	void playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
+	void playerShowHua(CharacterPlayer* player, const int& index, const MAHJONG& mah);
 protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限

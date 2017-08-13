@@ -108,6 +108,7 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPeng.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReady.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
@@ -208,6 +210,7 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h" />
@@ -232,6 +235,7 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPeng.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReady.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h" />
+    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
     <ClInclude Include="CommandSystem\CommandDefine.h" />
     <ClInclude Include="CommandSystem\CommandHeader.h" />
@@ -338,6 +342,7 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPass.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPeng.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerReady.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerShowHua.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCPlayerGang.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCPlayerHu.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCPlayerPass.h" />
@@ -345,6 +350,7 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCReadyRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCRequestDropRet.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCShowHua.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

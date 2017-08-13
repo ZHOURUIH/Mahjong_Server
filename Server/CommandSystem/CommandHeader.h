@@ -45,6 +45,8 @@
 #include "CommandCharacterMahjongEnd.h"
 #include "CommandCharacterContinueGame.h"
 #include "CommandCharacterNotifyOtherPlayerContinueGame.h"
+#include "CommandCharacterShowHua.h"
+#include "CommandCharacterNotifyOtherPlayerShowHua.h"
 
 #include "CommandRoomNotifyPlayerReady.h"
 #include "CommandRoomNotifyPlayerLeave.h"

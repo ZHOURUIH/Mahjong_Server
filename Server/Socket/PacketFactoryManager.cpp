@@ -67,6 +67,8 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCOtherPlayerContinueGame, PT_SC_OTHER_PLAYER_CONTINUE_GAME);
 	ADD_PACKET_FACTORY(SCBackToMahjongHallRet, PT_SC_BACK_TO_MAHJONG_HALL_RET);
 	ADD_PACKET_FACTORY(SCOtherPlayerBackToMahjongHall, PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL);
+	ADD_PACKET_FACTORY(SCShowHua, PT_SC_SHOW_HUA);
+	ADD_PACKET_FACTORY(SCOtherPlayerShowHua, PT_SC_OTHER_PLAYER_SHOW_HUA);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{
