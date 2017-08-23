@@ -11,7 +11,7 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 	txMap<CharacterPlayer*, bool>& playerChooseList = room->getPlayerChooseList();
 	txMap<CharacterPlayer*, bool>::iterator iter = playerChooseList.begin();
 	txMap<CharacterPlayer*, bool>::iterator iterEnd = playerChooseList.end();
-	for (; iter != iterEnd; ++iter)
+	FOR_STL(playerChooseList, ; iter != iterEnd; ++iter)
 	{
 		if (iter->second)
 		{
@@ -30,9 +30,8 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 			}
 		}
 	}
-	// 玩家选择是否继续游戏
-	room->chooseContinueGame(mPlayer, mContinue);
-	// 玩家离开房间
+	END_FOR_STL(playerChooseList);
+	// 不继续则玩家离开房间
 	if (!mContinue)
 	{
 		CommandRoomNotifyPlayerLeave cmdLeave(CMD_PARAM);
@@ -40,6 +39,8 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 		cmdLeave.mNotifyOtherPlayer = false;
 		mCommandSystem->pushCommand(&cmdLeave, room);
 	}
+	// 玩家选择是否继续游戏
+	room->chooseContinueGame(mPlayer, mContinue);
 }
 
 std::string CommandRoomNotifyPlayerContinueGame::showDebugInfo()

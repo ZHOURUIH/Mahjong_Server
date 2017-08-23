@@ -13,8 +13,12 @@ public:
 		fillParams();
 		zeroParams();
 	}
-	virtual void fillParams(){}
+	virtual void fillParams()
+	{
+		pushParam(mBanker);
+	}
 public:
+	bool mBanker;
 };
 
 #endif

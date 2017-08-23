@@ -11,6 +11,7 @@ void CommandCharacterNotifyOtherPlayerContinueGame::execute()
 	{
 		SCOtherPlayerContinueGame* otherContinue = static_cast<SCOtherPlayerContinueGame*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_CONTINUE_GAME));
 		otherContinue->mOtherPlayerGUID = mOtherPlayer->getGUID();
+		otherContinue->mBanker = mOtherPlayer->getCharacterData()->mBanker;
 		mNetServer->sendMessage(otherContinue, player->getClientGUID());
 	}
 	else

@@ -23,18 +23,21 @@ void Room::update(const float& elapsedTime)
 				return;
 			}
 
-			// 给玩家发牌
-			MAHJONG curMahjong = requestGet();
-			playerGetStartMahjong(curMahjong, curPlayer);
-
-			// 检测是否是花牌,如果是花牌,则需要抽出来,重新摸一张牌
-			if (ServerUtility::isHua(curMahjong))
+			// 给玩家发牌,如果摸到花牌,则需要将花牌拿出来,直到摸到一张不是花牌的
+			while (true)
 			{
-				playerShowHua(curPlayer, curPlayer->getCharacterData()->mHandIn.size() - 1, curMahjong);
-
-				// 重新摸一张牌
-				curMahjong = requestGet();
+				MAHJONG curMahjong = requestGet();
 				playerGetStartMahjong(curMahjong, curPlayer);
+
+				// 检测是否是花牌,如果是花牌,则需要抽出来,重新摸一张牌
+				if (ServerUtility::isHua(curMahjong))
+				{
+					playerShowHua(curPlayer, curPlayer->getCharacterData()->mHandIn.size() - 1, curMahjong);
+				}
+				else
+				{
+					break;
+				}
 			}
 
 			// 判断是否已经拿够了
@@ -103,7 +106,10 @@ void Room::leaveRoom(CharacterPlayer* player)
 				{
 					iterNext->second->getCharacterData()->mBanker = true;
 					// 通知房间中的所有玩家有庄家变化
-					notifyAllPlayerBanker(iterNext->second->getGUID());
+					if (mPlayState == MPS_WAITING)
+					{
+						notifyAllPlayerBanker(iterNext->second->getGUID());
+					}
 					break;
 				}
 				else
@@ -114,20 +120,19 @@ void Room::leaveRoom(CharacterPlayer* player)
 		}
 	}
 
-	// 清空玩家的房间ID,庄家标记,准备标记,麻将数据
+	// 清空玩家的房间ID,庄家标记,麻将数据
 	data->mRoomID = INVALID_ID;
-	data->mReady = false;
 	data->mBanker = false;
 	data->mPosition = -1;
-	data->mHandIn.clear();
-	data->mDropList.clear();
-	player->clearPengGang();
+	player->clearMahjong();
 }
 
 void Room::chooseContinueGame(CharacterPlayer* player, bool continueGame)
 {
 	// 通知房间中的其他玩家
 	mPlayerChooseList.insert(player, continueGame);
+	// 清空麻将数据
+	player->clearMahjong();
 	// 如果所有玩家都已经做出选择了,则设置为等待游戏开始状态
 	if (mPlayerChooseList.size() == mMaxPlayer)
 	{
@@ -584,7 +589,7 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 	{
 		reset();
 	}
-	// 开始掷骰子时,需要计算出掷骰子的结果
+	// 开始掷骰子
 	else if (mPlayState == MPS_DICE)
 	{
 		;
@@ -665,9 +670,10 @@ void Room::requestDrop(CharacterPlayer* player, const int& index)
 void Room::reset()
 {
 	mMahjongPool.clear();
+	mWaitList.clear();
+	mPlayerChooseList.clear();
 	mBankerPos = -1;
 	mCurAssignPos = -1;
-	mWaitList.clear();
 	mDiceDoneCount = 0;
 }
 

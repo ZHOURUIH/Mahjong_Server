@@ -13,6 +13,7 @@ void CommandCharacterContinueGame::execute()
 	if (mContinue)
 	{
 		SCContinueGameRet* continueRet = static_cast<SCContinueGameRet*>(mNetServer->createPacket(PT_SC_CONTINUE_GAME_RET));
+		continueRet->mBanker = player->getCharacterData()->mBanker;
 		mNetServer->sendMessage(continueRet, player->getClientGUID());
 	}
 	else

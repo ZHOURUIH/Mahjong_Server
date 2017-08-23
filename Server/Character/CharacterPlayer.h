@@ -22,7 +22,7 @@ public:
 	void dropMahjong(const int& index);
 	void gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropPlayer);
 	void pengMahjong(const MAHJONG& mahjong);
-	void clearPengGang();
+	void clearMahjong();
 protected:
 	void addPeng(const MAHJONG& mahjong);
 	void addGang(const MAHJONG& mahjong);

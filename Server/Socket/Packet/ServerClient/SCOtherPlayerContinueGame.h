@@ -16,13 +16,15 @@ public:
 	virtual void fillParams()
 	{
 		pushParam(mOtherPlayerGUID);
+		pushParam(mBanker);
 	}
 	virtual std::string debugInfo()
 	{
-		PACKET_DEBUG("other player guid : %d", mOtherPlayerGUID);
+		PACKET_DEBUG("other player guid : %d, banker : %s", mOtherPlayerGUID, mBanker ? "true" : "false");
 	}
 public:
 	int mOtherPlayerGUID;
+	bool mBanker;
 };
 
 #endif

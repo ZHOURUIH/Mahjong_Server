@@ -4,7 +4,7 @@
 
 void CharacterPlayer::destroy()
 {
-	clearPengGang();
+	clearMahjong();
 }
 
 void CharacterPlayer::reorderMahjong()
@@ -67,8 +67,12 @@ void CharacterPlayer::pengMahjong(const MAHJONG& mahjong)
 	addPeng(mahjong);
 }
 
-void CharacterPlayer::clearPengGang()
+void CharacterPlayer::clearMahjong()
 {
+	mCharacterData->mHandIn.clear();
+	mCharacterData->mHuaList.clear();
+	mCharacterData->mDropList.clear();
+	mCharacterData->mReady = false;
 	int count = mCharacterData->mPengGangList.size();
 	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
 	{
