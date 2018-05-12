@@ -4,16 +4,18 @@
 // 变量命名应与代码中枚举命名相同
 
 // socket端口号
-SD_SOCKET_PORT = 60777
+SDF_SOCKET_PORT = 60777
+
+SDF_DOMAIN_NAME = www.inothingtodo.com
 
 // 心跳超时时间
-SD_HEART_BEAT_TIME_OUT = 600.0
+SDF_HEART_BEAT_TIME_OUT = 600.0
 
 // 连接请求队列的最大长度
-SD_BACK_LOG = 100
+SDF_BACK_LOG = 100
 
 // 是否显示命令调试信息
-SD_SHOW_COMMAND_DEBUG_INFO = 0
+SDF_SHOW_COMMAND_DEBUG_INFO = 0
 
 // 是否显示网络日志信息
-SD_OUTPUT_NET_LOG = 1
+SDF_OUTPUT_NET_LOG = 1

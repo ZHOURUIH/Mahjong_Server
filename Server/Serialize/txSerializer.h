@@ -1,7 +1,10 @@
 ﻿#ifndef _TX_SERIALIZER_H_
 #define _TX_SERIALIZER_H_
 
+#include "ServerDefine.h"
 #include "GameLog.h"
+#include "txUtility.h"
+#include "txStringUtility.h"
 
 // 用于生成二进制文件的
 class txSerializer

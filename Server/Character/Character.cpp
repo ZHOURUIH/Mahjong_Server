@@ -2,7 +2,7 @@
 #include "CommandHeader.h"
 #include "Character.h"
 #include "CharacterData.h"
-#include "txMemeryTrace.h"
+#include "Utility.h"
 
 Character::Character(const CHARACTER_TYPE& type, const std::string& name)
 :

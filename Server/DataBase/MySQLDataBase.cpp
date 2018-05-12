@@ -1,5 +1,6 @@
 ﻿#include "MySQLDataBase.h"
 #include "GameLog.h"
+#include "Utility.h"
 
 char* MySQLDataBase::DATABASE = "test";
 char* MySQLDataBase::TABLE_ACCOUNT = "Account";
@@ -79,7 +80,7 @@ int MySQLDataBase::getMaxGUID()
 		MYSQL_ROW sql_row = mysql_fetch_row(result);
 		if (sql_row != NULL && sql_row[0] != NULL)
 		{
-			guid = txUtility::stringToInt(sql_row[0]);
+			guid = txStringUtility::stringToInt(sql_row[0]);
 		}
 	}
 	// 释放查询结果
@@ -117,7 +118,7 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 				MYSQL_FIELD* fd = mysql_fetch_field(result);
 				rowData.insert(fd->name, sql_row[i]);
 			}
-			guid = txUtility::stringToInt(getColumn(rowData, COL_GUID, TABLE_ACCOUNT));
+			guid = txStringUtility::stringToInt(getColumn(rowData, COL_GUID, TABLE_ACCOUNT));
 			ret = true;
 		}
 		// 释放结果资源
@@ -133,7 +134,7 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 	{
 		return false;
 	}
-	std::string guidStr = txUtility::intToString(guid);
+	std::string guidStr = txStringUtility::intToString(guid);
 	char queryStr[256];
 	SPRINTF(queryStr, 256, "select * from %s where %s = %s", TABLE_CHARACTER_DATA, COL_GUID, guidStr.c_str());
 	// 查询
@@ -159,8 +160,8 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 				rowData.insert(fd->name, sql_row[i]);
 			}
 			name = getColumn(rowData, COL_NAME, TABLE_CHARACTER_DATA);
-			money = txUtility::stringToInt(getColumn(rowData, COL_MONEY, TABLE_CHARACTER_DATA));
-			head = txUtility::stringToInt(getColumn(rowData, COL_HEAD, TABLE_CHARACTER_DATA));
+			money = txStringUtility::stringToInt(getColumn(rowData, COL_MONEY, TABLE_CHARACTER_DATA));
+			head = txStringUtility::stringToInt(getColumn(rowData, COL_HEAD, TABLE_CHARACTER_DATA));
 			ret = true;
 		}
 		// 释放结果资源
@@ -249,7 +250,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 		return -3;
 	}
 	// 插入账号信息
-	std::string guidStr = txUtility::intToString(++curMaxGUID);
+	std::string guidStr = txStringUtility::intToString(++curMaxGUID);
 	char insertAccountBuffer[256];
 	SPRINTF(insertAccountBuffer, 256, "insert into %s values(%s, %s, %s)", TABLE_ACCOUNT, ("\"" + account + "\"").c_str(), ("\"" + password + "\"").c_str(), guidStr.c_str());
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
@@ -260,8 +261,8 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	}
 
 	// 向角色数据表中插入数据
-	std::string moneyStr = txUtility::intToString(money);
-	std::string headStr = txUtility::intToString(head);
+	std::string moneyStr = txStringUtility::intToString(money);
+	std::string headStr = txStringUtility::intToString(head);
 	char insertCharacterDataBuffer[256];
 	SPRINTF(insertCharacterDataBuffer, 256, "insert into %s values(%s, %s, %s, %s)", TABLE_CHARACTER_DATA, guidStr.c_str(), ("\"" + name + "\"").c_str(), moneyStr.c_str(), headStr.c_str());
 	ret = mysql_query(mMySQL, insertCharacterDataBuffer);

@@ -36,7 +36,7 @@ public:
 	virtual bool writeData(const std::string& dataString, const int& paramIndex);
 	virtual bool writeData(char* buffer, const int& bufferSize, const int& paramIndex);
 	std::string getValueString(const int& paramIndex);
-	void readStringList(txVector<std::string>& dataList);
+	bool readStringList(const std::vector<std::string>& dataList);
 	const int& getSize() { return mDataSize; }
 	static bool readByte(char* dest, char* source, int& curSourceOffset, const int& sourceSize, const int& readSize)
 	{
@@ -75,7 +75,7 @@ public:
 		}
 	}
 public:
-	txVector<DataParameter> mDataParameterList;
+	std::vector<DataParameter> mDataParameterList;
 	int mDataSize;
 	static std::string mIntType;
 	static std::string mShortType;

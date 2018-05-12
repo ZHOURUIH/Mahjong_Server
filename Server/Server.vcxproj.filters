@@ -37,9 +37,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{345ff81f-526e-4c6a-a4d6-b6d7ca8e8921}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FileSystem">
-      <UniqueIdentifier>{072d9c2c-32b4-4e2a-8c89-89592d47371f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Net">
       <UniqueIdentifier>{0766192b-3fa8-4e04-b652-591c94d26d88}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,21 @@
     </Filter>
     <Filter Include="CommandSystem\CommandServer">
       <UniqueIdentifier>{0b0839af-7b85-417b-aa92-d60a592dc7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL">
+      <UniqueIdentifier>{94e4fc1e-fdea-48f3-9ab0-299a78862f3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{d55d7d09-eba2-4615-b7e2-8e88af1f9ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{98501655-b1d2-48cb-9bfc-4d851fd4179e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialize">
+      <UniqueIdentifier>{a2ed4d05-3d8c-4231-a46f-265defab86a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{fc22492a-c8b8-4f1b-aa76-b559b28093f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,28 +118,7 @@
     <ClCompile Include="Room\RoomManager.cpp">
       <Filter>Room</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\txDataElem.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="FileSystem\txDataManager.cpp">
-      <Filter>FileSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Common\ServerConfig.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\txMemeryTrace.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\txSerializedData.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\txSerializer.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\txShareMemeryServer.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\txUtility.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\ServerBase.cpp">
@@ -193,9 +184,6 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="Common\txThreadLock.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Socket\Packet\ClientServer\CSCreateRoom.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
     </ClCompile>
@@ -249,9 +237,6 @@
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\ServerUtility.cpp">
-      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
@@ -349,6 +334,45 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp">
       <Filter>CommandSystem\CommandCharacter</Filter>
     </ClCompile>
+    <ClCompile Include="Memory\txMemoryCheck.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\txMemoryTrace.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\txShareMemoryServer.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\txSerializedData.cpp">
+      <Filter>Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\txSerializer.cpp">
+      <Filter>Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\txFileUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\txMathUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\txStringUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\txUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\CustomThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\ThreadLock.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\TimeLock.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\ServerUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -438,12 +462,6 @@
     <ClInclude Include="Room\RoomManager.h">
       <Filter>Room</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\txDataElem.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystem\txDataManager.h">
-      <Filter>FileSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Common\GameLog.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -456,22 +474,7 @@
     <ClInclude Include="Common\txFactoryManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\txMemeryTrace.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txSerializedData.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txSerializer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txShareMemeryServer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\txSingleton.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txUtility.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ServerBase.h">
@@ -554,9 +557,6 @@
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h">
       <Filter>Socket\Packet\ServerClient</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txThreadLock.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Socket\Packet\ClientServer\CSCreateRoom.h">
       <Filter>Socket\Packet\ClientServer</Filter>
@@ -652,9 +652,6 @@
       <Filter>Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Common\GameDefine.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ServerUtility.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartDone.h">
@@ -780,18 +777,6 @@
     <ClInclude Include="Room\HuInfo.h">
       <Filter>Room</Filter>
     </ClInclude>
-    <ClInclude Include="Common\txMap.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txSet.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txSTLBase.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\txVector.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Net\NetClient.h">
       <Filter>Net</Filter>
     </ClInclude>
@@ -836,6 +821,66 @@
     </ClInclude>
     <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerShowHua.h">
       <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\txMemoryCheck.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\txMemoryTrace.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\txShareMemoryServer.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\txSerializedData.h">
+      <Filter>Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\txSerializer.h">
+      <Filter>Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\txFileUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\txMathUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\txStringUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\txUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\CustomThread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\ThreadLock.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\TimeLock.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="STL\txMap.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="STL\txSet.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="STL\txSTLBase.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="STL\txVector.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Utility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\ServerUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryInfo.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryDefine.h">
+      <Filter>Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿#include "txUtility.h"
+﻿#include "Utility.h"
 #include "txCommandSystem.h"
 #include "txCommandReceiver.h"
 #include "txCommand.h"
@@ -71,7 +71,7 @@ void txCommandSystem::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver
 	if (mShowDebugInfo && cmd->getShowDebugInfo())
 	{
 		COMMAND_INFO("%s | CommandSystem : 0x%p, %s, receiver : %s, file : %s, line : %d", txUtility::getTime(), 
-			cmd, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str(), txUtility::getFileName(cmd->getFile()).c_str(), cmd->getLine());
+			cmd, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str(), txStringUtility::getFileName(cmd->getFile()).c_str(), cmd->getLine());
 	}
 	cmdReceiver->receiveCommand(cmd);
 }
@@ -90,17 +90,17 @@ void txCommandSystem::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdRec
 	if (mShowDebugInfo && cmd->getShowDebugInfo())
 	{
 		COMMAND_INFO("%s | CommandSystem : delay cmd : %f, info : 0x%p, %s, receiver : %s, file : %s, line : %d", txUtility::getTime(),
-			delayExecute, cmd, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str(), txUtility::getFileName(cmd->getFile()).c_str(), cmd->getLine());
+			delayExecute, cmd, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str(), txStringUtility::getFileName(cmd->getFile()).c_str(), cmd->getLine());
 	}
 	if (cmd->isDelayCommand())
 	{
 		DelayCommand delayCommand(delayExecute, cmd, cmdReceiver);
 
 		// 等待解锁缓冲区,锁定缓冲区
-		LOCK(mBufferLock, LT_WRITE);
+		LOCK(mBufferLock);
 		mCommandBufferInput.push_back(delayCommand);
 		// 解锁缓冲区
-		UNLOCK(mBufferLock, LT_WRITE);
+		UNLOCK(mBufferLock);
 	}
 	else
 	{
@@ -178,7 +178,7 @@ void txCommandSystem::removeReceiverCommand(txCommandReceiver* receiver)
 void txCommandSystem::syncCommandBuffer()
 {
 	// 等待解锁缓冲区,锁定缓冲区
-	LOCK(mBufferLock, LT_WRITE);
+	LOCK(mBufferLock);
 	int inputCount = mCommandBufferInput.size();
 	FOR_STL(mCommandBufferInput, int i = 0; i < inputCount; ++i)
 	{
@@ -187,5 +187,5 @@ void txCommandSystem::syncCommandBuffer()
 	END_FOR_STL(mCommandBufferInput);
 	mCommandBufferInput.clear();
 	// 解锁缓冲区
-	UNLOCK(mBufferLock, LT_WRITE);
+	UNLOCK(mBufferLock);
 }

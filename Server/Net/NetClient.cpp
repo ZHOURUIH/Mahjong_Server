@@ -1,10 +1,11 @@
 ﻿#include "NetClient.h"
-#include "txMemeryTrace.h"
+#include "txMemoryTrace.h"
 #include "PacketHeader.h"
 #include "NetServer.h"
 #include "CommandHeader.h"
 #include "CharacterManager.h"
 #include "PacketFactoryManager.h"
+#include "Utility.h"
 
 NetClient::NetClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip)
 :
@@ -22,7 +23,7 @@ mConnectTime(0.0f),
 mIsDeadClient(false)
 {
 	memset(mIP, 0, 16);
-	memcpy(mIP, ip, TX_MAX(16, strlen(ip)));
+	memcpy(mIP, ip, txMath::getMax(16, (int)strlen(ip)));
 	mSendBuffer = TRACE_NEW_ARRAY(char, CLIENT_BUFFER_SIZE, mSendBuffer);
 	mRecvBuffer = TRACE_NEW_ARRAY(char, CLIENT_BUFFER_SIZE, mRecvBuffer);
 	mTempBuffer0 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer0);
@@ -45,17 +46,13 @@ void NetClient::destroy()
 	TRACE_DELETE_ARRAY(mTempBuffer1);
 
 	// 关闭客户端套接字,并从列表移除
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	closesocket(mSocket);
-#elif RUN_PLATFORM == PLATFORM_LINUX
-	close(mSocket);
-#endif
+	CLOSE_SOCKET(mSocket);
 }
 
 void NetClient::update(const float& elapsedTime)
 {
 	txVector<Packet*> packetList;
-	LOCK(mRecvLock, LT_WRITE);
+	LOCK(mRecvLock);
 	// 解析接收到的数据
 	int index = 0;
 	bool ret = true;
@@ -121,7 +118,7 @@ void NetClient::update(const float& elapsedTime)
 		memmove(mRecvBuffer, mRecvBuffer + index, mRecvDataCount - index);
 		mRecvDataCount -= index;
 	}
-	UNLOCK(mRecvLock, LT_WRITE);
+	UNLOCK(mRecvLock);
 
 	int packetCount = packetList.size();
 	FOR_STL(packetList, int i = 0; i < packetCount; ++i)
@@ -200,11 +197,11 @@ void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	packet->write(mTempBuffer1, packetSize);
 	Packet::writeByte(mTempBuffer0, mTempBuffer1, offset, sendSize, packetSize);
 
-	LOCK(mSendLock, LT_WRITE);
+	LOCK(mSendLock);
 	// 将数据拷贝到客户端主缓冲区中
 	memcpy(mSendBuffer + mSendDataCount, mTempBuffer0, sendSize);
 	mSendDataCount += sendSize;
-	UNLOCK(mSendLock, LT_WRITE);
+	UNLOCK(mSendLock);
 
 	// 销毁消息包
 	if (autoDestroyPacket)
@@ -215,14 +212,14 @@ void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 
 void NetClient::notifyDataSended(const int& sendedCount)
 {
-	LOCK(mSendLock, LT_WRITE);
+	LOCK(mSendLock);
 	if (sendedCount < mSendDataCount)
 	{
 		// 将后面未发送的字节移动到前面,重置数据长度
 		memmove(mSendBuffer, mSendBuffer + sendedCount, mSendDataCount - sendedCount);
 	}
 	mSendDataCount -= sendedCount;
-	UNLOCK(mSendLock, LT_WRITE);
+	UNLOCK(mSendLock);
 }
 
 void NetClient::notifyRecvData(const char* data, const int& dataCount)
@@ -234,10 +231,10 @@ void NetClient::notifyRecvData(const char* data, const int& dataCount)
 		GAME_ERROR("error : recv data is full!");
 		return;
 	}
-	LOCK(mRecvLock, LT_WRITE);
+	LOCK(mRecvLock);
 	memcpy(mRecvBuffer + mRecvDataCount, data, dataCount);
 	mRecvDataCount += dataCount;
-	UNLOCK(mRecvLock, LT_WRITE);
+	UNLOCK(mRecvLock);
 	if (NetServer::getOutputLog())
 	{
 		LOG_INFO("%s | recv : ip : %s, size : %d", txUtility::getTime(), mIP, dataCount);

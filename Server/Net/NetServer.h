@@ -3,8 +3,9 @@
 
 #include "PacketDefine.h"
 #include "ServerDefine.h"
-#include "txThreadLock.h"
+#include "ThreadLock.h"
 #include "ServerBase.h"
+#include "CustomThread.h"
 #include "txCommandReceiver.h"
 
 class Packet;
@@ -16,7 +17,7 @@ public:
 	NetServer();
 	virtual ~NetServer(){ destroy(); }
 	void destroy();
-	virtual void init(int port, int backLog);
+	virtual void init(const int& port, const int& backLog);
 	virtual void update(const float& elapsedTime);
 
 	static const float& getHeartBeatTimeOut() { return mHeartBeatTimeOut; }
@@ -24,32 +25,16 @@ public:
 	const int& getPort() { return mPort; }
 	int getClientCount() { return mClientList.size(); }
 	
-	virtual CLIENT_GUID notifyAcceptClient(const SOCKET& socket, const char* ip);
+	virtual CLIENT_GUID notifyAcceptClient(const TX_SOCKET& socket, const char* ip);
 	void sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend = true);
 	void sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend = true);
 	static Packet* createPacket(const PACKET_TYPE& type);
 	static void destroyPacket(Packet* packet);
 	virtual void disconnectSocket(const CLIENT_GUID& client);	// 与客户端断开连接,只能在主线程中调用
-	NetClient* getClient(const CLIENT_GUID& clientGUID)
-	{
-		NetClient* client = NULL;
-		LOCK(mClientLock, LT_READ);
-		txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(clientGUID);
-		if (iterClient != mClientList.end())
-		{
-			client = iterClient->second;
-		}
-		UNLOCK(mClientLock, LT_READ);
-		return client;
-	}
+	NetClient* getClient(const CLIENT_GUID& clientGUID);
 protected:
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	static DWORD WINAPI acceptSocket(LPVOID lpParameter);
-	static DWORD WINAPI receiveSendSocket(LPVOID lpParameter);
-#elif RUN_PLATFORM == PLATFORM_LINUX
-	static void* acceptSocket(void* args);
-	static void* receiveSendSocket(void* args);
-#endif
+	static bool acceptSocket(void* args);
+	static bool receiveSendSocket(void* args);
 	void processSend();
 	void processRecv();
 	CLIENT_GUID generateSocketGUID() { return mSocketGUIDSeed++; }
@@ -58,12 +43,11 @@ protected:
 #endif
 protected:
 	int mPort;                 // 端口号
-	int mBackLog;
 	unsigned int mMaxSocket;
 	TX_SOCKET mSocket;
-	TX_THREAD mAcceptThread;
-	TX_THREAD mReceiveThread;
-	txThreadLock mClientLock;
+	CustomThread* mAcceptThread;
+	CustomThread* mReceiveThread;
+	ThreadLock mClientLock;
 	txMap<CLIENT_GUID, NetClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;

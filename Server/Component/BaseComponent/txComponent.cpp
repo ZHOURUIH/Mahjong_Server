@@ -1,5 +1,6 @@
 ﻿#include "txComponentHeader.h"
 #include "GameLog.h"
+#include "Utility.h"
 
 txComponent::txComponent(const std::string& typeName, const std::string& name)
 :

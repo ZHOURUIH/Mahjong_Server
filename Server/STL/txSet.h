@@ -33,6 +33,20 @@ public:
 		checkLock();
 		mSet.erase(iter);
 	}
+	bool erase(const T& value)
+	{
+		iterator iter = mSet.find(value);
+		if (iter != mSet.end())
+		{
+			erase(iter);
+			return true;
+		}
+		return false;
+	}
+	bool contains(const T& value)
+	{
+		return mSet.find(value) != mSet.end();
+	}
 	void clear()
 	{
 		checkLock();

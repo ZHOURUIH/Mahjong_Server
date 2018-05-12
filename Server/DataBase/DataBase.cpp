@@ -1,8 +1,6 @@
-﻿#include "txDataManager.h"
-#include "txDataElem.h"
-
-#include "DataBase.h"
+﻿#include "DataBase.h"
 #include "DataFactory.h"
+#include "Utility.h"
 
 txMap<DATA_TYPE, DataFactoryBase*> DataBase::mDataFactoryList;
 txMap<std::string, DATA_TYPE> DataBase::mDataFileDefine;
@@ -101,9 +99,7 @@ void DataBase::loadAllDataFromFile()
 	// 读取配置文件，获得需要加载的所有数据列表
 	// 遍历每一个文件名，加载相应的文件
 	txVector<std::string> fileList;
-	txVector<std::string> patterns;
-	patterns.push_back(".table");
-	txUtility::findFiles(txUtility::getAvailableResourcePath(GAME_DATA_PATH).c_str(), fileList, patterns);
+	txFileUtility::findFiles(txUtility::getAvailableResourcePath(GAME_DATA_PATH).c_str(), fileList, ".table");
 	int listSize = fileList.size();
 	FOR_STL(fileList, int i = 0; i < listSize; ++i)
 	{
@@ -160,7 +156,7 @@ void DataBase::destroyData(const DATA_TYPE& type)
 void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 {
 	// 根据文件名查找工厂类型
-	std::string fileName = txUtility::getFileNameNoSuffix(filePath);
+	std::string fileName = txStringUtility::getFileNameNoSuffix(filePath);
 	txMap<std::string, DATA_TYPE>::iterator iterFileDefine = mDataFileDefine.find(fileName);
 	if(iterFileDefine == mDataFileDefine.end())
 	{
@@ -191,13 +187,8 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 	}
 
 	// 打开文件
-	int dataIndex = mDataManager->LoadData(filePath.c_str());
-	if(dataIndex < 0)
-	{
-		return;
-	}
-	char* fileBuffer = mDataManager->GetData(dataIndex)->getValuePtr();
-	int fileSize = mDataManager->GetFileSize(dataIndex);
+	int fileSize = 0;
+	char* fileBuffer = txFileUtility::openBinaryFile(txUtility::getAvailableResourcePath(filePath), &fileSize);
 
 	// 解析文件
 	txVector<Data*> dataList;
@@ -206,9 +197,9 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 	for (int i = 0; i < dataCount; ++i)
 	{
 		Data* newData = factory->createData();
-		if(NULL == newData)
+		if (newData == NULL)
 		{
-			mDataManager->DestroyData(dataIndex);
+			TRACE_DELETE_ARRAY(fileBuffer);
 			GAME_ERROR("error : can not create data ,type : %d", factory->getType());
 			return;
 		}
@@ -217,9 +208,8 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 			dataList.push_back(newData);
 		}
 	}
-
 	mDataStructList.insert(factory->getType(), dataList);
-	mDataManager->DestroyData(dataIndex);
+	TRACE_DELETE_ARRAY(fileBuffer);
 }
 
 bool DataBase::writeBinaryFile(const DATA_TYPE& type)
@@ -255,7 +245,7 @@ bool DataBase::writeBinaryFile(const DATA_TYPE& type)
 		GAME_ERROR("error : can not find data type in data define file list! type : %d", type);
 		return false;
 	}
-	txUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeBufferSize, writeFileBuffer);
+	txFileUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeBufferSize, writeFileBuffer);
 	TRACE_DELETE_ARRAY(writeFileBuffer);
 	return true;
 }

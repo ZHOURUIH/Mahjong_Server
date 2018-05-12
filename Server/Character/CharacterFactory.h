@@ -3,7 +3,7 @@
 
 #include "CharacterDefine.h"
 #include "Character.h"
-#include "txMemeryTrace.h"
+#include "Utility.h"
 #include "GameLog.h"
 
 class CharacterFactoryBase

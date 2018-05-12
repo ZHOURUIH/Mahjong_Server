@@ -4,7 +4,6 @@
 #include "GameDefine.h"
 #include "ServerBase.h"
 #include "txCommandReceiver.h"
-#include "txUtility.h"
 
 class CharacterPlayer;
 class WaitActionInfo;
@@ -13,23 +12,7 @@ class HuInfo;
 class Room : public ServerBase, public txCommandReceiver
 {
 public:
-	Room(int id)
-		:
-		txCommandReceiver("room" + txUtility::intToString(id)),
-		mID(id),
-		mMaxPlayer(MAX_PLAYER),
-		mLockRoom(false),
-		mDiceDoneCount(0),
-		mPlayState(MPS_WAITING),
-		mBankerPos(-1),
-		mCurAssignPos(-1),
-		mCurInterval(0.0f)
-	{
-		for (int i = 0; i < mMaxPlayer; ++i)
-		{
-			mPlayerPositionList.insert(i, (CharacterPlayer*)NULL);
-		}
-	}
+	Room(const int& id);
 	virtual ~Room(){ destroy(); }
 	virtual void init(){}
 	virtual void update(const float& elapsedTime);

@@ -1,7 +1,7 @@
 ﻿#ifndef _PACKET_FACTORY_H_
 #define _PACKET_FACTORY_H_
 
-#include "txMemeryTrace.h"
+#include "Utility.h"
 #include "PacketHeader.h"
 
 class PacketFactoryBase

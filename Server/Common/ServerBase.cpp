@@ -3,7 +3,6 @@
 
 ServerFramework* ServerBase::mServerFramework = NULL;
 ServerConfig* ServerBase::mServerConfig = NULL;
-txDataManager* ServerBase::mDataManager = NULL;
 txCommandSystem* ServerBase::mCommandSystem = NULL;
 NetServer* ServerBase::mNetServer = NULL;
 CharacterManager* ServerBase::mCharacterManager = NULL;
@@ -15,7 +14,6 @@ void ServerBase::notifyConstructDone()
 {
 	mServerFramework = ServerFramework::getSingletonPtr();
 	mServerConfig = mServerFramework->getServerConfig();
-	mDataManager = mServerFramework->getDataManager();
 	mCommandSystem = mServerFramework->getCommandSystem();
 	mNetServer = mServerFramework->getNetManagerServer();
 	mCharacterManager = mServerFramework->getCharacterManager();

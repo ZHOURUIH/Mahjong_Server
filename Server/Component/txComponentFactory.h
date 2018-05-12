@@ -1,7 +1,7 @@
 #ifndef _TX_COMPONENT_FACTORY_BASE_H_
 #define _TX_COMPONENT_FACTORY_BASE_H_
 
-#include "txUtility.h"
+#include "Utility.h"
 #include "txComponent.h"
 #include "GameLog.h"
 
@@ -45,7 +45,7 @@ public:
 	const std::string& getType() { return mType; }
 	std::string createUniqueName()
 	{
-		return mType + txUtility::intToString(mNameCount++);
+		return mType + txStringUtility::intToString(mNameCount++);
 	}
 protected:
 	std::string mType;

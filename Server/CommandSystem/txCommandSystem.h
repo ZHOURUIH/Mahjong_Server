@@ -3,7 +3,7 @@
 
 #include "CommandDefine.h"
 #include "ServerDefine.h"
-#include "txThreadLock.h"
+#include "ThreadLock.h"
 
 class txCommand;
 class txCommandReceiver;
@@ -32,7 +32,7 @@ protected:
 protected:
 	txVector<DelayCommand> mCommandBufferProcess;	// 用于处理的命令列表
 	txVector<DelayCommand> mCommandBufferInput;		// 用于放入命令的命令列表
-	txThreadLock mBufferLock;
+	ThreadLock mBufferLock;
 	bool mShowDebugInfo;
 	txSet<txCommandReceiver*> mDestroiedReceiver;	// 已经被销毁的命令接收者列表
 };

@@ -5,6 +5,7 @@
 #include "CharacterData.h"
 #include "CharacterManager.h"
 #include "CommandHeader.h"
+#include "Utility.h"
 
 int RoomManager::mRoomIDSeed = 0;
 void RoomManager::update(const float& elapsedTime)

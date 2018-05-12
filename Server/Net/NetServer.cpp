@@ -4,6 +4,7 @@
 #include "ServerConfig.h"
 #include "PacketFactoryManager.h"
 #include "NetClient.h"
+#include "TimeLock.h"
 
 CLIENT_GUID NetServer::mSocketGUIDSeed = 0;
 PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
@@ -12,13 +13,12 @@ bool NetServer::mOutputLog = true;
 
 NetServer::NetServer()
 :
-txCommandReceiver("NetManagerServer")
+txCommandReceiver(TOSTRING(NetServer))
 {
-	mReceiveThread = NULL_THREAD;
-	mAcceptThread = NULL_THREAD;
+	mReceiveThread = TRACE_NEW(CustomThread, mReceiveThread, "ReceiveSocket");
+	mAcceptThread = TRACE_NEW(CustomThread, mAcceptThread, "AcceptSocket");
 	mSocket = INVALID_SOCKET;
 	mPort = 0;
-	mBackLog = 0;
 	mOutputLog = true;
 	mMaxSocket = 0;
 	mHeartBeatTimeOut = 0.0f;
@@ -36,48 +36,23 @@ void NetServer::destroy()
 	END_FOR_STL(mClientList);
 	mClientList.clear();
 	TRACE_DELETE(mPacketFactoryManager);
-
+	TRACE_DELETE(mReceiveThread);
+	TRACE_DELETE(mAcceptThread);
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-	if (mReceiveThread != NULL_THREAD)
-	{
-		TerminateThread(mReceiveThread, 0);
-		CloseHandle(mReceiveThread);
-		mReceiveThread = NULL_THREAD;
-	}
-	if (mAcceptThread != NULL_THREAD)
-	{
-		TerminateThread(mAcceptThread, 0);
-		CloseHandle(mAcceptThread);
-		mAcceptThread = NULL_THREAD;
-	}
 	WSACleanup();
-	closesocket(mSocket);
-#elif RUN_PLATFORM == PLATFORM_LINUX
-	if (mReceiveThread != NULL_THREAD)
-	{
-		pthread_cancel(mReceiveThread);
-		mReceiveThread = NULL_THREAD;
-	}
-	if (mAcceptThread != NULL_THREAD)
-	{
-		pthread_cancel(mAcceptThread);
-		mAcceptThread = NULL_THREAD;
-	}
-	close(mSocket);
 #endif
+	CLOSE_SOCKET(mSocket);
 }
 
-void NetServer::init(int port, int backLog)
+void NetServer::init(const int& port, const int& backLog)
 {
 #if RUN_PLATFORM == PLATFORM_LINUX
 	signal(SIGPIPE, signalProcess);
 #endif
 
 	mPort = port;
-	mBackLog = backLog;
-
-	mHeartBeatTimeOut = ServerConfig::getFloatParam(SD_HEART_BEAT_TIME_OUT);
-	mOutputLog = (int)ServerConfig::getFloatParam(SD_OUTPUT_NET_LOG) > 0;
+	mHeartBeatTimeOut = ServerConfig::getFloatParam(SDF_HEART_BEAT_TIME_OUT);
+	mOutputLog = (int)ServerConfig::getFloatParam(SDF_OUTPUT_NET_LOG) > 0;
 	// 初始化工厂
 	mPacketFactoryManager = TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
 	mPacketFactoryManager->init();
@@ -93,7 +68,7 @@ void NetServer::init(int port, int backLog)
 #endif
 	//创建监听的Socket
 	mSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (mSocket == (TX_SOCKET)INVALID_SOCKET)
+	if (mSocket == INVALID_SOCKET)
 	{
 		GAME_ERROR("socket failed!");
 		return;
@@ -117,31 +92,18 @@ void NetServer::init(int port, int backLog)
 		return;
 	}
 	//在Sockets Server上进行监听
-	if (listen(mSocket, mBackLog) != 0)
+	if (listen(mSocket, backLog) != 0)
 	{
 		GAME_ERROR("listen failed!");
 		return;
 	}
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	mReceiveThread = CreateThread(NULL, 0, NetServer::receiveSendSocket, this, 0, NULL);
-	mAcceptThread = CreateThread(NULL, 0, NetServer::acceptSocket, this, 0, NULL);
-#elif RUN_PLATFORM == PLATFORM_LINUX
-	pthread_create(&mReceiveThread, NULL, NetManagerServer::receiveSendSocket, this);
-	pthread_create(&mAcceptThread, NULL, NetManagerServer::acceptSocket, this);
-#endif
+	mReceiveThread->start(receiveSendSocket, this);
+	mAcceptThread->start(acceptSocket, this);
 }
 
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-DWORD WINAPI NetServer::acceptSocket(LPVOID lpParameter)
-#elif RUN_PLATFORM == PLATFORM_LINUX
-void* NetServer::acceptSocket(void* args)
-#endif
+bool NetServer::acceptSocket(void* args)
 {
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	NetServer* netManager = (NetServer*)(lpParameter);
-#elif RUN_PLATFORM == PLATFORM_LINUX
 	NetServer* netManager = (NetServer*)(args);
-#endif
 	sockaddr_in addr;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	int nLen = sizeof(addr);
@@ -149,57 +111,43 @@ void* NetServer::acceptSocket(void* args)
 	socklen_t nLen = sizeof(addr);
 #endif
 	char ip[16] = { 0 };
-	while (true)
+	TX_SOCKET sClient = accept(netManager->mSocket, (struct sockaddr*)&addr, &nLen);
+	if (sClient == (TX_SOCKET)INVALID_SOCKET)
 	{
-		TX_SOCKET sClient = accept(netManager->mSocket, (struct sockaddr*)&addr, &nLen);
-		if (sClient == (TX_SOCKET)INVALID_SOCKET)
-		{
-			GAME_ERROR("error : accept failed!");
-			return 0;
-		}
-		// 获得客户端IP,然后通知已经接收到一个客户端的连接
-		if (netManager->mOutputLog)
-		{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-			SPRINTF(ip, 16, "%d.%d.%d.%d", addr.sin_addr.S_un.S_un_b.s_b1, addr.sin_addr.S_un.S_un_b.s_b2, addr.sin_addr.S_un.S_un_b.s_b3, addr.sin_addr.S_un.S_un_b.s_b4);
-#elif RUN_PLATFORM == PLATFORM_LINUX
-			int ip0 = GET_BYTE(addr.sin_addr.s_addr, 0);
-			int ip1 = GET_BYTE(addr.sin_addr.s_addr, 1);
-			int ip2 = GET_BYTE(addr.sin_addr.s_addr, 2);
-			int ip3 = GET_BYTE(addr.sin_addr.s_addr, 3);
-			SPRINTF(ip, 16, "%d.%d.%d.%d", ip0, ip1, ip2, ip3);
-#endif
-		}
-		CommandServerNotifyAcceptedClient* notifyAccepted = txCommand::createDelayCommand<CommandServerNotifyAcceptedClient>(CMD_PARAM, false);
-		notifyAccepted->mSocket = sClient;
-		notifyAccepted->mIP = ip;
-		mCommandSystem->pushDelayCommand(notifyAccepted, netManager);
+		GAME_ERROR("error : accept failed!");
+		return true;
 	}
-	return 0;
+	// 获得客户端IP,然后通知已经接收到一个客户端的连接
+	if (mOutputLog)
+	{
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+		SPRINTF(ip, 16, "%d.%d.%d.%d", addr.sin_addr.S_un.S_un_b.s_b1, addr.sin_addr.S_un.S_un_b.s_b2, addr.sin_addr.S_un.S_un_b.s_b3, addr.sin_addr.S_un.S_un_b.s_b4);
+#elif RUN_PLATFORM == PLATFORM_LINUX
+		int ip0 = GET_BYTE(addr.sin_addr.s_addr, 0);
+		int ip1 = GET_BYTE(addr.sin_addr.s_addr, 1);
+		int ip2 = GET_BYTE(addr.sin_addr.s_addr, 2);
+		int ip3 = GET_BYTE(addr.sin_addr.s_addr, 3);
+		SPRINTF(ip, 16, "%d.%d.%d.%d", ip0, ip1, ip2, ip3);
+#endif
+	}
+	CommandServerNotifyAcceptedClient* notifyAccepted = txCommand::createDelayCommand<CommandServerNotifyAcceptedClient>(CMD_PARAM, false);
+	notifyAccepted->mSocket = sClient;
+	notifyAccepted->mIP = ip;
+	mCommandSystem->pushDelayCommand(notifyAccepted, netManager);
+	return true;
 }
 
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-DWORD WINAPI NetServer::receiveSendSocket(LPVOID lpParameter)
-#elif RUN_PLATFORM == PLATFORM_LINUX
-void* NetServer::receiveSendSocket(void* args)
-#endif
+bool NetServer::receiveSendSocket(void* args)
 {
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	NetServer* netManager = (NetServer*)(lpParameter);
-#elif RUN_PLATFORM == PLATFORM_LINUX
 	NetServer* netManager = (NetServer*)(args);
-#endif
-	while (true)
+	// 有客户端连接到了服务器,才接收数据和发送数据
+	if (netManager->getClientCount() > 0)
 	{
-		// 有客户端连接到了服务器,才接收数据和发送数据
-		if (netManager->getClientCount() > 0)
-		{
-			netManager->processRecv();
-			// 处理发送socket消息
-			netManager->processSend();
-		}
+		netManager->processRecv();
+		// 处理发送socket消息
+		netManager->processSend();
 	}
-	return 0;
+	return true;
 }
 
 void NetServer::processSend()
@@ -208,7 +156,7 @@ void NetServer::processSend()
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdwrite;
 	// 等待发送列表解锁,然后锁定发送列表
-	LOCK(mClientLock, LT_READ);
+	LOCK(mClientLock);
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
@@ -264,7 +212,7 @@ void NetServer::processSend()
 	END_FOR_STL(mClientList);
 
 	// 解锁发送列表
-	UNLOCK(mClientLock, LT_READ);
+	UNLOCK(mClientLock);
 }
 
 void NetServer::processRecv()
@@ -274,7 +222,7 @@ void NetServer::processRecv()
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
 	// 等待解锁accept列表的读写,并锁定accept列表
-	LOCK(mClientLock, LT_READ);
+	LOCK(mClientLock);
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
@@ -322,17 +270,19 @@ void NetServer::processRecv()
 	END_FOR_STL(mClientList);
 
 	// 解锁accept列表
-	UNLOCK(mClientLock, LT_READ);
+	UNLOCK(mClientLock);
 }
 
 void NetServer::update(const float& elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
-	LOCK(mClientLock, LT_READ);
+	LOCK(mClientLock);
+	txMap<CLIENT_GUID, NetClient*> tempClientList = mClientList;
+	UNLOCK(mClientLock);
 	txVector<CLIENT_GUID> logoutClientList;
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
-	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = tempClientList.begin();
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = tempClientList.end();
+	FOR_STL(tempClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
 		// 将已经死亡的客户端放入列表
@@ -341,8 +291,7 @@ void NetServer::update(const float& elapsedTime)
 			logoutClientList.push_back(iterClient->first);
 		}
 	}
-	END_FOR_STL(mClientList);
-	UNLOCK(mClientLock, LT_READ);
+	END_FOR_STL(tempClientList);
 
 	int logoutCount = logoutClientList.size();
 	FOR_STL(logoutClientList, int i = 0; i < logoutCount; ++i)
@@ -355,7 +304,7 @@ void NetServer::update(const float& elapsedTime)
 CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表
-	LOCK(mClientLock, LT_WRITE);
+	LOCK(mClientLock);
 	CLIENT_GUID clientGUID = generateSocketGUID();
 	if (mClientList.find(clientGUID) == mClientList.end())
 	{
@@ -375,14 +324,14 @@ CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* i
 		GAME_ERROR("error : client insert to accept list failed!");
 	}
 	// 解锁accept列表
-	UNLOCK(mClientLock, LT_WRITE);
+	UNLOCK(mClientLock);
 	return clientGUID;
 }
 
 void NetServer::disconnectSocket(const CLIENT_GUID& client)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
-	LOCK(mClientLock, LT_WRITE);
+	LOCK(mClientLock);
 	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
@@ -395,7 +344,20 @@ void NetServer::disconnectSocket(const CLIENT_GUID& client)
 		}
 	}
 	// 解锁accept列表
-	UNLOCK(mClientLock, LT_WRITE);
+	UNLOCK(mClientLock);
+}
+
+NetClient* NetServer::getClient(const CLIENT_GUID& clientGUID)
+{
+	NetClient* client = NULL;
+	LOCK(mClientLock);
+	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(clientGUID);
+	if (iterClient != mClientList.end())
+	{
+		client = iterClient->second;
+	}
+	UNLOCK(mClientLock);
+	return client;
 }
 
 void NetServer::sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend)

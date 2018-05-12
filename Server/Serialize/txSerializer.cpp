@@ -1,6 +1,7 @@
 ﻿#include "txSerializer.h"
 #include "txUtility.h"
-#include "txMemeryTrace.h"
+#include "txMemoryTrace.h"
+#include "txFileUtility.h"
 
 txSerializer::txSerializer(const bool& traceMemery)
 :
@@ -159,7 +160,7 @@ void txSerializer::writeToFile(const std::string& fullName)
 	{
 		return;
 	}
-	txUtility::writeFile(fullName, mIndex, mBuffer);
+	txFileUtility::writeFile(fullName, mIndex, mBuffer);
 }
 
 void txSerializer::resizeBuffer(const int& maxSize)

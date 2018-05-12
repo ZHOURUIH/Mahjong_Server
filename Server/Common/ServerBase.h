@@ -3,7 +3,6 @@
 
 class ServerFramework;
 class ServerConfig;
-class txDataManager;
 class txCommandSystem;
 class NetServer;
 class CharacterManager;
@@ -18,7 +17,6 @@ public:
 public:
 	static ServerFramework* mServerFramework;
 	static ServerConfig* mServerConfig;
-	static txDataManager* mDataManager;
 	static txCommandSystem* mCommandSystem;
 	static NetServer* mNetServer;
 	static CharacterManager* mCharacterManager;

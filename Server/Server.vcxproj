@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -78,7 +78,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -152,26 +152,22 @@
     <ClCompile Include="CommandSystem\txCommandSystem.cpp" />
     <ClCompile Include="Common\ServerBase.cpp" />
     <ClCompile Include="Common\ServerConfig.cpp" />
-    <ClCompile Include="Common\ServerUtility.cpp" />
-    <ClCompile Include="Common\txThreadLock.cpp" />
-    <ClCompile Include="Common\txMemeryTrace.cpp" />
-    <ClCompile Include="Common\txSerializedData.cpp" />
-    <ClCompile Include="Common\txSerializer.cpp" />
-    <ClCompile Include="Common\txShareMemeryServer.cpp" />
-    <ClCompile Include="Common\txUtility.cpp" />
     <ClCompile Include="Component\BaseComponent\txComponent.cpp" />
     <ClCompile Include="Component\txComponentFactoryManager.cpp" />
     <ClCompile Include="Component\txComponentOwner.cpp" />
     <ClCompile Include="DataBase\Data.cpp" />
     <ClCompile Include="DataBase\DataBase.cpp" />
     <ClCompile Include="DataBase\MySQLDataBase.cpp" />
-    <ClCompile Include="FileSystem\txDataElem.cpp" />
-    <ClCompile Include="FileSystem\txDataManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Memory\txMemoryCheck.cpp" />
+    <ClCompile Include="Memory\txMemoryTrace.cpp" />
+    <ClCompile Include="Memory\txShareMemoryServer.cpp" />
     <ClCompile Include="Net\NetServer.cpp" />
     <ClCompile Include="Net\NetClient.cpp" />
     <ClCompile Include="Room\Room.cpp" />
     <ClCompile Include="Room\RoomManager.cpp" />
+    <ClCompile Include="Serialize\txSerializedData.cpp" />
+    <ClCompile Include="Serialize\txSerializer.cpp" />
     <ClCompile Include="ServerFramework\ServerFramework.cpp" />
     <ClCompile Include="Socket\PacketFactoryManager.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSBackToMahjongHall.cpp" />
@@ -188,6 +184,14 @@
     <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSRequestDrop.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSConfirmAction.cpp" />
+    <ClCompile Include="Thread\CustomThread.cpp" />
+    <ClCompile Include="Thread\ThreadLock.cpp" />
+    <ClCompile Include="Thread\TimeLock.cpp" />
+    <ClCompile Include="Utility\ServerUtility.cpp" />
+    <ClCompile Include="Utility\txFileUtility.cpp" />
+    <ClCompile Include="Utility\txMathUtility.cpp" />
+    <ClCompile Include="Utility\txStringUtility.cpp" />
+    <ClCompile Include="Utility\txUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h" />
@@ -259,19 +263,8 @@
     <ClInclude Include="Common\ServerBase.h" />
     <ClInclude Include="Common\ServerConfig.h" />
     <ClInclude Include="Common\ServerDefine.h" />
-    <ClInclude Include="Common\ServerUtility.h" />
-    <ClInclude Include="Common\txMap.h" />
-    <ClInclude Include="Common\txSet.h" />
-    <ClInclude Include="Common\txSTLBase.h" />
-    <ClInclude Include="Common\txThreadLock.h" />
     <ClInclude Include="Common\txFactoryManager.h" />
-    <ClInclude Include="Common\txMemeryTrace.h" />
-    <ClInclude Include="Common\txSerializedData.h" />
-    <ClInclude Include="Common\txSerializer.h" />
-    <ClInclude Include="Common\txShareMemeryServer.h" />
     <ClInclude Include="Common\txSingleton.h" />
-    <ClInclude Include="Common\txUtility.h" />
-    <ClInclude Include="Common\txVector.h" />
     <ClInclude Include="Component\BaseComponent\txComponent.h" />
     <ClInclude Include="Component\txComponentFactory.h" />
     <ClInclude Include="Component\txComponentFactoryManager.h" />
@@ -283,8 +276,11 @@
     <ClInclude Include="DataBase\DataFactory.h" />
     <ClInclude Include="DataBase\DataPlayerInfo.h" />
     <ClInclude Include="DataBase\MySQLDataBase.h" />
-    <ClInclude Include="FileSystem\txDataElem.h" />
-    <ClInclude Include="FileSystem\txDataManager.h" />
+    <ClInclude Include="Memory\MemoryDefine.h" />
+    <ClInclude Include="Memory\MemoryInfo.h" />
+    <ClInclude Include="Memory\txMemoryCheck.h" />
+    <ClInclude Include="Memory\txMemoryTrace.h" />
+    <ClInclude Include="Memory\txShareMemoryServer.h" />
     <ClInclude Include="Net\NetServer.h" />
     <ClInclude Include="Net\NetClient.h" />
     <ClInclude Include="Room\HuInfo.h" />
@@ -292,6 +288,8 @@
     <ClInclude Include="Room\Room.h" />
     <ClInclude Include="Room\RoomManager.h" />
     <ClInclude Include="Room\WaitActionInfo.h" />
+    <ClInclude Include="Serialize\txSerializedData.h" />
+    <ClInclude Include="Serialize\txSerializer.h" />
     <ClInclude Include="ServerFramework\ServerFramework.h" />
     <ClInclude Include="Socket\PacketDefine.h" />
     <ClInclude Include="Socket\PacketFactory.h" />
@@ -352,6 +350,19 @@
     <ClInclude Include="Socket\Packet\ServerClient\SCRequestDropRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCShowHua.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h" />
+    <ClInclude Include="STL\txMap.h" />
+    <ClInclude Include="STL\txSet.h" />
+    <ClInclude Include="STL\txSTLBase.h" />
+    <ClInclude Include="STL\txVector.h" />
+    <ClInclude Include="Thread\CustomThread.h" />
+    <ClInclude Include="Thread\ThreadLock.h" />
+    <ClInclude Include="Thread\TimeLock.h" />
+    <ClInclude Include="Utility\ServerUtility.h" />
+    <ClInclude Include="Utility\txFileUtility.h" />
+    <ClInclude Include="Utility\txMathUtility.h" />
+    <ClInclude Include="Utility\txStringUtility.h" />
+    <ClInclude Include="Utility\txUtility.h" />
+    <ClInclude Include="Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

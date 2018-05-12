@@ -32,6 +32,10 @@ public:
 	{
 		return mMap.find(k);
 	}
+	bool contains(const Key& key)
+	{
+		return mMap.find(key) != mMap.end();
+	}
 	std::pair<iterator, bool> insert(const Key& k, const Value& v)
 	{
 		checkLock();
@@ -44,6 +48,14 @@ public:
 			checkLock();
 		}
 		mMap.erase(iter);
+	}
+	void erase(const Key& key, const bool& check = true)
+	{
+		auto iter = mMap.find(key);
+		if (iter != mMap.end())
+		{
+			erase(iter);
+		}
 	}
 	void clear()
 	{

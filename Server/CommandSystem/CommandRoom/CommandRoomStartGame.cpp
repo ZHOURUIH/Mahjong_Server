@@ -2,12 +2,13 @@
 #include "Room.h"
 #include "CharacterPlayer.h"
 #include "CharacterData.h"
+#include "Utility.h"
 
 void CommandRoomStartGame::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
-	int dice0 = txUtility::randomInt(0, MAX_DICE - 1);
-	int dice1 = txUtility::randomInt(0, MAX_DICE - 1);
+	int dice0 = txMath::randomInt(0, MAX_DICE - 1);
+	int dice1 = txMath::randomInt(0, MAX_DICE - 1);
 	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();

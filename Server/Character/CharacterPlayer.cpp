@@ -1,6 +1,6 @@
 ﻿#include "CharacterPlayer.h"
 #include "CharacterData.h"
-#include "ServerUtility.h"
+#include "Utility.h"
 
 void CharacterPlayer::destroy()
 {

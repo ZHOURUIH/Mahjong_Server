@@ -1,6 +1,30 @@
 #include "ServerUtility.h"
+#include "Utility.h"
 
 txMap<HU_TYPE, int> ServerUtility::mMultipleList;
+
+void ServerUtility::init()
+{
+	mMultipleList.insert(HT_NORMAL, 1);
+	mMultipleList.insert(HT_QINGYISE, 4);
+	mMultipleList.insert(HT_QUESE, 1);
+	mMultipleList.insert(HT_HUA, 1);
+	mMultipleList.insert(HT_GANG, 1);
+	mMultipleList.insert(HT_ANGANG, 2);
+	mMultipleList.insert(HT_MENQING, 1);
+	mMultipleList.insert(HT_DUIDUIHU, 1);
+	mMultipleList.insert(HT_ANQIDUI, 4);
+	mMultipleList.insert(HT_LONGQIDUI, 8);
+	mMultipleList.insert(HT_GANGSHANGHUA, 4);
+	mMultipleList.insert(HT_GANGSHANGPAO, 4);
+	mMultipleList.insert(HT_HAIDIHUA, 4);
+	mMultipleList.insert(HT_HAIDIPAO, 4);
+	mMultipleList.insert(HT_TIANHU, 4);
+	if (mMultipleList.size() != HT_MAX)
+	{
+		GAME_ERROR("not all hu type added!");
+	}
+}
 
 // handInMah必须是从小到大的有序数组
 bool ServerUtility::canHu(txVector<MAHJONG>& handInMah, const MAHJONG& mah)

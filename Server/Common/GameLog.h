@@ -1,8 +1,6 @@
 #ifndef _GAME_LOG_H_
 #define _GAME_LOG_H_
 
-#include "txUtility.h"
-
 #define GAME_ERROR(...)													\
 {																		\
 	char buffer[2048];													\

@@ -2,10 +2,11 @@
 #define _DATA_FACTORY_H_
 
 #include "DataDefine.h"
-#include "txMemeryTrace.h"
+#include "txMemoryTrace.h"
 
 #include "Data.h"
 #include "GameLog.h"
+#include "Utility.h"
 
 class DataFactoryBase
 {

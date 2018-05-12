@@ -3,7 +3,7 @@
 
 #include "ServerDefine.h"
 #include "ServerBase.h"
-#include "txThreadLock.h"
+#include "ThreadLock.h"
 
 class Packet;
 class NetClient : public ServerBase
@@ -45,8 +45,8 @@ protected:
 	float mHeartBeatTime;		// 客户端上一次的心跳到当前的时间,秒
 	float mConnectTime;			// 客户端连接到服务器的时间,秒
 	bool mIsDeadClient;			// 该客户端是否已经断开连接或者心跳超时
-	txThreadLock mSendLock;		// 发送的线程锁
-	txThreadLock mRecvLock;		// 接收的线程锁
+	ThreadLock mSendLock;		// 发送的线程锁
+	ThreadLock mRecvLock;		// 接收的线程锁
 };
 
 #endif

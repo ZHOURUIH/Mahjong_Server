@@ -11,7 +11,7 @@ public:
 	{}
 	COMMAND_DECLARE_FUNCTION;
 public:
-	SOCKET mSocket;
+	TX_SOCKET mSocket;
 	std::string mIP;
 };
 

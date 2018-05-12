@@ -1,11 +1,9 @@
-﻿#include "txMemeryTrace.h"
-#include "txDataManager.h"
+﻿#include "Utility.h"
 #include "txCommandSystem.h"
 #include "txComponentFactory.h"
 #include "txComponentFactoryManager.h"
 #include "ServerFramework.h"
 #include "NetServer.h"
-#include "ServerDefine.h"
 #include "CharacterManager.h"
 #include "ServerConfig.h"
 #include "ServerBase.h"
@@ -18,7 +16,6 @@ ServerFramework::ServerFramework()
 :
 mStop(false),
 mMySQLDataBase(NULL),
-mDataManager(NULL),
 mServerConfig(NULL),
 mCommandSystem(NULL),
 mNetServer(NULL),
@@ -44,7 +41,6 @@ bool ServerFramework::init()
 {
 	// 创建所有组件
 	mComponentFactoryManager = TRACE_NEW(txComponentFactoryManager, mComponentFactoryManager);
-	mDataManager = TRACE_NEW(txDataManager, mDataManager);
 	mServerConfig = TRACE_NEW(ServerConfig, mServerConfig);
 	mCharacterManager = TRACE_NEW(CharacterManager, mCharacterManager);
 	mCommandSystem = TRACE_NEW(txCommandSystem, mCommandSystem);
@@ -55,12 +51,12 @@ bool ServerFramework::init()
 
 	// 初始化所有组件
 	initComponentFactory();
-	mDataManager->init();
 	mServerConfig->init();
 	mMySQLDataBase->init("root", "zhourui", "localhost", 3306);
+	//mMySQLDataBase->init("root", "zhourui", ServerConfig::getStringParam(SDS_DOMAIN_NAME), 3306);
 	mCharacterManager->init();
-	mCommandSystem->init((int)ServerConfig::getFloatParam(SD_SHOW_COMMAND_DEBUG_INFO) > 0);
-	mNetServer->init((int)ServerConfig::getFloatParam(SD_SOCKET_PORT), (int)ServerConfig::getFloatParam(SD_BACK_LOG));
+	mCommandSystem->init((int)ServerConfig::getFloatParam(SDF_SHOW_COMMAND_DEBUG_INFO) > 0);
+	mNetServer->init((int)ServerConfig::getFloatParam(SDF_SOCKET_PORT), (int)ServerConfig::getFloatParam(SDF_BACK_LOG));
 	mRoomManager->init();
 	return true;
 }
@@ -80,7 +76,6 @@ void ServerFramework::destroy()
 	TRACE_DELETE(mNetServer);
 	TRACE_DELETE(mCharacterManager);
 	TRACE_DELETE(mCommandSystem);
-	TRACE_DELETE(mDataManager);
 	TRACE_DELETE(mServerConfig);
 	TRACE_DELETE(mComponentFactoryManager);
 	TRACE_DELETE(mMySQLDataBase);

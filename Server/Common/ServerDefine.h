@@ -4,6 +4,7 @@
 // 平台标识宏
 #define PLATFORM_WINDOWS 0
 #define PLATFORM_LINUX 1
+#define PLATFORM_ANDROID PLATFORM_LINUX
 
 // 正在运行的平台标识
 #ifdef WINDOWS
@@ -62,37 +63,53 @@
 #include <algorithm>
 #include <assert.h>
 #include <mysql.h>
+#include <atomic>
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // 宏定义
-#if RUN_PLATFORM == PLATFORM_LINUX
-#define SOCKET unsigned int
-#define SOCKADDR_IN sockaddr_in
-#endif
-
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 #define _USE_SAFE_API
+#define TX_THREAD HANDLE
+#define TX_SOCKET SOCKET
+#define THREAD_CALLBACK_DECLEAR(func) static DWORD WINAPI func(LPVOID args)
+#define THREAD_CALLBACK(class, func) DWORD WINAPI class##::##func(LPVOID args)
+#define CREATE_THREAD(thread, func, args) thread = CreateThread(NULL, 0, func, args, 0, NULL)
+#define CLOSE_THREAD(thread)	\
+if (thread != NULL)				\
+{								\
+	TerminateThread(thread, 0);	\
+	CloseHandle(thread);		\
+	thread = NULL;				\
+}
+#define CLOSE_SOCKET(socket) closesocket(socket);
+#elif RUN_PLATFORM == PLATFORM_LINUX
+#define TX_THREAD pthread_t
+#define TX_SOCKET unsigned int
+#define SOCKADDR_IN sockaddr_in
+#define THREAD_CALLBACK_DECLEAR(func) static void* func(void* args)
+#define THREAD_CALLBACK(class, func) void* class##::##func(void* args)
+#define CREATE_THREAD(thread, func, args) pthread_create(&thread, NULL, func, args);
+#define CLOSE_THREAD(thread)	\
+if (thread != NULL)				\
+{								\
+	pthread_cancel(thread);		\
+	thread = NULL;				\
+}
+#define CLOSE_SOCKET(socket) close(socket);
+#ifdef __GNUC__
+#define CSET_GBK    "GBK"
+#define CSET_UTF8   "UTF-8"
+#define LC_NAME_zh_CN   "zh_CN"
+#endif
+#define LC_NAME_zh_CN_GBK       LC_NAME_zh_CN "." CSET_GBK
+#define LC_NAME_zh_CN_UTF8      LC_NAME_zh_CN "." CSET_UTF8
+#define LC_NAME_zh_CN_DEFAULT   LC_NAME_zh_CN_GBK
 #endif
 
 #ifdef _USE_SAFE_API
 #define SPRINTF(buffer, bufferSize, ...) sprintf_s(buffer, bufferSize, __VA_ARGS__)
 #else
 #define SPRINTF(buffer, bufferSize, ...) sprintf(buffer, __VA_ARGS__)
-#endif
-
-#include "txSTLBase.h"
-#include "txVector.h"
-#include "txMap.h"
-#include "txSet.h"
-
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-#define TX_THREAD HANDLE
-#define TX_SOCKET SOCKET
-#define NULL_THREAD NULL
-#elif RUN_PLATFORM == PLATFORM_LINUX
-#define TX_THREAD pthread_t
-#define TX_SOCKET unsigned int
-#define NULL_THREAD 0
 #endif
 
 #ifndef INVALID_SOCKET
@@ -105,31 +122,26 @@
 #define NULL 0
 #endif
 
-#define TX_MAX(x, y) ((x) > (y) ? (x) : (y))
-#define TX_MIN(x, y) ((x) < (y) ? (x) : (y))
-
-//角度转弧度
-#define AngleToRadian(angle) angle * 3.141592654 / 180.0
-
-//弧度转角度
-#define RadianToAngle(radian) radian * 180.0 / 3.141592654
-
-#define TOSTRING(t) #t
+#include "txVector.h"
+#include "txMap.h"
+#include "txSet.h"
 
 // 再次封装后的容器的遍历宏
 #define FOR_STL(stl, expression)									\
 	stl.lock(__FILE__, __LINE__);									\
-	for (expression)
+for (expression)
 
 #define END_FOR_STL(stl)											\
 	stl.unlock();
+
+#define TOSTRING(t) #t
 
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节
 #define SET_BYTE(value, byte, pos) value = (value & ~(0x000000ff << (8 * pos))) | (byte << (8 * pos))
 // 获得value的指定位置pos的字节的值
 #define GET_BYTE(value, pos) (value & (0x000000ff << (8 * pos))) >> (8 * pos)
 
-#define _FILE_LINE_ "file : " + txUtility::getFileName(__FILE__) + ", line : " + txUtility::intToString(__LINE__)
+#define _FILE_LINE_ "file : " + txStringUtility::getFileName(__FILE__) + ", line : " + txStringUtility::intToString(__LINE__)
 
 // 角色唯一ID
 typedef unsigned long CHAR_GUID;
@@ -142,37 +154,33 @@ typedef unsigned long CLIENT_GUID;
 #define FD_SETSIZE 64
 #endif
 
-#define LOCK(l, flag) l.waitForUnlock(__FILE__, __LINE__, flag)
-#define UNLOCK(l, flag) l.unlock(flag)
+#define LOCK(l) l.waitForUnlock(__FILE__, __LINE__)
+#define UNLOCK(l) l.unlock()
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 枚举定义
-// 线程加锁类型
-enum LOCK_TYPE
+// 服务器配置文件浮点数参数定义
+enum SERVER_DEFINE_FLOAT
 {
-	LT_READ,		// 锁定后需要进行读取
-	LT_WRITE,		// 锁定后需要进行写入
+	SDF_HEART_BEAT_TIME_OUT,	// 心跳超时时间
+	SDF_SOCKET_PORT,			// socket端口号
+	SDF_BACK_LOG,				// 连接请求队列的最大长度
+	SDF_SHOW_COMMAND_DEBUG_INFO,// 是否显示命令调试信息
+	SDF_OUTPUT_NET_LOG,			// 是否显示网络日志信息
+	SDF_MAX,
 };
-
-// 服务器配置文件参数定义
-enum SERVER_DEFINE
+// 服务器配置文件字符串参数定义
+enum SERVER_DEFINE_STRING
 {
-	SD_HEART_BEAT_TIME_OUT,		// 心跳超时时间
-	SD_SOCKET_PORT,				// socket端口号
-	SD_BACK_LOG,				// 连接请求队列的最大长度
-	SD_SHOW_COMMAND_DEBUG_INFO,	// 是否显示命令调试信息
-	SD_OUTPUT_NET_LOG,			// 是否显示网络日志信息
-	SD_MAX,
+	SDS_DOMAIN_NAME,			// 连接的服务器域名
+	SDS_MAX,
 };
-
-
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 结构体定义
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量数字定义
-const int MAX_LOAD_FILE_COUNT = 1024;			// 内存中同时存在的加载的文件的数量
 const int CLIENT_TEMP_BUFFER_SIZE = 2 * 1024;	// 客户端临时缓冲区大小,应该不小于单个消息包最大的大小
 const int CLIENT_BUFFER_SIZE = 512 * 1024;		// 客户端发送和接收数据缓冲区大小
 const int HEADER_SIZE = sizeof(short) + sizeof(short);
@@ -183,5 +191,10 @@ const std::string MEDIA_PATH = "../media";
 const std::string GAME_DATA_PATH = "GameDataFile/";
 const std::string CONFIG_PATH = "Config/";
 const std::string EMPTY_STRING = "";
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------
+// 回调函数定义
+// 线程回调
+typedef bool(*CustomThreadCallback)(void* args);
 
 #endif

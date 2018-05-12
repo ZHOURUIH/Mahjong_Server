@@ -1,36 +1,24 @@
-/******************************************************************
-++  File Name : FFMClass.cpp
-++  Description: å…±äº«å…§å­˜é¡ž
----------------------------------------------------------------
-++  Author:  Fei ZhaoDong
-++  Create time: 2004/3/25 ä¸Šåˆ 10:00:00
-++  Version:     1.0
-++  Modifier:
-++   Activities:
-++  Update List: 2004/3/29 ä¸‹åˆ 02:59:45
-*******************************************************************/
+#ifdef WINDOWS
 
-#include "txShareMemeryServer.h"
-#if RUN_PLATFORM == PLATFORM_WINDOWS
+#include "txShareMemoryServer.h"
 
-CFFMServer::CFFMServer()
+txShareMemoryServer::txShareMemoryServer()
 {
 	m_dwLastError = 0;
 	m_fnpSetEntriesInAcl = NULL;
 	_Init();
 }
-CFFMServer::~CFFMServer()
+txShareMemoryServer::~txShareMemoryServer()
 {
 	Destory();
 }
-CFFMServer::CFFMServer(char *szFileName, char *szMapName, DWORD dwSize)
+txShareMemoryServer::txShareMemoryServer(char *szFileName, char *szMapName, DWORD dwSize)
 {
-	// ä»¥è‡ªå®šç¾©è¨­ç½®å‰µå»ºå…±äº«å…§å­˜å¡Š
 	_Init();
 	Create(szFileName, szMapName, dwSize);
 }
-// åˆå§‹åŒ–å„å€‹åƒæ•¸
-void CFFMServer::_Init()
+// ³õÊ¼»¯¸÷‚€…¢”µ
+void txShareMemoryServer::_Init()
 {
 	m_hFile = NULL;
 	m_hFileMap = NULL;
@@ -40,16 +28,15 @@ void CFFMServer::_Init()
 	m_dwSize = 0;
 	m_bCreateFlag = FALSE;
 }
-// åˆ¤æ–·æ˜¯å¦NT4.0ä»¥ä¸Šæ“ä½œç³»çµ±
-BOOL CFFMServer::_IsWinNTLater()
+// ÅÐ”àÊÇ·ñNT4.0ÒÔÉÏ²Ù×÷Ïµ½y
+bool txShareMemoryServer::_IsWinNTLater()
 {
-	OSVERSIONINFO Ver;
-	BOOL bAbleVersion = FALSE;
-	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	OSVERSIONINFOA Ver;
+	bool bAbleVersion = FALSE;
+	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOA);
 	if (GetVersionExA(&Ver))
 	{
-		if (Ver.dwPlatformId == VER_PLATFORM_WIN32_NT
-			&& Ver.dwMajorVersion >= 4)
+		if (Ver.dwPlatformId == VER_PLATFORM_WIN32_NT && Ver.dwMajorVersion >= 4)
 		{
 			bAbleVersion = TRUE;
 		}
@@ -60,8 +47,8 @@ BOOL CFFMServer::_IsWinNTLater()
 	}
 	return bAbleVersion;
 }
-// é‡‹æ”¾ç•¶å‰å…±äº«å…§å­˜,ä¸¦é‡æ–°åˆå§‹åŒ–åƒæ•¸
-void CFFMServer::Destory()
+// áŒ·Å®”Ç°¹²ÏíƒÈ´æ,KÖØÐÂ³õÊ¼»¯…¢”µ
+void txShareMemoryServer::Destory()
 {
 	if (m_lpFileMapBuffer != NULL)
 	{
@@ -100,15 +87,15 @@ static void FreeSidEx(PSID oSID)
 	{
 	}
 }
-// å‰µå»ºå…±äº«å…§å­˜å¡Š
-BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
+// „“½¨¹²ÏíƒÈ´æ‰K
+bool txShareMemoryServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 {
-	// é‡‹æ”¾å·²æœ‰çš„å…±äº«å…§å­˜å¡Š
+	// áŒ·ÅÒÑÓÐµÄ¹²ÏíƒÈ´æ‰K
 	if (m_bCreateFlag)
 	{
 		Destory();
 	}
-	// æ‹·è²å„å€‹åƒæ•¸
+	// ¿½Ø¸÷‚€…¢”µ
 	if (szFileName)
 	{
 		m_pFileName = _strdup(szFileName);
@@ -129,14 +116,14 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 	{
 		m_dwSize = DEFAULT_MAPSIZE;
 	}
-	// ä»¥ä¸‹å‰µå»ºå…±äº«å…§å­˜
+	// ÒÔÏÂ„“½¨¹²ÏíƒÈ´æ
 	if (m_pFileName)
 	{
-		m_hFile = CreateFile(m_pFileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		m_hFile = CreateFileA(m_pFileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	}
 	else
 	{
-		// é»˜èªæƒ…æ³ä¸‹,åœ¨é é¢æ–‡ä»¶ä¸­å‰µå»ºå…±äº«å…§å­˜
+		// Ä¬ÕJÇé›rÏÂ,ÔÚí“ÃæÎÄ¼þÖÐ„“½¨¹²ÏíƒÈ´æ
 		m_hFile = INVALID_HANDLE_VALUE;
 	}
 	if (_IsWinNTLater())
@@ -145,15 +132,15 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 		const int NUM_ACES = 2;   // number if ACEs int DACL
 		// evryone -- read
 		// creator -- full access
-		// åˆå§‹åŒ–åƒæ•¸
-		PSID pEveryoneSID = NULL; // everyoneç¾¤çµ„SID
-		PSID pCreatorSID = NULL; // creatorç¾¤çµ„SID
-		PACL pFileMapACL = NULL; // æº–å‚™æ–°å…§å­˜æ–‡ä»¶çš„DACL
-		PSECURITY_DESCRIPTOR  pSD = NULL; // å…§å­˜æ–‡ä»¶çš„SD
-		SECURITY_ATTRIBUTES   saFileMap; // å…§å­˜æ–‡ä»¶çš„SA
-		EXPLICIT_ACCESS    ea[NUM_ACES]; // å¤–éƒ¨è¨ªå•çµæ§‹ 
-		BOOL bHasErr = FALSE; // è¿”å›žå€¼
-		// ä»¥ä¸‹å‰µå»ºSID
+		// ³õÊ¼»¯…¢”µ
+		PSID pEveryoneSID = NULL; // everyoneÈº½MSID
+		PSID pCreatorSID = NULL; // creatorÈº½MSID
+		PACL pFileMapACL = NULL; // œÊ‚äÐÂƒÈ´æÎÄ¼þµÄDACL
+		PSECURITY_DESCRIPTOR  pSD = NULL; // ƒÈ´æÎÄ¼þµÄSD
+		SECURITY_ATTRIBUTES   saFileMap; // ƒÈ´æÎÄ¼þµÄSA
+		EXPLICIT_ACCESS    ea[NUM_ACES]; // Íâ²¿ÔL†–½Y˜‹ 
+		bool bHasErr = FALSE; // ·µ»ØÖµ
+		// ÒÔÏÂ„“½¨SID
 		SID_IDENTIFIER_AUTHORITY SIDAuthWorld = SECURITY_WORLD_SID_AUTHORITY;
 		SID_IDENTIFIER_AUTHORITY SIDAuthCreator = SECURITY_CREATOR_SID_AUTHORITY;
 		// Evryone
@@ -170,26 +157,26 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 			bHasErr = TRUE;
 			goto Finish;
 		}
-		// å¡«å……ACE
+		// Ìî³äACE
 		ZeroMemory(&ea, NUM_ACES * sizeof(EXPLICIT_ACCESS));
-		// S-1-1-0 evryone, å”¯è®€æ¬Šé™
+		// S-1-1-0 evryone, Î¨×x™àÏÞ
 		ea[0].grfAccessPermissions = GENERIC_READ | GENERIC_WRITE;
 		ea[0].grfAccessMode = SET_ACCESS;
 		ea[0].grfInheritance = NO_INHERITANCE;
 		ea[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
 		ea[0].Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
 		ea[0].Trustee.ptstrName = (LPTSTR)pEveryoneSID;
-		// S-1-3-0 creator owner, å®Œå…¨æ¬Šé™
+		// S-1-3-0 creator owner, ÍêÈ«™àÏÞ
 		ea[1].grfAccessPermissions = STANDARD_RIGHTS_ALL;
 		ea[1].grfAccessMode = SET_ACCESS;
 		ea[1].grfInheritance = NO_INHERITANCE;
 		ea[1].Trustee.TrusteeForm = TRUSTEE_IS_SID;
 		ea[1].Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
 		ea[1].Trustee.ptstrName = (LPTSTR)pCreatorSID;
-		// å‰µå»ºä¸¦å¡«å……ACL
+		// „“½¨KÌî³äACL
 		if (NULL == m_fnpSetEntriesInAcl)
 		{
-			HINSTANCE hLib = ::LoadLibrary("Advapi32.dll");
+			HINSTANCE hLib = ::LoadLibraryA("Advapi32.dll");
 			if (NULL != hLib)
 			{
 				m_fnpSetEntriesInAcl = (PSetEntriesInAcl)GetProcAddress(hLib, "SetEntriesInAclA");
@@ -202,7 +189,7 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 			bHasErr = TRUE;
 			goto Finish;
 		}
-		// å‰µå»ºä¸¦åˆå§‹åŒ–SD
+		// „“½¨K³õÊ¼»¯SD
 		pSD = (PSECURITY_DESCRIPTOR)LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
 		if (NULL == pSD)
 		{
@@ -214,23 +201,23 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 			bHasErr = TRUE;
 			goto Finish;
 		}
-		// æ·»åŠ ACLåˆ°SDä¸­åŽ»
+		// Ìí¼ÓACLµ½SDÖÐÈ¥
 		if (!SetSecurityDescriptorDacl(pSD, TRUE, pFileMapACL, FALSE))   // not a default DACL 
 		{
 			bHasErr = TRUE;
 			goto Finish;
 		}
-		// è¨­ç½®SA
+		// ÔOÖÃSA
 		saFileMap.nLength = sizeof(SECURITY_ATTRIBUTES);
 		saFileMap.bInheritHandle = FALSE;
 		saFileMap.lpSecurityDescriptor = pSD;
-		// å‰µå»ºå…±äº«å…§å­˜æ–‡ä»¶
+		// „“½¨¹²ÏíƒÈ´æÎÄ¼þ
 		if (m_hFile != NULL)
 		{
-			m_hFileMap = CreateFileMapping(m_hFile, &saFileMap, PAGE_READWRITE, 0, m_dwSize, m_pMapName);
+			m_hFileMap = CreateFileMappingA(m_hFile, &saFileMap, PAGE_READWRITE, 0, m_dwSize, m_pMapName);
 			if (NULL == m_hFileMap)
 			{
-				m_hFileMap = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, TRUE, m_pMapName);
+				m_hFileMap = OpenFileMappingA(FILE_MAP_READ | FILE_MAP_WRITE, TRUE, m_pMapName);
 				if (NULL == m_hFileMap)
 				{
 					m_dwLastError = GetLastError();
@@ -240,10 +227,6 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 			}
 		}
 	Finish:
-		//if (pSD != NULL)
-		//{
-		//	LocalFree(pSD);
-		//}		
 		pSD = NULL;
 		if (pFileMapACL != NULL)
 		{
@@ -268,10 +251,10 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 	}
 	else
 	{
-		// å‰µå»ºå…±äº«å…§å­˜æ–‡ä»¶
+		// „“½¨¹²ÏíƒÈ´æÎÄ¼þ
 		if (m_hFile)
 		{
-			m_hFileMap = CreateFileMapping(m_hFile, NULL, PAGE_READWRITE, 0, m_dwSize, m_pMapName);
+			m_hFileMap = CreateFileMappingA(m_hFile, NULL, PAGE_READWRITE, 0, m_dwSize, m_pMapName);
 			if (NULL == m_hFileMap)
 			{
 				m_dwLastError = GetLastError();
@@ -280,7 +263,7 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 			}
 		}
 	}
-	// æ˜ å°„æ–‡ä»¶æŒ‡é‡åˆ°ç”¨æˆ¶
+	// Ó³ÉäÎÄ¼þÖ¸á˜µ½ÓÃ‘ô
 	if (m_hFileMap)
 	{
 		m_lpFileMapBuffer = MapViewOfFile(m_hFileMap, FILE_MAP_ALL_ACCESS, 0, 0, m_dwSize);
@@ -294,19 +277,15 @@ BOOL CFFMServer::Create(char *szFileName, char *szMapName, DWORD dwSize)
 	m_bCreateFlag = TRUE;
 	return TRUE;
 }
-// ç²å–å…§å­˜æ–‡ä»¶æŒ‡é‡
-LPVOID CFFMServer::GetBuffer()
+// «@È¡ƒÈ´æÎÄ¼þÖ¸á˜
+LPVOID txShareMemoryServer::GetBuffer()
 {
 	return (m_lpFileMapBuffer) ? (m_lpFileMapBuffer) : (NULL);
 }
-// ç²å–å…§å­˜æ–‡ä»¶å¤§å°
-DWORD CFFMServer::GetSize()
+
+bool txShareMemoryServer::WriteCmdData(DWORD nCommandCode, DWORD dwDataSize, const LPVOID pBuf)
 {
-	return m_dwSize;
-}
-BOOL CFFMServer::WriteCmdData(DWORD nCommandCode, DWORD dwDataSize, const LPVOID pBuf)
-{
-	// æª¢é©—æ•¸æ“šçš„åˆç†æ€§
+	// ™zòž”µ“þµÄºÏÀíÐÔ
 	if (NULL == GetBuffer())
 	{
 		m_dwLastError = ERROR_NO_MAPFILE;
@@ -331,14 +310,14 @@ BOOL CFFMServer::WriteCmdData(DWORD nCommandCode, DWORD dwDataSize, const LPVOID
 		SetLastError(ERROR_BUFFER_OVERFLOW);
 		return FALSE;
 	}
-	// å¡«å¯«æ•¸æ“šçµæ§‹
-	// æ–‡ä»¶é ­
+	// ÌîŒ‘”µ“þ½Y˜‹
+	// ÎÄ¼þî^
 	DATA_HEADER dataHeader;
 	dataHeader.nCommandCode = nCommandCode;
 	dataHeader.dwDataSize = dwDataSize;
 	ZeroMemory(GetBuffer(), GetSize());
 	memcpy(GetBuffer(), &dataHeader, sizeof(DATA_HEADER));
-	// æ•¸æ“šå¡Š
+	// ”µ“þ‰K
 	LPDATA_HEADER pData = (LPDATA_HEADER)GetBuffer();
 	memcpy(pData->bInfo, pBuf, dwDataSize);
 	return TRUE;

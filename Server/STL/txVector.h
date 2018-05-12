@@ -25,6 +25,14 @@ public:
 		}
 		return mVector.erase(iter);
 	}
+	iterator erase(const int& index, const bool& check = true)
+	{
+		if (index < 0 || index >= size())
+		{
+			return end();
+		}
+		return erase(begin() + index);
+	}
 	void clear()
 	{
 		checkLock();

@@ -6,6 +6,25 @@
 #include "WaitActionInfo.h"
 #include "MahjongAction.h"
 #include "HuInfo.h"
+#include "Utility.h"
+
+Room::Room(const int& id)
+	:
+	txCommandReceiver("room" + txStringUtility::intToString(id)),
+	mID(id),
+	mMaxPlayer(MAX_PLAYER),
+	mLockRoom(false),
+	mDiceDoneCount(0),
+	mPlayState(MPS_WAITING),
+	mBankerPos(-1),
+	mCurAssignPos(-1),
+	mCurInterval(0.0f)
+{
+	for (int i = 0; i < mMaxPlayer; ++i)
+	{
+		mPlayerPositionList.insert(i, (CharacterPlayer*)NULL);
+	}
+}
 
 void Room::update(const float& elapsedTime)
 {
@@ -712,7 +731,7 @@ void Room::resetMahjongPool(bool feng, int hua)
 	txVector<MAHJONG> tempPool = mMahjongPool;
 	FOR_STL(mMahjongPool, int i = 0; i < mahjongCount; ++i)
 	{
-		int randIndex = txUtility::randomInt(0, tempPool.size() - 1);
+		int randIndex = txMath::randomInt(0, tempPool.size() - 1);
 		mMahjongPool[i] = tempPool[randIndex];
 		// 填充临时麻将池中的空隙
 		tempPool[randIndex] = tempPool[mahjongCount - i - 1];

@@ -8,7 +8,6 @@ class ComponentFactoryBase;
 class NetServer;
 class txCommandSystem;
 class CharacterManager;
-class txDataManager;
 class ServerConfig;
 class RoomManager;
 class MySQLDataBase;
@@ -29,7 +28,6 @@ public:
 	const unsigned long& getStartMiliTime() {return mStartMiliTime;}
 #endif
 	ServerConfig* getServerConfig() { return mServerConfig; }
-	txDataManager* getDataManager() { return mDataManager; }
 	txCommandSystem* getCommandSystem() { return mCommandSystem; }
 	NetServer* getNetManagerServer(){ return mNetServer; }
 	CharacterManager* getCharacterManager() { return mCharacterManager; }
@@ -45,7 +43,6 @@ protected:
 #endif
 	bool mStop;
 	MySQLDataBase* mMySQLDataBase;
-	txDataManager* mDataManager;
 	ServerConfig* mServerConfig;
 	txCommandSystem* mCommandSystem;
 	NetServer* mNetServer;
