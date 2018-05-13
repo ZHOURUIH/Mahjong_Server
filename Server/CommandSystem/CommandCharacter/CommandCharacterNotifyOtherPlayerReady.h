@@ -7,11 +7,13 @@
 class CommandCharacterNotifyOtherPlayerReady : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerReady)
-		, mPlayerGUID(INVALID_ID)
-		, mReady(false)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+		mReady = false;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	bool mReady;
 	CHAR_GUID mPlayerGUID;	// 离线玩家的guid

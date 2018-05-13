@@ -65,6 +65,9 @@
 #include <mysql.h>
 #include <atomic>
 
+#include "ServerEnum.h"
+#include "ServerCallback.h"
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // 宏定义
 #if RUN_PLATFORM == PLATFORM_WINDOWS
@@ -127,20 +130,13 @@ if (thread != NULL)				\
 #include "txSet.h"
 
 // 再次封装后的容器的遍历宏
-#define FOR_STL(stl, expression)									\
-	stl.lock(__FILE__, __LINE__);									\
-for (expression)
-
-#define END_FOR_STL(stl)											\
-	stl.unlock();
-
+#define FOR_STL(stl, expression) stl.lock(__FILE__, __LINE__);for (expression)
+#define END_FOR_STL(stl) stl.unlock();
 #define TOSTRING(t) #t
-
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节
 #define SET_BYTE(value, byte, pos) value = (value & ~(0x000000ff << (8 * pos))) | (byte << (8 * pos))
 // 获得value的指定位置pos的字节的值
 #define GET_BYTE(value, pos) (value & (0x000000ff << (8 * pos))) >> (8 * pos)
-
 #define _FILE_LINE_ "file : " + txStringUtility::getFileName(__FILE__) + ", line : " + txStringUtility::intToString(__LINE__)
 
 // 角色唯一ID
@@ -158,25 +154,6 @@ typedef unsigned long CLIENT_GUID;
 #define UNLOCK(l) l.unlock()
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// 枚举定义
-// 服务器配置文件浮点数参数定义
-enum SERVER_DEFINE_FLOAT
-{
-	SDF_HEART_BEAT_TIME_OUT,	// 心跳超时时间
-	SDF_SOCKET_PORT,			// socket端口号
-	SDF_BACK_LOG,				// 连接请求队列的最大长度
-	SDF_SHOW_COMMAND_DEBUG_INFO,// 是否显示命令调试信息
-	SDF_OUTPUT_NET_LOG,			// 是否显示网络日志信息
-	SDF_MAX,
-};
-// 服务器配置文件字符串参数定义
-enum SERVER_DEFINE_STRING
-{
-	SDS_DOMAIN_NAME,			// 连接的服务器域名
-	SDS_MAX,
-};
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 结构体定义
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -191,10 +168,5 @@ const std::string MEDIA_PATH = "../media";
 const std::string GAME_DATA_PATH = "GameDataFile/";
 const std::string CONFIG_PATH = "Config/";
 const std::string EMPTY_STRING = "";
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------------
-// 回调函数定义
-// 线程回调
-typedef bool(*CustomThreadCallback)(void* args);
 
 #endif

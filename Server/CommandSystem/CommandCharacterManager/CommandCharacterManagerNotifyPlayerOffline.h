@@ -7,10 +7,12 @@
 class CommandCharacterManagerNotifyPlayerOffline : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerNotifyPlayerOffline)
-		, mPlayerID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerID;
 };

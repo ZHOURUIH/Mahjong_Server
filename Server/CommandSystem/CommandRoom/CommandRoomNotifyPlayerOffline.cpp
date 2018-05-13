@@ -9,8 +9,8 @@ void CommandRoomNotifyPlayerOffline::execute()
 	Room* room = static_cast<Room*>(mReceiver);
 	// 房间中有玩家离线,则退出该玩家,并且
 	// 此处不能使用引用
-	CommandCharacterLeaveRoom cmdLeave(CMD_PARAM);
-	mCommandSystem->pushCommand(&cmdLeave, mCharacterManager->getCharacter(mOfflinePlayer));
+	CommandCharacterLeaveRoom* cmd = NEW_CMD(cmd);
+	mCommandSystem->pushCommand(cmd, mCharacterManager->getCharacter(mOfflinePlayer));
 }
 
 std::string CommandRoomNotifyPlayerOffline::showDebugInfo()

@@ -7,13 +7,16 @@
 class CommandCharacterManagerPlayerLogin : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerPlayerLogin)
-		, mGUID(INVALID_ID)
-		, mClient(INVALID_ID)
-		, mMoney(0)
-		, mHead(0)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mGUID = INVALID_ID;
+		mName = EMPTY_STRING;
+		mClient = INVALID_ID;
+		mMoney = 0;
+		mHead = 0;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mGUID;
 	std::string mName;

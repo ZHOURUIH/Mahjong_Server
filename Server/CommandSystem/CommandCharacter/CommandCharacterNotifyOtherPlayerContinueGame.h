@@ -8,11 +8,13 @@ class CharacterPlayer;
 class CommandCharacterNotifyOtherPlayerContinueGame : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerContinueGame)
-		, mOtherPlayer(NULL)
-		, mContinue(false)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mOtherPlayer = NULL;
+		mContinue = false;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	bool mContinue;

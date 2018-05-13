@@ -13,18 +13,18 @@ void CommandRoomNotifyPlayerReady::execute()
 	{
 		if (iterPlayer->first != mPlayerGUID)
 		{
-			CommandCharacterNotifyOtherPlayerReady cmd(CMD_PARAM);
-			cmd.mPlayerGUID = mPlayerGUID;
-			cmd.mReady = mReady;
-			mCommandSystem->pushCommand(&cmd, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerReady* cmd = NEW_CMD(cmd);
+			cmd->mPlayerGUID = mPlayerGUID;
+			cmd->mReady = mReady;
+			mCommandSystem->pushCommand(cmd, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(playerList);
 	// 所有玩家都准备完毕后,通知房间开始游戏
 	if (room->isRoomFull() && room->isAllPlayerReady())
 	{
-		CommandRoomStartGame cmdStartGame(CMD_PARAM);
-		mCommandSystem->pushCommand(&cmdStartGame, room);
+		CommandRoomStartGame* cmd = NEW_CMD(cmd);
+		 mCommandSystem->pushCommand(cmd, room);
 	}
 }
 

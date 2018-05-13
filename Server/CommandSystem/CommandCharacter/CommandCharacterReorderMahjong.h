@@ -7,9 +7,12 @@
 class CommandCharacterReorderMahjong : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterReorderMahjong)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 };
 

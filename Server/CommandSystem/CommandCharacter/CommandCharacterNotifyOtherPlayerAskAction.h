@@ -8,10 +8,12 @@ class CharacterPlayer;
 class CommandCharacterNotifyOtherPlayerAskAction : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerAskAction)
-		, mOtherPlayer(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mOtherPlayer = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 };

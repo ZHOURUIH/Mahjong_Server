@@ -15,8 +15,8 @@ void CommandCharacterDrop::execute()
 	mNetServer->sendMessage(requestDropRet, player->getClientGUID());
 
 	// 打出一张牌后,需要重新排列
-	CommandCharacterReorderMahjong cmdReorder(CMD_PARAM);
-	mCommandSystem->pushCommand(&cmdReorder, player);
+	CommandCharacterReorderMahjong* cmd = NEW_CMD(cmd);
+	mCommandSystem->pushCommand(cmd, player);
 }
 
 std::string CommandCharacterDrop::showDebugInfo()

@@ -14,9 +14,9 @@ void CommandCharacterNotifyOtherPlayerDrop::execute()
 	mNetServer->sendMessage(otherPlayerDrop, player->getClientGUID());
 
 	// 打出一张牌后需要重新排列
-	CommandCharacterNotifyOtherPlayerReorderMahjong cmdReorder(CMD_PARAM);
-	cmdReorder.mPlayerGUID = mPlayerGUID;
-	mCommandSystem->pushCommand(&cmdReorder, player);
+	CommandCharacterNotifyOtherPlayerReorderMahjong* cmdReorder = NEW_CMD(cmdReorder);
+	cmdReorder->mPlayerGUID = mPlayerGUID;
+	mCommandSystem->pushCommand(cmdReorder, player);
 }
 
 std::string CommandCharacterNotifyOtherPlayerDrop::showDebugInfo()

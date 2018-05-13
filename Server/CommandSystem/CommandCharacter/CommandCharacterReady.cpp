@@ -23,10 +23,10 @@ void CommandCharacterReady::execute()
 	Room* room = mRoomManager->getRoom(data->mRoomID);
 	if (room != NULL)
 	{
-		CommandRoomNotifyPlayerReady cmd(CMD_PARAM);
-		cmd.mReady = mReady;
-		cmd.mPlayerGUID = data->mGUID;
-		mCommandSystem->pushCommand(&cmd, room);
+		CommandRoomNotifyPlayerReady* cmd = NEW_CMD(cmd);
+		cmd->mReady = mReady;
+		cmd->mPlayerGUID = data->mGUID;
+		mCommandSystem->pushCommand(cmd, room);
 	}
 }
 

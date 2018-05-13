@@ -7,10 +7,12 @@
 class CommandCharacterNotifyOtherPlayerReorderMahjong : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerReorderMahjong)
-		, mPlayerGUID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerGUID;
 };

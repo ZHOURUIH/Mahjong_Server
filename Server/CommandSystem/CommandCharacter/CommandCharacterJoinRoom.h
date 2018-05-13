@@ -7,10 +7,12 @@
 class CommandCharacterJoinRoom : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterJoinRoom)
-		, mRoomID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mRoomID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	int mRoomID;
 };

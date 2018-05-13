@@ -3,6 +3,13 @@
 
 #include "ServerDefine.h"
 
+enum EXECUTE_STATE
+{
+	ES_NOT_EXECUTE,
+	ES_EXECUTING,
+	ES_EXECUTED,
+};
+
 class txCommand;
 class txCommandReceiver;
 struct DelayCommand
@@ -18,23 +25,22 @@ struct DelayCommand
 	{}
 };
 
-typedef void(*CommandCallback) (void* user_data, txCommand* cmd);
+typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 
+#define CMD_CAST static_cast
 #define DEBUG_EMPTY "%s", ""
-
 #define CMD_PARAM __FILE__, __LINE__
-
-#define COMMAND_CONSTRUCT(className, baseCommand)									\
-	className(const char* file, const int& line, const bool& showInfo = true)		\
-	:																				\
-	baseCommand(file, line, showInfo)
-
 #define COMMAND_DECLARE_FUNCTION													\
 	virtual void execute();															\
 	virtual std::string showDebugInfo();
 
-#if RUN_PLATFORM == PLATFROM_WINDOWS
+#define NEW_CMD(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, false);
+#define NEW_CMD_INFO(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, true, false);
+#define NEW_CMD_DELAY(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, true);
+#define NEW_CMD_DELAY_INFO(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, true, true);
 
+// 命令调试信息宏
+#if RUN_PLATFORM == PLATFROM_WINDOWS
 #define COMMAND_DEBUG(...)															\
 {																					\
 	char strBuf[1024];																\
@@ -47,9 +53,7 @@ typedef void(*CommandCallback) (void* user_data, txCommand* cmd);
 	}																				\
 	return cmdName;																	\
 }
-
 #elif RUN_PLATFORM == PLATFORM_LINUX
-
 #define COMMAND_DEBUG(...)															\
 {																					\
 	char strBuf[1024];																\
@@ -61,7 +65,6 @@ typedef void(*CommandCallback) (void* user_data, txCommand* cmd);
 	}																				\
 	return cmdName;																	\
 }
-
 #endif
 
 #endif

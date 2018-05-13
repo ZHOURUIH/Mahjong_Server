@@ -13,7 +13,7 @@ void CSContinueGame::execute()
 {
 	NetClient* client = mNetServer->getClient(mClient);
 	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
-	CommandCharacterContinueGame cmdContinue(CMD_PARAM);
-	cmdContinue.mContinue = true;
-	mCommandSystem->pushCommand(&cmdContinue, character);
+	CommandCharacterContinueGame* cmdContinue = NEW_CMD(cmdContinue);
+	cmdContinue->mContinue = true;
+	mCommandSystem->pushCommand(cmdContinue, character);
 }

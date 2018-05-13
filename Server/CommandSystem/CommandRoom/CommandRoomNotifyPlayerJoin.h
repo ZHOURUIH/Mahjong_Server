@@ -7,14 +7,24 @@
 class CommandRoomNotifyPlayerJoin : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerJoin)
-		, mPlayerGUID(INVALID_ID)
-		, mResult(JRR_NO_ROOM)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+		mResult = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
+protected:
+	void setResult(const JOIN_ROOM_RESULT& result)
+	{
+		if (mResult != NULL)
+		{
+			*mResult = result;
+		}
+	}
 public:
 	CHAR_GUID mPlayerGUID;
-	JOIN_ROOM_RESULT mResult;
+	JOIN_ROOM_RESULT* mResult;
 };
 
 #endif

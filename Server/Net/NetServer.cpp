@@ -130,10 +130,10 @@ bool NetServer::acceptSocket(void* args)
 		SPRINTF(ip, 16, "%d.%d.%d.%d", ip0, ip1, ip2, ip3);
 #endif
 	}
-	CommandServerNotifyAcceptedClient* notifyAccepted = txCommand::createDelayCommand<CommandServerNotifyAcceptedClient>(CMD_PARAM, false);
-	notifyAccepted->mSocket = sClient;
-	notifyAccepted->mIP = ip;
-	mCommandSystem->pushDelayCommand(notifyAccepted, netManager);
+	CommandServerNotifyAcceptedClient* cmdAccepted = NEW_CMD_DELAY(cmdAccepted);
+	cmdAccepted->mSocket = sClient;
+	cmdAccepted->mIP = ip;
+	mCommandSystem->pushDelayCommand(cmdAccepted, netManager);
 	return true;
 }
 

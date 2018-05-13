@@ -17,9 +17,9 @@ void CommandRoomStartGame::execute()
 		// 取消玩家的准备标记
 		iterPlayer->second->getCharacterData()->mReady = false;
 		// 通知玩家开始游戏
-		CommandCharacterStartGame cmdStartGame(CMD_PARAM);
-		cmdStartGame.setDice(dice0, dice1);
-		mCommandSystem->pushCommand(&cmdStartGame, iterPlayer->second);
+		CommandCharacterStartGame* cmdStartGame = NEW_CMD(cmdStartGame);
+		cmdStartGame->setDice(dice0, dice1);
+		mCommandSystem->pushCommand(cmdStartGame, iterPlayer->second);
 	}
 	END_FOR_STL(playerList);
 }

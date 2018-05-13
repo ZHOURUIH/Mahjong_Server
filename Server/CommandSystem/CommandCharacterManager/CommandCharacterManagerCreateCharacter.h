@@ -8,19 +8,20 @@ class Character;
 class CommandCharacterManagerCreateCharacter : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerCreateCharacter)
-		, mCharGUID(INVALID_ID),
-		mClientGUID(INVALID_ID),
-		mType(CT_NONE),
-		mResultCharacter(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mCharGUID = INVALID_ID;
+		mClientGUID = INVALID_ID;
+		mName = EMPTY_STRING;
+		mType = CT_NONE;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mCharGUID;
 	CLIENT_GUID mClientGUID;
 	std::string mName;
 	CHARACTER_TYPE mType;
-	Character* mResultCharacter;
 };
 
 #endif

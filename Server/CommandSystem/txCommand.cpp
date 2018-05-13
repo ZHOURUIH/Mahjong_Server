@@ -1,15 +1,43 @@
 ﻿#include "txCommand.h"
 #include "txCommandReceiver.h"
 
-txCommand::txCommand(const char* file, const int& line, const bool& showInfo)
-:
-mReceiver(NULL),
-mFile(file),
-mLine(line),
-mShowDebugInfo(showInfo),
-mEndCallback(NULL),
-mStartCallback(NULL),
-mEndUserData(NULL),
-mStartUserData(NULL),
-mDelayCommand(false)
-{}
+void txCommand::init()
+{
+	mReceiver = NULL;
+	mShowDebugInfo = true;
+	mDelayCommand = false;
+	mValid = false;
+	mAssignID = -1;
+	mResult = NULL;
+	mExecuteState = ES_NOT_EXECUTE;
+	mFile = EMPTY_STRING;
+	mLine = 0;
+	mEndCallback.clear();
+	mStartCallback.clear();
+	reset();
+}
+
+void txCommand::runEndCallBack()
+{
+	int callbackCount = mEndCallback.size();
+	for (int i = 0; i < callbackCount; ++i)
+	{
+		if (mEndCallback[i].first != NULL)
+		{
+			mEndCallback[i].first(this, mEndCallback[i].second);
+		}
+	}
+	mEndCallback.clear();
+}
+void txCommand::runStartCallBack()
+{
+	int callbackCount = mStartCallback.size();
+	for (int i = 0; i < callbackCount; ++i)
+	{
+		if (mStartCallback[i].first != NULL)
+		{
+			mStartCallback[i].first(this, mStartCallback[i].second);
+		}
+	}
+	mStartCallback.clear();
+}

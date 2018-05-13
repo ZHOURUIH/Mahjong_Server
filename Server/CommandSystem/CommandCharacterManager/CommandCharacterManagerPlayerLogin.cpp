@@ -8,15 +8,15 @@
 
 void CommandCharacterManagerPlayerLogin::execute()
 {
-	CommandCharacterManagerCreateCharacter cmdCreate(CMD_PARAM);
-	cmdCreate.mCharGUID = mGUID;
-	cmdCreate.mName = mName;
-	cmdCreate.mType = CT_PLAYER;
-	cmdCreate.mClientGUID = mClient;
-	mCommandSystem->pushCommand(&cmdCreate, mReceiver);
+	CommandCharacterManagerCreateCharacter* cmdCreate = NEW_CMD(cmdCreate);
+	cmdCreate->mCharGUID = mGUID;
+	cmdCreate->mName = mName;
+	cmdCreate->mType = CT_PLAYER;
+	cmdCreate->mClientGUID = mClient;
+	mCommandSystem->pushCommand(cmdCreate, mReceiver);
 
 	// 玩家登陆后,设置玩家属性
-	Character* player = cmdCreate.mResultCharacter;
+	Character* player = mCharacterManager->getCharacter(mGUID);
 	CharacterData* data = player->getCharacterData();
 	data->mHead = mHead;
 	data->mMoney = mMoney;

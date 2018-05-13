@@ -4,7 +4,11 @@
 void CommandRoomManagerCreateRoom::execute()
 {
 	RoomManager* roomManager = static_cast<RoomManager*>(mReceiver);
-	mResultRoom = roomManager->createRoom();
+	Room* room = roomManager->createRoom();
+	if (mRoomPtr != NULL)
+	{
+		*mRoomPtr = room;
+	}
 }
 
 std::string CommandRoomManagerCreateRoom::showDebugInfo()

@@ -24,10 +24,10 @@ void CommandCharacterContinueGame::execute()
 
 	// 通知房间有玩家选择是否继续游戏
 	Room* curRoom = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
-	CommandRoomNotifyPlayerContinueGame cmdPlayerContinue(CMD_PARAM);
-	cmdPlayerContinue.mPlayer = player;
-	cmdPlayerContinue.mContinue = mContinue;
-	mCommandSystem->pushCommand(&cmdPlayerContinue, curRoom);
+	CommandRoomNotifyPlayerContinueGame* cmdPlayerContinue = NEW_CMD(cmdPlayerContinue);
+	cmdPlayerContinue->mPlayer = player;
+	cmdPlayerContinue->mContinue = mContinue;
+	mCommandSystem->pushCommand(cmdPlayerContinue, curRoom);
 }
 
 std::string CommandCharacterContinueGame::showDebugInfo()

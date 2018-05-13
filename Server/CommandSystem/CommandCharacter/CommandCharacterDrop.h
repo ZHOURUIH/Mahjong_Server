@@ -7,11 +7,13 @@
 class CommandCharacterDrop : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterDrop)
-		, mIndex(0)
-		, mMahjong(M_MAX)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mIndex = 0;
+		mMahjong = M_MAX;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	int mIndex;
 	MAHJONG mMahjong;

@@ -23,23 +23,23 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 				// 已经离线的玩家不作通知
 				if (iterPlayer->first != mPlayerID)
 				{
-					CommandCharacterNotifyOtherPlayerOffline cmdPlayerOffline(CMD_PARAM);
-					cmdPlayerOffline.mPlayerGUID = mPlayerID;
-					mCommandSystem->pushCommand(&cmdPlayerOffline, iterPlayer->second);
+					CommandCharacterNotifyOtherPlayerOffline* cmdPlayerOffline = NEW_CMD(cmdPlayerOffline);
+					cmdPlayerOffline->mPlayerGUID = mPlayerID;
+					mCommandSystem->pushCommand(cmdPlayerOffline, iterPlayer->second);
 				}
 			}
 			END_FOR_STL(playerList);
 			// 通知房间有玩家离线
-			CommandRoomNotifyPlayerOffline cmdRoomOffline(CMD_PARAM);
-			cmdRoomOffline.mOfflinePlayer = mPlayerID;
-			mCommandSystem->pushCommand(&cmdRoomOffline, room);
+			CommandRoomNotifyPlayerOffline* cmdRoomOffline = NEW_CMD(cmdRoomOffline);
+			cmdRoomOffline->mOfflinePlayer = mPlayerID;
+			mCommandSystem->pushCommand(cmdRoomOffline, room);
 		}
 	}
 
 	// 将角色销毁
-	CommandCharacterManagerDestroyCharacter cmdDestroy(CMD_PARAM);
-	cmdDestroy.mGUID = mPlayerID;
-	mCommandSystem->pushCommand(&cmdDestroy, characterManager);
+	CommandCharacterManagerDestroyCharacter* cmdDestroy = NEW_CMD(cmdDestroy);
+	cmdDestroy->mGUID = mPlayerID;
+	mCommandSystem->pushCommand(cmdDestroy, characterManager);
 }
 
 std::string CommandCharacterManagerNotifyPlayerOffline::showDebugInfo()

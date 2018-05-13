@@ -6,10 +6,13 @@
 class CommandServerNotifyAcceptedClient : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandServerNotifyAcceptedClient)
-		, mSocket(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mSocket = INVALID_ID;
+		mIP = EMPTY_STRING;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	TX_SOCKET mSocket;
 	std::string mIP;

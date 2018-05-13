@@ -7,9 +7,12 @@
 class CommandRoomStartGame : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomStartGame)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 };
 

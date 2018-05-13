@@ -14,8 +14,8 @@ void CSConfirmAction::execute()
 	NetClient* client = mNetServer->getClient(mClient);
 	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
-	CommandRoomConfirmAction cmd(CMD_PARAM);
-	cmd.mPlayerGUID = character->getGUID();
-	cmd.mAction = (ACTION_TYPE)mAction;
-	mCommandSystem->pushCommand(&cmd, room);
+	CommandRoomConfirmAction* cmd = NEW_CMD(cmd);
+	cmd->mPlayerGUID = character->getGUID();
+	cmd->mAction = (ACTION_TYPE)mAction;
+	mCommandSystem->pushCommand(cmd, room);
 }

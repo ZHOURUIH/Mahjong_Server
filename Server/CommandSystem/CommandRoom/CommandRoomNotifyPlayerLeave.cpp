@@ -23,9 +23,9 @@ void CommandRoomNotifyPlayerLeave::execute()
 			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
 			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
-				CommandCharacterNotifyOtherPlayerLeaveRoom cmdLeave(CMD_PARAM);
-				cmdLeave.mLeavePlayerID = mPlayer->getGUID();
-				mCommandSystem->pushCommand(&cmdLeave, iterPlayer->second);
+				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD(cmdLeave);
+				cmdLeave->mLeavePlayerID = mPlayer->getGUID();
+				mCommandSystem->pushCommand(cmdLeave, iterPlayer->second);
 			}
 			END_FOR_STL(playerList);
 		}
@@ -33,9 +33,9 @@ void CommandRoomNotifyPlayerLeave::execute()
 	// 如果房间中没有人了,则销毁房间
 	else
 	{
-		CommandRoomManagerDestroyRoom cmdDestroyRoom(CMD_PARAM);
-		cmdDestroyRoom.mRoomID = room->getID();
-		mCommandSystem->pushCommand(&cmdDestroyRoom, mRoomManager);
+		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD(cmdDestroyRoom);
+		cmdDestroyRoom->mRoomID = room->getID();
+		mCommandSystem->pushCommand(cmdDestroyRoom, mRoomManager);
 	}
 }
 

@@ -7,10 +7,12 @@
 class CommandCharacterNotifyOtherPlayerLeaveRoom : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerLeaveRoom)
-		, mLeavePlayerID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mLeavePlayerID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mLeavePlayerID;
 };

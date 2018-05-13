@@ -8,11 +8,13 @@ class CharacterPlayer;
 class CommandRoomNotifyPlayerContinueGame : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerContinueGame)
-		, mPlayer(NULL)
-		, mContinue(false)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayer = NULL;
+		mContinue = false;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mPlayer;
 	bool mContinue;

@@ -7,11 +7,13 @@
 class CommandCharacterNotifyOtherPlayerGetMahjong : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerGetMahjong)
-		, mMahjong(M_MAX)
-		, mPlayerGUID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mMahjong = M_MAX;
+		mPlayerGUID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	MAHJONG mMahjong;
 	CHAR_GUID mPlayerGUID;

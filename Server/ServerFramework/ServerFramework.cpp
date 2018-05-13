@@ -55,7 +55,7 @@ bool ServerFramework::init()
 	mMySQLDataBase->init("root", "zhourui", "localhost", 3306);
 	//mMySQLDataBase->init("root", "zhourui", ServerConfig::getStringParam(SDS_DOMAIN_NAME), 3306);
 	mCharacterManager->init();
-	mCommandSystem->init((int)ServerConfig::getFloatParam(SDF_SHOW_COMMAND_DEBUG_INFO) > 0);
+	mCommandSystem->init();
 	mNetServer->init((int)ServerConfig::getFloatParam(SDF_SOCKET_PORT), (int)ServerConfig::getFloatParam(SDF_BACK_LOG));
 	mRoomManager->init();
 	return true;

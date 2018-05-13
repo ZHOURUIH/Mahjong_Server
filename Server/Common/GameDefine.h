@@ -9,7 +9,7 @@
 // 加入房间的结果
 enum JOIN_ROOM_RESULT
 {
-	JRR_SUCC,			// 加入成功
+	JRR_SUCCESS,		// 加入成功
 	JRR_FULL,			// 房间已满
 	JRR_ROOM_LOCKED,	// 房间已锁定,拒绝加入
 	JRR_NO_ROOM,		// 房间不存在

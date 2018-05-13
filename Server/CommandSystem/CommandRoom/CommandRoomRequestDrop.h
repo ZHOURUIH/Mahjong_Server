@@ -7,11 +7,13 @@
 class CommandRoomRequestDrop : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomRequestDrop)
-		, mPlayerGUID(INVALID_ID)
-		, mIndex(0)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+		mIndex = 0;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerGUID;
 	int mIndex;

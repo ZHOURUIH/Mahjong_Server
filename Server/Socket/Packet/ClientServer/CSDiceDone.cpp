@@ -14,7 +14,7 @@ void CSDiceDone::execute()
 	NetClient* client = mNetServer->getClient(mClient);
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(client->getCharGUID()));
 	Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
-	CommandRoomNotifyDiceDone cmd(CMD_PARAM);
-	cmd.mPlayerGUID = player->getGUID();
-	mCommandSystem->pushCommand(&cmd, room);
+	CommandRoomNotifyDiceDone* cmd = NEW_CMD(cmd);
+	cmd->mPlayerGUID = player->getGUID();
+	mCommandSystem->pushCommand(cmd, room);
 }

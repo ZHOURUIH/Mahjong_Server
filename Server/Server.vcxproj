@@ -135,6 +135,7 @@
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
+    <ClCompile Include="CommandSystem\CommandPool.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
     <ClInclude Include="CommandSystem\CommandDefine.h" />
     <ClInclude Include="CommandSystem\CommandHeader.h" />
+    <ClInclude Include="CommandSystem\CommandPool.h" />
     <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
     <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h" />
@@ -261,8 +263,10 @@
     <ClInclude Include="Common\GameDefine.h" />
     <ClInclude Include="Common\GameLog.h" />
     <ClInclude Include="Common\ServerBase.h" />
+    <ClInclude Include="Common\ServerCallback.h" />
     <ClInclude Include="Common\ServerConfig.h" />
     <ClInclude Include="Common\ServerDefine.h" />
+    <ClInclude Include="Common\ServerEnum.h" />
     <ClInclude Include="Common\txFactoryManager.h" />
     <ClInclude Include="Common\txSingleton.h" />
     <ClInclude Include="Component\BaseComponent\txComponent.h" />

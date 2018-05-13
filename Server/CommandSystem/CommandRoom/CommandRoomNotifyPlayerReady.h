@@ -7,11 +7,13 @@
 class CommandRoomNotifyPlayerReady : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerReady)
-		, mPlayerGUID(INVALID_ID)
-		, mReady(false)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+		mReady = false;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerGUID;
 	bool mReady;

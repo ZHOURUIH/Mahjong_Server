@@ -664,10 +664,10 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 void Room::requestDrop(CharacterPlayer* player, const int& index)
 {
 	MAHJONG mahjong = player->getCharacterData()->mHandIn[index];
-	CommandCharacterDrop cmdDrop(CMD_PARAM);
-	cmdDrop.mIndex = index;
-	cmdDrop.mMahjong = mahjong;
-	mCommandSystem->pushCommand(&cmdDrop, player);
+	CommandCharacterDrop* cmdDrop = NEW_CMD(cmdDrop);
+	cmdDrop->mIndex = index;
+	cmdDrop->mMahjong = mahjong;
+	mCommandSystem->pushCommand(cmdDrop, player);
 
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
@@ -676,11 +676,11 @@ void Room::requestDrop(CharacterPlayer* player, const int& index)
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerDrop cmd(CMD_PARAM);
-			cmd.mIndex = index;
-			cmd.mPlayerGUID = player->getGUID();
-			cmd.mMahjong = cmdDrop.mMahjong;
-			mCommandSystem->pushCommand(&cmd, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerDrop* cmd = NEW_CMD(cmd);
+			cmd->mIndex = index;
+			cmd->mPlayerGUID = player->getGUID();
+			cmd->mMahjong = mahjong;
+			mCommandSystem->pushCommand(cmd, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -775,8 +775,8 @@ void Room::notifyAllPlayerGetStartDone()
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		CommandCharacterNotifyGetStartDone cmdStartDone(CMD_PARAM);
-		mCommandSystem->pushCommand(&cmdStartDone, iterPlayer->second);
+		CommandCharacterNotifyGetStartDone* cmd = NEW_CMD(cmd);
+		mCommandSystem->pushCommand(cmd, iterPlayer->second);
 	}
 	END_FOR_STL(mPlayerPositionList);
 }
@@ -787,9 +787,9 @@ void Room::notifyAllPlayerBanker(const CHAR_GUID& banker)
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
 	FOR_STL(mPlayerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		CommandCharacterNotifyBanker cmdNotifyBanker(CMD_PARAM);
-		cmdNotifyBanker.mBankerID = banker;
-		mCommandSystem->pushCommand(&cmdNotifyBanker, iterPlayer->second);
+		CommandCharacterNotifyBanker* cmdNotifyBanker = NEW_CMD(cmdNotifyBanker);
+		cmdNotifyBanker->mBankerID = banker;
+		mCommandSystem->pushCommand(cmdNotifyBanker, iterPlayer->second);
 	}
 	END_FOR_STL(mPlayerList);
 }
@@ -800,8 +800,8 @@ void Room::notifyAllPlayerDiceDone()
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
 	FOR_STL(mPlayerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		CommandCharacterNotifyDiceDone cmdDiceDone(CMD_PARAM);
-		mCommandSystem->pushCommand(&cmdDiceDone, iterPlayer->second);
+		CommandCharacterNotifyDiceDone* cmd = NEW_CMD(cmd);
+		mCommandSystem->pushCommand(cmd, iterPlayer->second);
 	}
 	END_FOR_STL(mPlayerList);
 }
@@ -812,18 +812,18 @@ void Room::notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaLis
 	txMap<int, CharacterPlayer*>::iterator iterPosEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPos != iterPosEnd; ++iterPos)
 	{
-		CommandCharacterMahjongEnd cmd(CMD_PARAM);
-		cmd.mMoneyDeltaList = moneyDeltaList;
-		mCommandSystem->pushCommand(&cmd, iterPos->second);
+		CommandCharacterMahjongEnd* cmd = NEW_CMD(cmd);
+		cmd->mMoneyDeltaList = moneyDeltaList;
+		mCommandSystem->pushCommand(cmd, iterPos->second);
 	}
 	END_FOR_STL(mPlayerPositionList);
 }
 
 void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
 {
-	CommandCharacterGetStartMahjong cmdGetStart(CMD_PARAM);
-	cmdGetStart.mMahjong = mah;
-	mCommandSystem->pushCommand(&cmdGetStart, player);
+	CommandCharacterGetStartMahjong* cmdGetStart = NEW_CMD(cmdGetStart);
+	cmdGetStart->mMahjong = mah;
+	mCommandSystem->pushCommand(cmdGetStart, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -831,10 +831,10 @@ void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerGetStartMahjong cmdNotifyGetStart(CMD_PARAM);
-			cmdNotifyGetStart.mPlayerGUID = player->getGUID();
-			cmdNotifyGetStart.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdNotifyGetStart, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerGetStartMahjong* cmdNotifyGetStart = NEW_CMD(cmdNotifyGetStart);
+			cmdNotifyGetStart->mPlayerGUID = player->getGUID();
+			cmdNotifyGetStart->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdNotifyGetStart, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -842,9 +842,9 @@ void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
 
 void Room::playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player)
 {
-	CommandCharacterGetMahjong cmdGetStart(CMD_PARAM);
-	cmdGetStart.mMahjong = mah;
-	mCommandSystem->pushCommand(&cmdGetStart, player);
+	CommandCharacterGetMahjong* cmdGetStart = NEW_CMD(cmdGetStart);
+	cmdGetStart->mMahjong = mah;
+	mCommandSystem->pushCommand(cmdGetStart, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -852,10 +852,10 @@ void Room::playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player)
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerGetMahjong cmdNotifyGetStart(CMD_PARAM);
-			cmdNotifyGetStart.mPlayerGUID = player->getGUID();
-			cmdNotifyGetStart.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdNotifyGetStart, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerGetMahjong* cmdNotifyGetStart = NEW_CMD(cmdNotifyGetStart);
+			cmdNotifyGetStart->mPlayerGUID = player->getGUID();
+			cmdNotifyGetStart->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdNotifyGetStart, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -863,8 +863,8 @@ void Room::playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player)
 
 void Room::playerReorderMahjong(CharacterPlayer* player)
 {
-	CommandCharacterReorderMahjong cmdReorder(CMD_PARAM);
-	mCommandSystem->pushCommand(&cmdReorder, player);
+	CommandCharacterReorderMahjong* cmd = NEW_CMD(cmd);
+	mCommandSystem->pushCommand(cmd, player);
 
 	// 通知其他玩家有玩家的牌重新排列
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
@@ -873,9 +873,9 @@ void Room::playerReorderMahjong(CharacterPlayer* player)
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerReorderMahjong cmdOtherReorder(CMD_PARAM);
-			cmdOtherReorder.mPlayerGUID = player->getGUID();
-			mCommandSystem->pushCommand(&cmdOtherReorder, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerReorderMahjong* cmdOtherReorder = NEW_CMD(cmdOtherReorder);
+			cmdOtherReorder->mPlayerGUID = player->getGUID();
+			mCommandSystem->pushCommand(cmdOtherReorder, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -898,20 +898,20 @@ void Room::playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList)
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
-		CommandCharacterPlayerHu cmdOtherHu(CMD_PARAM);
-		cmdOtherHu.mHuPlayerList = huPlayerList;
-		cmdOtherHu.mHuList = huList;
-		mCommandSystem->pushCommand(&cmdOtherHu, iterPlayer->second);
+		CommandCharacterPlayerHu* cmdOtherHu = NEW_CMD(cmdOtherHu);
+		cmdOtherHu->mHuPlayerList = huPlayerList;
+		cmdOtherHu->mHuList = huList;
+		mCommandSystem->pushCommand(cmdOtherHu, iterPlayer->second);
 	}
 	END_FOR_STL(mPlayerPositionList);
 }
 
 void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
 {
-	CommandCharacterGang cmdGang(CMD_PARAM);
-	cmdGang.mMahjong = mah;
-	cmdGang.mDroppedPlayer = droppedPlayer;
-	mCommandSystem->pushCommand(&cmdGang, player);
+	CommandCharacterGang* cmdGang = NEW_CMD(cmdGang);
+	cmdGang->mMahjong = mah;
+	cmdGang->mDroppedPlayer = droppedPlayer;
+	mCommandSystem->pushCommand(cmdGang, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -919,11 +919,11 @@ void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerGang cmdOtherGang(CMD_PARAM);
-			cmdOtherGang.mOtherPlayer = player;
-			cmdOtherGang.mDroppedPlayer = droppedPlayer;
-			cmdOtherGang.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdOtherGang, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerGang* cmdOtherGang = NEW_CMD(cmdOtherGang);
+			cmdOtherGang->mOtherPlayer = player;
+			cmdOtherGang->mDroppedPlayer = droppedPlayer;
+			cmdOtherGang->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdOtherGang, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -931,10 +931,10 @@ void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 
 void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
 {
-	CommandCharacterPeng cmdPeng(CMD_PARAM);
-	cmdPeng.mMahjong = mah;
-	cmdPeng.mDroppedPlayer = droppedPlayer;
-	mCommandSystem->pushCommand(&cmdPeng, player);
+	CommandCharacterPeng* cmdPeng = NEW_CMD(cmdPeng);
+	cmdPeng->mMahjong = mah;
+	cmdPeng->mDroppedPlayer = droppedPlayer;
+	mCommandSystem->pushCommand(cmdPeng, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -942,11 +942,11 @@ void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerPeng cmdOtherPeng(CMD_PARAM);
-			cmdOtherPeng.mOtherPlayer = player;
-			cmdOtherPeng.mDroppedPlayer = droppedPlayer;
-			cmdOtherPeng.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdOtherPeng, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerPeng* cmdOtherPeng = NEW_CMD(cmdOtherPeng);
+			cmdOtherPeng->mOtherPlayer = player;
+			cmdOtherPeng->mDroppedPlayer = droppedPlayer;
+			cmdOtherPeng->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdOtherPeng, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -954,10 +954,10 @@ void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 
 void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
 {
-	CommandCharacterPass cmdPass(CMD_PARAM);
-	cmdPass.mDroppedPlayer = droppedPlayer;
-	cmdPass.mMahjong = mah;
-	mCommandSystem->pushCommand(&cmdPass, player);
+	CommandCharacterPass* cmdPass = NEW_CMD(cmdPass);
+	cmdPass->mDroppedPlayer = droppedPlayer;
+	cmdPass->mMahjong = mah;
+	mCommandSystem->pushCommand(cmdPass, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -965,11 +965,11 @@ void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerPass cmdOtherPass(CMD_PARAM);
-			cmdOtherPass.mOtherPlayer = player;
-			cmdOtherPass.mDroppedPlayer = droppedPlayer;
-			cmdOtherPass.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdOtherPass, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerPass* cmdOtherPass = NEW_CMD(cmdOtherPass);
+			cmdOtherPass->mOtherPlayer = player;
+			cmdOtherPass->mDroppedPlayer = droppedPlayer;
+			cmdOtherPass->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdOtherPass, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -977,8 +977,8 @@ void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 
 void Room::playerAskDrop(CharacterPlayer* player)
 {
-	CommandCharacterAskDrop cmdAskDrop(CMD_PARAM);
-	mCommandSystem->pushCommand(&cmdAskDrop, player);
+	CommandCharacterAskDrop* cmd = NEW_CMD(cmd);
+	mCommandSystem->pushCommand(cmd, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -986,9 +986,9 @@ void Room::playerAskDrop(CharacterPlayer* player)
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerAskDrop cmdOtherAskDrop(CMD_PARAM);
-			cmdOtherAskDrop.mOtherPlayer = player;
-			mCommandSystem->pushCommand(&cmdOtherAskDrop, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerAskDrop* cmdOtherAskDrop = NEW_CMD(cmdOtherAskDrop);
+			cmdOtherAskDrop->mOtherPlayer = player;
+			mCommandSystem->pushCommand(cmdOtherAskDrop, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -996,9 +996,9 @@ void Room::playerAskDrop(CharacterPlayer* player)
 
 void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList)
 {
-	CommandCharacterAskAction cmdAskAction(CMD_PARAM);
-	cmdAskAction.mActionList = actionList;
-	mCommandSystem->pushCommand(&cmdAskAction, player);
+	CommandCharacterAskAction* cmdAskAction = NEW_CMD(cmdAskAction);
+	cmdAskAction->mActionList = actionList;
+	mCommandSystem->pushCommand(cmdAskAction, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -1006,9 +1006,9 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerAskAction cmdOtherAskAction(CMD_PARAM);
-			cmdOtherAskAction.mOtherPlayer = player;
-			mCommandSystem->pushCommand(&cmdOtherAskAction, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerAskAction* cmdOtherAskAction = NEW_CMD(cmdOtherAskAction);
+			cmdOtherAskAction->mOtherPlayer = player;
+			mCommandSystem->pushCommand(cmdOtherAskAction, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);
@@ -1016,10 +1016,10 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 
 void Room::playerShowHua(CharacterPlayer* player, const int& index, const MAHJONG& mah)
 {
-	CommandCharacterShowHua cmdShowHua(CMD_PARAM);
-	cmdShowHua.mIndex = index;
-	cmdShowHua.mMahjong = mah;
-	mCommandSystem->pushCommand(&cmdShowHua, player);
+	CommandCharacterShowHua* cmdShowHua = NEW_CMD(cmdShowHua);
+	cmdShowHua->mIndex = index;
+	cmdShowHua->mMahjong = mah;
+	mCommandSystem->pushCommand(cmdShowHua, player);
 	// 通知其他玩家
 	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
 	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
@@ -1027,11 +1027,11 @@ void Room::playerShowHua(CharacterPlayer* player, const int& index, const MAHJON
 	{
 		if (iterPlayer->second != player)
 		{
-			CommandCharacterNotifyOtherPlayerShowHua cmdOtherShowHua(CMD_PARAM);
-			cmdOtherShowHua.mOtherPlayer = player;
-			cmdOtherShowHua.mIndex = index;
-			cmdOtherShowHua.mMahjong = mah;
-			mCommandSystem->pushCommand(&cmdOtherShowHua, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerShowHua* cmdOtherShowHua = NEW_CMD(cmdOtherShowHua);
+			cmdOtherShowHua->mOtherPlayer = player;
+			cmdOtherShowHua->mIndex = index;
+			cmdOtherShowHua->mMahjong = mah;
+			mCommandSystem->pushCommand(cmdOtherShowHua, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(mPlayerPositionList);

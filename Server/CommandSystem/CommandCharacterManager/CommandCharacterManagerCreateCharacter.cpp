@@ -4,7 +4,7 @@
 void CommandCharacterManagerCreateCharacter::execute()
 {
 	CharacterManager* characterManager = static_cast<CharacterManager*>(mReceiver);
-	mResultCharacter = characterManager->createCharacter(mName, mType, mCharGUID, mClientGUID);
+	characterManager->createCharacter(mName, mType, mCharGUID, mClientGUID);
 }
 
 std::string CommandCharacterManagerCreateCharacter::showDebugInfo()

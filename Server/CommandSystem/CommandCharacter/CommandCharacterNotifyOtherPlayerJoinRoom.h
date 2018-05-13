@@ -8,10 +8,12 @@ class Character;
 class CommandCharacterNotifyOtherPlayerJoinRoom : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerJoinRoom)
-		, mJoinPlayer(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mJoinPlayer = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	Character* mJoinPlayer;
 };

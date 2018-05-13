@@ -7,9 +7,13 @@
 class CommandCharacterStartGame : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterStartGame)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mDice[0] = 0;
+		mDice[1] = 0;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 	void setDice(char dice0, char dice1)
 	{
 		mDice[0] = dice0;

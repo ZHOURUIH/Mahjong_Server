@@ -373,6 +373,9 @@
     <ClCompile Include="Utility\ServerUtility.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="CommandSystem\CommandPool.cpp">
+      <Filter>CommandSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -881,6 +884,15 @@
     </ClInclude>
     <ClInclude Include="Memory\MemoryDefine.h">
       <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandPool.h">
+      <Filter>CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerEnum.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ServerCallback.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,11 +6,13 @@
 class CommandRoomConfirmAction : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomConfirmAction)
-		, mPlayerGUID(INVALID_ID)
-		, mAction(AT_MAX)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+		mAction = AT_MAX;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerGUID;
 	ACTION_TYPE mAction;

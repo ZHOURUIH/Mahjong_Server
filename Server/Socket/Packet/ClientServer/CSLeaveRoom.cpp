@@ -9,6 +9,6 @@
 void CSLeaveRoom::execute()
 {
 	NetClient* client = mNetServer->getClient(mClient);
-	CommandCharacterLeaveRoom cmd(CMD_PARAM);
-	mCommandSystem->pushCommand(&cmd, mCharacterManager->getCharacter(client->getCharGUID()));
+	CommandCharacterLeaveRoom* cmd = NEW_CMD(cmd);
+	mCommandSystem->pushCommand(cmd, mCharacterManager->getCharacter(client->getCharGUID()));
 }

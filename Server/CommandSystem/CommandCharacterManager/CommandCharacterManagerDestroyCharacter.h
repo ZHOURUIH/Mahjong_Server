@@ -7,10 +7,12 @@
 class CommandCharacterManagerDestroyCharacter : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterManagerDestroyCharacter)
-		, mGUID(INVALID_ID)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mGUID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mGUID;
 };

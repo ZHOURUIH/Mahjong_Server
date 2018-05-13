@@ -7,10 +7,12 @@
 class CommandCharacterContinueGame : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterContinueGame)
-		, mContinue(false)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mContinue = false;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	bool mContinue;
 };

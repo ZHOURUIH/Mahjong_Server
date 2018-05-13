@@ -6,9 +6,12 @@
 class CommandRoomNotifyDiceDone : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyDiceDone)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayerGUID = INVALID_ID;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CHAR_GUID mPlayerGUID;
 };

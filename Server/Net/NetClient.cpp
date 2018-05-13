@@ -35,16 +35,14 @@ void NetClient::destroy()
 	// 如果角色已经登录了,则通知角色管理器玩家已经断开连接
 	if (mCharGUID != INVALID_ID)
 	{
-		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = txCommand::createDelayCommand<CommandCharacterManagerNotifyPlayerOffline>(CMD_PARAM);
+		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = NEW_CMD_DELAY_INFO(cmdOffline);
 		cmdOffline->mPlayerID = mCharGUID;
 		mCommandSystem->pushDelayCommand(cmdOffline, mCharacterManager);
 	}
-
 	TRACE_DELETE_ARRAY(mSendBuffer);
 	TRACE_DELETE_ARRAY(mRecvBuffer);
 	TRACE_DELETE_ARRAY(mTempBuffer0);
 	TRACE_DELETE_ARRAY(mTempBuffer1);
-
 	// 关闭客户端套接字,并从列表移除
 	CLOSE_SOCKET(mSocket);
 }

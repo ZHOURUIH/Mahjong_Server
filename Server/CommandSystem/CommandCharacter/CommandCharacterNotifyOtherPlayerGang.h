@@ -8,12 +8,14 @@ class CharacterPlayer;
 class CommandCharacterNotifyOtherPlayerGang : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerGang)
-		, mOtherPlayer(NULL)
-		, mMahjong(M_MAX)
-		, mDroppedPlayer(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mOtherPlayer = NULL;
+		mMahjong = M_MAX;
+		mDroppedPlayer = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	MAHJONG mMahjong;

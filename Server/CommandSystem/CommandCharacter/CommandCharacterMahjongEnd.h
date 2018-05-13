@@ -6,9 +6,12 @@
 class CommandCharacterMahjongEnd : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterMahjongEnd)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	txMap<CharacterPlayer*, int> mMoneyDeltaList;
 };

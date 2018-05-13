@@ -8,9 +8,13 @@ class CharacterPlayer;
 class CommandCharacterPlayerHu : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterPlayerHu)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mHuPlayerList.clear();
+		mHuList.clear();
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	txVector<CharacterPlayer*> mHuPlayerList;
 	txVector<txVector<HU_TYPE>> mHuList;

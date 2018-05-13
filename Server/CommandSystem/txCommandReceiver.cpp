@@ -21,6 +21,8 @@ txCommandReceiver::~txCommandReceiver()
 void txCommandReceiver::receiveCommand(txCommand* cmd)
 {
 	cmd->runStartCallBack();
+	cmd->setExecuteState(ES_EXECUTING);
 	cmd->execute();
+	cmd->setExecuteState(ES_EXECUTED);
 	cmd->runEndCallBack();
 }

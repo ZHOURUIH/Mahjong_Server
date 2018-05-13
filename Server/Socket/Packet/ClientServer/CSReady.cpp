@@ -9,7 +9,7 @@
 void CSReady::execute()
 {
 	NetClient* client = mNetServer->getClient(mClient);
-	CommandCharacterReady cmd(CMD_PARAM);
-	cmd.mReady = mReady;
-	mCommandSystem->pushCommand(&cmd, mCharacterManager->getCharacter(client->getCharGUID()));
+	CommandCharacterReady* cmd = NEW_CMD(cmd);
+	cmd->mReady = mReady;
+	mCommandSystem->pushCommand(cmd, mCharacterManager->getCharacter(client->getCharGUID()));
 }

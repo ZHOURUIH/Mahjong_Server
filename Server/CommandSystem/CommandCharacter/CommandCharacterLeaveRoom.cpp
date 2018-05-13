@@ -13,9 +13,9 @@ void CommandCharacterLeaveRoom::execute()
 	if (room != NULL)
 	{
 		// 通知房间有玩家离开
-		CommandRoomNotifyPlayerLeave cmdLeave(CMD_PARAM);
-		cmdLeave.mPlayer = player;
-		mCommandSystem->pushCommand(&cmdLeave, room);
+		CommandRoomNotifyPlayerLeave* cmdLeave = NEW_CMD(cmdLeave);
+		cmdLeave->mPlayer = player;
+		mCommandSystem->pushCommand(cmdLeave, room);
 	}
 	SCLeaveRoomRet* leaveRet = static_cast<SCLeaveRoomRet*>(mNetServer->createPacket(PT_SC_LEAVE_ROOM_RET));
 	leaveRet->mResult = (room != NULL);

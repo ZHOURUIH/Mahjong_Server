@@ -8,12 +8,14 @@ class CharacterPlayer;
 class CommandCharacterNotifyOtherPlayerShowHua : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyOtherPlayerShowHua)
-		, mOtherPlayer(NULL)
-		, mMahjong(M_MAX)
-		, mIndex(-1)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mOtherPlayer = NULL;
+		mMahjong = M_MAX;
+		mIndex = -1;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	MAHJONG mMahjong;

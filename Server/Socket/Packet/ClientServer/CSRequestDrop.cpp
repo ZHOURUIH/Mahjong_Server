@@ -13,8 +13,8 @@ void CSRequestDrop::execute()
 {
 	NetClient* client = mNetServer->getClient(mClient);
 	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
-	CommandRoomRequestDrop cmd(CMD_PARAM);
-	cmd.mPlayerGUID = client->getCharGUID();
-	cmd.mIndex = mIndex;
-	mCommandSystem->pushCommand(&cmd, mRoomManager->getRoom(character->getCharacterData()->mRoomID));
+	CommandRoomRequestDrop* cmd = NEW_CMD(cmd);
+	cmd->mPlayerGUID = client->getCharGUID();
+	cmd->mIndex = mIndex;
+	mCommandSystem->pushCommand(cmd, mRoomManager->getRoom(character->getCharacterData()->mRoomID));
 }

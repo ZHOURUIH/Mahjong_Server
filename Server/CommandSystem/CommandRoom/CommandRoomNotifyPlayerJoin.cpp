@@ -9,17 +9,17 @@ void CommandRoomNotifyPlayerJoin::execute()
 	Room* room = static_cast<Room*>(mReceiver);
 	if (room->isRoomFull())
 	{
-		mResult = JRR_FULL;
+		setResult(JRR_FULL);
 		return;
 	}
 	if (room->getMember(mPlayerGUID) != NULL)
 	{
-		mResult = JRR_PLAYER_IN_ROOM;
+		setResult(JRR_PLAYER_IN_ROOM);
 		return;
 	}
 	if (room->isRoomLocked())
 	{
-		mResult = JRR_ROOM_LOCKED;
+		setResult(JRR_ROOM_LOCKED);
 		return;
 	}
 	// 将玩家加入房间中
@@ -33,13 +33,13 @@ void CommandRoomNotifyPlayerJoin::execute()
 	{
 		if (iterPlayer->second != joinPlayer)
 		{
-			CommandCharacterNotifyOtherPlayerJoinRoom cmdJoin(CMD_PARAM);
-			cmdJoin.mJoinPlayer = joinPlayer;
-			mCommandSystem->pushCommand(&cmdJoin, iterPlayer->second);
+			CommandCharacterNotifyOtherPlayerJoinRoom* cmdJoin = NEW_CMD(cmdJoin);
+			cmdJoin->mJoinPlayer = joinPlayer;
+			mCommandSystem->pushCommand(cmdJoin, iterPlayer->second);
 		}
 	}
 	END_FOR_STL(playerList);
-	mResult = JRR_SUCC;
+	setResult(JRR_SUCCESS);
 }
 
 std::string CommandRoomNotifyPlayerJoin::showDebugInfo()

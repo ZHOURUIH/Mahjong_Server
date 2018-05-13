@@ -8,11 +8,13 @@ class CharacterPlayer;
 class CommandRoomNotifyPlayerLeave : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomNotifyPlayerLeave)
-		, mPlayer(NULL)
-		, mNotifyOtherPlayer(true)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mPlayer = NULL;
+		mNotifyOtherPlayer = true;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mPlayer;
 	bool mNotifyOtherPlayer;

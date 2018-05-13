@@ -7,9 +7,12 @@ class MahjongAction;
 class CommandCharacterAskAction : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterAskAction)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mActionList.clear();
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	txVector<MahjongAction*> mActionList;
 };

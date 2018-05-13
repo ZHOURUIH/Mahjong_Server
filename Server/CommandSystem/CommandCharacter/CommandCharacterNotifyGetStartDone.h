@@ -7,9 +7,12 @@
 class CommandCharacterNotifyGetStartDone : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterNotifyGetStartDone)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 };
 

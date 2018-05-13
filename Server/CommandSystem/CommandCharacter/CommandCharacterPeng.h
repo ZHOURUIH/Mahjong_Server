@@ -8,11 +8,13 @@ class CharacterPlayer;
 class CommandCharacterPeng : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandCharacterPeng)
-		, mMahjong(M_MAX)
-		, mDroppedPlayer(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mMahjong = M_MAX;
+		mDroppedPlayer = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
 	MAHJONG mMahjong;
 	CharacterPlayer* mDroppedPlayer;

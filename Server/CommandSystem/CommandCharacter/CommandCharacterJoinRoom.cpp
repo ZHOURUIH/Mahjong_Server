@@ -22,10 +22,12 @@ void CommandCharacterJoinRoom::execute()
 		Room* room = mRoomManager->getRoom(mRoomID);
 		if (room != NULL)
 		{
-			CommandRoomNotifyPlayerJoin cmdJoin(CMD_PARAM);
-			cmdJoin.mPlayerGUID = player->getGUID();
-			mCommandSystem->pushCommand(&cmdJoin, room);
-			joinRet->mResult = cmdJoin.mResult;
+			JOIN_ROOM_RESULT result = JRR_NO_ROOM;
+			CommandRoomNotifyPlayerJoin* cmdJoin = NEW_CMD(cmdJoin);
+			cmdJoin->mPlayerGUID = player->getGUID();
+			cmdJoin->mResult = &result;
+			mCommandSystem->pushCommand(cmdJoin, room);
+			joinRet->mResult = result;
 		}
 		else
 		{
@@ -33,7 +35,7 @@ void CommandCharacterJoinRoom::execute()
 		}
 	}
 	// 加入成功则设置消息中的房间号,玩家在房间中的位置,玩家的房间号
-	if (joinRet->mResult == JRR_SUCC)
+	if (joinRet->mResult == JRR_SUCCESS)
 	{
 		joinRet->mRoomID = mRoomID;
 		joinRet->mServerPosition = player->getCharacterData()->mPosition;
@@ -50,7 +52,7 @@ void CommandCharacterJoinRoom::execute()
 	mNetServer->sendMessage(joinRet, player->getClientGUID());
 
 	// 如果加入成功,则发送当前房间的所有玩家的数据
-	if (result == JRR_SUCC)
+	if (result == JRR_SUCCESS)
 	{
 		// 房间需要再次获取一次
 		Room* room = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
@@ -62,9 +64,9 @@ void CommandCharacterJoinRoom::execute()
 			// 玩家自己不再通知
 			if (iter->second != player)
 			{
-				CommandCharacterNotifyOtherPlayerJoinRoom cmd(CMD_PARAM);
-				cmd.mJoinPlayer = iter->second;
-				mCommandSystem->pushCommand(&cmd, player);
+				CommandCharacterNotifyOtherPlayerJoinRoom* cmd = NEW_CMD(cmd);
+				cmd->mJoinPlayer = iter->second;
+				mCommandSystem->pushCommand(cmd, player);
 			}
 		}
 		END_FOR_STL(playerList);

@@ -8,12 +8,14 @@ class Room;
 class CommandRoomManagerCreateRoom : public txCommand
 {
 public:
-	COMMAND_SERVER_CONSTRUCT(CommandRoomManagerCreateRoom)
-		, mResultRoom(NULL)
-	{}
-	COMMAND_DECLARE_FUNCTION;
+	virtual void reset()
+	{
+		mRoomPtr = NULL;
+	}
+	virtual void execute();
+	virtual std::string showDebugInfo();
 public:
-	Room* mResultRoom;
+	Room** mRoomPtr;
 };
 
 #endif
