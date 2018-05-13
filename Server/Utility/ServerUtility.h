@@ -1,4 +1,4 @@
-#ifndef _SERVER_UTILITY_H_
+﻿#ifndef _SERVER_UTILITY_H_
 #define _SERVER_UTILITY_H_
 
 #include "GameDefine.h"

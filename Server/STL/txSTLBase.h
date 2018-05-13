@@ -1,4 +1,4 @@
-#ifndef _TX_STL_BASE_H_
+ï»¿#ifndef _TX_STL_BASE_H_
 #define _TX_STL_BASE_H_
 
 class txSTLBase
@@ -11,7 +11,7 @@ public:
 	}
 	virtual ~txSTLBase(){}
 	const bool& isLocked() { return mLock; }
-	// Ñ­»·±éÀúÁĞ±íÖ®Ç°±ØĞëËø¶¨
+	// å¾ªç¯éå†åˆ—è¡¨ä¹‹å‰å¿…é¡»é”å®š
 	virtual void lock(const std::string& file, const int& line) 
 	{
 		if (mLock)
@@ -24,7 +24,7 @@ public:
 		mLine = line;
 		mLock = true; 
 	}
-	// Ñ­»·±éÀúÁĞ±í½áÊøÒÔºó±ØĞë½âËø
+	// å¾ªç¯éå†åˆ—è¡¨ç»“æŸä»¥åå¿…é¡»è§£é”
 	virtual void unlock() 
 	{
 		if (!mLock)

@@ -1,4 +1,4 @@
-#ifndef _WAIT_ACTION_INFO_H_
+ï»¿#ifndef _WAIT_ACTION_INFO_H_
 #define _WAIT_ACTION_INFO_H_
 
 #include "GameDefine.h"
@@ -8,11 +8,11 @@ class MahjongAction;
 class WaitActionInfo
 {
 public:
-	CharacterPlayer* mPlayer;				// µÈ´ıÈ·ÈÏ²Ù×÷µÄÍæ¼Ò
-	CharacterPlayer* mDroppedPlayer;		// ´ò³öÕâÕÅÅÆµÄÍæ¼Ò
-	txVector<MahjongAction*> mActionList;// Íæ¼Ò¿ÉÑ¡ÔñµÄ²Ù×÷
-	MAHJONG mMahjong;						// µ±Ç°Âé½«
-	MahjongAction* mConfirmedAction;		// Íæ¼ÒÈ·ÈÏÑ¡ÔñµÄÒ»ÖÖ²Ù×÷
+	CharacterPlayer* mPlayer;				// ç­‰å¾…ç¡®è®¤æ“ä½œçš„ç©å®¶
+	CharacterPlayer* mDroppedPlayer;		// æ‰“å‡ºè¿™å¼ ç‰Œçš„ç©å®¶
+	txVector<MahjongAction*> mActionList;// ç©å®¶å¯é€‰æ‹©çš„æ“ä½œ
+	MAHJONG mMahjong;						// å½“å‰éº»å°†
+	MahjongAction* mConfirmedAction;		// ç©å®¶ç¡®è®¤é€‰æ‹©çš„ä¸€ç§æ“ä½œ
 	WaitActionInfo(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const txVector<MahjongAction*>& actionList, const MAHJONG& mah)
 	{
 		mPlayer = player;

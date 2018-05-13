@@ -1,4 +1,4 @@
-#include "txMemoryTrace.h"
+ï»¿#include "txMemoryTrace.h"
 #ifdef TRACE_MEMORY
 #include "txSerializer.h"
 #include "TimeLock.h"
@@ -51,11 +51,11 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 	int memorySize = 0;
 	if (mShowAll)
 	{
-		// Ê×ÏÈ¼ì²âÊÇ·ñ¿ÉÒÔ¶ÁÈ¡,Èç¹û²»¿ÉÒÔ,ÔòµÈ´ý½âËø¶ÁÈ¡
+		// é¦–å…ˆæ£€æµ‹æ˜¯å¦å¯ä»¥è¯»å–,å¦‚æžœä¸å¯ä»¥,åˆ™ç­‰å¾…è§£é”è¯»å–
 		LOCK(mInfoLock);
 		LOG_INFO("\n\n---------------------------------------------memery info begin-----------------------------------------------------------\n");
 
-		// ÄÚ´æÏêÏ¸ÐÅÏ¢
+		// å†…å­˜è¯¦ç»†ä¿¡æ¯
 		auto iter = mMemoryInfo.begin();
 		auto iterEnd = mMemoryInfo.end();
 		FOR_STL(mMemoryInfo, ; iter != iterEnd; ++iter)
@@ -65,19 +65,19 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 			{
 				continue;
 			}
-			// Èç¹û¸ÃÀàÐÍÒÑºöÂÔ,Ôò²»ÏÔÊ¾
+			// å¦‚æžœè¯¥ç±»åž‹å·²å¿½ç•¥,åˆ™ä¸æ˜¾ç¤º
 			if (mIgnoreClass.find(iter->second.type) != mIgnoreClass.end())
 			{
 				continue;
 			}
 
-			// Èç¹û½öÏÔÊ¾µÄÀàÐÍÁÐ±í²»Îª¿Õ,ÔòÖ»ÏÔÊ¾ÁÐ±íÖÐµÄÀàÐÍ
+			// å¦‚æžœä»…æ˜¾ç¤ºçš„ç±»åž‹åˆ—è¡¨ä¸ä¸ºç©º,åˆ™åªæ˜¾ç¤ºåˆ—è¡¨ä¸­çš„ç±»åž‹
 			if (mShowOnlyDetailClass.size() > 0 && mShowOnlyDetailClass.find(iter->second.type) == mShowOnlyDetailClass.end())
 			{
 				continue;
 			}
 
-			// Èç¹ûÀàÐÍ°üº¬¹Ø¼ü×Ö,Ôò²»ÏÔÊ¾
+			// å¦‚æžœç±»åž‹åŒ…å«å…³é”®å­—,åˆ™ä¸æ˜¾ç¤º
 			bool show = true;
 			auto iterKeyword = mIgnoreClassKeyword.begin();
 			auto iterKeywordEnd = mIgnoreClassKeyword.end();
@@ -103,24 +103,24 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 		{
 			LOG_INFO("-------------------------------------------------memery count : %d, total size : %.3fKB\n", memoryCount, memorySize / 1000.0f);
 		}
-		// ÏÔÊ¾Í³¼ÆÊý¾Ý
+		// æ˜¾ç¤ºç»Ÿè®¡æ•°æ®
 		if (mShowStatistics)
 		{
 			auto iterType = mMemoryType.begin();
 			auto iterTypeEnd = mMemoryType.end();
 			FOR_STL (mMemoryType, ; iterType != iterTypeEnd; ++iterType)
 			{
-				// Èç¹û¸ÃÀàÐÍÒÑºöÂÔ,Ôò²»ÏÔÊ¾
+				// å¦‚æžœè¯¥ç±»åž‹å·²å¿½ç•¥,åˆ™ä¸æ˜¾ç¤º
 				if (mIgnoreClass.find(iterType->first) != mIgnoreClass.end())
 				{
 					continue;
 				}
-				// Èç¹û½öÏÔÊ¾µÄÀàÐÍÁÐ±í²»Îª¿Õ,ÔòÖ»ÏÔÊ¾ÁÐ±íÖÐµÄÀàÐÍ
+				// å¦‚æžœä»…æ˜¾ç¤ºçš„ç±»åž‹åˆ—è¡¨ä¸ä¸ºç©º,åˆ™åªæ˜¾ç¤ºåˆ—è¡¨ä¸­çš„ç±»åž‹
 				if (mShowOnlyStatisticsClass.size() > 0 && mShowOnlyStatisticsClass.find(iterType->first) == mShowOnlyStatisticsClass.end())
 				{
 					continue;
 				}
-				// Èç¹ûÀàÐÍ°üº¬¹Ø¼ü×Ö,Ôò²»ÏÔÊ¾
+				// å¦‚æžœç±»åž‹åŒ…å«å…³é”®å­—,åˆ™ä¸æ˜¾ç¤º
 				bool show = true;
 				auto iterKeyword = mIgnoreClassKeyword.begin();
 				auto iterKeywordEnd = mIgnoreClassKeyword.end();
@@ -135,7 +135,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 				END_FOR_STL(mIgnoreClassKeyword);
 				if (show)
 				{
-					LOG_INFO("%s : %d¸ö, %.3fKB\n", iterType->first.c_str(), iterType->second.count, iterType->second.size / 1000.0f);
+					LOG_INFO("%s : %dä¸ª, %.3fKB\n", iterType->first.c_str(), iterType->second.count, iterType->second.size / 1000.0f);
 				}
 			}
 			END_FOR_STL(mMemoryType);
@@ -147,38 +147,38 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 bool txMemoryTrace::writeMemoryTrace(void* args)
 {
-	// ÕâÀï¾Í²»ÄÜÔÚ¶ÔÐòÁÐ»¯µÄÄÚ´æ½øÐÐ¸ú×Ù,·ñÔò»áÏÝÈëËÀËø
+	// è¿™é‡Œå°±ä¸èƒ½åœ¨å¯¹åºåˆ—åŒ–çš„å†…å­˜è¿›è¡Œè·Ÿè¸ª,å¦åˆ™ä¼šé™·å…¥æ­»é”
 	txSerializer serializer(false);
-	// Ëø¶¨ÁÐ±í
+	// é”å®šåˆ—è¡¨
 	LOCK(mInfoLock);
-	// Ð´ÈëÏêÏ¸ÐÅÏ¢ÊýÁ¿
+	// å†™å…¥è¯¦ç»†ä¿¡æ¯æ•°é‡
 	int infoCount = mMemoryInfo.size();
 	serializer.write(infoCount);
 	auto iterInfo = mMemoryInfo.begin();
 	auto iterInfoEnd = mMemoryInfo.end();
 	FOR_STL(mMemoryInfo, ; iterInfo != iterInfoEnd; ++iterInfo)
 	{
-		serializer.write(iterInfo->first);						// µØÖ·
-		serializer.write(iterInfo->second.size);				// ÄÚ´æ´óÐ¡
-		serializer.writeString(iterInfo->second.file.c_str());	// ÎÄ¼þÃû
-		serializer.write(iterInfo->second.line);				// ÐÐºÅ
-		serializer.writeString(iterInfo->second.type.c_str());	// ÀàÐÍ
+		serializer.write(iterInfo->first);						// åœ°å€
+		serializer.write(iterInfo->second.size);				// å†…å­˜å¤§å°
+		serializer.writeString(iterInfo->second.file.c_str());	// æ–‡ä»¶å
+		serializer.write(iterInfo->second.line);				// è¡Œå·
+		serializer.writeString(iterInfo->second.type.c_str());	// ç±»åž‹
 	}
 	END_FOR_STL(mMemoryInfo);
 
-	// Ð´ÈëÀàÐÍÊýÁ¿
+	// å†™å…¥ç±»åž‹æ•°é‡
 	int typeCount = mMemoryTypeIndex.size();
 	serializer.write(typeCount);
 	auto iterIndex = mMemoryTypeIndex.begin();
 	auto iterIndexEnd = mMemoryTypeIndex.end();
 	FOR_STL (mMemoryTypeIndex, ; iterIndex != iterIndexEnd; ++iterIndex)
 	{
-		serializer.writeString(mMemoryList[iterIndex->second].type.c_str());	// ÀàÐÍÃû
-		serializer.write(mMemoryList[iterIndex->second].count);					// ¸öÊý
-		serializer.write(mMemoryList[iterIndex->second].size);					// ´óÐ¡
+		serializer.writeString(mMemoryList[iterIndex->second].type.c_str());	// ç±»åž‹å
+		serializer.write(mMemoryList[iterIndex->second].count);					// ä¸ªæ•°
+		serializer.write(mMemoryList[iterIndex->second].size);					// å¤§å°
 	}
 	END_FOR_STL(mMemoryTypeIndex);
-	// ½âËøÁÐ±í
+	// è§£é”åˆ—è¡¨
 	UNLOCK(mInfoLock);
 	mShareMemoryServer->WriteCmdData(1, serializer.getDataSize(), (void*)serializer.getBuffer());
 	return true;
@@ -186,7 +186,7 @@ bool txMemoryTrace::writeMemoryTrace(void* args)
 
 void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 {
-	// Ëø¶¨ÁÐ±í
+	// é”å®šåˆ—è¡¨
 	LOCK(mInfoLock);
 	int lastPos = info.file.find_last_of('\\');
 	if (lastPos != -1)
@@ -208,14 +208,14 @@ void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 
 	if(mWriteOrDebug)
 	{
-		// ÔÚÀàÐÍÏÂ±êÁÐ±íÖÐ²éÕÒ¸ÃÀàÐÍ,Èç¹ûÓÐ,Ôò¸üÐÂÀàÐÍÐÅÏ¢
+		// åœ¨ç±»åž‹ä¸‹æ ‡åˆ—è¡¨ä¸­æŸ¥æ‰¾è¯¥ç±»åž‹,å¦‚æžœæœ‰,åˆ™æ›´æ–°ç±»åž‹ä¿¡æ¯
 		auto iterIndex = mMemoryTypeIndex.find(info.type);
 		if (iterIndex != mMemoryTypeIndex.end())
 		{
 			auto iterType = mMemoryType.find(info.type);
 			mMemoryList[iterIndex->second] = iterType->second;
 		}
-		// Èç¹ûÃ»ÓÐ,ÔòÌí¼ÓÀàÐÍÐÅÏ¢
+		// å¦‚æžœæ²¡æœ‰,åˆ™æ·»åŠ ç±»åž‹ä¿¡æ¯
 		else
 		{
 			if (mMemoryCount < MAX_COUNT)
@@ -233,18 +233,18 @@ void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 		}
 	}
 	
-	// ½âËøÁÐ±í
+	// è§£é”åˆ—è¡¨
 	UNLOCK(mInfoLock);
 }
 
 void txMemoryTrace::erasePtr(void* ptr)
 {
-	// Ëø¶¨ÁÐ±í
+	// é”å®šåˆ—è¡¨
 	LOCK(mInfoLock);
-	// ¼ÓÒ»²ãÑ­»·ÊÇÎªÁË·½±ã½âËø
+	// åŠ ä¸€å±‚å¾ªçŽ¯æ˜¯ä¸ºäº†æ–¹ä¾¿è§£é”
 	do
 	{
-		// ´ÓÄÚ´æÐÅÏ¢ÁÐ±íÖÐÒÆ³ý
+		// ä»Žå†…å­˜ä¿¡æ¯åˆ—è¡¨ä¸­ç§»é™¤
 		auto iterTrace = mMemoryInfo.find(ptr);
 		if (iterTrace == mMemoryInfo.end())
 		{
@@ -253,7 +253,7 @@ void txMemoryTrace::erasePtr(void* ptr)
 		std::string type = iterTrace->second.type;
 		int size = iterTrace->second.size;
 		mMemoryInfo.erase(iterTrace);
-		// ´ÓÄÚ´æÀàÐÍÁÐ±íÖÐÒÆ³ý
+		// ä»Žå†…å­˜ç±»åž‹åˆ—è¡¨ä¸­ç§»é™¤
 		auto iterType = mMemoryType.find(type);
 		if (iterType == mMemoryType.end())
 		{
@@ -263,7 +263,7 @@ void txMemoryTrace::erasePtr(void* ptr)
 		iterType->second.size -= size;
 		if(mWriteOrDebug)
 		{
-			// ÔÚÏÂ±êÁÐ±íÖÐ²éÕÒ¸ÃÀàÐÍµÄÏÂ±ê,Èç¹ûÓÐ,Ôò½«ÀàÐÍÐÅÏ¢ÖÐµÄÐÅÏ¢Çå¿Õ
+			// åœ¨ä¸‹æ ‡åˆ—è¡¨ä¸­æŸ¥æ‰¾è¯¥ç±»åž‹çš„ä¸‹æ ‡,å¦‚æžœæœ‰,åˆ™å°†ç±»åž‹ä¿¡æ¯ä¸­çš„ä¿¡æ¯æ¸…ç©º
 			auto iterIndex = mMemoryTypeIndex.find(type);
 			if (iterIndex == mMemoryTypeIndex.end())
 			{
@@ -273,7 +273,7 @@ void txMemoryTrace::erasePtr(void* ptr)
 			mMemoryList[iterIndex->second].size -= size;
 		}
 	} while (false);
-	// ½âËøÁÐ±í
+	// è§£é”åˆ—è¡¨
 	UNLOCK(mInfoLock);
 }
 

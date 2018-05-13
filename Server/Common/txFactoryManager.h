@@ -1,4 +1,4 @@
-#if 0
+﻿#if 0
 #ifndef _TX_FACTORY_MANAGER_H_
 #define _TX_FACTORY_MANAGER_H_
 

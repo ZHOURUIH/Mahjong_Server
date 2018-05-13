@@ -1,4 +1,4 @@
-#ifndef _TX_COMMAND_H_
+﻿#ifndef _TX_COMMAND_H_
 #define _TX_COMMAND_H_
 
 #include "txUtility.h"
@@ -16,9 +16,9 @@ public:
 	virtual ~txCommand(){}
 	virtual void init();
 	virtual void reset() = 0;
-	// 命令执行
+	// 鍛戒护鎵ц
 	virtual void execute() = 0;
-	// 调试信息，由CommandSystem调用
+	// 璋冭瘯淇℃伅锛岀敱CommandSystem璋冪敤
 	virtual std::string showDebugInfo()
 	{
 		COMMAND_DEBUG(DEBUG_EMPTY);
@@ -61,19 +61,19 @@ public:
 	void runEndCallBack();
 	void runStartCallBack();
 protected:
-	txCommandReceiver* mReceiver;	// 命令接受者
-	bool mShowDebugInfo;			// 是否显示调试信息
-	bool mDelayCommand;				// 是否是延迟执行的命令
-	bool mValid;					// 是否为有效命令
-	EXECUTE_STATE mExecuteState;	// 命令执行状态
-	std::string mType;				// 命令类型
-	std::string mFile;				// 命令发出时所在的文件名
-	int mLine;						// 命令发出时所在的行号
-	int	mCmdID;						// 命令唯一ID,在命令被创建时设置
-	int mAssignID;					// 被分配为延迟命令时的唯一ID,每次分配都会设置一个新的唯一执行ID
-	bool* mResult;					// 命令的执行结果,只用于部分需要知道执行结果的命令使用
-	txVector<std::pair<CommandCallback, void*>> mEndCallback;		// 命令执行完毕时的回调函数
-	txVector<std::pair<CommandCallback, void*>> mStartCallback;	// 命令开始执行时的回调函数
+	txCommandReceiver* mReceiver;	// 鍛戒护鎺ュ彈鑰?
+	bool mShowDebugInfo;			// 鏄惁鏄剧ず璋冭瘯淇℃伅
+	bool mDelayCommand;				// 鏄惁鏄欢杩熸墽琛岀殑鍛戒护
+	bool mValid;					// 鏄惁涓烘湁鏁堝懡浠?
+	EXECUTE_STATE mExecuteState;	// 鍛戒护鎵ц鐘舵€?
+	std::string mType;				// 鍛戒护绫诲瀷
+	std::string mFile;				// 鍛戒护鍙戝嚭鏃舵墍鍦ㄧ殑鏂囦欢鍚?
+	int mLine;						// 鍛戒护鍙戝嚭鏃舵墍鍦ㄧ殑琛屽彿
+	int	mCmdID;						// 鍛戒护鍞竴ID,鍦ㄥ懡浠よ鍒涘缓鏃惰缃?
+	int mAssignID;					// 琚垎閰嶄负寤惰繜鍛戒护鏃剁殑鍞竴ID,姣忔鍒嗛厤閮戒細璁剧疆涓€涓柊鐨勫敮涓€鎵цID
+	bool* mResult;					// 鍛戒护鐨勬墽琛岀粨鏋?鍙敤浜庨儴鍒嗛渶瑕佺煡閬撴墽琛岀粨鏋滅殑鍛戒护浣跨敤
+	txVector<std::pair<CommandCallback, void*>> mEndCallback;		// 鍛戒护鎵ц瀹屾瘯鏃剁殑鍥炶皟鍑芥暟
+	txVector<std::pair<CommandCallback, void*>> mStartCallback;	// 鍛戒护寮€濮嬫墽琛屾椂鐨勫洖璋冨嚱鏁?
 };
 
 #endif

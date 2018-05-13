@@ -1,4 +1,4 @@
-#include "CommandHeader.h"
+﻿#include "CommandHeader.h"
 #include "Room.h"
 #include "RoomManager.h"
 #include "CharacterPlayer.h"
@@ -7,15 +7,15 @@
 void CommandRoomNotifyPlayerLeave::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
-	// 将玩家从房间中移除
+	// 灏嗙帺瀹朵粠鎴块棿涓Щ闄?
 	if (room != NULL)
 	{
 		room->leaveRoom(mPlayer);
 	}
-	// 房间中还有人则通知房间中的其他玩家有玩家离开
+	// 鎴块棿涓繕鏈変汉鍒欓€氱煡鎴块棿涓殑鍏朵粬鐜╁鏈夌帺瀹剁寮€
 	if (room->getPlayerList().size() > 0)
 	{
-		// 如果需要通知其他玩家
+		// 濡傛灉闇€瑕侀€氱煡鍏朵粬鐜╁
 		if (mNotifyOtherPlayer)
 		{
 			txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
@@ -30,7 +30,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 			END_FOR_STL(playerList);
 		}
 	}
-	// 如果房间中没有人了,则销毁房间
+	// 濡傛灉鎴块棿涓病鏈変汉浜?鍒欓攢姣佹埧闂?
 	else
 	{
 		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD(cmdDestroyRoom);

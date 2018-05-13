@@ -1,4 +1,4 @@
-#ifndef _DATA_H_
+﻿#ifndef _DATA_H_
 #define _DATA_H_
 
 #include "txSerializedData.h"

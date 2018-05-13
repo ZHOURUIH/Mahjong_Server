@@ -1,4 +1,4 @@
-#ifndef _TIME_LOCK_H_
+ï»¿#ifndef _TIME_LOCK_H_
 #define _TIME_LOCK_H_
 
 #include "ServerDefine.h"
@@ -6,13 +6,8 @@
 class TimeLock
 {
 public:
-	TimeLock(const long& frameTimeMS)
-	{
-		mFrameTimeMS = frameTimeMS;
-		mLastTime = 0;
-		mForceSleep = 0;
-	}
-	// ·µ»ØÖµ±íÊ¾ÉÏÒ»Ö¡¾­¹ıµÄÊ±¼ä
+	TimeLock(const long& frameTimeMS);
+	// è¿”å›å€¼è¡¨ç¤ºä¸Šä¸€å¸§ç»è¿‡çš„æ—¶é—´
 	long update();
 	void setForceSleep(const long& forceTimeMS)
 	{
@@ -21,7 +16,7 @@ public:
 protected:
 	long mFrameTimeMS;
 	long mLastTime;
-	long mForceSleep;          // Ã¿Ö¡ÎŞÔİÍ£Ê±¼äÊ±Ç¿ÖÆÔİÍ£µÄºÁÃëÊı,±ÜÃâÏß³Ìµ¥Ö¡ÈÎÎñ·±ÖØÊ±,µ¼ÖÂµ¥Ö¡ÏûºÄÊ±¼ä´óÓÚÉè¶¨µÄ¹Ì¶¨µ¥Ö¡Ê±¼äÊ±,CPUÕ¼ÓÃ¹ı¸ßµÄÎÊÌâ
+	long mForceSleep;          // æ¯å¸§æ— æš‚åœæ—¶é—´æ—¶å¼ºåˆ¶æš‚åœçš„æ¯«ç§’æ•°,é¿å…çº¿ç¨‹å•å¸§ä»»åŠ¡ç¹é‡æ—¶,å¯¼è‡´å•å¸§æ¶ˆè€—æ—¶é—´å¤§äºè®¾å®šçš„å›ºå®šå•å¸§æ—¶é—´æ—¶,CPUå ç”¨è¿‡é«˜çš„é—®é¢˜
 };
 
 #endif

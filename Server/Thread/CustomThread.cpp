@@ -1,4 +1,4 @@
-#include "CustomThread.h"
+ï»¿#include "CustomThread.h"
 #include "txUtility.h"
 #include "txMemoryTrace.h"
 #include "TimeLock.h"
@@ -29,10 +29,10 @@ void CustomThread::destroy()
 
 void CustomThread::start(CustomThreadCallback callback, void* args, const int& frameTimeMS)
 {
-	LOG_INFO("×¼±¸Æô¶¯Ïß³Ì : %s", mName.c_str());
+	LOG_INFO("å‡†å¤‡å¯åŠ¨çº¿ç¨‹ : %s", mName.c_str());
 	if (mThread != NULL_THREAD)
 	{
-		LOG_ERROR("Ïß³ÌÒÑ¾­Æô¶¯ : %s", mName.c_str());
+		LOG_ERROR("çº¿ç¨‹å·²ç»å¯åŠ¨ : %s", mName.c_str());
 		return;
 	}
 	mTimeLock = TRACE_NEW(TimeLock, mTimeLock, frameTimeMS);
@@ -41,19 +41,19 @@ void CustomThread::start(CustomThreadCallback callback, void* args, const int& f
 	mCallback = callback;
 	mArgs = args;
 	CREATE_THREAD(mThread, run, this);
-	LOG_INFO("Ïß³ÌÆô¶¯³É¹¦ : %s", mName.c_str());
+	LOG_INFO("çº¿ç¨‹å¯åŠ¨æˆåŠŸ : %s", mName.c_str());
 }
 
 void CustomThread::stop()
 {
-	LOG_INFO("×¼±¸ÍË³öÏß³Ì : %s", mName.c_str());
+	LOG_INFO("å‡†å¤‡é€€å‡ºçº¿ç¨‹ : %s", mName.c_str());
 	mRunning = false;
 	mPause = false;
 	while (!mIsBackground && !mFinish) {}
 	CLOSE_THREAD(mThread);
 	mCallback = NULL;
 	TRACE_DELETE(mTimeLock);
-	LOG_INFO("Ïß³ÌÍË³öÍê³É! Ïß³ÌÃû : %s", mName.c_str());
+	LOG_INFO("çº¿ç¨‹é€€å‡ºå®Œæˆ! çº¿ç¨‹å : %s", mName.c_str());
 }
 
 void CustomThread::updateThread()
@@ -75,7 +75,7 @@ void CustomThread::updateThread()
 		}
 		catch (...)
 		{
-			LOG_INFO("²¶»ñÏß³ÌÒì³£! Ïß³ÌÃû : %s", mName.c_str());
+			LOG_INFO("æ•è·çº¿ç¨‹å¼‚å¸¸! çº¿ç¨‹å : %s", mName.c_str());
 		}
 	}
 	mFinish = true;

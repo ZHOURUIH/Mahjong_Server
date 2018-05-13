@@ -1,4 +1,4 @@
-#ifndef _MEMORY_DEFINE_H_
+ï»¿#ifndef _MEMORY_DEFINE_H_
 #define _MEMORY_DEFINE_H_
 
 //#define TRACE_MEMORY
@@ -8,7 +8,7 @@
 #include "GameLog.h"
 #include "txMemoryCheck.h"
 
-// ÎŞÂÛÊ²Ã´Æ½Ì¨¶¼ĞèÒª¶¨ÒåÒÔÏÂÕı³£µÄÄÚ´æÉêÇëºê
+// æ— è®ºä»€ä¹ˆå¹³å°éƒ½éœ€è¦å®šä¹‰ä»¥ä¸‹æ­£å¸¸çš„å†…å­˜ç”³è¯·å®
 #define NEW_MEMORY(className, ptr, check, ...)		\
 NULL;												\
 try													\
@@ -25,7 +25,7 @@ catch (...)											\
 	LOG_ERROR("error : can not alloc memory!");	\
 }
 
-// Õı³£µÄÉêÇëÊı×éÄÚ´æ
+// æ­£å¸¸çš„ç”³è¯·æ•°ç»„å†…å­˜
 #define NEW_MEMORY_ARRAY(className, count, ptr, check)		\
 NULL;														\
 if (count <= 0)												\
@@ -50,7 +50,7 @@ else														\
 	}														\
 }															\
 
-// Õı³£µÄÊÍ·ÅÄÚ´æ
+// æ­£å¸¸çš„é‡Šæ”¾å†…å­˜
 #define DELETE_MEMORY(ptr, check)		\
 if (ptr != NULL)						\
 {										\
@@ -62,7 +62,7 @@ if (ptr != NULL)						\
 	ptr = NULL;							\
 }
 
-// Õı³£µÄÊÍ·ÅÊı×éÄÚ´æ
+// æ­£å¸¸çš„é‡Šæ”¾æ•°ç»„å†…å­˜
 #define DELETE_MEMORY_ARRAY(ptr, check)	\
 if (ptr != NULL)						\
 {										\
@@ -75,13 +75,13 @@ if (ptr != NULL)						\
 }
 
 #ifdef CHECK_MEMORY
-// ´øÄÚ´æºÏ·¨¼ì²âµÄ³£¹æÄÚ´æÉêÇëºÍÊÍ·Å
+// å¸¦å†…å­˜åˆæ³•æ£€æµ‹çš„å¸¸è§„å†…å­˜ç”³è¯·å’Œé‡Šæ”¾
 #define NORMAL_NEW(className, ptr, ...)			NEW_MEMORY(className, ptr, true, __VA_ARGS__)
 #define NORMAL_NEW_ARRAY(className, count, ptr)	NEW_MEMORY_ARRAY(className, count, ptr, true)
 #define NORMAL_DELETE(ptr)						DELETE_MEMORY(ptr, true)
 #define NORMAL_DELETE_ARRAY(ptr)				DELETE_MEMORY_ARRAY(ptr, true)
 #else
-// ²»´øÄÚ´æºÏ·¨¼ì²âµÄ³£¹æÄÚ´æÉêÇëºÍÊÍ·Å
+// ä¸å¸¦å†…å­˜åˆæ³•æ£€æµ‹çš„å¸¸è§„å†…å­˜ç”³è¯·å’Œé‡Šæ”¾
 #define NORMAL_NEW(className, ptr, ...)			NEW_MEMORY(className, ptr, false, __VA_ARGS__)
 #define NORMAL_NEW_ARRAY(className, count, ptr)	NEW_MEMORY_ARRAY(className, count, ptr, false)
 #define NORMAL_DELETE(ptr)						DELETE_MEMORY(ptr, false)
@@ -89,7 +89,7 @@ if (ptr != NULL)						\
 #endif
 
 #ifdef TRACE_MEMORY
-// ÉêÇëÎŞ²Î»òÕß´ø²Î¹¹ÔìÀàµÄÄÚ´æ
+// ç”³è¯·æ— å‚æˆ–è€…å¸¦å‚æ„é€ ç±»çš„å†…å­˜
 #define TRACE_NEW(className, ptr, ...)		\
 NORMAL_NEW(className, ptr, __VA_ARGS__)		\
 if(ptr != NULL)								\
@@ -97,7 +97,7 @@ if(ptr != NULL)								\
 	txMemoryTrace::insertPtr(ptr, MemoryInfo(sizeof(className), __FILE__, __LINE__, typeid(className).name())); \
 }
 
-// ÉêÇëÎŞ²Î¹¹ÔìµÄÀà»òÕß»ù´¡Êı¾İÀàĞÍÊı×éÄÚ´æ
+// ç”³è¯·æ— å‚æ„é€ çš„ç±»æˆ–è€…åŸºç¡€æ•°æ®ç±»å‹æ•°ç»„å†…å­˜
 #define TRACE_NEW_ARRAY(className, count, ptr)  \
 NORMAL_NEW_ARRAY(className, count, ptr)			\
 if(ptr != NULL)									\
@@ -105,12 +105,12 @@ if(ptr != NULL)									\
 	txMemoryTrace::insertPtr(ptr, MemoryInfo(sizeof(className)* count, __FILE__, __LINE__, typeid(className).name())); \
 }
 
-// ÊÍ·ÅTRACE_NEWÉêÇëµÄÄÚ´æ
+// é‡Šæ”¾TRACE_NEWç”³è¯·çš„å†…å­˜
 #define TRACE_DELETE(ptr)			\
 txMemoryTrace::erasePtr((void*)ptr);\
 NORMAL_DELETE(ptr)
 
-// ÊÍ·ÅTRACE_NEW_ARRAYÉêÇëµÄÄÚ´æ
+// é‡Šæ”¾TRACE_NEW_ARRAYç”³è¯·çš„å†…å­˜
 #define TRACE_DELETE_ARRAY(ptr)		\
 txMemoryTrace::erasePtr((void*)ptr);\
 NORMAL_DELETE_ARRAY(ptr)

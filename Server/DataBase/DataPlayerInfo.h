@@ -1,4 +1,4 @@
-#ifndef _DATA_PLAYER_INFO_H_
+﻿#ifndef _DATA_PLAYER_INFO_H_
 #define _DATA_PLAYER_INFO_H_
 
 #include "Data.h"

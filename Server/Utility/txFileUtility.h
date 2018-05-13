@@ -1,4 +1,4 @@
-#ifndef _TX_FILE_UTILITY_H_
+ï»¿#ifndef _TX_FILE_UTILITY_H_
 #define _TX_FILE_UTILITY_H_
 
 #include "ServerDefine.h"
@@ -15,9 +15,9 @@ public:
 	static void findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive = false);
 	static void deleteFolder(const std::string& path);
 	static bool isFileExist(const std::string& fullPath);
-	// ½«sourceFile¿½±´µ½destFile,sourceFileºÍdestFile¶¼ÊÇ´ø¿ÉÖ±½Ó·ÃÎÊµÄÂ·¾¶µÄÎÄ¼şÃû,overWriteÖ¸¶¨µ±Ä¿±êÎÄ¼şÒÑ¾­´æÔÚÊ±ÊÇ·ñÒª¸²¸ÇÎÄ¼ş
+	// å°†sourceFileæ‹·è´åˆ°destFile,sourceFileå’ŒdestFileéƒ½æ˜¯å¸¦å¯ç›´æ¥è®¿é—®çš„è·¯å¾„çš„æ–‡ä»¶å,overWriteæŒ‡å®šå½“ç›®æ ‡æ–‡ä»¶å·²ç»å­˜åœ¨æ—¶æ˜¯å¦è¦è¦†ç›–æ–‡ä»¶
 	static bool copyFile(const std::string& sourceFile, const std::string& destFile, bool overWrite = true);
-	// ´´½¨Ò»¸öÎÄ¼ş¼Ğ,pathÊÇÒ»¸ö²»ÒÔ/½áÎ²µÄ¿ÉÖ±½Ó·ÃÎÊµÄÏà¶Ô»òÕß¾ø¶ÔµÄÎÄ¼ş¼ĞÃû
+	// åˆ›å»ºä¸€ä¸ªæ–‡ä»¶å¤¹,pathæ˜¯ä¸€ä¸ªä¸ä»¥/ç»“å°¾çš„å¯ç›´æ¥è®¿é—®çš„ç›¸å¯¹æˆ–è€…ç»å¯¹çš„æ–‡ä»¶å¤¹å
 	static bool createFolder(const std::string& path);
 	static bool writeFile(std::string filePath, const int& length, const char* buffer);
 	static char* openFile(const std::string& filePath, int* bufferSize, const bool& addZero);

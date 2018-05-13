@@ -1,4 +1,4 @@
-#ifndef _TX_SHARE_MEMORY_SERVER_H_
+ï»¿#ifndef _TX_SHARE_MEMORY_SERVER_H_
 #define _TX_SHARE_MEMORY_SERVER_H_
 
 #ifdef WINDOWS
@@ -6,26 +6,26 @@
 
 #pragma warning(disable:4996)
 
-#define DEFAULT_FILENAME NULL    // Ä¬ÕJµÄÎÄ¼şÃû
-#define DEFAULT_MAPNAME  "Local//_FZD_MAP_"   // Ä¬ÕJµÄ¹²ÏíƒÈ´æÃû
-#define DEFAULT_MAPSIZE  (0xFFFF + 1) * 100  // Ä¬ÕJµÄ¹²ÏíƒÈ´æ´óĞ¡
-const DWORD NETRGUSER_CFM_CODE = 0x1211DBFF; // Ğ£ò´a, ÓÃì¶ÃüÁî”µ“ş
-const DWORD NETRGUSER_CMD_NONE = 0;   // ³õÊ¼»¯Ö¸Áî´a, ŸoÖ¸Áî
+#define DEFAULT_FILENAME NULL    // é»˜èªçš„æ–‡ä»¶å
+#define DEFAULT_MAPNAME  "Local//_FZD_MAP_"   // é»˜èªçš„å…±äº«å…§å­˜å
+#define DEFAULT_MAPSIZE  (0xFFFF + 1) * 100  // é»˜èªçš„å…±äº«å…§å­˜å¤§å°
+const DWORD NETRGUSER_CFM_CODE = 0x1211DBFF; // æ ¡é©—ç¢¼, ç”¨æ–¼å‘½ä»¤æ•¸æ“š
+const DWORD NETRGUSER_CMD_NONE = 0;   // åˆå§‹åŒ–æŒ‡ä»¤ç¢¼, ç„¡æŒ‡ä»¤
 
-#define ERROR_LEN    256    // åeÕ`ÃèÊöéL¶È
-#define ERROR_INVALID_CMDCODE 0xE00001FF  // ÒÑ½›´æÔÚÍêÈ«Ò»˜ÓµÄ¹²ÏíƒÈ´æ
-#define ERROR_NO_MAPFILE 0xE00002FF  // Î´·ÖÅä¹²ÏíƒÈ´æÎÄ¼ş
-#define ERROR_INVALID_CFMCODE 0xE00003FF  // Ğ£ò´a²»Æ¥Åä
+#define ERROR_LEN    256    // éŒ¯èª¤æè¿°é•·åº¦
+#define ERROR_INVALID_CMDCODE 0xE00001FF  // å·²ç¶“å­˜åœ¨å®Œå…¨ä¸€æ¨£çš„å…±äº«å…§å­˜
+#define ERROR_NO_MAPFILE 0xE00002FF  // æœªåˆ†é…å…±äº«å…§å­˜æ–‡ä»¶
+#define ERROR_INVALID_CFMCODE 0xE00003FF  // æ ¡é©—ç¢¼ä¸åŒ¹é…
 
 #pragma pack(1)
-// ÓÃì¶´æƒ¦ÃüÁî”µ“şµÄƒÈ´æÎÄ¼ş¸ñÊ½
+// ç”¨æ–¼å­˜å„²å‘½ä»¤æ•¸æ“šçš„å…§å­˜æ–‡ä»¶æ ¼å¼
 typedef struct _tagDATA_HEADER
 {
-	DWORD dwConfirmCode; // Ğ£ò´a
-	DWORD nCommandCode;  // Ö¸Áî×R„e´a
-	DWORD dwDataSize;  // ”µ“şµÄ´óĞ¡
-	BYTE  dwReserved[19]; // ±£Áô
-	BYTE  bInfo[1];   // ”µ“şÆğÊ¼µØÖ·
+	DWORD dwConfirmCode; // æ ¡é©—ç¢¼
+	DWORD nCommandCode;  // æŒ‡ä»¤è­˜åˆ¥ç¢¼
+	DWORD dwDataSize;  // æ•¸æ“šçš„å¤§å°
+	BYTE  dwReserved[19]; // ä¿ç•™
+	BYTE  bInfo[1];   // æ•¸æ“šèµ·å§‹åœ°å€
 	_tagDATA_HEADER()
 	{
 		dwConfirmCode = NETRGUSER_CFM_CODE;
@@ -40,31 +40,31 @@ typedef DWORD(WINAPI *PSetEntriesInAcl)(unsigned long, PEXPLICIT_ACCESS, PACL, P
 #pragma pack()
 
 //////////////////////////////////////////////////////////////////////
-// î¶¨Áx£¬¹²ÏíƒÈ´æ·ş„Õ¶Ë
+// é¡å®šç¾©ï¼Œå…±äº«å…§å­˜æœå‹™ç«¯
 class txShareMemoryServer
 {
 public:
 	txShareMemoryServer();
 	virtual ~txShareMemoryServer();
 	txShareMemoryServer(char *szFileName, char *szMapName, DWORD dwSize);
-	bool Create(char *szFileName = DEFAULT_FILENAME, char *szMapName = DEFAULT_MAPNAME, DWORD dwSize = DEFAULT_MAPSIZE); // ĞÂ½¨¹²ÏíƒÈ´æ
-	LPVOID GetBuffer();      // «@È¡ƒÈ´æÎÄ¼şÖ¸á˜
-	DWORD GetSize(){ return m_dwSize; }      // «@È¡ƒÈ´æÎÄ¼ş´óĞ¡
-	void Destory();       // äNš§ÒÑÓĞµÄ¹²ÏíƒÈ´æ
-	bool WriteCmdData(DWORD nCommandCode, DWORD dwDataSize, const LPVOID pBuf); // Œ‘ÈëÃüÁî”µ“ş
+	bool Create(char *szFileName = DEFAULT_FILENAME, char *szMapName = DEFAULT_MAPNAME, DWORD dwSize = DEFAULT_MAPSIZE); // æ–°å»ºå…±äº«å…§å­˜
+	LPVOID GetBuffer();      // ç²å–å…§å­˜æ–‡ä»¶æŒ‡é‡
+	DWORD GetSize(){ return m_dwSize; }      // ç²å–å…§å­˜æ–‡ä»¶å¤§å°
+	void Destory();       // éŠ·æ¯€å·²æœ‰çš„å…±äº«å…§å­˜
+	bool WriteCmdData(DWORD nCommandCode, DWORD dwDataSize, const LPVOID pBuf); // å¯«å…¥å‘½ä»¤æ•¸æ“š
 protected:
-	void _Init();    // ³õÊ¼»¯…¢”µ
-	bool _IsWinNTLater();  // ÅĞ”à®”Ç°²Ù×÷Ïµ½y
+	void _Init();    // åˆå§‹åŒ–åƒæ•¸
+	bool _IsWinNTLater();  // åˆ¤æ–·ç•¶å‰æ“ä½œç³»çµ±
 protected:
 	PSetEntriesInAcl m_fnpSetEntriesInAcl;
-	HANDLE m_hFile;   // Ó³ÉäÎÄ¼ş¾ä±ú
-	HANDLE m_hFileMap;   // ƒÈ´æÎÄ¼ş¾ä±ú
-	LPVOID m_lpFileMapBuffer; // ¾Ğn…^Ö¸á˜
-	char *m_pFileName;  // Ó³ÉäÎÄ¼şÃû
-	char *m_pMapName;  // ƒÈ´æÎÄ¼şÃû
-	DWORD m_dwSize;   // ¾Ğn…^´óĞ¡
-	bool m_bCreateFlag;  // ÊÇ·ñÒÑ„“½¨¹²ÏíƒÈ´æ
-	DWORD   m_dwLastError;  // åeÕ`´ú´a
+	HANDLE m_hFile;   // æ˜ å°„æ–‡ä»¶å¥æŸ„
+	HANDLE m_hFileMap;   // å…§å­˜æ–‡ä»¶å¥æŸ„
+	LPVOID m_lpFileMapBuffer; // ç·©è¡å€æŒ‡é‡
+	char *m_pFileName;  // æ˜ å°„æ–‡ä»¶å
+	char *m_pMapName;  // å…§å­˜æ–‡ä»¶å
+	DWORD m_dwSize;   // ç·©è¡å€å¤§å°
+	bool m_bCreateFlag;  // æ˜¯å¦å·²å‰µå»ºå…±äº«å…§å­˜
+	DWORD   m_dwLastError;  // éŒ¯èª¤ä»£ç¢¼
 };
 #endif
 #endif

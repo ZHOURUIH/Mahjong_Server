@@ -13,7 +13,7 @@ void txUtility::sleep(const unsigned long& timeMS)
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	Sleep(timeMS);
 #elif RUN_PLATFORM == PLATFORM_LINUX
-	sleep(timeMS);
+	usleep(timeMS * 1000);
 #endif
 }
 

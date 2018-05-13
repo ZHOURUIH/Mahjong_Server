@@ -1,4 +1,4 @@
-#ifndef _TX_COMPONENT_FACTORY_MANAGER_H_
+﻿#ifndef _TX_COMPONENT_FACTORY_MANAGER_H_
 #define _TX_COMPONENT_FACTORY_MANAGER_H_
 
 #include "txUtility.h"

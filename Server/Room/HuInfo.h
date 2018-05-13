@@ -1,4 +1,4 @@
-#ifndef _HU_INFO_H_
+ï»¿#ifndef _HU_INFO_H_
 #define _HU_INFO_H_
 
 #include "GameDefine.h"
@@ -7,10 +7,10 @@ class CharacterPlayer;
 class HuInfo
 {
 public:
-	CharacterPlayer* mHuPlayer;			// ºúÅÆµÄÍæ¼Ò
-	CharacterPlayer* mDroppedPlayer;	// ´ò³öÕâÕÅÅÆµÄÍæ¼Ò,Èç¹ûÎª×ÔÃş,ÔòÎªºúÅÆµÄÍæ¼Ò
-	MAHJONG mMahjong;					// ºúÅÆµÄÂé½«
-	txVector<HU_TYPE> mHuList;		// ºúÅÆ·¬ĞÍÁĞ±í
+	CharacterPlayer* mHuPlayer;			// èƒ¡ç‰Œçš„ç©å®¶
+	CharacterPlayer* mDroppedPlayer;	// æ‰“å‡ºè¿™å¼ ç‰Œçš„ç©å®¶,å¦‚æœä¸ºè‡ªæ‘¸,åˆ™ä¸ºèƒ¡ç‰Œçš„ç©å®¶
+	MAHJONG mMahjong;					// èƒ¡ç‰Œçš„éº»å°†
+	txVector<HU_TYPE> mHuList;		// èƒ¡ç‰Œç•ªå‹åˆ—è¡¨
 };
 
 #endif

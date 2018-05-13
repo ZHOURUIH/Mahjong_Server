@@ -1,4 +1,4 @@
-#ifndef _CUSTOM_THREAD_H_
+ï»¿#ifndef _CUSTOM_THREAD_H_
 #define _CUSTOM_THREAD_H_
 
 #include "ServerDefine.h"
@@ -20,17 +20,17 @@ protected:
 		((CustomThread*)args)->updateThread();
 		return NULL;
 	}
-	// ÔÙĞ´Ò»¸öº¯Êı,±ÜÃâÔÚ¾²Ì¬º¯ÊıÖĞÖ»ÄÜÍ¨¹ı±äÁ¿·ÃÎÊ³ÉÔ±±äÁ¿
+	// å†å†™ä¸€ä¸ªå‡½æ•°,é¿å…åœ¨é™æ€å‡½æ•°ä¸­åªèƒ½é€šè¿‡å˜é‡è®¿é—®æˆå‘˜å˜é‡
 	void updateThread();
 protected:
 	volatile std::atomic<bool> mRunning;
 	volatile std::atomic<bool> mFinish;
 	volatile std::atomic<bool> mPause;
-	TX_THREAD mThread;					// ÎªÁË¼æÈİwindowsºÍlinux,¾ä±ú²»Ğ´ÎªÔ­×ÓÀàĞÍ
+	TX_THREAD mThread;					// ä¸ºäº†å…¼å®¹windowså’Œlinux,å¥æŸ„ä¸å†™ä¸ºåŸå­ç±»å‹
 	CustomThreadCallback mCallback;
 	TimeLock* mTimeLock;
 	std::string mName;
-	bool mIsBackground;		// ÊÇ·ñÎªºóÌ¨Ïß³Ì,Èç¹ûÊÇºóÌ¨Ïß³Ì,ÔòÔÚÓ¦ÓÃ³ÌĞò¹Ø±ÕÊ±,×ÓÏß³Ì»á×Ô¶¯Ç¿ÖÆ¹Ø±Õ
+	bool mIsBackground;		// æ˜¯å¦ä¸ºåå°çº¿ç¨‹,å¦‚æœæ˜¯åå°çº¿ç¨‹,åˆ™åœ¨åº”ç”¨ç¨‹åºå…³é—­æ—¶,å­çº¿ç¨‹ä¼šè‡ªåŠ¨å¼ºåˆ¶å…³é—­
 	void* mArgs;
 };
 

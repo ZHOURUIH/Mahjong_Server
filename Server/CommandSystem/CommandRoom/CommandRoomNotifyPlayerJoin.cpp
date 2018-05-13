@@ -1,4 +1,4 @@
-#include "CommandHeader.h"
+﻿#include "CommandHeader.h"
 #include "Room.h"
 #include "RoomManager.h"
 #include "CharacterPlayer.h"
@@ -22,10 +22,10 @@ void CommandRoomNotifyPlayerJoin::execute()
 		setResult(JRR_ROOM_LOCKED);
 		return;
 	}
-	// 将玩家加入房间中
+	// 灏嗙帺瀹跺姞鍏ユ埧闂翠腑
 	CharacterPlayer* joinPlayer = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mPlayerGUID));
 	room->joinRoom(joinPlayer);
-	// 通知房间中的其他玩家有玩家加入
+	// 閫氱煡鎴块棿涓殑鍏朵粬鐜╁鏈夌帺瀹跺姞鍏?
 	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();

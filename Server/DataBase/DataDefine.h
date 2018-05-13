@@ -1,7 +1,7 @@
-#ifndef _DATA_DEFINE_H_
+ï»¿#ifndef _DATA_DEFINE_H_
 #define _DATA_DEFINE_H_
 
-// Êı¾İÀàĞÍ
+// æ•°æ®ç±»å‹
 enum DATA_TYPE
 {
 	DT_MIN,

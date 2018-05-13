@@ -1,4 +1,4 @@
-#ifndef _MEMORY_INFO_H_
+ï»¿#ifndef _MEMORY_INFO_H_
 #define _MEMORY_INFO_H_
 
 #include "ServerDefine.h"
@@ -12,10 +12,10 @@ struct MemoryInfo
 		line(l),
 		type(t)
 	{}
-	int size;			// ÄÚ´æ´óĞ¡
-	std::string file;	// ¿ª±ÙÄÚ´æµÄÎÄ¼ş
-	int line;			// ¿ª±ÙÄÚ´æµÄ´úÂëĞĞºÅ
-	std::string type;	// ÄÚ´æµÄ¶ÔÏóÀàĞÍ
+	int size;			// å†…å­˜å¤§å°
+	std::string file;	// å¼€è¾Ÿå†…å­˜çš„æ–‡ä»¶
+	int line;			// å¼€è¾Ÿå†…å­˜çš„ä»£ç è¡Œå·
+	std::string type;	// å†…å­˜çš„å¯¹è±¡ç±»å‹
 };
 
 struct MemoryType

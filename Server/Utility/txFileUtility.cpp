@@ -1,4 +1,4 @@
-#include "txFileUtility.h"
+ï»¿#include "txFileUtility.h"
 #include "txStringUtility.h"
 #include "GameLog.h"
 #include "txUtility.h"
@@ -8,7 +8,7 @@ std::string txFileUtility::validPath(const std::string& path)
 	std::string temp = path;
 	if (temp.length() > 0)
 	{
-		// ²»ÒÔ/½áÎ²,Ôò¼ÓÉÏ/
+		// ä¸ä»¥/ç»“å°¾,åˆ™åŠ ä¸Š/
 		if (temp[temp.length() - 1] != '/')
 		{
 			temp += "/";
@@ -24,16 +24,16 @@ void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>
 	findFiles(pathName, files, patternList, recursive);
 }
 #if RUN_PLATFORM == PLATFORM_ANDROID
-// ÅĞ¶ÏÊÇ·ñÎªÄ¿Â¼
+// åˆ¤æ–­æ˜¯å¦ä¸ºç›®å½•
 bool txFileUtility::isDirectory(const std::string& pszName)
 {
 	struct stat S_stat;
-	// È¡µÃÎÄ¼ş×´Ì¬
+	// å–å¾—æ–‡ä»¶çŠ¶æ€
 	if (lstat(pszName.c_str(), &S_stat) < 0)
 	{
 		return false;
 	}
-	// ÅĞ¶ÏÎÄ¼şÊÇ·ñÎªÎÄ¼ş¼Ğ
+	// åˆ¤æ–­æ–‡ä»¶æ˜¯å¦ä¸ºæ–‡ä»¶å¤¹
 	return S_ISDIR(S_stat.st_mode);
 }
 
@@ -45,7 +45,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 	FOR_STL(fileName, int i = 0; i < fileCount; ++i)
 	{
 		const std::string& fullName = fileName[i];
-		// ÅĞ¶ÏÊÇ·ñ·ûºÏºó×º¹ıÂË
+		// åˆ¤æ–­æ˜¯å¦ç¬¦åˆåç¼€è¿‡æ»¤
 		int patternCount = patterns.size();
 		if(patternCount > 0)
 		{
@@ -75,19 +75,19 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 	dirent* pDirent = NULL;
 	while ((pDirent = readdir(pDir)) != NULL)
 	{
-		//Èç¹ûÊÇ.»òÕß..Ìø¹ı
+		//å¦‚æœæ˜¯.æˆ–è€…..è·³è¿‡
 		if (std::string(pDirent->d_name) == "." || std::string(pDirent->d_name) == "..")
 		{
 			continue;
 		}
-		//ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş¼Ğ
+		//åˆ¤æ–­æ˜¯å¦ä¸ºæ–‡ä»¶å¤¹
 		memset(szTmpPath, 0, 1024);
 		SPRINTF(szTmpPath, 1024, "%s/%s", path.c_str(), pDirent->d_name);
 		if (isDirectory(szTmpPath))
 		{
 			if (recursive)
 			{
-				//Èç¹ûÊÇÎÄ¼ş¼ĞÔò½øĞĞµİ¹é
+				//å¦‚æœæ˜¯æ–‡ä»¶å¤¹åˆ™è¿›è¡Œé€’å½’
 				findFiles(szTmpPath, files, patterns, recursive);
 			}
 		}
@@ -126,15 +126,15 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 	char szTmpPath[1024];
 	while ((pDirent = readdir(pDir)) != NULL)
 	{
-		//Èç¹ûÊÇ.»òÕß..Ìø¹ı
+		//å¦‚æœæ˜¯.æˆ–è€…..è·³è¿‡
 		if (std::string(pDirent->d_name) == "." || std::string(pDirent->d_name) == "..")
 		{
 			continue;
 		}
-		//ÅĞ¶ÏÊÇ·ñÎªÎÄ¼ş¼Ğ
+		//åˆ¤æ–­æ˜¯å¦ä¸ºæ–‡ä»¶å¤¹
 		memset(szTmpPath, 0, 1024);
 		SPRINTF(szTmpPath, 1024, "%s/%s", path.c_str(), pDirent->d_name);
-		// Èç¹ûÊÇÎÄ¼ş¼Ğ,ÔòÏÈ½«ÎÄ¼ş¼Ğ·ÅÈëÁĞ±í,È»ºóÅĞ¶ÏÊÇ·ñµİ¹é²éÕÒ
+		// å¦‚æœæ˜¯æ–‡ä»¶å¤¹,åˆ™å…ˆå°†æ–‡ä»¶å¤¹æ”¾å…¥åˆ—è¡¨,ç„¶ååˆ¤æ–­æ˜¯å¦é€’å½’æŸ¥æ‰¾
 		if (isDirectory(szTmpPath))
 		{
 			folders.push_back(szTmpPath);
@@ -153,21 +153,21 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind = FindFirstFileA((tempPath + "*").c_str(), &FindFileData);
-	// Èç¹ûÕÒ²»µ½ÎÄ¼ş¼Ğ¾ÍÖ±½Ó·µ»Ø
+	// å¦‚æœæ‰¾ä¸åˆ°æ–‡ä»¶å¤¹å°±ç›´æ¥è¿”å›
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
 		return;
 	}
 	do
 	{
-		// ¹ıÂË.ºÍ..
+		// è¿‡æ»¤.å’Œ..
 		if (strcmp(FindFileData.cFileName, ".") == 0
 			|| strcmp(FindFileData.cFileName, "..") == 0)
 		{
 			continue;
 		}
 
-		// ¹¹ÔìÍêÕûÂ·¾¶
+		// æ„é€ å®Œæ•´è·¯å¾„
 		std::string fullname = tempPath + std::string(FindFileData.cFileName);
 		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
@@ -203,23 +203,23 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind = FindFirstFileA((tempPath + "*").c_str(), &FindFileData);
-	// Èç¹ûÕÒ²»µ½ÎÄ¼ş¼Ğ¾ÍÖ±½Ó·µ»Ø
+	// å¦‚æœæ‰¾ä¸åˆ°æ–‡ä»¶å¤¹å°±ç›´æ¥è¿”å›
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
 		return;
 	}
 	do
 	{
-		// ¹ıÂË.ºÍ..
+		// è¿‡æ»¤.å’Œ..
 		if (strcmp(FindFileData.cFileName, ".") == 0
 			|| strcmp(FindFileData.cFileName, "..") == 0)
 		{
 			continue;
 		}
 
-		// ¹¹ÔìÍêÕûÂ·¾¶
+		// æ„é€ å®Œæ•´è·¯å¾„
 		std::string fullname = tempPath + std::string(FindFileData.cFileName);
-		// ÊÇÎÄ¼ş¼ĞÔòÏÈ·ÅÈëÁĞ±í,È»ºóÅĞ¶ÏÊÇ·ñµİ¹é²éÕÒ
+		// æ˜¯æ–‡ä»¶å¤¹åˆ™å…ˆæ”¾å…¥åˆ—è¡¨,ç„¶ååˆ¤æ–­æ˜¯å¦é€’å½’æŸ¥æ‰¾
 		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			folders.push_back(fullname);
@@ -235,7 +235,7 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 void txFileUtility::deleteFolder(const std::string& path)
 {
 	WIN32_FIND_DATAA FindData;
-	// ¹¹ÔìÂ·¾¶
+	// æ„é€ è·¯å¾„
 	std::string pathName = path + "/*.*";
 	HANDLE hFind = FindFirstFileA(pathName.c_str(), &FindData);
 	if (hFind == INVALID_HANDLE_VALUE)
@@ -244,28 +244,28 @@ void txFileUtility::deleteFolder(const std::string& path)
 	}
 	while (::FindNextFileA(hFind, &FindData))
 	{
-		// ¹ıÂÇ.ºÍ..
+		// è¿‡è™‘.å’Œ..
 		if (strcmp(FindData.cFileName, ".") == 0
 			|| strcmp(FindData.cFileName, "..") == 0)
 		{
 			continue;
 		}
 
-		// ¹¹ÔìÍêÕûÂ·¾¶
+		// æ„é€ å®Œæ•´è·¯å¾„
 		std::string fullname = path + "/" + std::string(FindData.cFileName);
-		// Èç¹ûÊÇÎÄ¼ş¼Ğ,Ôòµİ¹éÉ¾³ıÎÄ¼ş¼Ğ
+		// å¦‚æœæ˜¯æ–‡ä»¶å¤¹,åˆ™é€’å½’åˆ é™¤æ–‡ä»¶å¤¹
 		if (FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			deleteFolder(fullname);
 		}
-		// Èç¹ûÊÇÎÄ¼ş,ÔòÖ±½ÓÉ¾³ıÎÄ¼ş
+		// å¦‚æœæ˜¯æ–‡ä»¶,åˆ™ç›´æ¥åˆ é™¤æ–‡ä»¶
 		else
 		{
 			DeleteFileA(fullname.c_str());
 		}
 	}
 	::FindClose(hFind);
-	// É¾³ıÎÄ¼ş¼Ğ×ÔÉí
+	// åˆ é™¤æ–‡ä»¶å¤¹è‡ªèº«
 	RemoveDirectoryA(path.c_str());
 }
 #endif
@@ -286,7 +286,7 @@ bool txFileUtility::isFileExist(const std::string& fullPath)
 
 bool txFileUtility::copyFile(const std::string& sourceFile, const std::string& destFile, bool overWrite)
 {
-	// Èç¹ûÄ¿±êÎÄ¼şËùÔÚµÄÄ¿Â¼²»´æÔÚ,ÔòÏÈ´´½¨Ä¿Â¼
+	// å¦‚æœç›®æ ‡æ–‡ä»¶æ‰€åœ¨çš„ç›®å½•ä¸å­˜åœ¨,åˆ™å…ˆåˆ›å»ºç›®å½•
 	std::string parentDir = txStringUtility::getFilePath(destFile);
 	createFolder(parentDir);
 #if RUN_PLATFORM == PLATFORM_WINDOWS
@@ -298,13 +298,13 @@ bool txFileUtility::copyFile(const std::string& sourceFile, const std::string& d
 
 bool txFileUtility::createFolder(const std::string& path)
 {
-	// Èç¹ûÓĞÉÏÒ»¼¶Ä¿Â¼,²¢ÇÒÉÏÒ»¼¶Ä¿Â¼²»´æÔÚ,ÔòÏÈ´´½¨ÉÏÒ»¼¶Ä¿Â¼
+	// å¦‚æœæœ‰ä¸Šä¸€çº§ç›®å½•,å¹¶ä¸”ä¸Šä¸€çº§ç›®å½•ä¸å­˜åœ¨,åˆ™å…ˆåˆ›å»ºä¸Šä¸€çº§ç›®å½•
 	std::string parentDir = txStringUtility::getFilePath(path);
 	if (parentDir != path)
 	{
 		createFolder(parentDir);
 	}
-	// Èç¹ûÎÄ¼ş²»´æÔÚÔò´´½¨ÎÄ¼ş
+	// å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨åˆ™åˆ›å»ºæ–‡ä»¶
 	if (!isFileExist(path))
 	{
 #ifdef _USE_SAFE_API

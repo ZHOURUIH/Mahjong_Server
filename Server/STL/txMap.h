@@ -1,4 +1,4 @@
-#ifndef _TX_MAP_H_
+﻿#ifndef _TX_MAP_H_
 #define _TX_MAP_H_
 
 #include "txSTLBase.h"

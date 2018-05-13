@@ -1,22 +1,22 @@
-#ifndef _GAME_DEFINE_H_
+ï»¿#ifndef _GAME_DEFINE_H_
 #define _GAME_DEFINE_H_
 
 #include "ServerDefine.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// Ã¶¾Ù¶¨Òå
+// æžšä¸¾å®šä¹‰
 
-// ¼ÓÈë·¿¼äµÄ½á¹û
+// åŠ å…¥æˆ¿é—´çš„ç»“æžœ
 enum JOIN_ROOM_RESULT
 {
-	JRR_SUCCESS,		// ¼ÓÈë³É¹¦
-	JRR_FULL,			// ·¿¼äÒÑÂú
-	JRR_ROOM_LOCKED,	// ·¿¼äÒÑËø¶¨,¾Ü¾ø¼ÓÈë
-	JRR_NO_ROOM,		// ·¿¼ä²»´æÔÚ
-	JRR_PLAYER_IN_ROOM,	// Íæ¼ÒÒÑÔÚ·¿¼äÖÐ
+	JRR_SUCCESS,		// åŠ å…¥æˆåŠŸ
+	JRR_FULL,			// æˆ¿é—´å·²æ»¡
+	JRR_ROOM_LOCKED,	// æˆ¿é—´å·²é”å®š,æ‹’ç»åŠ å…¥
+	JRR_NO_ROOM,		// æˆ¿é—´ä¸å­˜åœ¨
+	JRR_PLAYER_IN_ROOM,	// çŽ©å®¶å·²åœ¨æˆ¿é—´ä¸­
 };
 
-// Âé½«ÐÐÎª
+// éº»å°†è¡Œä¸º
 enum ACTION_TYPE
 {
 	AT_HU,
@@ -26,31 +26,31 @@ enum ACTION_TYPE
 	AT_MAX,
 };
 
-// ºúÅÆÀàÐÍ
+// èƒ¡ç‰Œç±»åž‹
 enum HU_TYPE
 {
-	HT_NORMAL,		// Æ½ºú
-	HT_QINGYISE,	// ÇåÒ»É«
-	HT_QUESE,		// È±Ò»ÃÅ
-	HT_HUA,			// »¨ÅÆ
-	HT_GANG,		// ¸ÜÅÆ
-	HT_ANGANG,		// °µ¸Ü
-	HT_MENQING,		// ÃÅÇå
-	HT_DUIDUIHU,	// ¶Ô¶Ôºú
-	HT_ANQIDUI,		// °µÆß¶Ô
-	HT_LONGQIDUI,	// ÁúÆß¶Ô
-	HT_GANGSHANGHUA,// ¸ÜÉÏ»¨
-	HT_GANGSHANGPAO,// ¸ÜÉÏÅÚ
-	HT_HAIDIHUA,	// º£µ×»¨
-	HT_HAIDIPAO,	// º£µ×ÅÚ
-	HT_TIANHU,		// Ììºú
+	HT_NORMAL,		// å¹³èƒ¡
+	HT_QINGYISE,	// æ¸…ä¸€è‰²
+	HT_QUESE,		// ç¼ºä¸€é—¨
+	HT_HUA,			// èŠ±ç‰Œ
+	HT_GANG,		// æ ç‰Œ
+	HT_ANGANG,		// æš—æ 
+	HT_MENQING,		// é—¨æ¸…
+	HT_DUIDUIHU,	// å¯¹å¯¹èƒ¡
+	HT_ANQIDUI,		// æš—ä¸ƒå¯¹
+	HT_LONGQIDUI,	// é¾™ä¸ƒå¯¹
+	HT_GANGSHANGHUA,// æ ä¸ŠèŠ±
+	HT_GANGSHANGPAO,// æ ä¸Šç‚®
+	HT_HAIDIHUA,	// æµ·åº•èŠ±
+	HT_HAIDIPAO,	// æµ·åº•ç‚®
+	HT_TIANHU,		// å¤©èƒ¡
 	HT_MAX,
 };
 
-// Âé½«
+// éº»å°†
 enum MAHJONG
 {
-	// 9¸öÍ²
+	// 9ä¸ªç­’
 	M_TONG1,
 	M_TONG2,
 	M_TONG3,
@@ -60,7 +60,7 @@ enum MAHJONG
 	M_TONG7,
 	M_TONG8,
 	M_TONG9,
-	// 9¸öÌõ
+	// 9ä¸ªæ¡
 	M_TIAO1,
 	M_TIAO2,
 	M_TIAO3,
@@ -70,7 +70,7 @@ enum MAHJONG
 	M_TIAO7,
 	M_TIAO8,
 	M_TIAO9,
-	// 9¸öÍò
+	// 9ä¸ªä¸‡
 	M_WAN1,
 	M_WAN2,
 	M_WAN3,
@@ -80,7 +80,7 @@ enum MAHJONG
 	M_WAN7,
 	M_WAN8,
 	M_WAN9,
-	// 7¸ö·ç
+	// 7ä¸ªé£Ž
 	M_FENG_DONG,
 	M_FENG_NAN,
 	M_FENG_XI,
@@ -88,7 +88,7 @@ enum MAHJONG
 	M_FENG_ZHONG,
 	M_FENG_FA,
 	M_FENG_BAI,
-	// »¨ÅÆ
+	// èŠ±ç‰Œ
 	M_HUA_CHUN,
 	M_HUA_XIA,
 	M_HUA_QIU,
@@ -101,29 +101,29 @@ enum MAHJONG
 	M_MAX,
 };
 
-// ±¾¾ÖÂé½«µÄ×´Ì¬
+// æœ¬å±€éº»å°†çš„çŠ¶æ€
 enum MAHJONG_PLAY_STATE
 {
-	MPS_WAITING,				// ÕýÔÚµÈ´ýÍæ¼Ò½øÈë»ò×¼±¸
-	MPS_DICE,					// ÕýÔÚÖÀ÷»×Ó
-	MPS_GET_START,				// ÕýÔÚ¿ª¾ÖÄÃÅÆ
-	MPS_NORMAL_GAMING,			// ÕýÔÚ½øÐÐÕý³£µÄÂé½«ÓÎÏ·
-	MPS_WAIT_FOR_ACTION,		// ÕýÔÚµÈ´ýÍæ¼ÒÑ¡Ôñ¶Ôµ±Ç°´ò³öÅÆµÄÐÐÎª
-	MPS_ENDING,					// ±¾¾ÖÂé½«½áÊø
+	MPS_WAITING,				// æ­£åœ¨ç­‰å¾…çŽ©å®¶è¿›å…¥æˆ–å‡†å¤‡
+	MPS_DICE,					// æ­£åœ¨æŽ·éª°å­
+	MPS_GET_START,				// æ­£åœ¨å¼€å±€æ‹¿ç‰Œ
+	MPS_NORMAL_GAMING,			// æ­£åœ¨è¿›è¡Œæ­£å¸¸çš„éº»å°†æ¸¸æˆ
+	MPS_WAIT_FOR_ACTION,		// æ­£åœ¨ç­‰å¾…çŽ©å®¶é€‰æ‹©å¯¹å½“å‰æ‰“å‡ºç‰Œçš„è¡Œä¸º
+	MPS_ENDING,					// æœ¬å±€éº»å°†ç»“æŸ
 };
 
-// »¨É«ÀàÐÍ
+// èŠ±è‰²ç±»åž‹
 enum MAHJONG_HUASE
 {
-	MH_FENG,	// ·çÅÆ
-	MH_TONG,	// Í²
-	MH_TIAO,	// Ìõ
-	MH_WAN,		// Íò
+	MH_FENG,	// é£Žç‰Œ
+	MH_TONG,	// ç­’
+	MH_TIAO,	// æ¡
+	MH_WAN,		// ä¸‡
 	MH_MAX,
 };
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// ½á¹¹Ìå¶¨Òå
+// ç»“æž„ä½“å®šä¹‰
 struct PengGangInfo
 {
 	ACTION_TYPE mType;
@@ -137,20 +137,20 @@ struct MahInfo
 };
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// ³£Á¿Êý×Ö¶¨Òå
-const int MAX_DICE = 6;									// ÷»×ÓµÄ×î´óÖµ
-const int MAX_PLAYER = 4;								// ·¿¼äÖÐ×î´óµÄÍæ¼ÒÊýÁ¿
+// å¸¸é‡æ•°å­—å®šä¹‰
+const int MAX_DICE = 6;									// éª°å­çš„æœ€å¤§å€¼
+const int MAX_PLAYER = 4;								// æˆ¿é—´ä¸­æœ€å¤§çš„çŽ©å®¶æ•°é‡
 const float ASSIGN_MAHJONG_INTERVAL = 0.1f;
 const int MAX_SINGLE_COUNT = 4;
-const int MAX_HAND_IN_COUNT = 14;						// Ã¿ÃûÍæ¼ÒÊÖÀï×î¶àÓÐ14ÕÅÅÆ,²»°üº¬Åö,³Ô,¸Ü
-const int MAX_HU_COUNT = 16;							// ºúÅÆÀàÐÍµÄ×î´óÊýÁ¿
-const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;			// »¨ÅÆµÄÖÖÀà
-const int MAX_FENG_COUNT = M_FENG_BAI - M_FENG_DONG + 1;// ·çÅÆµÄÖÖÀà
-const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// Âé½«ÖÐ³ýÁË·çºÍ»¨µÄÖÖÀàÊýÁ¿
+const int MAX_HAND_IN_COUNT = 14;						// æ¯åçŽ©å®¶æ‰‹é‡Œæœ€å¤šæœ‰14å¼ ç‰Œ,ä¸åŒ…å«ç¢°,åƒ,æ 
+const int MAX_HU_COUNT = 16;							// èƒ¡ç‰Œç±»åž‹çš„æœ€å¤§æ•°é‡
+const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;			// èŠ±ç‰Œçš„ç§ç±»
+const int MAX_FENG_COUNT = M_FENG_BAI - M_FENG_DONG + 1;// é£Žç‰Œçš„ç§ç±»
+const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// éº»å°†ä¸­é™¤äº†é£Žå’ŒèŠ±çš„ç§ç±»æ•°é‡
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// ³£Á¿×Ö·û´®¶¨Òå
-// ËùÓÐÂé½«µÄÃû×Ö
+// å¸¸é‡å­—ç¬¦ä¸²å®šä¹‰
+// æ‰€æœ‰éº»å°†çš„åå­—
 const std::string MAHJONG_NAME[(int)M_MAX] = 
 {
 	"Tong0", "Tong1", "Tong2", "Tong3", "Tong4", "Tong5", "Tong6", "Tong7", "Tong8",

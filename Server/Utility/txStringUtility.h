@@ -1,4 +1,4 @@
-#ifndef _TX_STRING_UTILITY_H_
+ï»¿#ifndef _TX_STRING_UTILITY_H_
 #define _TX_STRING_UTILITY_H_
 
 #include "ServerDefine.h"
@@ -7,30 +7,30 @@ class txStringUtility
 {
 public:
 	static std::string removeSuffix(const std::string& str);
-	// È¥µô×îºóÒ»¸ö¶ººÅ
+	// å»æ‰æœ€åä¸€ä¸ªé€—å·
 	static void removeLastComma(std::string& stream);
 	static std::string getFileName(std::string str);
 	static std::string getFileNameNoSuffix(std::string str);
 	static std::string getFilePath(std::string dir);
 	static std::string getFileSuffix(const std::string& fileName);
-	// »ñµÃ×Ö·û´®×îºó²»ÊÇÊı×ÖµÄÏÂ±ê
+	// è·å¾—å­—ç¬¦ä¸²æœ€åä¸æ˜¯æ•°å­—çš„ä¸‹æ ‡
 	static int getLastNotNumberPos(const std::string& str);
-	// »ñµÃ×Ö·û´®½áÎ²µÄÊı×Ö
+	// è·å¾—å­—ç¬¦ä¸²ç»“å°¾çš„æ•°å­—
 	static int getLastNumber(const std::string& str);
 	static void split(std::string str, const std::string& deli, txVector<std::string>& vec);
 	static std::string boolToString(const bool& value) { return value ? "True" : "False"; }
 	static bool stringToBool(const std::string& str) { return str == "True" || str == "true"; }
-	// ½«strÖĞµÄ[begin,end)Ìæ»»ÎªreStr
+	// å°†strä¸­çš„[begin,end)æ›¿æ¢ä¸ºreStr
 	static std::string strReplace(const std::string& str, const int& begin, const int& end, const std::string& reStr);
-	// limitLenÊÇ×Ö·û´®µÄ×îĞ¡³¤¶È,Èç¹ûÕûÊıµÄÎ»Êı²»×ã×îĞ¡³¤¶È,Ôò»áÔÚÇ°Ãæ¼Ó0
+	// limitLenæ˜¯å­—ç¬¦ä¸²çš„æœ€å°é•¿åº¦,å¦‚æœæ•´æ•°çš„ä½æ•°ä¸è¶³æœ€å°é•¿åº¦,åˆ™ä¼šåœ¨å‰é¢åŠ 0
 	static std::string intToString(const int& i, const int& limitLen = 0); 
 	static int stringToInt(const std::string& str){return atoi(str.c_str());}
-	//precisionÎª¾«¶È,±£ÁôµÄĞ¡ÊıµÄÎ»Êı,removeZeroÎªÊÇ·ñÈ¥³ıÄ©Î²ÎŞÓÃµÄ0
+	//precisionä¸ºç²¾åº¦,ä¿ç•™çš„å°æ•°çš„ä½æ•°,removeZeroä¸ºæ˜¯å¦å»é™¤æœ«å°¾æ— ç”¨çš„0
 	static std::string floatToString(float f, const int& precision = 4, const bool& removeZero = true);
 	static float stringToFloat(const std::string& str){return (float)atof(str.c_str());}
-	// ÅĞ¶ÏoriStringÊÇ·ñÒÔpattern½áÎ²,sensitiveÎªÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+	// åˆ¤æ–­oriStringæ˜¯å¦ä»¥patternç»“å°¾,sensitiveä¸ºæ˜¯å¦å¤§å°å†™æ•æ„Ÿ
 	static bool endWith(const std::string& oriString, const std::string& pattern, const bool& sensitive = true);
-	// ÅĞ¶ÏoriStringÊÇ·ñÒÔpattern¿ªÍ·,sensitiveÎªÊÇ·ñ´óĞ¡Ğ´Ãô¸Ğ
+	// åˆ¤æ–­oriStringæ˜¯å¦ä»¥patternå¼€å¤´,sensitiveä¸ºæ˜¯å¦å¤§å°å†™æ•æ„Ÿ
 	static bool startWith(const std::string& oriString, const std::string& pattern, const bool& sensitive = true);
 	static std::wstring ANSIToUnicode(const std::string& str);
 	static std::string UnicodeToANSI(const std::wstring& str);
@@ -53,7 +53,7 @@ public:
 	static txVector<std::string> findSubstr(txMap<std::string, T>& res, const std::string& dst, const bool& sensitive = true)
 	{
 		txVector<std::string> retList;
-		// Ñ­»·±éÀú,Èç¹ûÆ¥Åäµ½·ÅÈëÁĞ±í
+		// å¾ªç¯éå†,å¦‚æœåŒ¹é…åˆ°æ”¾å…¥åˆ—è¡¨
 		auto itr = res.begin();
 		auto itrEnd = res.end();
 		FOR_STL(res, ; itr != itrEnd; ++itr)

@@ -1,4 +1,4 @@
-#include "ThreadLock.h"
+ï»¿#include "ThreadLock.h"
 #include "Utility.h"
 #include "GameLog.h"
 
@@ -13,7 +13,7 @@ void ThreadLock::waitForUnlock(const char* file, const int& line)
 	{
 		LOG_ERROR("can not lock in the same thread!");
 	}
-	// Ôİ²»Çø·Ö¶ÁËø¶¨ºÍĞ´Ëø¶¨
+	// æš‚ä¸åŒºåˆ†è¯»é”å®šå’Œå†™é”å®š
 	while (mLock.exchange(1) == 1)
 	{
 		txUtility::sleep(1);

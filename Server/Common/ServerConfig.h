@@ -1,4 +1,4 @@
-#ifndef _SERVER_CONFIG_H_
+﻿#ifndef _SERVER_CONFIG_H_
 #define _SERVER_CONFIG_H_
 
 #include "ServerDefine.h"

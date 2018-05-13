@@ -1,4 +1,4 @@
-#ifndef _TX_SET_H_
+﻿#ifndef _TX_SET_H_
 #define _TX_SET_H_
 
 #include "txSTLBase.h"

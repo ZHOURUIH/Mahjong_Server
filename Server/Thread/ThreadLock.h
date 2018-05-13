@@ -1,4 +1,4 @@
-#ifndef _THREAD_LOCK_H_
+ï»¿#ifndef _THREAD_LOCK_H_
 #define _THREAD_LOCK_H_
 
 #include "ServerDefine.h"
@@ -17,10 +17,10 @@ public:
 	void unlock();
 	bool isLocked(){ return mLock != 0; }
 public:
-	volatile std::atomic<int> mLock;	// 1±íÊ¾Ëø¶¨,0±íÊ¾Î´Ëø¶¨
-	volatile char mFile[256];		// ¼ÓËøµÄÎÄ¼şÃû
-	volatile int mLine;				// ¼ÓËøµÄĞĞºÅ
-	volatile int mThreadID;			// ¼ÓËøÏß³ÌµÄID
+	volatile std::atomic<int> mLock;	// 1è¡¨ç¤ºé”å®š,0è¡¨ç¤ºæœªé”å®š
+	volatile char mFile[256];		// åŠ é”çš„æ–‡ä»¶å
+	volatile int mLine;				// åŠ é”çš„è¡Œå·
+	volatile int mThreadID;			// åŠ é”çº¿ç¨‹çš„ID
 };
 
 #endif

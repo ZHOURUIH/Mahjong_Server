@@ -1,4 +1,4 @@
-#include "ServerUtility.h"
+ï»¿#include "ServerUtility.h"
 #include "Utility.h"
 
 txMap<HU_TYPE, int> ServerUtility::mMultipleList;
@@ -26,12 +26,12 @@ void ServerUtility::init()
 	}
 }
 
-// handInMah±ØĞëÊÇ´ÓĞ¡µ½´óµÄÓĞĞòÊı×é
+// handInMahå¿…é¡»æ˜¯ä»å°åˆ°å¤§çš„æœ‰åºæ•°ç»„
 bool ServerUtility::canHu(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
-	//¸´ÖÆÒ»·İÁĞ±í
+	//å¤åˆ¶ä¸€ä»½åˆ—è¡¨
 	txVector<MAHJONG> temp = handInMah;
-	// È»ºó±ğÈË´ò³öµÄÅÆ¼ÓÈëÆäÖĞ
+	// ç„¶ååˆ«äººæ‰“å‡ºçš„ç‰ŒåŠ å…¥å…¶ä¸­
 	temp.push_back(mah);
 	return canHu(temp);
 }
@@ -73,7 +73,7 @@ void ServerUtility::toMahjongGroup(txVector<MAHJONG>& list, txVector<MahInfo>& g
 	END_FOR_STL(groupMap);
 }
 
-// µÃµ½Ö¸¶¨ÅÆµÄ»¨É«
+// å¾—åˆ°æŒ‡å®šç‰Œçš„èŠ±è‰²
 MAHJONG_HUASE ServerUtility::getHuaSe(const MAHJONG& mah)
 {
 	if (mah >= M_FENG_DONG && mah <= M_FENG_BAI)
@@ -99,7 +99,7 @@ bool ServerUtility::isShunzi(txVector<MahInfo>& mahjongList, const int& startInd
 	{
 		return false;
 	}
-	// ±ØĞëÊÇÍ¬»¨É«µÄ
+	// å¿…é¡»æ˜¯åŒèŠ±è‰²çš„
 	MAHJONG_HUASE huase0 = getHuaSe(mahjongList[startIndex].mMah);
 	MAHJONG_HUASE huase1 = getHuaSe(mahjongList[startIndex + 1].mMah);
 	MAHJONG_HUASE huase2 = getHuaSe(mahjongList[startIndex + 2].mMah);
@@ -140,7 +140,7 @@ void ServerUtility::getHuaseList(txVector<MahInfo>& infoList, txMap<MAHJONG_HUAS
 
 bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJONG>>& devideList)
 {
-	// ±ØĞëÖÁÉÙÈ±Ò»É«ÅÆ²ÅÄÜºú,
+	// å¿…é¡»è‡³å°‘ç¼ºä¸€è‰²ç‰Œæ‰èƒ½èƒ¡,
 	txMap<MAHJONG_HUASE, txVector<MAHJONG>> huaseList;
 	getHuaseList(mahjongList, huaseList);
 	if (huaseList.size() > 2)
@@ -156,21 +156,21 @@ bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJO
 	END_FOR_STL(mahjongList);
 	if (allCount > 2)
 	{
-		// È¡³öËùÓĞ¿ÉÄÜµÄË³×ÓºÍÈı¸öÏàÍ¬µÄ,ÖğÒ»ÅĞ¶ÏÊÇ·ñ¿Éºú
+		// å–å‡ºæ‰€æœ‰å¯èƒ½çš„é¡ºå­å’Œä¸‰ä¸ªç›¸åŒçš„,é€ä¸€åˆ¤æ–­æ˜¯å¦å¯èƒ¡
 		int index = 0;
 		while (true)
 		{
-			// Ã»ÕÒµ½Ë³×Ó,ÔòÍË³öÑ­»·
+			// æ²¡æ‰¾åˆ°é¡ºå­,åˆ™é€€å‡ºå¾ªç¯
 			if (index >= (int)mahjongList.size())
 			{
 				break;
 			}
-			// ÅĞ¶ÏÊÇ·ñÓĞÈı¸öÏàÍ¬µÄ
+			// åˆ¤æ–­æ˜¯å¦æœ‰ä¸‰ä¸ªç›¸åŒçš„
 			if (mahjongList[index].mCount >= 3)
 			{
-				// ÏÈ±¸·İÁĞ±í
+				// å…ˆå¤‡ä»½åˆ—è¡¨
 				txVector<MahInfo> beforeList = mahjongList;
-				// ÒÆ³ıÈı¸öÏàÍ¬µÄ,ÅĞ¶ÏÈ¥³ıºóÊÇ·ñ¿Éºú
+				// ç§»é™¤ä¸‰ä¸ªç›¸åŒçš„,åˆ¤æ–­å»é™¤åæ˜¯å¦å¯èƒ¡
 				MAHJONG curMah = mahjongList[index].mMah;
 				mahjongList[index].mCount -= 3;
 				if (mahjongList[index].mCount == 0)
@@ -186,21 +186,21 @@ bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJO
 					devideList.push_back(temp);
 					return true;
 				}
-				// ²»ÄÜºúÔò»¹Ô­»ØÈ¥
+				// ä¸èƒ½èƒ¡åˆ™è¿˜åŸå›å»
 				else
 				{
 					mahjongList = beforeList;
 				}
 			}
-			// ÅĞ¶ÏÊÇ·ñÓĞË³×Ó
+			// åˆ¤æ–­æ˜¯å¦æœ‰é¡ºå­
 			if (isShunzi(mahjongList, index))
 			{
-				// ÏÈ±¸·İÁĞ±í
+				// å…ˆå¤‡ä»½åˆ—è¡¨
 				txVector<MahInfo> beforeList = mahjongList;
 				MAHJONG mah0 = mahjongList[index].mMah;
 				MAHJONG mah1 = mahjongList[index + 1].mMah;
 				MAHJONG mah2 = mahjongList[index + 2].mMah;
-				// ÒÆ³ı¸ÃË³×Ó,ÅĞ¶ÏÈ¥³ıºóÊÇ·ñ¿Éºú,ĞèÒª´ÓºóÍùÇ°ÅĞ¶Ï,±ÜÃâÒÆ³ıºóÓ°ÏìÏÂ±ê
+				// ç§»é™¤è¯¥é¡ºå­,åˆ¤æ–­å»é™¤åæ˜¯å¦å¯èƒ¡,éœ€è¦ä»åå¾€å‰åˆ¤æ–­,é¿å…ç§»é™¤åå½±å“ä¸‹æ ‡
 				mahjongList[index + 2].mCount -= 1;
 				if (mahjongList[index + 2].mCount == 0)
 				{
@@ -216,7 +216,7 @@ bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJO
 				{
 					mahjongList.erase(mahjongList.begin() + index);
 				}
-				// Èç¹û¿ÉÒÔºú,ÔòÖ±½Ó·µ»Øtrue
+				// å¦‚æœå¯ä»¥èƒ¡,åˆ™ç›´æ¥è¿”å›true
 				if (canHu(mahjongList, devideList))
 				{
 					txVector<MAHJONG> temp;
@@ -226,19 +226,19 @@ bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJO
 					devideList.push_back(temp);
 					return true;
 				}
-				// ²»ÄÜºú,ÔòĞèÒª½«Ë³×Ó»¹Ô­µ½ÁĞ±íÖĞ,È»ºó¼ÌĞøÑ°ÕÒÏÂÒ»¸öË³×Ó
+				// ä¸èƒ½èƒ¡,åˆ™éœ€è¦å°†é¡ºå­è¿˜åŸåˆ°åˆ—è¡¨ä¸­,ç„¶åç»§ç»­å¯»æ‰¾ä¸‹ä¸€ä¸ªé¡ºå­
 				else
 				{
 					mahjongList = beforeList;
 				}
 			}
-			// ÅĞ¶ÏÈı¸öÏàÍ¬ºÍË³×Óºó¶¼²»ÄÜºú,¾Í¼ÌĞøÍùºóÕÒ
+			// åˆ¤æ–­ä¸‰ä¸ªç›¸åŒå’Œé¡ºå­åéƒ½ä¸èƒ½èƒ¡,å°±ç»§ç»­å¾€åæ‰¾
 			++index;
 		}
-		// ±éÀúµ½×îºóÒ»¸öË³×Ó¶¼Ã»·¢ÏÖ¿ÉÒÔºú,Ôò²»ÄÜºú
+		// éå†åˆ°æœ€åä¸€ä¸ªé¡ºå­éƒ½æ²¡å‘ç°å¯ä»¥èƒ¡,åˆ™ä¸èƒ½èƒ¡
 		return false;
 	}
-	// ÅĞ¶Ï×îºóÊ£µÄÁ½ÕÅÅÆÊÇ·ñÎª½«ÅÆ
+	// åˆ¤æ–­æœ€åå‰©çš„ä¸¤å¼ ç‰Œæ˜¯å¦ä¸ºå°†ç‰Œ
 	else
 	{
 		bool ret = (mahjongList.size() == 1 && mahjongList[0].mCount == 2);
@@ -309,13 +309,13 @@ bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
 
 void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
-	// ÅöµÄÇ°ÌáÊÇÖ®Ç°¼ì²â¹ı¿ÉÒÔÅö
+	// ç¢°çš„å‰ææ˜¯ä¹‹å‰æ£€æµ‹è¿‡å¯ä»¥ç¢°
 	int mahCount = handInMah.size();
 	FOR_STL(handInMah, int i = 0; i < mahCount - 1; ++i)
 	{
 		if (handInMah[i] == mah && handInMah[i + 1] == mah)
 		{
-			// ´ÓºóÍùÇ°É¾³ı
+			// ä»åå¾€å‰åˆ é™¤
 			handInMah.erase(handInMah.begin() + i + 1, false);
 			handInMah.erase(handInMah.begin() + i, false);
 			break;
@@ -326,7 +326,7 @@ void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 
 void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 {
-	// ¸ÜµÄÇ°ÌáÊÇÖ®Ç°¼ì²â¹ı¿ÉÒÔ¸Ü
+	// æ çš„å‰ææ˜¯ä¹‹å‰æ£€æµ‹è¿‡å¯ä»¥æ 
 	int mahCount = handInMah.size();
 	FOR_STL(handInMah, int i = 0; i < mahCount - 2; ++i)
 	{
@@ -341,10 +341,10 @@ void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 	END_FOR_STL(handInMah);
 }
 
-// handInIncludeDrop±íÊ¾handInMahÖĞÊÇ·ñÒÑ¾­°üº¬ÁËdropMah
+// handInIncludeDropè¡¨ç¤ºhandInMahä¸­æ˜¯å¦å·²ç»åŒ…å«äº†dropMah
 txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, const MAHJONG& dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop)
 {
-	// ½«Êı×é×ª»»ÎªÁĞ±í
+	// å°†æ•°ç»„è½¬æ¢ä¸ºåˆ—è¡¨
 	txVector<MAHJONG> handInList;
 	txVector<MAHJONG> pengs;
 	txVector<MAHJONG> gangs;
@@ -354,7 +354,7 @@ txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, co
 		handInList.push_back(handInMah[i]);
 	}
 	END_FOR_STL(handInMah);
-	// Èç¹ûhandInMahÖĞ²»°üº¬dropMah,ÔòĞèÒª¼Óµ½ÁĞ±íÖĞ
+	// å¦‚æœhandInMahä¸­ä¸åŒ…å«dropMah,åˆ™éœ€è¦åŠ åˆ°åˆ—è¡¨ä¸­
 	if (!handInIncludeDrop)
 	{
 		int curCount = handInList.size();
@@ -381,14 +381,14 @@ txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, co
 		}
 	}
 	END_FOR_STL(gangPengList);
-	// ÅĞ¶ÏºúÅÆÀàĞÍ
+	// åˆ¤æ–­èƒ¡ç‰Œç±»å‹
 	txVector<HU_TYPE> huList;
-	// ÊÇ·ñÎªÇåÒ»É«
+	// æ˜¯å¦ä¸ºæ¸…ä¸€è‰²
 	if (isQingYiSe(handInList, pengs, gangs))
 	{
 		huList.push_back(HT_QINGYISE);
 	}
-	// Èç¹û²»Âú×ãÈÎÒâÒ»ÖÖ·¬ĞÍ,ÔòÎªÆ½ºú
+	// å¦‚æœä¸æ»¡è¶³ä»»æ„ä¸€ç§ç•ªå‹,åˆ™ä¸ºå¹³èƒ¡
 	if (huList.size() == 0)
 	{
 		huList.push_back(HT_NORMAL);
@@ -401,7 +401,7 @@ bool ServerUtility::isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& 
 	bool ret = true;
 	int handInCount = handInMah.size();
 	MAHJONG_HUASE curHuase = getHuaSe(handInMah[0]);
-	// ÊÖÅÆÖĞÊÇ·ñÓĞÆäËû»¨É«
+	// æ‰‹ç‰Œä¸­æ˜¯å¦æœ‰å…¶ä»–èŠ±è‰²
 	FOR_STL(handInMah, int i = 0; i < handInCount; ++i)
 	{
 		if (getHuaSe(handInMah[i]) != curHuase)
@@ -415,7 +415,7 @@ bool ServerUtility::isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& 
 	{
 		return ret;
 	}
-	// ÅöÅÆÖĞÊÇ·ñÓĞÆäËû»¨É«
+	// ç¢°ç‰Œä¸­æ˜¯å¦æœ‰å…¶ä»–èŠ±è‰²
 	int pengCount = pengList.size();
 	FOR_STL(pengList, int i = 0; i < pengCount; ++i)
 	{
@@ -430,7 +430,7 @@ bool ServerUtility::isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& 
 	{
 		return ret;
 	}
-	// ¸ÜÅÆÖĞÊÇ·ñÓĞÆäËû»¨É«
+	// æ ç‰Œä¸­æ˜¯å¦æœ‰å…¶ä»–èŠ±è‰²
 	int gangCount = gangList.size();
 	FOR_STL(gangList, int i = 0; i < gangCount; ++i)
 	{

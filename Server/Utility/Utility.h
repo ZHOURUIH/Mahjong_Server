@@ -1,4 +1,4 @@
-#ifndef _UTILITY_H_
+﻿#ifndef _UTILITY_H_
 #define _UTILITY_H_
 
 #include "txUtility.h"

@@ -1,4 +1,4 @@
-#ifndef _DATA_FACTORY_H_
+﻿#ifndef _DATA_FACTORY_H_
 #define _DATA_FACTORY_H_
 
 #include "DataDefine.h"

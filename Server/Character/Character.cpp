@@ -1,4 +1,4 @@
-#include "ServerFramework.h"
+﻿#include "ServerFramework.h"
 #include "CommandHeader.h"
 #include "Character.h"
 #include "CharacterData.h"
@@ -26,12 +26,12 @@ void Character::init(const CHAR_GUID& guid)
 
 void Character::initComponents()
 {
-	// 初始化默认组件
+	// 鍒濆鍖栭粯璁ょ粍浠?
 }
 
 void Character::update(const float& elaspedTime)
 {
-	// 先更新自己的所有组件
+	// 鍏堟洿鏂拌嚜宸辩殑鎵€鏈夌粍浠?
 	txComponentOwner::updateComponents(elaspedTime);
 }
 

@@ -1,4 +1,4 @@
-#ifndef _GAME_LOG_H_
+ï»¿#ifndef _GAME_LOG_H_
 #define _GAME_LOG_H_
 
 class GameLog
@@ -7,9 +7,9 @@ public:
 	static void logError(const std::string& info)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << "³ÌÐò´íÎó : " << info.c_str() << std::endl;
+		std::cout << "ç¨‹åºé”™è¯¯ : " << info.c_str() << std::endl;
 #elif RUN_PLATFORM == PLATFORM_LINUX
-		printf("³ÌÐò´íÎó : %s\n", info.c_str());
+		printf("ç¨‹åºé”™è¯¯ : %s\n", info.c_str());
 #endif
 	}
 	static void logInfo(const std::string& info)
@@ -33,7 +33,7 @@ public:
 {																\
 	char buffer[2048];											\
 	SPRINTF(buffer, 2048, __VA_ARGS__);							\
-	GameLog::logInfo(std::string(buffer) + " " + _FILE_LINE_);	\
+	GameLog::logInfo(std::string(buffer));	\
 }
 
 #endif

@@ -1,4 +1,4 @@
-#ifndef _TX_MEMORY_CHECK_H_
+﻿#ifndef _TX_MEMORY_CHECK_H_
 #define _TX_MEMORY_CHECK_H_
 
 #include "ThreadLock.h"

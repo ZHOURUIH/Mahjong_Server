@@ -1,4 +1,4 @@
-#ifndef _COMMAND_POOL_H_
+ï»¿#ifndef _COMMAND_POOL_H_
 #define _COMMAND_POOL_H_
 
 #include "ServerDefine.h"
@@ -24,17 +24,17 @@ public:
 	T* newCmd(const bool& show = true, const bool& delay = false)
 	{
 		LOCK(mNewCmdLock); 
-		// Ê×ÏÈ´ÓÎ´Ê¹ÓÃµÄÁĞ±íÖĞ»ñÈ¡,»ñÈ¡²»µ½ÔÙÖØĞÂ´´½¨Ò»¸ö
+		// é¦–å…ˆä»æœªä½¿ç”¨çš„åˆ—è¡¨ä¸­è·å–,è·å–ä¸åˆ°å†é‡æ–°åˆ›å»ºä¸€ä¸ª
 		T* cmd = NULL;
 		std::string type = typeid(T).name();
 		auto iterUnuse = mUnusedList.find(type);
 		if (iterUnuse != mUnusedList.end() && iterUnuse->second.size() > 0)
 		{
 			cmd = (T*)iterUnuse->second[0];
-			// ´ÓÎ´Ê¹ÓÃÁĞ±íÖĞÒÆ³ı
+			// ä»æœªä½¿ç”¨åˆ—è¡¨ä¸­ç§»é™¤
 			removeUnuse(cmd);
 		}
-		// Ã»ÓĞÕÒµ½¿ÉÒÔÓÃµÄ,Ôò´´½¨Ò»¸ö
+		// æ²¡æœ‰æ‰¾åˆ°å¯ä»¥ç”¨çš„,åˆ™åˆ›å»ºä¸€ä¸ª
 		if (cmd == NULL)
 		{
 			cmd = TRACE_NEW(T, cmd);
@@ -44,12 +44,12 @@ public:
 			++mNewCount;
 			LOG_INFO("new cmd : %d, type : %s", mNewCount, type.c_str());
 		}
-		// ÉèÖÃÎª¿ÉÓÃÃüÁî
+		// è®¾ç½®ä¸ºå¯ç”¨å‘½ä»¤
 		cmd->setValid(true);
 		cmd->setAssignID(delay ? (mAssignIDSeed++) : -1);
 		cmd->setShowDebugInfo(show);
 		cmd->setDelayCommand(delay);
-		// ¼ÓÈëÒÑÊ¹ÓÃÁĞ±í
+		// åŠ å…¥å·²ä½¿ç”¨åˆ—è¡¨
 		addInuse(cmd);
 		UNLOCK(mNewCmdLock);
 		return cmd;
@@ -66,7 +66,7 @@ protected:
 	txMap<std::string, txVector<txCommand*>> mUnusedList;
 	ThreadLock mInuseLock;
 	ThreadLock mUnuseLock;
-	ThreadLock mNewCmdLock;	// Ö»ĞèÒªÌí¼Ó´´½¨ÃüÁîµÄËø¾Í¿ÉÒÔ,Ö»Òª²»·ÖÅä³öÖØ¸´µÄÃüÁî,»ØÊÕÃüÁîÊ±¾Í²»»á·¢Éú³åÍ»
+	ThreadLock mNewCmdLock;	// åªéœ€è¦æ·»åŠ åˆ›å»ºå‘½ä»¤çš„é”å°±å¯ä»¥,åªè¦ä¸åˆ†é…å‡ºé‡å¤çš„å‘½ä»¤,å›æ”¶å‘½ä»¤æ—¶å°±ä¸ä¼šå‘ç”Ÿå†²çª
 	int mNewCount;
 	static int mIDSeed;
 	static int mAssignIDSeed;

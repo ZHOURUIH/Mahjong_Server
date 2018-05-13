@@ -1,4 +1,4 @@
-#ifndef _TX_COMPONENT_FACTORY_BASE_H_
+ï»¿#ifndef _TX_COMPONENT_FACTORY_BASE_H_
 #define _TX_COMPONENT_FACTORY_BASE_H_
 
 #include "Utility.h"
@@ -50,7 +50,7 @@ public:
 protected:
 	std::string mType;
 	int mCount;
-	int mNameCount;	// ÓÃÓÚÉú³ÉÎ¨Ò»Ãû×Ö
+	int mNameCount;	// ç”¨äºç”Ÿæˆå”¯ä¸€åå­—
 };
 
 template<class T>

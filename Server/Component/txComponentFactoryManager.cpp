@@ -1,10 +1,10 @@
-#include "txComponentFactoryManager.h"
+ï»¿#include "txComponentFactoryManager.h"
 #include "txComponentFactory.h"
 #include "txComponentHeader.h"
 
 void txComponentFactoryManager::init()
 {
-	// »ù±¾×é¼þÀàÐÍ
+	// åŸºæœ¬ç»„ä»¶ç±»åž‹
 }
 
 void txComponentFactoryManager::destory()

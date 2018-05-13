@@ -1,4 +1,4 @@
-#include "txMemoryCheck.h"
+﻿#include "txMemoryCheck.h"
 #include "GameLog.h"
 #include "txUtility.h"
 #include "txStringUtility.h"

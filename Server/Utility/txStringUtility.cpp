@@ -1,4 +1,4 @@
-#include "txStringUtility.h"
+﻿#include "txStringUtility.h"
 #include "txUtility.h"
 #include "txMathUtility.h"
 
@@ -200,16 +200,16 @@ std::string txStringUtility::floatToString(float f, const int& precision, const 
 			}
 		}
 	}
-	// �Ƴ�ĩβ���õ�0
+	// 移除末尾无用的0
 	if (removeZero)
 	{
 		int dotPos = retString.find_last_of('.');
 		if (dotPos != -1)
 		{
 			std::string floatPart = retString.substr(dotPos + 1, retString.length() - dotPos - 1);
-			// �ҵ����һ������0��λ��,Ȼ�󽫺��������0��ȥ��
+			// 找到最后一个不是0的位置,然后将后面的所有0都去掉
 			int notZeroPos = floatPart.find_last_not_of('0');
-			// ���С������ȫ��0,��С����Ҳһ��ȥ��
+			// 如果小数部分全是0,则将小数点也一起去掉
 			if (notZeroPos == -1)
 			{
 				retString = retString.substr(0, dotPos);
@@ -522,10 +522,10 @@ void txStringUtility::rightToLeft(std::string& str)
 
 bool txStringUtility::findSubstr(std::string res, std::string dst, const bool& sensitive, int* pos, const int& startPose, const bool& firstOrLast)
 {
-	// ��������ִ�Сд
+	// 如果不区分大小写
 	if (!sensitive)
 	{
-		// ȫת��ΪСд
+		// 全转换为小写
 		strToLower(res);
 		strToLower(dst);
 	}
@@ -611,9 +611,9 @@ std::string txStringUtility::charToHexString(const unsigned char& byte, const bo
 	char byteHex[3] = { 0 };
 	const char* charPool = upper ? "ABCDEF" : "abcdef";
 	unsigned char highBit = byte >> 4;
-	// ���ֽڵ�ʮ������
+	// 高字节的十六进制
 	byteHex[0] = (highBit < (unsigned char)10) ? ('0' + highBit) : charPool[highBit - 10];
-	// ���ֽڵ�ʮ������
+	// 低字节的十六进制
 	unsigned char lowBit = byte & 0x0F;
 	byteHex[1] = (lowBit < (unsigned char)10) ? ('0' + lowBit) : charPool[lowBit - 10];
 	return byteHex;

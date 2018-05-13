@@ -1,4 +1,4 @@
-#include "CommandPool.h"
+ï»¿#include "CommandPool.h"
 
 int CommandPool::mIDSeed = 0;
 int CommandPool::mAssignIDSeed = 0;
@@ -36,7 +36,7 @@ void CommandPool::destroy()
 
 void CommandPool::destroyCmd(txCommand* cmd)
 {
-	// Ïú»ÙÃüÁîÊ±,³õÊ¼»¯ÃüÁîÊý¾Ý,²¢ÉèÖÃÎª²»¿ÉÓÃÃüÁî
+	// é”€æ¯å‘½ä»¤æ—¶,åˆå§‹åŒ–å‘½ä»¤æ•°æ®,å¹¶è®¾ç½®ä¸ºä¸å¯ç”¨å‘½ä»¤
 	cmd->init();
 	addUnuse(cmd);
 	removeInuse(cmd);
@@ -45,7 +45,7 @@ void CommandPool::destroyCmd(txCommand* cmd)
 void CommandPool::addInuse(txCommand* cmd)
 {
 	LOCK(mInuseLock);
-	// Ìí¼Óµ½Ê¹ÓÃÁÐ±íÖÐ
+	// æ·»åŠ åˆ°ä½¿ç”¨åˆ—è¡¨ä¸­
 	const std::string& type = cmd->getType();
 	auto iterInuse = mInusedList.find(type);
 	if (iterInuse == mInusedList.end())
@@ -58,7 +58,7 @@ void CommandPool::addInuse(txCommand* cmd)
 void CommandPool::addUnuse(txCommand* cmd)
 {
 	LOCK(mUnuseLock);
-	// Ìí¼Óµ½Î´Ê¹ÓÃÁÐ±íÖÐ
+	// æ·»åŠ åˆ°æœªä½¿ç”¨åˆ—è¡¨ä¸­
 	const std::string& type = cmd->getType();
 	auto iterUnuse = mUnusedList.find(type);
 	if (iterUnuse == mUnusedList.end())

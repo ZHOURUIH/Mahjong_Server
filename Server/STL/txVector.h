@@ -1,4 +1,4 @@
-#ifndef _TX_VECTOR_H_
+﻿#ifndef _TX_VECTOR_H_
 #define _TX_VECTOR_H_
 
 #include "txSTLBase.h"
