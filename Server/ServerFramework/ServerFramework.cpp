@@ -80,14 +80,14 @@ void ServerFramework::destroy()
 	TRACE_DELETE(mComponentFactoryManager);
 	TRACE_DELETE(mMySQLDataBase);
 	destroyComponentFactory();
-	LOG_INFO("%s | 关闭服务器！", txUtility::getTime());
+	LOG_INFO("关闭服务器！");
 }
 
 void ServerFramework::launch()
 {
 	if (mNetServer != NULL)
 	{
-		LOG_INFO("%s | 启动服务器,端口 : %d", txUtility::getTime(), mNetServer->getPort());
+		LOG_INFO("启动服务器,端口 : %d", mNetServer->getPort());
 	}
 	else
 	{

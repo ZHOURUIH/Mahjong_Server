@@ -376,6 +376,9 @@
     <ClCompile Include="CommandSystem\CommandPool.cpp">
       <Filter>CommandSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Common\GameLog.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">

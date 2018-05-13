@@ -17,7 +17,7 @@ public:
 	void unlock();
 	bool isLocked(){ return mLock != 0; }
 public:
-	volatile std::atomic<int> mLock;	// 1表示锁定,0表示未锁定
+	volatile std::atomic<int> mLock;// 1表示锁定,0表示未锁定
 	volatile char mFile[256];		// 加锁的文件名
 	volatile int mLine;				// 加锁的行号
 	volatile int mThreadID;			// 加锁线程的ID

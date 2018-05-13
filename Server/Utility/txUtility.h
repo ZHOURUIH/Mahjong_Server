@@ -3,9 +3,11 @@
 
 #include "txMemoryTrace.h"
 #include "ServerDefine.h"
+#include "ThreadLock.h"
 
 class txUtility
 {
+	static ThreadLock mTimeLock;
 public:
 	static void stop();
 	static void sleep(const unsigned long& timeMS);

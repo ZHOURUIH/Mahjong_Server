@@ -185,7 +185,7 @@ void NetServer::processSend()
 				{
 					if (mOutputLog)
 					{
-						LOG_INFO("%s | send to client : %s", txUtility::getTime(), selectedClient[i]->getIP());
+						LOG_INFO("send to client : %s", selectedClient[i]->getIP());
 					}
 					int sendedCount = send(selectedClient[i]->getSocket(), selectedClient[i]->getSendData(), selectedClient[i]->getSendDataCount(), 0);
 					// 检查是否send有错误
@@ -193,11 +193,11 @@ void NetServer::processSend()
 					{
 						if (errno == EPIPE)
 						{
-							LOG_ERROR("%s | 管道损坏错误信号，send error : EPIPE", txUtility::getTime());
+							LOG_ERROR("管道损坏错误信号，send error : EPIPE");
 						}
 						else if (errno == EAGAIN)
 						{
-							LOG_ERROR("%s | 重试错误信号，send error : EAGAIN", txUtility::getTime());
+							LOG_ERROR("重试错误信号，send error : EAGAIN");
 						}
 					}
 					else
@@ -249,11 +249,11 @@ void NetServer::processRecv()
 					{
 						if (errno == EPIPE)
 						{
-							LOG_ERROR("%s | 管道损坏错误信号，recv error : EPIPE", txUtility::getTime());
+							LOG_ERROR("管道损坏错误信号，recv error : EPIPE");
 						}
 						else if (errno == EAGAIN)
 						{
-							LOG_ERROR("%s | 重试错误信号，recv error : EAGAIN", txUtility::getTime());
+							LOG_ERROR("重试错误信号，recv error : EAGAIN");
 						}
 						// 客户端可能已经与服务器断开了连接,先立即标记该客户端已断开,然后再移除
 						selectedClient[i]->notifyRecvEmpty();
@@ -312,7 +312,7 @@ CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* i
 		mClientList.insert(clientGUID, client);
 		if (mOutputLog)
 		{
-			LOG_INFO("%s | client : %s connect to server! connect count : %d", txUtility::getTime(), ip, (int)mClientList.size());
+			LOG_INFO("client : %s connect to server! connect count : %d", ip, (int)mClientList.size());
 		}
 		if (socket > mMaxSocket)
 		{
@@ -404,7 +404,7 @@ void NetServer::signalProcess(int signalNum)
 {
 	if(signalNum == SIGPIPE)
 	{
-		LOG_INFO("%s | process signal : SINGPIPE", txUtility::getTime());
+		LOG_INFO("process signal : SINGPIPE");
 	}
 }
 #endif

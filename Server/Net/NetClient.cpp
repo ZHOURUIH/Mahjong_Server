@@ -124,7 +124,7 @@ void NetClient::update(const float& elapsedTime)
 		Packet* packetReply = packetList[i];
 		if (NetServer::getOutputLog())
 		{
-			LOG_INFO("%s | execute : type : %d, desc : %s", txUtility::getTime(), (int)packetReply->getPacketType(), packetReply->debugInfo().c_str());
+			LOG_INFO("execute : type : %d, desc : %s", (int)packetReply->getPacketType(), packetReply->debugInfo().c_str());
 		}
 		packetReply->execute();
 		NetServer::destroyPacket(packetReply);
@@ -235,6 +235,6 @@ void NetClient::notifyRecvData(const char* data, const int& dataCount)
 	UNLOCK(mRecvLock);
 	if (NetServer::getOutputLog())
 	{
-		LOG_INFO("%s | recv : ip : %s, size : %d", txUtility::getTime(), mIP, dataCount);
+		LOG_INFO("recv : ip : %s, size : %d", mIP, dataCount);
 	}
 }

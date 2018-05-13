@@ -3,6 +3,8 @@
 #include "GameLog.h"
 #include "ServerFramework.h"
 
+ThreadLock txUtility::mTimeLock;
+
 void txUtility::stop()
 {
 	ServerFramework::getSingletonPtr()->stop();
@@ -30,20 +32,19 @@ unsigned long txUtility::getTimeMS()
 
 const char* txUtility::getTime()
 {
-	static char timeBuffer[64] = {0};
+	LOCK(mTimeLock);
+	static char timeBuffer[128] = { 0 };
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-	static SYSTEMTIME sys;
+	SYSTEMTIME sys;
 	GetLocalTime(&sys);
-	SPRINTF(timeBuffer, 64, "%d时%d分%d秒%d毫秒", sys.wHour, sys.wMinute, sys.wSecond, sys.wMilliseconds);
+	SPRINTF(timeBuffer, 128, "%d月%d日%d时%d分%d秒%d毫秒", sys.wMonth, sys.wDay, sys.wHour, sys.wMinute, sys.wSecond, sys.wMilliseconds);
 #elif RUN_PLATFORM == PLATFORM_LINUX
-	static struct timeval tv;
-	gettimeofday(&tv, NULL);
-	unsigned long curMiliTime = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	const unsigned long& startMiliTime = ServerFramework::getSingletonPtr()->getStartMiliTime();
-	unsigned long deltaMiliTime = curMiliTime - startMiliTime;
-	unsigned long curSec = deltaMiliTime / 1000;
-	unsigned long curMili = deltaMiliTime % 1000;
-	SPRINTF(timeBuffer, 64, "%d秒%d毫秒", (int)curSec, (int)curMili);
+	time_t tt;
+	time(&tt);
+	struct tm date;
+	localtime_r(&tt, &date);
+	SPRINTF(timeBuffer, 64, "%d月%d日%d时%d分%d秒", date.tm_mon + 1, date.tm_mday, date.tm_hour, date.tm_min, date.tm_sec);
 #endif
+	UNLOCK(mTimeLock);
 	return timeBuffer;
 }

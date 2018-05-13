@@ -139,6 +139,7 @@ Server/CommandSystem/CommandServer/CommandServerNotifyAcceptedClient.cpp;
 Server/CommandSystem/txCommand.cpp;
 Server/CommandSystem/txCommandReceiver.cpp;
 Server/CommandSystem/txCommandSystem.cpp;
+Server/Common/GameLog.cpp;
 Server/Common/ServerBase.cpp;
 Server/Common/ServerConfig.cpp;
 Server/Component/BaseComponent/txComponent.cpp;

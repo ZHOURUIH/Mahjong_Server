@@ -154,6 +154,7 @@
     <ClCompile Include="CommandSystem\txCommand.cpp" />
     <ClCompile Include="CommandSystem\txCommandReceiver.cpp" />
     <ClCompile Include="CommandSystem\txCommandSystem.cpp" />
+    <ClCompile Include="Common\GameLog.cpp" />
     <ClCompile Include="Common\ServerBase.cpp" />
     <ClCompile Include="Common\ServerConfig.cpp" />
     <ClCompile Include="Component\BaseComponent\txComponent.cpp" />
