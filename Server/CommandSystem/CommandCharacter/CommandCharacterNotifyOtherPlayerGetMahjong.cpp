@@ -15,5 +15,5 @@ void CommandCharacterNotifyOtherPlayerGetMahjong::execute()
 
 std::string CommandCharacterNotifyOtherPlayerGetMahjong::showDebugInfo()
 {
-	COMMAND_DEBUG("player guid : %d, mahjong : %s", mPlayerGUID, MAHJONG_NAME[mMahjong].c_str());
+	COMMAND_DEBUG("player guid : %d, mahjong : %s", (int)mPlayerGUID, MAHJONG_NAME[(int)mMahjong].c_str());
 }

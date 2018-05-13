@@ -10,11 +10,21 @@ void CommandCharacterPlayerHu::execute()
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	SCPlayerHu* hu = static_cast<SCPlayerHu*>(mNetServer->createPacket(PT_SC_PLAYER_HU));
 	hu->setHuList(mHuList);
-	hu->setHuPlayer(mHuPlayerList);
 	mNetServer->sendMessage(hu, player->getClientGUID());
 }
 
 std::string CommandCharacterPlayerHu::showDebugInfo()
 {
-	COMMAND_DEBUG(DEBUG_EMPTY);
+	int playerCount = mHuList.size();
+	std::string info;
+	for (int i = 0; i < playerCount; ++i)
+	{
+		info += "player : " + mHuList[i].first->getName() + "; ";
+		int huCount = mHuList[i].second.size();
+		for (int j = 0; j < huCount; ++j)
+		{
+			info += "hu list : " + txStringUtility::intToString((int)mHuList[i].second[j]);
+		}
+	}
+	COMMAND_DEBUG("%s", info.c_str());
 }

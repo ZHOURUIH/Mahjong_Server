@@ -13,8 +13,3 @@ void CommandCharacterNotifyOtherPlayerPeng::execute()
 	otherPeng->mMahjong = mMahjong;
 	mNetServer->sendMessage(otherPeng, player->getClientGUID());
 }
-
-std::string CommandCharacterNotifyOtherPlayerPeng::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

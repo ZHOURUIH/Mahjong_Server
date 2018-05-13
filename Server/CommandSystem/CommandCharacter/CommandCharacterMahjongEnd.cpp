@@ -20,8 +20,3 @@ void CommandCharacterMahjongEnd::execute()
 	mahjongEnd->setList(infoList);
 	mNetServer->sendMessage(mahjongEnd, player->getClientGUID());
 }
-
-std::string CommandCharacterMahjongEnd::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

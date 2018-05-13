@@ -22,5 +22,5 @@ void CommandCharacterNotifyOtherPlayerJoinRoom::execute()
 
 std::string CommandCharacterNotifyOtherPlayerJoinRoom::showDebugInfo()
 {
-	COMMAND_DEBUG("player guid : %d, name : %s", mJoinPlayer->getGUID(), mJoinPlayer->getName().c_str());
+	COMMAND_DEBUG("player guid : %d, name : %s", (int)mJoinPlayer->getGUID(), mJoinPlayer->getName().c_str());
 }

@@ -13,8 +13,3 @@ void CommandCharacterNotifyOtherPlayerGang::execute()
 	otherGang->mMahjong = mMahjong;
 	mNetServer->sendMessage(otherGang, player->getClientGUID());
 }
-
-std::string CommandCharacterNotifyOtherPlayerGang::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

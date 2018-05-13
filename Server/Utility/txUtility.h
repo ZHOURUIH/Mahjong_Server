@@ -8,22 +8,6 @@ class txUtility
 {
 public:
 	static void stop();
-	static void logError(const std::string& info)
-	{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << "程序错误 : " << info.c_str() << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-		printf("程序错误 : %s\n", info.c_str());
-#endif
-	}
-	static void logInfo(const std::string& info)
-	{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << info.c_str() << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-		printf("%s\n", info.c_str());
-#endif
-	}
 	static void sleep(const unsigned long& timeMS);
 	static unsigned long getTimeMS();
 	static const char* getTime();

@@ -30,9 +30,6 @@ typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 #define CMD_CAST static_cast
 #define DEBUG_EMPTY "%s", ""
 #define CMD_PARAM __FILE__, __LINE__
-#define COMMAND_DECLARE_FUNCTION													\
-	virtual void execute();															\
-	virtual std::string showDebugInfo();
 
 #define NEW_CMD(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, false);
 #define NEW_CMD_INFO(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, true, false);

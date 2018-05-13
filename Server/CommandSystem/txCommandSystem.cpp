@@ -57,7 +57,7 @@ bool txCommandSystem::interruptCommand(const int& assignID)
 	}
 	if (assignID < 0)
 	{
-		GAME_ERROR("assignID invalid! : %d", assignID);
+		LOG_ERROR("assignID invalid! : %d", assignID);
 		return false;
 	}
 	syncCommandBuffer();
@@ -81,11 +81,11 @@ bool txCommandSystem::interruptCommand(const int& assignID)
 	{
 		if (mExecuteList[i]->mCommand->getAssignID() == assignID)
 		{
-			GAME_ERROR("cmd is in execute list! can not interrupt!");
+			LOG_ERROR("cmd is in execute list! can not interrupt!");
 			break;
 		}
 	}
-	GAME_ERROR("not find cmd with assignID! %d", assignID);
+	LOG_ERROR("not find cmd with assignID! %d", assignID);
 	return false;
 }
 
@@ -94,29 +94,29 @@ void txCommandSystem::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver
 	if (cmd == NULL)
 	{
 		std::string receiverName = (cmdReceiver != NULL) ? cmdReceiver->getName() : EMPTY_STRING;
-		GAME_ERROR("cmd is null! receiver : %s", receiverName.c_str());
+		LOG_ERROR("cmd is null! receiver : %s", receiverName.c_str());
 		return;
 	}
 	if (cmdReceiver == NULL)
 	{
 		std::string cmdName = (cmd != NULL) ? cmd->getType() : EMPTY_STRING;
-		GAME_ERROR("receiver is null! cmd : %s", cmdName.c_str());
+		LOG_ERROR("receiver is null! cmd : %s", cmdName.c_str());
 		return;
 	}
 	if (!cmd->isValid())
 	{
-		GAME_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushCommand cmd type : %s, assign id : %d", cmd->getType(), cmd->getAssignID());
+		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushCommand cmd type : %s, assign id : %d", cmd->getType().c_str(), cmd->getAssignID());
 		return;
 	}
 	if (cmd->isDelayCommand())
 	{
-		GAME_ERROR("cmd is a delay cmd! can not use pushCommand! assign id : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo());
+		LOG_ERROR("cmd is a delay cmd! can not use pushCommand! assign id : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str());
 		return;
 	}
 	cmd->setReceiver(cmdReceiver);
 	if (cmd->getShowDebugInfo())
 	{
-		LOG_INFO("CommandSystem : %d, %s, receiver : %s", cmd->getAssignID(), cmd->showDebugInfo(), cmdReceiver->getName());
+		LOG_INFO("CommandSystem : %d, %s, receiver : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str());
 	}
 	cmdReceiver->receiveCommand(cmd);
 
@@ -129,23 +129,23 @@ void txCommandSystem::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdRec
 	if (cmd == NULL)
 	{
 		std::string receiverName = (cmdReceiver != NULL) ? cmdReceiver->getName() : EMPTY_STRING;
-		GAME_ERROR("cmd is null! receiver : %s", receiverName.c_str());
+		LOG_ERROR("cmd is null! receiver : %s", receiverName.c_str());
 		return;
 	}
 	if (cmdReceiver == NULL)
 	{
 		std::string cmdName = (cmd != NULL) ? cmd->getType() : EMPTY_STRING;
-		GAME_ERROR("receiver is null! cmd : %s", cmdName.c_str());
+		LOG_ERROR("receiver is null! cmd : %s", cmdName.c_str());
 		return;
 	}
 	if (!cmd->isValid())
 	{
-		GAME_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushDelayCommand cmd type : %s, assign id : %d", cmd->getType().c_str(), cmd->getAssignID());
+		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushDelayCommand cmd type : %s, assign id : %d", cmd->getType().c_str(), cmd->getAssignID());
 		return;
 	}
 	if (!cmd->isDelayCommand())
 	{
-		GAME_ERROR("cmd is not a delay command, Command : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo());
+		LOG_ERROR("cmd is not a delay command, Command : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str());
 		return;
 	}
 	if (delayExecute < 0.0f)
@@ -154,7 +154,7 @@ void txCommandSystem::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdRec
 	}
 	if (cmd->getShowDebugInfo())
 	{
-		LOG_INFO("CommandSystem : delay cmd : %d, %.2f, info : %s, receiver : %s", cmd->getAssignID(), delayExecute, cmd->showDebugInfo().c_str(), cmdReceiver->getName());
+		LOG_INFO("CommandSystem : delay cmd : %d, %.2f, info : %s, receiver : %s", cmd->getAssignID(), delayExecute, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str());
 	}
 	DelayCommand* delayCommand = TRACE_NEW(DelayCommand, delayCommand, delayExecute, cmd, cmdReceiver);
 

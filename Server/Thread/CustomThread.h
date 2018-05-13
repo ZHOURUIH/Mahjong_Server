@@ -26,7 +26,11 @@ protected:
 	volatile std::atomic<bool> mRunning;
 	volatile std::atomic<bool> mFinish;
 	volatile std::atomic<bool> mPause;
+#if RUN_PLATFORM == PLATFORM_WINDOWS
 	volatile std::atomic<TX_THREAD> mThread;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+	TX_THREAD mThread;
+#endif
 	CustomThreadCallback mCallback;
 	TimeLock* mTimeLock;
 	std::string mName;

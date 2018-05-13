@@ -261,7 +261,7 @@ void txComponent::notifyChildNameChanged(const std::string& oldName, txComponent
 		}
 		else
 		{
-			GAME_ERROR("error : there is a child named : %s!", component->mName.c_str());
+			LOG_ERROR("error : there is a child named : %s!", component->mName.c_str());
 		}
 	}
 }

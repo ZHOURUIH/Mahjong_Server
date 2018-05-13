@@ -3,6 +3,20 @@
 #include "GameLog.h"
 #include "txUtility.h"
 
+std::string txFileUtility::validPath(const std::string& path)
+{
+	std::string temp = path;
+	if (temp.length() > 0)
+	{
+		// 不以/结尾,则加上/
+		if (temp[temp.length() - 1] != '/')
+		{
+			temp += "/";
+		}
+	}
+	return temp;
+}
+
 void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>& files, const std::string& patterns, const bool& recursive)
 {
 	txVector<std::string> patternList;
@@ -15,7 +29,7 @@ bool txFileUtility::isDirectory(const std::string& pszName)
 {
 	struct stat S_stat;
 	// 取得文件状态
-	if (lstat(pszName, &S_stat) < 0)
+	if (lstat(pszName.c_str(), &S_stat) < 0)
 	{
 		return false;
 	}
@@ -23,7 +37,7 @@ bool txFileUtility::isDirectory(const std::string& pszName)
 	return S_ISDIR(S_stat.st_mode);
 }
 
-void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, txVector<std::string>& patterns, const bool& recursive)
+void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	txVector<std::string> fileName = ASS_getFileList((char*)path.c_str());
@@ -35,7 +49,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 		int patternCount = patterns.size();
 		if(patternCount > 0)
 		{
-			FOR_STL(patterns, int j = 0; j < patternCount; ++j)
+			for(int i = 0; i < patternCount; ++i)
 			{
 				if (txStringUtility::endWith(fullName, patterns[j], false))
 				{
@@ -43,7 +57,6 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 					break;
 				}
 			}
-			END_FOR_STL(patterns);
 		}
 		else
 		{
@@ -83,7 +96,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 			int patternCount = patterns.size();
 			if(patternCount > 0)
 			{
-				FOR_STL(patterns, int i = 0; i < patternCount; ++i)
+				for(int i = 0; i < patternCount; ++i)
 				{
 					if (txStringUtility::endWith(szTmpPath, patterns[i], false))
 					{
@@ -91,7 +104,6 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 						break;
 					}
 				}
-				END_FOR_STL(patterns);
 			}
 			else
 			{
@@ -103,7 +115,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 #endif
 }
 
-void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive = false)
+void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive)
 {
 	struct dirent* pDirent;
 	DIR* pDir = opendir(path.c_str());
@@ -136,19 +148,11 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 }
 
 #elif RUN_PLATFORM == PLATFORM_WINDOWS
-void txFileUtility::findFiles(std::string path, txVector<std::string>& files, txVector<std::string>& patterns, const bool& recursive)
+void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
 {
-	if (path.length() == 0)
-	{
-		return;
-	}
-	// 不以/结尾,则加上/
-	if (path[path.length() - 1] != '/')
-	{
-		path += "/";
-	}
+	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
-	HANDLE hFind = FindFirstFileA((path + "*").c_str(), &FindFileData);
+	HANDLE hFind = FindFirstFileA((tempPath + "*").c_str(), &FindFileData);
 	// 如果找不到文件夹就直接返回
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
@@ -164,7 +168,7 @@ void txFileUtility::findFiles(std::string path, txVector<std::string>& files, tx
 		}
 
 		// 构造完整路径
-		std::string fullname = path + std::string(FindFileData.cFileName);
+		std::string fullname = tempPath + std::string(FindFileData.cFileName);
 		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			if (recursive)
@@ -194,19 +198,11 @@ void txFileUtility::findFiles(std::string path, txVector<std::string>& files, tx
 	::FindClose(hFind);
 }
 
-void txFileUtility::findFolders(std::string path, txVector<std::string>& folders, const bool& recursive)
+void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive)
 {
-	if (path.length() == 0)
-	{
-		return;
-	}
-	// 不以/结尾,则加上/
-	if (path[path.length() - 1] != '/')
-	{
-		path += "/";
-	}
+	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
-	HANDLE hFind = FindFirstFileA((path + "*").c_str(), &FindFileData);
+	HANDLE hFind = FindFirstFileA((tempPath + "*").c_str(), &FindFileData);
 	// 如果找不到文件夹就直接返回
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
@@ -222,7 +218,7 @@ void txFileUtility::findFolders(std::string path, txVector<std::string>& folders
 		}
 
 		// 构造完整路径
-		std::string fullname = path + std::string(FindFileData.cFileName);
+		std::string fullname = tempPath + std::string(FindFileData.cFileName);
 		// 是文件夹则先放入列表,然后判断是否递归查找
 		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
@@ -331,18 +327,18 @@ bool txFileUtility::writeFile(std::string filePath, const int& length, const cha
 
 	if (length <= 0 || NULL == buffer)
 	{
-		GAME_ERROR("error : file length is 0 or buffer is NULL! can not write file! file path : %s", filePath.c_str());
+		LOG_ERROR("error : file length is 0 or buffer is NULL! can not write file! file path : %s", filePath.c_str());
 		return false;
 	}
 
 	txStringUtility::rightToLeft(filePath);
 	int pos = filePath.find_last_of('/');
-	if (-1 != pos)
+	if (pos != -1)
 	{
 		std::string dirPath = filePath.substr(0, pos);
 		if (!createFolder(dirPath))
 		{
-			GAME_ERROR("error : can not create folder, name : %s", dirPath.c_str());
+			LOG_ERROR("error : can not create folder, name : %s", dirPath.c_str());
 			return false;
 		}
 	}
@@ -350,7 +346,7 @@ bool txFileUtility::writeFile(std::string filePath, const int& length, const cha
 	{
 		if (!createFolder(filePath))
 		{
-			GAME_ERROR("error : can not create folder, name : %s", filePath.c_str());
+			LOG_ERROR("error : can not create folder, name : %s", filePath.c_str());
 			return false;
 		}
 	}
@@ -363,7 +359,7 @@ bool txFileUtility::writeFile(std::string filePath, const int& length, const cha
 #endif
 	if (pFile == NULL)
 	{
-		GAME_ERROR("error : can not write file, name : %s", filePath.c_str());
+		LOG_ERROR("error : can not write file, name : %s", filePath.c_str());
 		return false;
 	}
 	fwrite(buffer, sizeof(char), length, pFile);
@@ -372,10 +368,14 @@ bool txFileUtility::writeFile(std::string filePath, const int& length, const cha
 	return true;
 }
 
-char* txFileUtility::openFile(std::string filePath, int* bufferSize, const bool& addZero)
+char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, const bool& addZero)
 {
 	FILE* pFile = NULL;
+#if RUN_PLATFORM == PLATFORM_WINDOWS
 	fopen_s(&pFile, filePath.c_str(), "rb");
+#elif RUN_PLATFORM == PLATFORM_LINUX
+	pFile = fopen(filePath.c_str(), "rb");
+#endif
 	if (pFile == NULL)
 	{
 		return NULL;

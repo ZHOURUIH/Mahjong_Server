@@ -15,10 +15,6 @@ public:
 	}
 	virtual void execute();
 	virtual void fillParams(){}
-	virtual std::string debugInfo()
-	{
-		PACKET_DEBUG(PACKET_EMPTY);
-	}
 public:
 };
 

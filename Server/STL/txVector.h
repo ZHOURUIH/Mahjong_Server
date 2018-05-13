@@ -62,11 +62,7 @@ public:
 	{
 		if (i < 0 || i >= size())
 		{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-			MessageBoxA(NULL, "error : vector index out of range!", "", MB_OK);
-#elif RUN_PLATFORM == PLATFORM_ANDROID
-			LOGI("error : vector index out of range!");
-#endif
+			LOG_ERROR("%s", "error : vector index out of range!");
 		}
 		return mVector[i];
 	}
@@ -74,11 +70,7 @@ public:
 	{
 		if (i < 0 || i >= size())
 		{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-			MessageBoxA(NULL, "error : vector index out of range!", "", MB_OK);
-#elif RUN_PLATFORM == PLATFORM_ANDROID
-			LOGI("error : vector index out of range!");
-#endif
+			LOG_ERROR("%s", "error : vector index out of range!");
 		}
 		return mVector[i];
 	}

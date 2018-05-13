@@ -15,7 +15,6 @@ public:
 		mDroppedPlayer = NULL;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	MAHJONG mMahjong;

@@ -21,8 +21,3 @@ void CommandCharacterNotifyOtherPlayerContinueGame::execute()
 		mNetServer->sendMessage(otherBack, player->getClientGUID());
 	}
 }
-
-std::string CommandCharacterNotifyOtherPlayerContinueGame::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

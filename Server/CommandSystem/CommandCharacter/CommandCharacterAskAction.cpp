@@ -12,8 +12,3 @@ void CommandCharacterAskAction::execute()
 	askAction->setActionList(mActionList);
 	mNetServer->sendMessage(askAction, player->getClientGUID());
 }
-
-std::string CommandCharacterAskAction::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

@@ -22,7 +22,7 @@ try													\
 catch (...)											\
 {													\
 	ptr = NULL;										\
-	GAME_ERROR("error : can not alloc memory!");	\
+	LOG_ERROR("error : can not alloc memory!");	\
 }
 
 // 正常的申请数组内存
@@ -46,7 +46,7 @@ else														\
 	catch (...)												\
 	{														\
 		ptr = NULL;											\
-		GAME_ERROR("error : can not alloc memory array!"); \
+		LOG_ERROR("error : can not alloc memory array!"); \
 	}														\
 }															\
 

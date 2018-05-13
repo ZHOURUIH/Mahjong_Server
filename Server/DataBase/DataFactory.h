@@ -35,12 +35,12 @@ public:
 	{
 		if (data == NULL)
 		{
-			GAME_ERROR("error : can not destroy NULL data!");
+			LOG_ERROR("error : can not destroy NULL data!");
 			return;
 		}
 		if (data->getType() != mType)
 		{
-			GAME_ERROR("error : destroy wrong type data! factory type : %d, data type : %d", mType, data->getType());
+			LOG_ERROR("error : destroy wrong type data! factory type : %d, data type : %d", mType, data->getType());
 			return;
 		}
 		TRACE_DELETE(data);

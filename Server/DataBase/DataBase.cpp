@@ -126,7 +126,7 @@ void  DataBase::destroyAllData()
 		}
 		else
 		{
-			GAME_ERROR("error : can not find data factory : %d, DataBase::destroyAllData", (int)iterStructList->first);
+			LOG_ERROR("error : can not find data factory : %d, DataBase::destroyAllData", (int)iterStructList->first);
 		}
 	}
 	END_FOR_STL(mDataStructList);
@@ -160,7 +160,7 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 	txMap<std::string, DATA_TYPE>::iterator iterFileDefine = mDataFileDefine.find(fileName);
 	if(iterFileDefine == mDataFileDefine.end())
 	{
-		GAME_ERROR("error : can not find data file define, file name : %s, filePath : %s", fileName.c_str(), filePath.c_str());
+		LOG_ERROR("error : can not find data file define, file name : %s, filePath : %s", fileName.c_str(), filePath.c_str());
 		return;
 	}
 
@@ -182,7 +182,7 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 	DataFactoryBase* factory = getDataFactory(iterFileDefine->second);
 	if(factory == NULL)
 	{
-		GAME_ERROR("error : can not find factory, type : %d, filename : %s, filePath : %s", (int)iterFileDefine->second, fileName.c_str(), filePath.c_str());
+		LOG_ERROR("error : can not find factory, type : %d, filename : %s, filePath : %s", (int)iterFileDefine->second, fileName.c_str(), filePath.c_str());
 		return;
 	}
 
@@ -200,7 +200,7 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 		if (newData == NULL)
 		{
 			TRACE_DELETE_ARRAY(fileBuffer);
-			GAME_ERROR("error : can not create data ,type : %d", factory->getType());
+			LOG_ERROR("error : can not create data ,type : %d", factory->getType());
 			return;
 		}
 		if(newData->read(fileBuffer + i * dataSize, dataSize))
@@ -223,7 +223,7 @@ bool DataBase::writeBinaryFile(const DATA_TYPE& type)
 	DataFactoryBase* factory = getDataFactory(type);
 	if (factory == NULL)
 	{
-		GAME_ERROR("error : can not find data factory! type : %d", type);
+		LOG_ERROR("error : can not find data factory! type : %d", type);
 		return false;
 	}
 
@@ -242,7 +242,7 @@ bool DataBase::writeBinaryFile(const DATA_TYPE& type)
 	txMap<DATA_TYPE, std::string>::iterator iterDataDefine = mDataDefineFile.find(type);
 	if (iterDataDefine == mDataDefineFile.end())
 	{
-		GAME_ERROR("error : can not find data type in data define file list! type : %d", type);
+		LOG_ERROR("error : can not find data type in data define file list! type : %d", type);
 		return false;
 	}
 	txFileUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeBufferSize, writeFileBuffer);

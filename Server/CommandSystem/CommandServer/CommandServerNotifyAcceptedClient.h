@@ -8,7 +8,7 @@ class CommandServerNotifyAcceptedClient : public txCommand
 public:
 	virtual void reset()
 	{
-		mSocket = INVALID_ID;
+		mSocket = INVALID_SOCKET;
 		mIP = EMPTY_STRING;
 	}
 	virtual void execute();

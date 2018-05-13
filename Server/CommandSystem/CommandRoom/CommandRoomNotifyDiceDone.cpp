@@ -20,5 +20,5 @@ void CommandRoomNotifyDiceDone::execute()
 
 std::string CommandRoomNotifyDiceDone::showDebugInfo()
 {
-	COMMAND_DEBUG("player guid : %d", mPlayerGUID);
+	COMMAND_DEBUG("player guid : %d", (int)mPlayerGUID);
 }

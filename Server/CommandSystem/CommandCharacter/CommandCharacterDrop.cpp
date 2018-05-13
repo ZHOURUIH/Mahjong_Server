@@ -21,5 +21,5 @@ void CommandCharacterDrop::execute()
 
 std::string CommandCharacterDrop::showDebugInfo()
 {
-	COMMAND_DEBUG("index : %d, mahjong : %s", mIndex, MAHJONG_NAME[mMahjong].c_str());
+	COMMAND_DEBUG("index : %d, mahjong : %s", mIndex, MAHJONG_NAME[(int)mMahjong].c_str());
 }

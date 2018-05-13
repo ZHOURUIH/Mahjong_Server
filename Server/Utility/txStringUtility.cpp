@@ -214,7 +214,7 @@ std::string txStringUtility::floatToString(float f, const int& precision, const 
 			{
 				retString = retString.substr(0, dotPos);
 			}
-			else if (notZeroPos != floatPart.length() - 1)
+			else if (notZeroPos != (int)floatPart.length() - 1)
 			{
 				floatPart = floatPart.substr(0, notZeroPos + 1);
 				retString = retString.substr(0, dotPos + 1) + floatPart;
@@ -321,11 +321,9 @@ std::wstring txStringUtility::ANSIToUnicode(const std::string& str)
 	std::string curName = setlocale(LC_ALL, LC_NAME_zh_CN_GBK);
 
 	int dSize = mbstowcs(NULL, str.c_str(), 0) + 1;
-
 	wchar_t* dBuf = TRACE_NEW_ARRAY(wchar_t, dSize, dBuf);
 	wmemset(dBuf, 0, dSize);
-	int nRet = mbstowcs(dBuf, str.c_str(), dSize);
-
+	mbstowcs(dBuf, str.c_str(), dSize);
 	curName = setlocale(LC_ALL, oldname.c_str());
 	std::wstring strText = dBuf;
 	TRACE_DELETE_ARRAY(dBuf);
@@ -342,12 +340,9 @@ std::string txStringUtility::UnicodeToANSI(const std::wstring& str)
 	std::string curName = setlocale(LC_ALL, LC_NAME_zh_CN_GBK);
 
 	int dSize = wcstombs(NULL, str.c_str(), 0) + 1;
-
 	char *dBuf = TRACE_NEW_ARRAY(char, dSize, dBuf);
 	memset(dBuf, 0, dSize);
-
-	int nRet = wcstombs(dBuf, str.c_str(), dSize);
-
+	wcstombs(dBuf, str.c_str(), dSize);
 	curName = setlocale(LC_ALL, oldname.c_str());
 	std::string strText = dBuf;
 	TRACE_DELETE_ARRAY(dBuf);
@@ -365,8 +360,7 @@ std::string txStringUtility::UnicodeToUTF8(const std::wstring& str)
 	int dSize = wcstombs(NULL, str.c_str(), 0) + 1;
 	char *dBuf = TRACE_NEW_ARRAY(char, dSize, dBuf);
 	memset(dBuf, 0, dSize);
-	int nRet = wcstombs(dBuf, str.c_str(), dSize);
-
+	wcstombs(dBuf, str.c_str(), dSize);
 	curName = setlocale(LC_ALL, oldname.c_str());
 	std::string strText = dBuf;
 	TRACE_DELETE_ARRAY(dBuf);
@@ -386,9 +380,8 @@ std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
 	int dSize = mbstowcs(NULL, str.c_str(), 0) + 1;
 	wchar_t* dBuf = TRACE_NEW_ARRAY(wchar_t, dSize, dBuf);
 	wmemset(dBuf, 0, dSize);
-	int nRet = mbstowcs(dBuf, str.c_str(), dSize);
-
-	curName = (LC_ALL, oldname.c_str());
+	mbstowcs(dBuf, str.c_str(), dSize);
+	curName = setlocale(LC_ALL, oldname.c_str());
 	std::wstring strText = dBuf;
 	TRACE_DELETE_ARRAY(dBuf);
 	return strText;
@@ -616,7 +609,7 @@ std::string txStringUtility::checkIntString(const std::string& str, const std::s
 std::string txStringUtility::charToHexString(const unsigned char& byte, const bool& upper)
 {
 	char byteHex[3] = { 0 };
-	char* charPool = upper ? "ABCDEF" : "abcdef";
+	const char* charPool = upper ? "ABCDEF" : "abcdef";
 	unsigned char highBit = byte >> 4;
 	// 高字节的十六进制
 	byteHex[0] = (highBit < (unsigned char)10) ? ('0' + highBit) : charPool[highBit - 10];

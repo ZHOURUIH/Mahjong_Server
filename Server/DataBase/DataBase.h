@@ -99,8 +99,8 @@ protected:
 	void addDataFactory(const DATA_TYPE& type, const std::string& dataName)
 	{
 		T data(type);
-		mDataFileDefine.insert(std::pair<std::string, DATA_TYPE>(dataName, type));
-		mDataDefineFile.insert(std::pair<DATA_TYPE, std::string>(type, dataName));
+		mDataFileDefine.insert(dataName, type);
+		mDataDefineFile.insert(type, dataName);
 		DataFactoryBase* factory = DataFactoryBase::createDataFactory<DataFactory<T> >(type, data.getSize());
 		addDataFactoryToList(factory);
 	}

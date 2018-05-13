@@ -11,7 +11,7 @@ CustomThread::CustomThread(const std::string& name)
 	mFinish = true;
 	mRunning = false;
 	mCallback = NULL;
-	mThread = NULL;
+	mThread = NULL_THREAD;
 	mTimeLock = NULL;
 	mPause = false;
 	mIsBackground = true;
@@ -30,9 +30,9 @@ void CustomThread::destroy()
 void CustomThread::start(CustomThreadCallback callback, void* args, const int& frameTimeMS)
 {
 	LOG_INFO("准备启动线程 : %s", mName.c_str());
-	if (mThread._My_val != NULL)
+	if (mThread != NULL_THREAD)
 	{
-		GAME_ERROR("线程已经启动 : %s", mName.c_str());
+		LOG_ERROR("线程已经启动 : %s", mName.c_str());
 		return;
 	}
 	mTimeLock = TRACE_NEW(TimeLock, mTimeLock, frameTimeMS);

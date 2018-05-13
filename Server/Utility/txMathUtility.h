@@ -116,7 +116,6 @@ public:
 	template<typename T>
 	static float lerp(const T& start, const T& end, const float& t)
 	{
-		clamp(t, 0.0f, 1.0f);
 		return start + (end - start) * t;
 	}
 	static float inverseLerp(const float& a, const float& b, const float& value)

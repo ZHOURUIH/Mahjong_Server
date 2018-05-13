@@ -15,7 +15,6 @@ public:
 		mMahjong = M_MAX;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	CharacterPlayer* mDroppedPlayer;

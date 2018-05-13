@@ -18,10 +18,6 @@ public:
 	{
 		pushParam(mAction);
 	}
-	virtual std::string debugInfo()
-	{
-		PACKET_DEBUG(PACKET_EMPTY);
-	}
 public:
 	char mAction;
 };

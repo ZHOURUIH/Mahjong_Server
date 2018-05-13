@@ -10,14 +10,12 @@ class CommandCharacterPlayerHu : public txCommand
 public:
 	virtual void reset()
 	{
-		mHuPlayerList.clear();
 		mHuList.clear();
 	}
 	virtual void execute();
 	virtual std::string showDebugInfo();
 public:
-	txVector<CharacterPlayer*> mHuPlayerList;
-	txVector<txVector<HU_TYPE>> mHuList;
+	txVector<std::pair<CharacterPlayer*, txVector<HU_TYPE>>> mHuList;
 };
 
 #endif

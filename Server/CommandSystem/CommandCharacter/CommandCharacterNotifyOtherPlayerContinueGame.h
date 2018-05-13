@@ -14,7 +14,6 @@ public:
 		mContinue = false;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	bool mContinue;

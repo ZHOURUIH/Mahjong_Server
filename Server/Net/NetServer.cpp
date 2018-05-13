@@ -62,7 +62,7 @@ void NetServer::init(const int& port, const int& backLog)
 	WSADATA wsd;
 	if (WSAStartup(MAKEWORD(2, 2), &wsd) != 0)
 	{
-		GAME_ERROR("WSAStartup failed!");
+		LOG_ERROR("WSAStartup failed!");
 		return;
 	}
 #endif
@@ -70,7 +70,7 @@ void NetServer::init(const int& port, const int& backLog)
 	mSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (mSocket == INVALID_SOCKET)
 	{
-		GAME_ERROR("socket failed!");
+		LOG_ERROR("socket failed!");
 		return;
 	}
 
@@ -88,13 +88,13 @@ void NetServer::init(const int& port, const int& backLog)
 	//绑定Sockets Server
 	if (bind(mSocket, (const struct sockaddr*)&addrServ, sizeof(SOCKADDR_IN)) != 0)
 	{
-		GAME_ERROR("bind failed!");
+		LOG_ERROR("bind failed!");
 		return;
 	}
 	//在Sockets Server上进行监听
 	if (listen(mSocket, backLog) != 0)
 	{
-		GAME_ERROR("listen failed!");
+		LOG_ERROR("listen failed!");
 		return;
 	}
 	mReceiveThread->start(receiveSendSocket, this);
@@ -114,7 +114,7 @@ bool NetServer::acceptSocket(void* args)
 	TX_SOCKET sClient = accept(netManager->mSocket, (struct sockaddr*)&addr, &nLen);
 	if (sClient == (TX_SOCKET)INVALID_SOCKET)
 	{
-		GAME_ERROR("error : accept failed!");
+		LOG_ERROR("error : accept failed!");
 		return true;
 	}
 	// 获得客户端IP,然后通知已经接收到一个客户端的连接
@@ -193,11 +193,11 @@ void NetServer::processSend()
 					{
 						if (errno == EPIPE)
 						{
-							GAME_ERROR("%s | 管道损坏错误信号，send error : EPIPE", txUtility::getTime());
+							LOG_ERROR("%s | 管道损坏错误信号，send error : EPIPE", txUtility::getTime());
 						}
 						else if (errno == EAGAIN)
 						{
-							GAME_ERROR("%s | 重试错误信号，send error : EAGAIN", txUtility::getTime());
+							LOG_ERROR("%s | 重试错误信号，send error : EAGAIN", txUtility::getTime());
 						}
 					}
 					else
@@ -249,11 +249,11 @@ void NetServer::processRecv()
 					{
 						if (errno == EPIPE)
 						{
-							GAME_ERROR("%s | 管道损坏错误信号，recv error : EPIPE", txUtility::getTime());
+							LOG_ERROR("%s | 管道损坏错误信号，recv error : EPIPE", txUtility::getTime());
 						}
 						else if (errno == EAGAIN)
 						{
-							GAME_ERROR("%s | 重试错误信号，recv error : EAGAIN", txUtility::getTime());
+							LOG_ERROR("%s | 重试错误信号，recv error : EAGAIN", txUtility::getTime());
 						}
 						// 客户端可能已经与服务器断开了连接,先立即标记该客户端已断开,然后再移除
 						selectedClient[i]->notifyRecvEmpty();
@@ -321,7 +321,7 @@ CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* i
 	}
 	else
 	{
-		GAME_ERROR("error : client insert to accept list failed!");
+		LOG_ERROR("error : client insert to accept list failed!");
 	}
 	// 解锁accept列表
 	UNLOCK(mClientLock);
@@ -379,7 +379,7 @@ Packet* NetServer::createPacket(const PACKET_TYPE& type)
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(type);
 	if (factory == NULL)
 	{
-		GAME_ERROR("error : can not find packet factory : %d", (int)type);
+		LOG_ERROR("error : can not find packet factory : %d", (int)type);
 		return NULL;
 	}
 	return factory->createPacket();
@@ -394,13 +394,13 @@ void NetServer::destroyPacket(Packet* packet)
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(packet->getPacketType());
 	if (factory == NULL)
 	{
-		GAME_ERROR("error : can not find packet factory : %d", (int)packet->getPacketType());
+		LOG_ERROR("error : can not find packet factory : %d", (int)packet->getPacketType());
 	}
 	factory->destroyPacket(packet);
 }
 
 #if RUN_PLATFORM == PLATFORM_LINUX
-void NetManagerServer::signalProcess(int signalNum)
+void NetServer::signalProcess(int signalNum)
 {
 	if(signalNum == SIGPIPE)
 	{

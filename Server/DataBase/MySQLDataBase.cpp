@@ -2,15 +2,15 @@
 #include "GameLog.h"
 #include "Utility.h"
 
-char* MySQLDataBase::DATABASE = "test";
-char* MySQLDataBase::TABLE_ACCOUNT = "Account";
-char* MySQLDataBase::TABLE_CHARACTER_DATA = "CharacterData";
-char* MySQLDataBase::COL_ACCOUNT = "account";
-char* MySQLDataBase::COL_PASSWORD = "password";
-char* MySQLDataBase::COL_GUID = "guid";
-char* MySQLDataBase::COL_NAME = "name";
-char* MySQLDataBase::COL_MONEY = "money";
-char* MySQLDataBase::COL_HEAD = "head";
+const char* MySQLDataBase::DATABASE = "test";
+const char* MySQLDataBase::TABLE_ACCOUNT = "Account";
+const char* MySQLDataBase::TABLE_CHARACTER_DATA = "CharacterData";
+const char* MySQLDataBase::COL_ACCOUNT = "account";
+const char* MySQLDataBase::COL_PASSWORD = "password";
+const char* MySQLDataBase::COL_GUID = "guid";
+const char* MySQLDataBase::COL_NAME = "name";
+const char* MySQLDataBase::COL_MONEY = "money";
+const char* MySQLDataBase::COL_HEAD = "head";
 
 void MySQLDataBase::init(const std::string& user, const std::string& pswd, const std::string& host, const int& port)
 {
@@ -31,13 +31,13 @@ bool MySQLDataBase::connectDataBase(const std::string& dataBase)
 	}
 	if (!mysql_real_connect(mMySQL, mHost.c_str(), mUser.c_str(), mPassword.c_str(), dataBase.c_str(), mPort, NULL, 0))
 	{
-		GAME_ERROR("can not connect DataBase %s!", dataBase.c_str());
+		LOG_ERROR("can not connect DataBase %s!", dataBase.c_str());
 		return false;
 	}
 	int ret = mysql_query(mMySQL, "SET NAMES UTF8"); //设置编码格式
 	if (ret != 0)
 	{
-		GAME_ERROR("set names error!");
+		LOG_ERROR("set names error!");
 		return false;
 	}
 	mConnectedDataBase = dataBase;
@@ -65,7 +65,7 @@ int MySQLDataBase::getMaxGUID()
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		GAME_ERROR("query max GUID error!");
+		LOG_ERROR("query max GUID error!");
 		return -1;
 	}
 	// 获得查询结果
@@ -100,7 +100,7 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		GAME_ERROR("query login error");
+		LOG_ERROR("query login error");
 		return false;
 	}
 	// 获得查询结果
@@ -141,7 +141,7 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		GAME_ERROR("query character data error!");
+		LOG_ERROR("query character data error!");
 		return false;
 	}
 	// 获得查询结果
@@ -175,7 +175,7 @@ const std::string& MySQLDataBase::getColumn(txMap<std::string, std::string>& row
 {
 	if (rowData.find(col) == rowData.end())
 	{
-		GAME_ERROR("can not find %s in table %s", col.c_str(), table.c_str());
+		LOG_ERROR("can not find %s in table %s", col.c_str(), table.c_str());
 		return EMPTY_STRING;
 	}
 	else
@@ -256,7 +256,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
 	if (ret != 0)
 	{
-		GAME_ERROR("insert account error!");
+		LOG_ERROR("insert account error!");
 		return -4;
 	}
 
@@ -268,7 +268,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	ret = mysql_query(mMySQL, insertCharacterDataBuffer);
 	if (ret != 0)
 	{
-		GAME_ERROR("insert character data error!");
+		LOG_ERROR("insert character data error!");
 		return -5;
 	}
 	return 0;

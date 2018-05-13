@@ -18,7 +18,7 @@ public:
 	{
 		if (mCount != 0)
 		{
-			GAME_ERROR("error : there are components left! count : %d, type : %s", mCount, mType.c_str());
+			LOG_ERROR("error : there are components left! count : %d, type : %s", mCount, mType.c_str());
 		}
 	}
 	virtual txComponent* createComponent(const std::string& name) = 0;
@@ -32,12 +32,12 @@ public:
 	{
 		if (component == NULL)
 		{
-			GAME_ERROR("error : can not destroy NULL character component!");
+			LOG_ERROR("error : can not destroy NULL character component!");
 			return;
 		}
 		if (component->getType() != mType)
 		{
-			GAME_ERROR("error : destroy wrong type of character component! factory type : %s, component type : %s", mType.c_str(), component->getType().c_str());
+			LOG_ERROR("error : destroy wrong type of character component! factory type : %s, component type : %s", mType.c_str(), component->getType().c_str());
 		}
 		TRACE_DELETE(component);
 		--mCount;

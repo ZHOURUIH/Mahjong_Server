@@ -22,8 +22,3 @@ void CommandCharacterLeaveRoom::execute()
 	// 发送消息通知客户端离开房间的结果
 	mNetServer->sendMessage(leaveRet, player->getClientGUID());
 }
-
-std::string CommandCharacterLeaveRoom::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

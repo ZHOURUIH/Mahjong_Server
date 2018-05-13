@@ -9,7 +9,7 @@ class CommandRoomManagerDestroyRoom : public txCommand
 public:
 	virtual void reset()
 	{
-		mRoomID = INVALID_ID;
+		mRoomID = INVALID_INT_ID;
 	}
 	virtual void execute();
 	virtual std::string showDebugInfo();

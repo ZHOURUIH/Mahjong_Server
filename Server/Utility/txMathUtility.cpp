@@ -181,7 +181,7 @@ float txMath::calculateFloat(std::string str)
 	while (true)
 	{
 		// 先判断有没有括号，如果有括号就先算括号里的,如果没有就退出while循环
-		if (str.find_first_of("(") != -1 || str.find_first_of(")") != -1)
+		if (str.find_first_of("(") != std::string::npos || str.find_first_of(")") != std::string::npos)
 		{
 			int curpos = str.find_last_of("(");
 			std::string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);
@@ -403,7 +403,7 @@ int txMath::calculateInt(std::string str)
 	while (true)
 	{
 		// 先判断有没有括号，如果有括号就先算括号里的,如果没有就退出while循环
-		if (str.find_first_of("(") != -1 || str.find_first_of(")") != -1)
+		if (str.find_first_of("(") != std::string::npos || str.find_first_of(")") != std::string::npos)
 		{
 			int curpos = str.find_last_of("(");
 			std::string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);

@@ -11,7 +11,7 @@ void txMemoryCheck::usePtr(void* ptr)
 	LOCK(mLock);
 	if (!mUsedPtrs.insert(ptr).second)
 	{
-		GAME_ERROR("error : ptr is in use!");
+		LOG_ERROR("error : ptr is in use!");
 	}
 	UNLOCK(mLock);
 }
@@ -26,7 +26,7 @@ void txMemoryCheck::unusePtr(void* ptr)
 	}
 	else
 	{
-		GAME_ERROR("error : not find ptr! can not unuse it!");
+		LOG_ERROR("error : not find ptr! can not unuse it!");
 	}
 	UNLOCK(mLock);
 }

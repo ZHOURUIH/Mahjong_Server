@@ -140,7 +140,7 @@ void Room::leaveRoom(CharacterPlayer* player)
 	}
 
 	// 清空玩家的房间ID,庄家标记,麻将数据
-	data->mRoomID = INVALID_ID;
+	data->mRoomID = INVALID_INT_ID;
 	data->mBanker = false;
 	data->mPosition = -1;
 	player->clearMahjong();
@@ -229,7 +229,8 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
 			// 牌已经摸完了,则本局为平局
 			else
 			{
-				endGame(txMap<CharacterPlayer*, HuInfo*>());
+				txMap<CharacterPlayer*, HuInfo*> temp;
+				endGame(temp);
 			}
 		}
 	}
@@ -255,7 +256,8 @@ void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
 		// 牌已经摸完了,则本局为平局
 		else
 		{
-			endGame(txMap<CharacterPlayer*, HuInfo*>());
+			txMap<CharacterPlayer*, HuInfo*> temp;
+			endGame(temp);
 		}
 	}
 	// 是否可胡
@@ -305,7 +307,7 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 	txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterWait = mWaitList.find(player);
 	if (iterWait == mWaitList.end())
 	{
-		GAME_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
+		LOG_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
 		return;
 	}
 	MahjongAction* action = NULL;
@@ -399,7 +401,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 				// 牌已经摸完了,则本局为平局
 				else
 				{
-					endGame(txMap<CharacterPlayer*, HuInfo*>());
+					txMap<CharacterPlayer*, HuInfo*> temp;
+					endGame(temp);
 				}
 			}
 			else if (highestAction->mType == AT_PENG)
@@ -428,7 +431,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
 					// 牌已经摸完了,则本局为平局
 					else
 					{
-						endGame(txMap<CharacterPlayer*, HuInfo*>());
+						txMap<CharacterPlayer*, HuInfo*> temp;
+						endGame(temp);
 					}
 				}
 			}
@@ -520,7 +524,7 @@ void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlay
 {
 	if (actionList.size() == 0)
 	{
-		GAME_ERROR("has no action");
+		LOG_ERROR("has no action");
 		return;
 	}
 	// 将行为放入列表
@@ -573,7 +577,7 @@ void Room::addPlayer(CharacterPlayer* player)
 	END_FOR_STL(mPlayerPositionList);
 	if (data->mPosition == -1)
 	{
-		GAME_ERROR("can not find an available position!");
+		LOG_ERROR("can not find an available position!");
 	}
 }
 
@@ -594,7 +598,7 @@ void Room::removePlayer(CharacterPlayer* player)
 		}
 		else
 		{
-			GAME_ERROR("player not match position!");
+			LOG_ERROR("player not match position!");
 		}
 	}
 	data->mPosition = -1;
@@ -632,7 +636,7 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 		END_FOR_STL(mPlayerPositionList);
 		if (mBankerPos == -1)
 		{
-			GAME_ERROR("not find banker!");
+			LOG_ERROR("not find banker!");
 		}
 	}
 	else if (mPlayState == MPS_NORMAL_GAMING)
@@ -883,14 +887,12 @@ void Room::playerReorderMahjong(CharacterPlayer* player)
 
 void Room::playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList)
 {
-	txVector<CharacterPlayer*> huPlayerList;
-	txVector<txVector<HU_TYPE>> huList;
+	txVector<std::pair<CharacterPlayer*, txVector<HU_TYPE>>> huList;
 	txMap<CharacterPlayer*, HuInfo*>::iterator iterInfo = huInfoList.begin();
 	txMap<CharacterPlayer*, HuInfo*>::iterator iterInfoEnd = huInfoList.end();
 	FOR_STL(huInfoList, ; iterInfo != iterInfoEnd; ++iterInfo)
 	{
-		huPlayerList.push_back(iterInfo->first);
-		huList.push_back(iterInfo->second->mHuList);
+		huList.push_back(std::make_pair(iterInfo->first, iterInfo->second->mHuList));
 	}
 	END_FOR_STL(huInfoList);
 	// 通知所有玩家
@@ -899,7 +901,6 @@ void Room::playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList)
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		CommandCharacterPlayerHu* cmdOtherHu = NEW_CMD(cmdOtherHu);
-		cmdOtherHu->mHuPlayerList = huPlayerList;
 		cmdOtherHu->mHuList = huList;
 		mCommandSystem->pushCommand(cmdOtherHu, iterPlayer->second);
 	}

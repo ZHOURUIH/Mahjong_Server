@@ -23,7 +23,7 @@ public:
 	{
 		for (int i = 0; i < MAX_PLAYER; ++i)
 		{
-			mCharacterGUIDList[i] = INVALID_ID;
+			mCharacterGUIDList[i] = INVALID_INT_ID;
 			mMoneyDeltaList[i] = 0;
 		}
 		txMap<CHAR_GUID, int>::iterator iter = infoList.begin();

@@ -13,7 +13,6 @@ public:
 		mOtherPlayer = NULL;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 };

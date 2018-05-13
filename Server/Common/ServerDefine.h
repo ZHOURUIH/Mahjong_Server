@@ -74,29 +74,31 @@
 #define _USE_SAFE_API
 #define TX_THREAD HANDLE
 #define TX_SOCKET SOCKET
+#define NULL_THREAD NULL
 #define THREAD_CALLBACK_DECLEAR(func) static DWORD WINAPI func(LPVOID args)
 #define THREAD_CALLBACK(class, func) DWORD WINAPI class##::##func(LPVOID args)
 #define CREATE_THREAD(thread, func, args) thread = CreateThread(NULL, 0, func, args, 0, NULL)
 #define CLOSE_THREAD(thread)	\
-if (thread != NULL)				\
+if (thread != NULL_THREAD)		\
 {								\
 	TerminateThread(thread, 0);	\
 	CloseHandle(thread);		\
-	thread = NULL;				\
+	thread = NULL_THREAD;		\
 }
 #define CLOSE_SOCKET(socket) closesocket(socket);
 #elif RUN_PLATFORM == PLATFORM_LINUX
 #define TX_THREAD pthread_t
 #define TX_SOCKET unsigned int
+#define NULL_THREAD 0
 #define SOCKADDR_IN sockaddr_in
 #define THREAD_CALLBACK_DECLEAR(func) static void* func(void* args)
 #define THREAD_CALLBACK(class, func) void* class##::##func(void* args)
 #define CREATE_THREAD(thread, func, args) pthread_create(&thread, NULL, func, args);
 #define CLOSE_THREAD(thread)	\
-if (thread != NULL)				\
+if (thread != NULL_THREAD)		\
 {								\
 	pthread_cancel(thread);		\
-	thread = NULL;				\
+	thread = NULL_THREAD;		\
 }
 #define CLOSE_SOCKET(socket) close(socket);
 #ifdef __GNUC__
@@ -116,28 +118,26 @@ if (thread != NULL)				\
 #endif
 
 #ifndef INVALID_SOCKET
-#define INVALID_SOCKET ~0
+#define INVALID_SOCKET (unsigned int)~0
 #endif
 
-#define INVALID_ID ~0
+#define INVALID_ID (unsigned long)~0
+#define INVALID_INT_ID -1
 
 #ifndef NULL
 #define NULL 0
 #endif
 
-#include "txVector.h"
-#include "txMap.h"
-#include "txSet.h"
-
 // 再次封装后的容器的遍历宏
 #define FOR_STL(stl, expression) stl.lock(__FILE__, __LINE__);for (expression)
 #define END_FOR_STL(stl) stl.unlock();
 #define TOSTRING(t) #t
+#define LINE_STR(v) TOSTRING(v)
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节
 #define SET_BYTE(value, byte, pos) value = (value & ~(0x000000ff << (8 * pos))) | (byte << (8 * pos))
 // 获得value的指定位置pos的字节的值
 #define GET_BYTE(value, pos) (value & (0x000000ff << (8 * pos))) >> (8 * pos)
-#define _FILE_LINE_ "file : " + txStringUtility::getFileName(__FILE__) + ", line : " + txStringUtility::intToString(__LINE__)
+#define _FILE_LINE_ "File : " + std::string(__FILE__) + ", Line : " + LINE_STR(__LINE__)
 
 // 角色唯一ID
 typedef unsigned long CHAR_GUID;
@@ -152,6 +152,11 @@ typedef unsigned long CLIENT_GUID;
 
 #define LOCK(l) l.waitForUnlock(__FILE__, __LINE__)
 #define UNLOCK(l) l.unlock()
+
+#include "GameLog.h"
+#include "txVector.h"
+#include "txMap.h"
+#include "txSet.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 结构体定义

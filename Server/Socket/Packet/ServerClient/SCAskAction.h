@@ -52,7 +52,7 @@ protected:
 		int count = huList.size();
 		for (int i = 0; i < MAX_HU_COUNT; ++i)
 		{
-			if (mType == AT_HU && i < count)
+			if (i < count)
 			{
 				mHuList[i] = huList[i];
 			}

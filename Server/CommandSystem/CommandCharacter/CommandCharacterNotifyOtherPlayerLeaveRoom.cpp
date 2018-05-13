@@ -15,5 +15,5 @@ void CommandCharacterNotifyOtherPlayerLeaveRoom::execute()
 
 std::string CommandCharacterNotifyOtherPlayerLeaveRoom::showDebugInfo()
 {
-	COMMAND_DEBUG("player guid : %d", mLeavePlayerID);
+	COMMAND_DEBUG("player guid : %d", (int)mLeavePlayerID);
 }

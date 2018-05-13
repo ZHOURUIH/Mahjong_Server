@@ -12,6 +12,7 @@ class txCommandSystem
 {
 public:
 	txCommandSystem();
+	virtual ~txCommandSystem(){ destroy(); }
 	virtual void init()
 	{
 		mCommandPool->init();
@@ -35,7 +36,7 @@ public:
 	void pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdReceiver, float delayExecute = 0.001f);
 	virtual void notifyReceiverDestroied(txCommandReceiver* receiver);
 protected:
-	virtual void destroy();
+	void destroy();
 	void syncCommandBuffer();
 protected:
 	CommandPool* mCommandPool;

@@ -61,6 +61,8 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,6 +82,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

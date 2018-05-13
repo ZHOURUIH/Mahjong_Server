@@ -11,10 +11,10 @@ void ThreadLock::waitForUnlock(const char* file, const int& line)
 #endif
 	if (isLocked() && threadID == mThreadID)
 	{
-		GAME_ERROR("can not lock in the same thread!");
+		LOG_ERROR("can not lock in the same thread!");
 	}
 	// 暂不区分读锁定和写锁定
-	while (InterlockedExchange(&mLock, 1) == 1)
+	while (mLock.exchange(1) == 1)
 	{
 		txUtility::sleep(1);
 	}
@@ -26,5 +26,5 @@ void ThreadLock::waitForUnlock(const char* file, const int& line)
 
 void ThreadLock::unlock()
 {
-	InterlockedExchange(&mLock, 0);
+	mLock.exchange(0);
 }

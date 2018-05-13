@@ -35,15 +35,15 @@ protected:
 	std::string mUser;
 	std::string mPassword;
 	std::string mHost;
-	static char* DATABASE;
-	static char* TABLE_ACCOUNT;
-	static char* TABLE_CHARACTER_DATA;
-	static char* COL_ACCOUNT;
-	static char* COL_PASSWORD;
-	static char* COL_GUID;
-	static char* COL_NAME;
-	static char* COL_MONEY;
-	static char* COL_HEAD;
+	static const char* DATABASE;
+	static const char* TABLE_ACCOUNT;
+	static const char* TABLE_CHARACTER_DATA;
+	static const char* COL_ACCOUNT;
+	static const char* COL_PASSWORD;
+	static const char* COL_GUID;
+	static const char* COL_NAME;
+	static const char* COL_MONEY;
+	static const char* COL_HEAD;
 	int mPort;
 };
 

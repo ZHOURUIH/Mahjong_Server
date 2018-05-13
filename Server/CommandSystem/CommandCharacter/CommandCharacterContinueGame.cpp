@@ -29,8 +29,3 @@ void CommandCharacterContinueGame::execute()
 	cmdPlayerContinue->mContinue = mContinue;
 	mCommandSystem->pushCommand(cmdPlayerContinue, curRoom);
 }
-
-std::string CommandCharacterContinueGame::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

@@ -11,8 +11,3 @@ void CommandCharacterNotifyOtherPlayerAskAction::execute()
 	otherAskAction->mOtherPlayerGUID = mOtherPlayer->getGUID();
 	mNetServer->sendMessage(otherAskAction, player->getClientGUID());
 }
-
-std::string CommandCharacterNotifyOtherPlayerAskAction::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

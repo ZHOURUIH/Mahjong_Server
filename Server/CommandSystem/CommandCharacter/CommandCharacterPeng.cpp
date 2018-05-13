@@ -17,5 +17,5 @@ void CommandCharacterPeng::execute()
 
 std::string CommandCharacterPeng::showDebugInfo()
 {
-	COMMAND_DEBUG(DEBUG_EMPTY);
+	COMMAND_DEBUG("mahjong : %s", MAHJONG_NAME[(int)mMahjong].c_str());
 }

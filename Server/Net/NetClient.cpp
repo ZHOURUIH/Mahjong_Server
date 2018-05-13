@@ -157,7 +157,7 @@ void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 		{
 			NetServer::destroyPacket(packet);
 		}
-		GAME_ERROR("error : packet's client ID should be none!");
+		LOG_ERROR("error : packet's client ID should be none!");
 		return;
 	}
 	// 保存发送数据
@@ -170,7 +170,7 @@ void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 		{
 			NetServer::destroyPacket(packet);
 		}
-		GAME_ERROR("temp buffer is too small! send size : %d, temp buffer size : %d", sendSize, CLIENT_TEMP_BUFFER_SIZE);
+		LOG_ERROR("temp buffer is too small! send size : %d, temp buffer size : %d", sendSize, CLIENT_TEMP_BUFFER_SIZE);
 		return;
 	}
 	// 判断缓冲区是否还能存放下当前要发送的消息数据
@@ -226,7 +226,7 @@ void NetClient::notifyRecvData(const char* data, const int& dataCount)
 	if (mRecvDataCount + dataCount > CLIENT_BUFFER_SIZE)
 	{
 		// 暂时报错
-		GAME_ERROR("error : recv data is full!");
+		LOG_ERROR("error : recv data is full!");
 		return;
 	}
 	LOCK(mRecvLock);

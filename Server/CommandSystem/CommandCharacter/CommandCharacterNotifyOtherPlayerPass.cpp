@@ -13,8 +13,3 @@ void CommandCharacterNotifyOtherPlayerPass::execute()
 	otherPass->mMahjong = mMahjong;
 	mNetServer->sendMessage(otherPass, player->getClientGUID());
 }
-
-std::string CommandCharacterNotifyOtherPlayerPass::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
-}

@@ -15,5 +15,5 @@ void CommandCharacterNotifyBanker::execute()
 
 std::string CommandCharacterNotifyBanker::showDebugInfo()
 {
-	COMMAND_DEBUG("banker id : %d", mBankerID);
+	COMMAND_DEBUG("banker id : %d", (int)mBankerID);
 }

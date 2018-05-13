@@ -41,7 +41,7 @@ void txSerializer::writeBuffer(char* buffer, const int& bufferSize)
 	// 如果是只读的,则不能写入
 	if (!mWriteFlag)
 	{
-		GAME_ERROR("error : the buffer is read only, can not write!");
+		LOG_ERROR("error : the buffer is read only, can not write!");
 		return;
 	}
 	// 如果缓冲区为空,则创建缓冲区
@@ -63,18 +63,18 @@ void txSerializer::readBuffer(char* buffer, const int& bufferSize, const int& re
 	// 如果是只写的,则不能读取
 	if (mWriteFlag)
 	{
-		GAME_ERROR("error : the buffer is write only, can not read!");
+		LOG_ERROR("error : the buffer is write only, can not read!");
 		return;
 	}
 	if (mBuffer == NULL)
 	{
-		GAME_ERROR("error : buffer is NULL! can not read");
+		LOG_ERROR("error : buffer is NULL! can not read");
 		return;
 	}
 	// 先读入字符串长度
 	if (mIndex + readLen > mBufferSize)
 	{
-		GAME_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
+		LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
 		return;
 	}
 	// 如果存放数据的空间大小不足以放入当前要读取的数据,则只拷贝能容纳的长度,但是下标应该正常跳转
@@ -95,7 +95,7 @@ void txSerializer::writeString(const char* str)
 	// 如果是只读的,则不能写入
 	if (!mWriteFlag)
 	{
-		GAME_ERROR("error : the buffer is read only, can not write!");
+		LOG_ERROR("error : the buffer is read only, can not write!");
 		return;
 	}
 	// 先写入字符串长度
@@ -120,12 +120,12 @@ void txSerializer::readString(char* str, const int& strBufferSize)
 	// 如果是只写的,则不能读取
 	if (mWriteFlag)
 	{
-		GAME_ERROR("error : the buffer is write only, can not read!");
+		LOG_ERROR("error : the buffer is write only, can not read!");
 		return;
 	}
 	if (mBuffer == NULL)
 	{
-		GAME_ERROR("error : buffer is NULL! can not read");
+		LOG_ERROR("error : buffer is NULL! can not read");
 		return;
 	}
 	// 先读入字符串长度
@@ -133,7 +133,7 @@ void txSerializer::readString(char* str, const int& strBufferSize)
 	read(readLen);
 	if (mIndex + readLen > mBufferSize)
 	{
-		GAME_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
+		LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
 		return;
 	}
 	// 如果存放字符串的空间大小不足以放入当前要读取的字符串,则只拷贝能容纳的长度,但是下标应该正常跳转

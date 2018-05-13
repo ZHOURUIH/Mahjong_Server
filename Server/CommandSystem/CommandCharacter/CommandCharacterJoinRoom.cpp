@@ -45,7 +45,7 @@ void CommandCharacterJoinRoom::execute()
 	// 否则设置消息中的房间号为无效值
 	else
 	{
-		joinRet->mRoomID = INVALID_ID;
+		joinRet->mRoomID = INVALID_INT_ID;
 	}
 	// 因为要保证消息发送的顺序,并且在消息发送后会被自动销毁,所以在发送消息之前判断是否成功
 	JOIN_ROOM_RESULT result = (JOIN_ROOM_RESULT)joinRet->mResult;

@@ -45,11 +45,7 @@ protected:
 	}
 	void directError(const std::string& info)
 	{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-		MessageBoxA(NULL, info.c_str(), "", MB_OK);
-#elif RUN_PLATFORM == PLATFORM_ANDROID
-		LOGI(info.c_str());
-#endif
+		LOG_ERROR("%s", info.c_str());
 	}
 protected:
 	bool mLock;

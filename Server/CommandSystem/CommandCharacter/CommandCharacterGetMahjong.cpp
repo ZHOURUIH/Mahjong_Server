@@ -16,5 +16,5 @@ void CommandCharacterGetMahjong::execute()
 
 std::string CommandCharacterGetMahjong::showDebugInfo()
 {
-	COMMAND_DEBUG("mahjong : %s", MAHJONG_NAME[mMahjong].c_str());
+	COMMAND_DEBUG("mahjong : %s", MAHJONG_NAME[(int)mMahjong].c_str());
 }

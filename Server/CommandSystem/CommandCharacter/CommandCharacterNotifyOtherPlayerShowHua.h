@@ -15,7 +15,6 @@ public:
 		mIndex = -1;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	CharacterPlayer* mOtherPlayer;
 	MAHJONG mMahjong;

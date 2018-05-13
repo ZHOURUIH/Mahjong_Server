@@ -58,13 +58,13 @@ Character* CharacterManager::createCharacter(const std::string& name, const CHAR
 {
 	if (mCharacterList.find(name) != mCharacterList.end())
 	{
-		GAME_ERROR("error : there is a character named : %s! can not create again!", name.c_str());
+		LOG_ERROR("error : there is a character named : %s! can not create again!", name.c_str());
 		return NULL;
 	}
 	CharacterFactoryBase* factory = mCharacterFactoryManager->getFactory(type);
 	if(NULL == factory)
 	{
-		GAME_ERROR("error : can not find CharacterFactory ,type %d ", (int)type);
+		LOG_ERROR("error : can not find CharacterFactory ,type %d ", (int)type);
 		return NULL;
 	}
 
@@ -105,7 +105,7 @@ void CharacterManager::addCharacterToList(Character* character)
 	int characterID = character->getGUID();
 	if (mCharacterIDList.find(characterID) != mCharacterIDList.end())
 	{
-		GAME_ERROR("error : there is a character id : %d", characterID);
+		LOG_ERROR("error : there is a character id : %d", characterID);
 	}
 	mCharacterIDList.insert(characterID, character);
 }

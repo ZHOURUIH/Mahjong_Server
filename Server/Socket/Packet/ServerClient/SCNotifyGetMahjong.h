@@ -21,7 +21,7 @@ public:
 	}
 	virtual std::string debugInfo()
 	{
-		PACKET_DEBUG("player guid : %d, mahjong : %s", mPlayerGUID, MAHJONG_NAME[mMahjong].c_str());
+		PACKET_DEBUG("player guid : %d, mahjong : %s", mPlayerGUID, MAHJONG_NAME[(int)mMahjong].c_str());
 	}
 public:
 	int mPlayerGUID;

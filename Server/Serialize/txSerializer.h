@@ -19,7 +19,7 @@ public:
 		// 如果是只读的,则不能写入
 		if (!mWriteFlag)
 		{
-			GAME_ERROR("error : the buffer is read only, can not write!");
+			LOG_ERROR("error : the buffer is read only, can not write!");
 			return;
 		}
 		int writeLen = sizeof(T);
@@ -42,18 +42,18 @@ public:
 		// 如果是只写的,则不能读取
 		if (mWriteFlag)
 		{
-			GAME_ERROR("error : the buffer is write only, can not read!");
+			LOG_ERROR("error : the buffer is write only, can not read!");
 			return;
 		}
 		if (mBuffer == NULL)
 		{
-			GAME_ERROR("error : buffer is NULL! can not read");
+			LOG_ERROR("error : buffer is NULL! can not read");
 			return;
 		}
 		int readLen = sizeof(T);
 		if (mIndex + readLen > mBufferSize)
 		{
-			GAME_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
+			LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
 			return;
 		}
 		value = *((T*)(mBuffer + mIndex));

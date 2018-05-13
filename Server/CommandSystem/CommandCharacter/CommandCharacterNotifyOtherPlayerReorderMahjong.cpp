@@ -14,5 +14,5 @@ void CommandCharacterNotifyOtherPlayerReorderMahjong::execute()
 
 std::string CommandCharacterNotifyOtherPlayerReorderMahjong::showDebugInfo()
 {
-	COMMAND_DEBUG("player guid : %d", mPlayerGUID);
+	COMMAND_DEBUG("player guid : %d", (int)mPlayerGUID);
 }

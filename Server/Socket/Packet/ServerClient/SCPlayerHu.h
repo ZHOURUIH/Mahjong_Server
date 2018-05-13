@@ -20,35 +20,29 @@ public:
 		pushArrayParam(mHuPlayerGUID, MAX_PLAYER - 1);
 		pushArrayParam(mHuList, MAX_HU_COUNT * (MAX_PLAYER - 1));
 	}
-	virtual std::string debugInfo()
-	{
-		PACKET_DEBUG(PACKET_EMPTY);
-	}
-	void setHuPlayer(const txVector<CharacterPlayer*>& huPlayerList)
-	{
-		for (int i = 0; i < MAX_PLAYER - 1; ++i)
-		{
-			if (i < (int)huPlayerList.size())
-			{
-				mHuPlayerGUID[i] = huPlayerList[i]->getGUID();
-			}
-			else
-			{
-				mHuPlayerGUID[i] = INVALID_ID;
-			}
-		}
-	}
-	void setHuList(const txVector<txVector<HU_TYPE>>& huList)
+	void setHuList(const txVector<std::pair<CharacterPlayer*, txVector<HU_TYPE>>>& huList)
 	{
 		int playerCount = huList.size();
 		for (int i = 0; i < MAX_PLAYER - 1; ++i)
 		{
-			int huCount = i < playerCount ? huList[i].size() : 0;
+			if (i < playerCount)
+			{
+				mHuPlayerGUID[i] = huList[i].first->getGUID();
+			}
+			else
+			{
+				mHuPlayerGUID[i] = INVALID_INT_ID;
+			}
+		}
+
+		for (int i = 0; i < MAX_PLAYER - 1; ++i)
+		{
+			int huCount = i < playerCount ? playerCount : 0;
 			for (int j = 0; j < MAX_HU_COUNT; ++j)
 			{
 				if (j < huCount && i < playerCount)
 				{
-					mHuList[i * MAX_HU_COUNT + j] = huList[i][j];
+					mHuList[i * MAX_HU_COUNT + j] = huList[i].second[j];
 				}
 				else
 				{

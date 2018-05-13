@@ -18,7 +18,7 @@ public:
 	{
 		if (mCurCount != 0)
 		{
-			GAME_ERROR("error : there is character left! count : %d", mCurCount);
+			LOG_ERROR("error : there is character left! count : %d", mCurCount);
 		}
 	}
 	virtual Character* createCharacter(const std::string& name) = 0;
@@ -26,12 +26,12 @@ public:
 	{
 		if (character == NULL)
 		{
-			GAME_ERROR("error : can not destroy NULL character!");
+			LOG_ERROR("error : can not destroy NULL character!");
 			return;
 		}
 		if (character->getType() != mType)
 		{
-			GAME_ERROR("error : destroy wrong type character! factory type : %d, character type : %d", (int)mType, (int)character->getType());
+			LOG_ERROR("error : destroy wrong type character! factory type : %d, character type : %d", (int)mType, (int)character->getType());
 		}
 		TRACE_DELETE(character);
 		--mCurCount;

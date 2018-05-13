@@ -12,7 +12,6 @@ public:
 		mActionList.clear();
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 	txVector<MahjongAction*> mActionList;
 };

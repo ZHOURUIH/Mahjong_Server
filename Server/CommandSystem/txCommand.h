@@ -19,7 +19,10 @@ public:
 	// 命令执行
 	virtual void execute() = 0;
 	// 调试信息，由CommandSystem调用
-	virtual std::string showDebugInfo() = 0;
+	virtual std::string showDebugInfo()
+	{
+		COMMAND_DEBUG(DEBUG_EMPTY);
+	}
 	const bool& getShowDebugInfo()						{ return mShowDebugInfo; }
 	const bool& isDelayCommand()						{ return mDelayCommand; }
 	txCommandReceiver* getReceiver()					{ return mReceiver; }

@@ -22,7 +22,7 @@ void ServerUtility::init()
 	mMultipleList.insert(HT_TIANHU, 4);
 	if (mMultipleList.size() != HT_MAX)
 	{
-		GAME_ERROR("not all hu type added!");
+		LOG_ERROR("not all hu type added!");
 	}
 }
 

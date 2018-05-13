@@ -14,13 +14,13 @@ public:
 		mMoney = 0;
 		mBanker = false;
 		mPosition = -1;
-		mRoomID = INVALID_ID;
+		mRoomID = INVALID_INT_ID;
 		mReady = false;
 	}
 	virtual ~CharacterData(){}
 public:
 	std::string mName;						// 名字
-	int mGUID;								// 唯一ID
+	CHAR_GUID mGUID;						// 唯一ID
 	int mHead;								// 头像
 	int mMoney;								// 金币数
 	bool mBanker;							// 是否为庄家

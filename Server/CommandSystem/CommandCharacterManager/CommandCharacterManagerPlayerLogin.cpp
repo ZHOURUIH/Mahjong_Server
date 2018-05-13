@@ -22,7 +22,7 @@ void CommandCharacterManagerPlayerLogin::execute()
 	data->mMoney = mMoney;
 	data->mBanker = false;
 	data->mPosition = -1;
-	data->mRoomID = INVALID_ID;
+	data->mRoomID = INVALID_INT_ID;
 	data->mReady = false;
 
 	// 玩家登陆成功后, 发回登陆成功的消息
