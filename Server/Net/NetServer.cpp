@@ -7,9 +7,9 @@
 #include "TimeLock.h"
 
 CLIENT_GUID NetServer::mSocketGUIDSeed = 0;
-PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
 float NetServer::mHeartBeatTimeOut = 0.0f;
 bool NetServer::mOutputLog = true;
+PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
 
 NetServer::NetServer()
 :
@@ -19,10 +19,10 @@ txCommandReceiver(TOSTRING(NetServer))
 	mAcceptThread = TRACE_NEW(CustomThread, mAcceptThread, "AcceptSocket");
 	mSocket = INVALID_SOCKET;
 	mPort = 0;
-	mOutputLog = true;
 	mMaxSocket = 0;
-	mHeartBeatTimeOut = 0.0f;
-	mPacketFactoryManager = NULL;
+	mServerHeartBeatTimeout = 10.0f;
+	mCurServerHeartBeatTime = 0.0f;
+	mPacketFactoryManager = TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
 }
 
 void NetServer::destroy()
@@ -54,7 +54,6 @@ void NetServer::init(const int& port, const int& backLog)
 	mHeartBeatTimeOut = ServerConfig::getFloatParam(SDF_HEART_BEAT_TIME_OUT);
 	mOutputLog = (int)ServerConfig::getFloatParam(SDF_OUTPUT_NET_LOG) > 0;
 	// 初始化工厂
-	mPacketFactoryManager = TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
 	mPacketFactoryManager->init();
 
 	//初始化Socket环境
@@ -118,7 +117,7 @@ bool NetServer::acceptSocket(void* args)
 		return true;
 	}
 	// 获得客户端IP,然后通知已经接收到一个客户端的连接
-	if (mOutputLog)
+	if (netManager->mOutputLog)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 		SPRINTF(ip, 16, "%d.%d.%d.%d", addr.sin_addr.S_un.S_un_b.s_b1, addr.sin_addr.S_un.S_un_b.s_b2, addr.sin_addr.S_un.S_un_b.s_b3, addr.sin_addr.S_un.S_un_b.s_b4);
@@ -299,6 +298,12 @@ void NetServer::update(const float& elapsedTime)
 		disconnectSocket(logoutClientList[i]);
 	}
 	END_FOR_STL(logoutClientList);
+	mCurServerHeartBeatTime += elapsedTime;
+	if (mCurServerHeartBeatTime >= mServerHeartBeatTimeout)
+	{
+		mCurServerHeartBeatTime = 0.0f;
+		LOG_INFO("服务器心跳 : %d", mServerHeartBeat++);
+	}
 }
 
 CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)

@@ -6,7 +6,7 @@
 void CommandCharacterNotifyOtherPlayerReady::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	// 鍙戦€佹湁鐜╁鍑嗗鐨勬秷鎭?
+	// 发送有玩家准备的消息
 	SCOtherPlayerReady* playerReady = static_cast<SCOtherPlayerReady*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_READY));
 	playerReady->mPlayerGUID = mPlayerGUID;
 	playerReady->mReady = mReady;

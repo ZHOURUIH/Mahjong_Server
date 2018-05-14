@@ -30,7 +30,7 @@ public:
 	void sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend = true);
 	static Packet* createPacket(const PACKET_TYPE& type);
 	static void destroyPacket(Packet* packet);
-	virtual void disconnectSocket(const CLIENT_GUID& client);	// 涓庡鎴风鏂紑杩炴帴,鍙兘鍦ㄤ富绾跨▼涓皟鐢?
+	virtual void disconnectSocket(const CLIENT_GUID& client);	// 与客户端断开连接,只能在主线程中调用
 	NetClient* getClient(const CLIENT_GUID& clientGUID);
 protected:
 	static bool acceptSocket(void* args);
@@ -42,17 +42,20 @@ protected:
 	static void signalProcess(int signalNum);
 #endif
 protected:
-	int mPort;                 // 绔彛鍙?
+	int mPort;                 // 端口号
 	unsigned int mMaxSocket;
 	TX_SOCKET mSocket;
 	CustomThread* mAcceptThread;
 	CustomThread* mReceiveThread;
 	ThreadLock mClientLock;
-	txMap<CLIENT_GUID, NetClient*> mClientList;	// 瀹㈡埛绔垪琛?
+	txMap<CLIENT_GUID, NetClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;
 	static float mHeartBeatTimeOut;
 	static bool mOutputLog;
+	float mServerHeartBeatTimeout;	// 服务器自身心跳间隔时间
+	float mCurServerHeartBeatTime;
+	int mServerHeartBeat;			// 服务器自身的心跳,用于判断服务器是否还在继续运行
 };
 
 #endif

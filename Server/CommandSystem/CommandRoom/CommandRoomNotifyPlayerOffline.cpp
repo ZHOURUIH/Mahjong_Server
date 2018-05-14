@@ -6,7 +6,7 @@
 
 void CommandRoomNotifyPlayerOffline::execute()
 {
-	// 鎴块棿涓湁鐜╁绂荤嚎,鍒欓€€鍑鸿鐜╁
+	// 房间中有玩家离线,则退出该玩家
 	CommandCharacterLeaveRoom* cmd = NEW_CMD(cmd);
 	mCommandSystem->pushCommand(cmd, mCharacterManager->getCharacter(mOfflinePlayer));
 }

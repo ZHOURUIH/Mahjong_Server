@@ -18,7 +18,7 @@ public:
 		txCommandReceiver("DataBase")
 	{}
 	virtual ~DataBase() { destroy(); }
-	// 鍒濆鍖栨墍鏈夋暟鎹?
+	// 初始化所有数据
 	void init(const bool& loadAllData = true);
 	virtual void initDataFactory() = 0;
 	void destroyDataFactory();
@@ -31,14 +31,14 @@ public:
 	virtual void update(const float& elapsedTime){}
 	void destroy()
 	{
-		// 鍏堥攢姣佹暟鎹?
+		// 先销毁数据
 		destroyAllData();
-		// 鍐嶉攢姣佸伐鍘?
+		// 再销毁工厂
 		destroyDataFactory();
 		mDataFileDefine.clear();
 		mDataDefineFile.clear();
 	}
-	// 寰楀埌鏁版嵁鍒楄〃
+	// 得到数据列表
 	bool getDataList(const DATA_TYPE& type, txVector<Data*>& dataList)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
@@ -49,7 +49,7 @@ public:
 		dataList = iter->second;
 		return true;
 	}
-	// 寰楀埌鏁版嵁鏁伴噺
+	// 得到数据数量
 	int getDataCount(const DATA_TYPE& type)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
@@ -59,7 +59,7 @@ public:
 		}
 		return 0;
 	}
-	// 鏌ヨ鏁版嵁
+	// 查询数据
 	Data* queryData(const DATA_TYPE& type, const int& index)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
@@ -74,7 +74,7 @@ public:
 	}
 	bool addData(const DATA_TYPE& type, Data* data, const int& pos = -1);
 	bool deleteData(const DATA_TYPE& type, const int& index);
-	// 鏍规嵁鏁版嵁鍚嶅緱鍒版暟鎹畾涔?
+	// 根据数据名得到数据定义
 	const std::string& getDataNameByDataType(const DATA_TYPE& type)
 	{
 		txMap<DATA_TYPE, std::string>::iterator iter = mDataDefineFile.find(type);
@@ -84,7 +84,7 @@ public:
 		}
 		return EMPTY_STRING;
 	}
-	// 鏍规嵁鏁版嵁瀹氫箟寰楀埌鏁版嵁鍚?
+	// 根据数据定义得到数据名
 	DATA_TYPE getDataTypeByDataName(const std::string& name)
 	{
 		txMap<std::string, DATA_TYPE>::iterator iter = mDataFileDefine.find(name);

@@ -19,18 +19,18 @@ public:
 	}
 	virtual ~CharacterData(){}
 public:
-	std::string mName;						// 鍚嶅瓧
-	CHAR_GUID mGUID;						// 鍞竴ID
-	int mHead;								// 澶村儚
-	int mMoney;								// 閲戝竵鏁?
-	bool mBanker;							// 鏄惁涓哄簞瀹?
-	int mPosition;							// 鐜╁鐨勪綅缃?鎴块棿涓殑椤哄簭,瀹㈡埛绔腑闇€瑕佷緷鎹椤哄簭,閲嶆柊鎺掑垪鑷繁甯冨眬鐨勪綅缃?
-	int mRoomID;							// 鐜╁褰撳墠鎵€鍦ㄧ殑鎴块棿ID
-	bool mReady;							// 鐜╁鏄惁宸插噯澶?
-	txVector<MAHJONG> mHandIn;				// 鎵嬮噷鐨勭墝
-	txVector<MAHJONG> mDropList;			// 鎵撳嚭鐨勭墝
-	txVector<PengGangInfo*> mPengGangList;	// 纰版垨鑰呮潬鐨勭墝
-	txVector<MAHJONG> mHuaList;				// 鎽稿埌鐨勮姳鐗?
+	std::string mName;						// 名字
+	CHAR_GUID mGUID;						// 唯一ID
+	int mHead;								// 头像
+	int mMoney;								// 金币数
+	bool mBanker;							// 是否为庄家
+	int mPosition;							// 玩家的位置,房间中的顺序,客户端中需要依据此顺序,重新排列自己布局的位置
+	int mRoomID;							// 玩家当前所在的房间ID
+	bool mReady;							// 玩家是否已准备
+	txVector<MAHJONG> mHandIn;				// 手里的牌
+	txVector<MAHJONG> mDropList;			// 打出的牌
+	txVector<PengGangInfo*> mPengGangList;	// 碰或者杠的牌
+	txVector<MAHJONG> mHuaList;				// 摸到的花牌
 };
 
 #endif

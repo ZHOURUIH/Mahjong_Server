@@ -5,7 +5,7 @@
 void CommandRoomNotifyPlayerReady::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
-	// 閫氱煡鎴块棿涓殑鍏朵粬鐜╁鏈夌帺瀹跺凡缁忓噯澶?
+	// 通知房间中的其他玩家有玩家已经准备
 	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
@@ -20,7 +20,7 @@ void CommandRoomNotifyPlayerReady::execute()
 		}
 	}
 	END_FOR_STL(playerList);
-	// 鎵€鏈夌帺瀹堕兘鍑嗗瀹屾瘯鍚?閫氱煡鎴块棿寮€濮嬫父鎴?
+	// 所有玩家都准备完毕后,通知房间开始游戏
 	if (room->isRoomFull() && room->isAllPlayerReady())
 	{
 		CommandRoomStartGame* cmd = NEW_CMD(cmd);

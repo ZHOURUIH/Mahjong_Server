@@ -8,66 +8,66 @@ enum PACKET_TYPE
 {
 	PT_MIN,
 
-	// CS琛ㄧずClient->Server
+	// CS表示Client->Server
 	PT_CS_MIN = 10000,
-	PT_CS_HEART_BEAT,                       // 鍚戞湇鍔″櫒鍙戦€佺殑蹇冭烦
-	PT_CS_REGISTER,                         // 鍚戞湇鍔″櫒鍙戦€佹敞鍐岃处鍙?
-	PT_CS_LOGIN,                            // 鍚戞湇鍔″櫒鍙戦€佺櫥褰曡姹?
-	PT_CS_CHECK_NAME,                       // 鍚戞湇鍔″櫒璇锋眰鍒ゆ柇鍚嶅瓧鏄惁宸茬粡瀛樺湪
-	PT_CS_CHECK_ACCOUNT,                    // 鍚戞湇鍔″櫒璇锋眰鍒ゆ柇璐﹀彿鏄惁宸茬粡瀛樺湪
-	PT_CS_CREATE_ROOM,                      // 鍚戞湇鍔″櫒璇锋眰鍒涘缓鎴块棿
-	PT_CS_JOIN_ROOM,                        // 鍚戞湇鍔″櫒璇锋眰鍔犲叆鎴块棿
-	PT_CS_READY,                            // 鍚戞湇鍔″櫒鍙戦€佹槸鍚﹀凡鍑嗗
-	PT_CS_LEAVE_ROOM,                       // 鍚戞湇鍔″櫒璇锋眰绂诲紑鎴块棿
-	PT_CS_DICE_DONE,                        // 鍚戞湇鍔″櫒鍙戦€侀瀛?
-	PT_CS_REQUEST_DROP,                     // 鍚戞湇鍔″櫒璇锋眰鎵撳嚭涓€寮犵墝
-	PT_CS_CONFIRM_ACTION,                   // 鍚戞湇鍔″櫒纭楹诲皢鎿嶄綔
-	PT_CS_CONTINUE_GAME,                    // 鍚戞湇鍔″櫒璇锋眰缁х画娓告垙
-	PT_CS_BACK_TO_MAHJONG_HALL,				// 鍚戞湇鍔″櫒璇锋眰杩斿洖澶у巺
+	PT_CS_HEART_BEAT,                       // 向服务器发送的心跳
+	PT_CS_REGISTER,                         // 向服务器发送注册账号
+	PT_CS_LOGIN,                            // 向服务器发送登录请求
+	PT_CS_CHECK_NAME,                       // 向服务器请求判断名字是否已经存在
+	PT_CS_CHECK_ACCOUNT,                    // 向服务器请求判断账号是否已经存在
+	PT_CS_CREATE_ROOM,                      // 向服务器请求创建房间
+	PT_CS_JOIN_ROOM,                        // 向服务器请求加入房间
+	PT_CS_READY,                            // 向服务器发送是否已准备
+	PT_CS_LEAVE_ROOM,                       // 向服务器请求离开房间
+	PT_CS_DICE_DONE,                        // 向服务器发送骰子
+	PT_CS_REQUEST_DROP,                     // 向服务器请求打出一张牌
+	PT_CS_CONFIRM_ACTION,                   // 向服务器确认麻将操作
+	PT_CS_CONTINUE_GAME,                    // 向服务器请求继续游戏
+	PT_CS_BACK_TO_MAHJONG_HALL,				// 向服务器请求返回大厅
 	PT_CS_MAX,
 
-	// SC琛ㄧずServer->Client
+	// SC表示Server->Client
 	PT_SC_MIN = 20000,
-	PT_SC_HEART_BEAT_RET,                   // 鍚戝鎴风鍙戝洖鐨勫績璺崇粨鏋?
-	PT_SC_START_GAME,                       // 鍚戝鎴风鍙戦€佺殑鍙互寮€濮嬫父鎴忕殑娑堟伅
-	PT_SC_REGISTER_RET,                     // 鍚戝鎴风鍙戝洖鐨勬敞鍐岃处鍙风殑缁撴灉
-	PT_SC_LOGIN_RET,                        // 鍚戝鎴风鍙戝洖鐨勭櫥褰曠粨鏋?
-	PT_SC_OTHER_PLAYER_OFFLINE,             // 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁鎺夌嚎
-	PT_SC_CHECK_NAME_RET,                   // 鍚戝鎴风杩斿洖鐨勬娴嬪悕瀛楃殑缁撴灉
-	PT_SC_CHECK_ACCOUNT_RET,                // 鍚戝鎴风杩斿洖鐨勬娴嬭处鍙风殑缁撴灉
-	PT_SC_CREATE_ROOM_RET,                  // 鍚戝鎴风杩斿洖鍒涘缓鎴块棿鐨勭粨鏋?
-	PT_SC_NOTIFY_BANKER,                    // 閫氱煡瀹㈡埛绔簞瀹跺彉鍖?
-	PT_SC_OTHER_PLAYER_LEAVE_ROOM,          // 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁绂诲紑鎴块棿
-	PT_SC_OTHER_PLAYER_JOIN_ROOM,           // 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁鍔犲叆鎴块棿
-	PT_SC_JOIN_ROOM_RET,                    // 閫氱煡瀹㈡埛绔姞鍏ユ埧闂寸殑缁撴灉
-	PT_SC_READY_RET,                        // 閫氱煡瀹㈡埛绔帺瀹舵槸鍚﹀噯澶?
-	PT_SC_OTHER_PLAYER_READY,               // 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁鍑嗗
-	PT_SC_LEAVE_ROOM_RET,                   // 閫氱煡瀹㈡埛绔寮€鎴块棿鐨勭粨鏋?
-	PT_SC_DICE_DONE_RET,                    // 閫氱煡瀹㈡埛绔幏楠板瓙瀹屾瘯,寮€濮嬫嬁鐗?
-	PT_SC_NOTIFY_GET_START_MAHJONG,         // 閫氱煡瀹㈡埛绔湁鐜╁寮€灞€鎷跨墝
-	PT_SC_NOTIFY_REORDER_MAHJONG,           // 閫氱煡瀹㈡埛绔噸鏂版帓鍒楅夯灏?
-	PT_SC_NOTIFY_GET_START_DONE,            // 閫氱煡瀹㈡埛绔紑灞€鎷跨墝瀹屾瘯
-	PT_SC_ASK_DROP,                         // 閫氱煡瀹㈡埛绔渶瑕佹墦鍑轰竴寮犵墝
-	PT_SC_NOTIFY_GET_MAHJONG,               // 閫氱煡瀹㈡埛绔湁鐜╁鎽镐簡涓€寮犵墝
-	PT_SC_ASK_ACTION,                       // 閫氱煡瀹㈡埛绔€夋嫨楹诲皢琛屼负
-	PT_SC_OTHER_PLAYER_DROP,                // 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁鎵撳嚭涓€寮犵墝
-	PT_SC_REQUEST_DROP_RET,                 // 閫氱煡瀹㈡埛绔姹傛墦鍑轰竴寮犵墝鐨勭粨鏋?
-	PT_SC_PLAYER_HU,                        // 閫氱煡瀹㈡埛绔儭鐗?
-	PT_SC_PLAYER_GANG,                      // 閫氱煡瀹㈡埛绔潬鐗?
-	PT_SC_PLAYER_PENG,                      // 閫氱煡瀹㈡埛绔鐗?
-	PT_SC_PLAYER_PASS,                      // 閫氱煡瀹㈡埛绔繃
-	PT_SC_OTHER_PLAYER_GANG,                // 閫氱煡瀹㈡埛绔叾浠栫帺瀹舵潬鐗?
-	PT_SC_OTHER_PLAYER_PENG,                // 閫氱煡瀹㈡埛绔叾浠栫帺瀹剁鐗?
-	PT_SC_OTHER_PLAYER_PASS,                // 閫氱煡瀹㈡埛绔叾浠栫帺瀹惰繃
-	PT_SC_OTHER_PLAYER_ASK_DROP,            // 閫氱煡瀹㈡埛绔瓑寰呭叾浠栫帺瀹舵墦鍑虹墝
-	PT_SC_OTHER_PLAYER_ASK_ACTION,          // 閫氱煡瀹㈡埛绔瓑寰呭叾浠栫帺瀹堕€夋嫨鎿嶄綔
-	PT_SC_NOTIFY_MAHJONG_END,               // 閫氱煡瀹㈡埛绔湰灞€娓告垙缁撴潫
-	PT_SC_CONTINUE_GAME_RET,                // 閫氱煡瀹㈡埛绔户缁父鎴忕殑缁撴灉
-	PT_SC_OTHER_PLAYER_CONTINUE_GAME,		// 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁閫夋嫨缁х画娓告垙
-	PT_SC_BACK_TO_MAHJONG_HALL_RET,			// 閫氱煡瀹㈡埛绔繑鍥炲ぇ鍘呯殑缁撴灉
-	PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL,// 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁閫夋嫨杩斿洖澶у巺
-	PT_SC_SHOW_HUA,							// 閫氱煡瀹㈡埛绔憜鍑鸿姳鐗?
-	PT_SC_OTHER_PLAYER_SHOW_HUA,			// 閫氱煡瀹㈡埛绔湁鍏朵粬鐜╁鎽嗗嚭鑺辩墝
+	PT_SC_HEART_BEAT_RET,                   // 向客户端发回的心跳结果
+	PT_SC_START_GAME,                       // 向客户端发送的可以开始游戏的消息
+	PT_SC_REGISTER_RET,                     // 向客户端发回的注册账号的结果
+	PT_SC_LOGIN_RET,                        // 向客户端发回的登录结果	
+	PT_SC_OTHER_PLAYER_OFFLINE,             // 通知客户端有其他玩家掉线
+	PT_SC_CHECK_NAME_RET,                   // 向客户端返回的检测名字的结果
+	PT_SC_CHECK_ACCOUNT_RET,                // 向客户端返回的检测账号的结果
+	PT_SC_CREATE_ROOM_RET,                  // 向客户端返回创建房间的结果
+	PT_SC_NOTIFY_BANKER,                    // 通知客户端庄家变化
+	PT_SC_OTHER_PLAYER_LEAVE_ROOM,          // 通知客户端有其他玩家离开房间
+	PT_SC_OTHER_PLAYER_JOIN_ROOM,           // 通知客户端有其他玩家加入房间
+	PT_SC_JOIN_ROOM_RET,                    // 通知客户端加入房间的结果
+	PT_SC_READY_RET,                        // 通知客户端玩家是否准备
+	PT_SC_OTHER_PLAYER_READY,               // 通知客户端有其他玩家准备
+	PT_SC_LEAVE_ROOM_RET,                   // 通知客户端离开房间的结果
+	PT_SC_DICE_DONE_RET,                    // 通知客户端掷骰子完毕,开始拿牌
+	PT_SC_NOTIFY_GET_START_MAHJONG,         // 通知客户端有玩家开局拿牌
+	PT_SC_NOTIFY_REORDER_MAHJONG,           // 通知客户端重新排列麻将
+	PT_SC_NOTIFY_GET_START_DONE,            // 通知客户端开局拿牌完毕
+	PT_SC_ASK_DROP,                         // 通知客户端需要打出一张牌
+	PT_SC_NOTIFY_GET_MAHJONG,               // 通知客户端有玩家摸了一张牌
+	PT_SC_ASK_ACTION,                       // 通知客户端选择麻将行为
+	PT_SC_OTHER_PLAYER_DROP,                // 通知客户端有其他玩家打出一张牌
+	PT_SC_REQUEST_DROP_RET,                 // 通知客户端请求打出一张牌的结果
+	PT_SC_PLAYER_HU,                        // 通知客户端胡牌
+	PT_SC_PLAYER_GANG,                      // 通知客户端杠牌
+	PT_SC_PLAYER_PENG,                      // 通知客户端碰牌
+	PT_SC_PLAYER_PASS,                      // 通知客户端过
+	PT_SC_OTHER_PLAYER_GANG,                // 通知客户端其他玩家杠牌
+	PT_SC_OTHER_PLAYER_PENG,                // 通知客户端其他玩家碰牌
+	PT_SC_OTHER_PLAYER_PASS,                // 通知客户端其他玩家过
+	PT_SC_OTHER_PLAYER_ASK_DROP,            // 通知客户端等待其他玩家打出牌
+	PT_SC_OTHER_PLAYER_ASK_ACTION,          // 通知客户端等待其他玩家选择操作
+	PT_SC_NOTIFY_MAHJONG_END,               // 通知客户端本局游戏结束
+	PT_SC_CONTINUE_GAME_RET,                // 通知客户端继续游戏的结果
+	PT_SC_OTHER_PLAYER_CONTINUE_GAME,		// 通知客户端有其他玩家选择继续游戏
+	PT_SC_BACK_TO_MAHJONG_HALL_RET,			// 通知客户端返回大厅的结果
+	PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL,// 通知客户端有其他玩家选择返回大厅
+	PT_SC_SHOW_HUA,							// 通知客户端摆出花牌
+	PT_SC_OTHER_PLAYER_SHOW_HUA,			// 通知客户端有其他玩家摆出花牌
 	PT_SC_MAX,
 
 	PT_MAX,
