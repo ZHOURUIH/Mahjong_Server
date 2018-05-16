@@ -301,7 +301,7 @@ void NetServer::update(const float& elapsedTime)
 	mCurServerHeartBeatTime += elapsedTime;
 	if (mCurServerHeartBeatTime >= mServerHeartBeatTimeout)
 	{
-		mCurServerHeartBeatTime = 0.0f;
+		mCurServerHeartBeatTime -= mServerHeartBeatTimeout;
 		LOG_INFO("服务器心跳 : %d", mServerHeartBeat++);
 	}
 }

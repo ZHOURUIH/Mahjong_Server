@@ -4,16 +4,15 @@
 TimeLock::TimeLock(const long& frameTimeMS)
 {
 	mFrameTimeMS = frameTimeMS;
-	mLastTime = 0;
-	mForceSleep = 0;
+	mForceSleep = 5;
 	mLastTime = txUtility::getTimeMS();
+	mCurTime = mLastTime;
 }
 
 long TimeLock::update()
 {
-	long curTime = txUtility::getTimeMS();
-	long thisFrameTime = curTime - mLastTime;
-	long remainMS = mFrameTimeMS - thisFrameTime;
+	long endTime = txUtility::getTimeMS();
+	long remainMS = mFrameTimeMS - (endTime - mCurTime);
 	if (remainMS > 0)
 	{
 		txUtility::sleep(remainMS);
@@ -22,6 +21,8 @@ long TimeLock::update()
 	{
 		txUtility::sleep(mForceSleep);
 	}
-	mLastTime = curTime;
-	return thisFrameTime;
+	mCurTime = txUtility::getTimeMS();
+	long frameTime = mCurTime - mLastTime;
+	mLastTime = mCurTime;
+	return frameTime;
 }

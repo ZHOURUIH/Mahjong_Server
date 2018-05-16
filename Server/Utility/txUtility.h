@@ -11,7 +11,7 @@ class txUtility
 public:
 	static void stop();
 	static void sleep(const unsigned long& timeMS);
-	static unsigned long getTimeMS();
+	static long getTimeMS();
 	static const char* getTime();
 	// 返回media的路径,不带/
 	static const std::string& getMediaPath()

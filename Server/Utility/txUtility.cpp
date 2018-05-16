@@ -19,14 +19,17 @@ void txUtility::sleep(const unsigned long& timeMS)
 #endif
 }
 
-unsigned long txUtility::getTimeMS()
+long txUtility::getTimeMS()
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	return timeGetTime();
 #elif RUN_PLATFORM == PLATFORM_LINUX
 	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return (unsigned long)(tv.tv_sec * 1000.0f + tv.tv_usec / 1000.0f);
+	if(gettimeofday(&tv, NULL) != 0)
+	{
+		LOG_ERROR("time get error : %d", errno);
+	}
+	return tv.tv_sec * 1000 + (long)(tv.tv_usec / 1000.0f);
 #endif
 }
 
