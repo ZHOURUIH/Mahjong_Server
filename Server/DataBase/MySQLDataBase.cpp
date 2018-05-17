@@ -2,9 +2,9 @@
 #include "GameLog.h"
 #include "Utility.h"
 
-const char* MySQLDataBase::DATABASE = "test";
-const char* MySQLDataBase::TABLE_ACCOUNT = "Account";
-const char* MySQLDataBase::TABLE_CHARACTER_DATA = "CharacterData";
+const char* MySQLDataBase::DATABASE_MAHJONG_USERDATA = "mahjong_userdata";
+const char* MySQLDataBase::TABLE_ACCOUNT = "account";
+const char* MySQLDataBase::TABLE_CHARACTER_DATA = "character_data";
 const char* MySQLDataBase::COL_ACCOUNT = "account";
 const char* MySQLDataBase::COL_PASSWORD = "password";
 const char* MySQLDataBase::COL_GUID = "guid";
@@ -53,7 +53,7 @@ void MySQLDataBase::destroy()
 
 int MySQLDataBase::getMaxGUID()
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return -1;
 	}
@@ -90,7 +90,7 @@ int MySQLDataBase::getMaxGUID()
 
 bool MySQLDataBase::queryLogin(const std::string& account, const std::string& password, CHAR_GUID& guid)
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return false;
 	}
@@ -130,7 +130,7 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 
 bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name, int& money, short& head)
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return false;
 	}
@@ -186,7 +186,7 @@ const std::string& MySQLDataBase::getColumn(txMap<std::string, std::string>& row
 
 bool MySQLDataBase::isAccountExist(const std::string& account)
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return false;
 	}
@@ -209,7 +209,7 @@ bool MySQLDataBase::isAccountExist(const std::string& account)
 
 bool MySQLDataBase::isNameExist(const std::string& name)
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return false;
 	}
@@ -232,7 +232,7 @@ bool MySQLDataBase::isNameExist(const std::string& name)
 
 int MySQLDataBase::registerAccount(const std::string& account, const std::string& password, const std::string& name, const int& money, const int& head)
 {
-	if (!connectDataBase(DATABASE))
+	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
 		return -3;
 	}

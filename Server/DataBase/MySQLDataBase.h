@@ -35,7 +35,7 @@ protected:
 	std::string mUser;
 	std::string mPassword;
 	std::string mHost;
-	static const char* DATABASE;
+	static const char* DATABASE_MAHJONG_USERDATA;
 	static const char* TABLE_ACCOUNT;
 	static const char* TABLE_CHARACTER_DATA;
 	static const char* COL_ACCOUNT;
