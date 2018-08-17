@@ -6,7 +6,7 @@
 class SCPlayerPass : public Packet
 {
 public:
-	SCPlayerPass(const PACKET_TYPE& type)
+	SCPlayerPass(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

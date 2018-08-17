@@ -17,21 +17,21 @@ public:
 	NetServer();
 	virtual ~NetServer(){ destroy(); }
 	void destroy();
-	virtual void init(const int& port, const int& backLog);
-	virtual void update(const float& elapsedTime);
+	virtual void init(int port, int backLog);
+	virtual void update(float elapsedTime);
 
-	static const float& getHeartBeatTimeOut() { return mHeartBeatTimeOut; }
-	static const bool& getOutputLog(){ return mOutputLog; }
-	const int& getPort() { return mPort; }
-	int getClientCount() { return mClientList.size(); }
+	static float getHeartBeatTimeOut()	{ return mHeartBeatTimeOut; }
+	static bool getOutputLog()			{ return mOutputLog; }
+	int getPort()						{ return mPort; }
+	int getClientCount()				{ return mClientList.size(); }
 	
-	virtual CLIENT_GUID notifyAcceptClient(const TX_SOCKET& socket, const char* ip);
-	void sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend = true);
-	void sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend = true);
-	static Packet* createPacket(const PACKET_TYPE& type);
+	virtual CLIENT_GUID notifyAcceptClient(TX_SOCKET socket, const char* ip);
+	void sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend = true);
+	void sendMessage(Packet* packet, NetClient* client, bool destroyPacketEndSend = true);
+	static Packet* createPacket(PACKET_TYPE type);
 	static void destroyPacket(Packet* packet);
-	virtual void disconnectSocket(const CLIENT_GUID& client);	// 与客户端断开连接,只能在主线程中调用
-	NetClient* getClient(const CLIENT_GUID& clientGUID);
+	virtual void disconnectSocket(CLIENT_GUID client);	// 与客户端断开连接,只能在主线程中调用
+	NetClient* getClient(CLIENT_GUID clientGUID);
 protected:
 	static bool acceptSocket(void* args);
 	static bool receiveSendSocket(void* args);

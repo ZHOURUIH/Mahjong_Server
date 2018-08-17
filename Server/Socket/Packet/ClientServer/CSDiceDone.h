@@ -6,7 +6,7 @@
 class CSDiceDone : public Packet
 {
 public:
-	CSDiceDone(const PACKET_TYPE& type)
+	CSDiceDone(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

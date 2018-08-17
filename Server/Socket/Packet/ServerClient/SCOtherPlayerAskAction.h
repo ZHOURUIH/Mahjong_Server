@@ -9,7 +9,7 @@
 class SCOtherPlayerAskAction : public Packet
 {
 public:
-	SCOtherPlayerAskAction(const PACKET_TYPE& type)
+	SCOtherPlayerAskAction(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

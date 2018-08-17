@@ -22,7 +22,7 @@ public:
 	txMemoryTrace();
 	virtual ~txMemoryTrace();
 	// writeOrDebug为真则表示将信息写入共享内存,然后使用MemeryViewer查看,为假时表示在控制台显示内存信息
-	void init(const bool& writeOrDebug);
+	void init(bool writeOrDebug);
 	static bool debugMemoryTrace(void* args);
 	static bool writeMemoryTrace(void* args);
 	static void insertPtr(void* ptr, MemoryInfo& info);
@@ -31,9 +31,9 @@ public:
 	static void setIgnoreClassKeyword(txSet<std::string>& classList){mIgnoreClassKeyword = classList;}
 	static void setShowOnlyDetailClass(txSet<std::string>& classList){mShowOnlyDetailClass = classList;}
 	static void setShowOnlyStatisticsClass(txSet<std::string>& classList){mShowOnlyStatisticsClass = classList;}
-	static void setShowDetail(const bool& show){ mShowDetail = show; }
-	static void setShowStatistics(const bool& show){ mShowStatistics = show; }
-	static void setShowAll(const bool& show){ mShowAll = show; }
+	static void setShowDetail(bool show){ mShowDetail = show; }
+	static void setShowStatistics(bool show){ mShowStatistics = show; }
+	static void setShowAll(bool show){ mShowAll = show; }
 protected:
 	// 内存申请总信息表
 	static txMap<void*, MemoryInfo> mMemoryInfo;

@@ -16,11 +16,11 @@ public:
 	{}
 	virtual ~RoomManager(){ destroy(); }
 	virtual void init(){}
-	virtual void update(const float& elapsedTime);
+	virtual void update(float elapsedTime);
 	void destroy(){}
 	Room* createRoom();
-	Room* getRoom(const int& id);
-	void destroyRoom(const int& id);
+	Room* getRoom(int id);
+	void destroyRoom(int id);
 	void destroyAllRoom();
 	const txMap<int, Room*>& getRoomList() { return mRoomList; }
 protected:

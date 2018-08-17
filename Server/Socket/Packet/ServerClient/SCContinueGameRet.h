@@ -6,7 +6,7 @@
 class SCContinueGameRet : public Packet
 {
 public:
-	SCContinueGameRet(const PACKET_TYPE& type)
+	SCContinueGameRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

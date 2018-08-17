@@ -7,7 +7,7 @@
 class SCNotifyGetMahjong : public Packet
 {
 public:
-	SCNotifyGetMahjong(const PACKET_TYPE& type)
+	SCNotifyGetMahjong(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

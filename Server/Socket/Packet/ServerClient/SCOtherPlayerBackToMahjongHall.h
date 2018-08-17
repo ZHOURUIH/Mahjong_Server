@@ -6,7 +6,7 @@
 class SCOtherPlayerBackToMahjongHall : public Packet
 {
 public:
-	SCOtherPlayerBackToMahjongHall(const PACKET_TYPE& type)
+	SCOtherPlayerBackToMahjongHall(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

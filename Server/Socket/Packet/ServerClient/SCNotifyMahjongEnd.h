@@ -7,7 +7,7 @@
 class SCNotifyMahjongEnd : public Packet
 {
 public:
-	SCNotifyMahjongEnd(const PACKET_TYPE& type)
+	SCNotifyMahjongEnd(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

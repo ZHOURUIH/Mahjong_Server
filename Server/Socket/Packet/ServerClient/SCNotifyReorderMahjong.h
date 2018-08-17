@@ -6,7 +6,7 @@
 class SCNotifyReorderMahjong : public Packet
 {
 public:
-	SCNotifyReorderMahjong(const PACKET_TYPE& type)
+	SCNotifyReorderMahjong(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

@@ -12,19 +12,19 @@ void CharacterPlayer::reorderMahjong()
 	std::sort(mCharacterData->mHandIn.begin(), mCharacterData->mHandIn.end());
 }
 
-void CharacterPlayer::getMahjong(const MAHJONG& mah)
+void CharacterPlayer::getMahjong(MAHJONG mah)
 {
 	mCharacterData->mHandIn.push_back(mah);
 }
 
-void CharacterPlayer::dropMahjong(const int& index)
+void CharacterPlayer::dropMahjong(int index)
 {
 	MAHJONG mah = mCharacterData->mHandIn[index];
 	mCharacterData->mDropList.push_back(mah);
 	mCharacterData->mHandIn.erase(mCharacterData->mHandIn.begin() + index);
 }
 
-void CharacterPlayer::showHua(const int& index)
+void CharacterPlayer::showHua(int index)
 {
 	MAHJONG mah = mCharacterData->mHandIn[index];
 	mCharacterData->mHuaList.push_back(mah);
@@ -32,7 +32,7 @@ void CharacterPlayer::showHua(const int& index)
 }
 
 // 杠指定牌
-void CharacterPlayer::gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropPlayer)
+void CharacterPlayer::gangMahjong(MAHJONG mahjong, CharacterPlayer* dropPlayer)
 {
 	int pengIndex = -1;
 	bool isAlreadyPeng = hasPeng(mahjong, pengIndex);
@@ -61,7 +61,7 @@ void CharacterPlayer::gangMahjong(const MAHJONG& mahjong, CharacterPlayer* dropP
 	}
 }
 
-void CharacterPlayer::pengMahjong(const MAHJONG& mahjong)
+void CharacterPlayer::pengMahjong(MAHJONG mahjong)
 {
 	ServerUtility::pengMahjong(mCharacterData->mHandIn, mahjong);
 	addPeng(mahjong);
@@ -82,7 +82,7 @@ void CharacterPlayer::clearMahjong()
 	mCharacterData->mPengGangList.clear();
 }
 
-void CharacterPlayer::addPeng(const MAHJONG& mahjong)
+void CharacterPlayer::addPeng(MAHJONG mahjong)
 {
 	PengGangInfo* info = TRACE_NEW(PengGangInfo, info);
 	info->mMahjong = mahjong;
@@ -90,7 +90,7 @@ void CharacterPlayer::addPeng(const MAHJONG& mahjong)
 	mCharacterData->mPengGangList.push_back(info);
 }
 
-void CharacterPlayer::addGang(const MAHJONG& mahjong)
+void CharacterPlayer::addGang(MAHJONG mahjong)
 {
 	PengGangInfo* info = TRACE_NEW(PengGangInfo, info);
 	info->mMahjong = mahjong;
@@ -98,7 +98,7 @@ void CharacterPlayer::addGang(const MAHJONG& mahjong)
 	mCharacterData->mPengGangList.push_back(info);
 }
 
-bool CharacterPlayer::hasPeng(const MAHJONG& mahjong, int& pengIndex)
+bool CharacterPlayer::hasPeng(MAHJONG mahjong, int& pengIndex)
 {
 	pengIndex = -1;
 	int pengGangCount = mCharacterData->mPengGangList.size();

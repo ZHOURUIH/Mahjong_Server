@@ -17,7 +17,7 @@ public:
 		checkLock();
 		mVector.push_back(elem);
 	}
-	iterator erase(const iterator& iter, const bool& check = true)
+	iterator erase(const iterator& iter, bool check = true)
 	{
 		if (check)
 		{
@@ -25,7 +25,7 @@ public:
 		}
 		return mVector.erase(iter);
 	}
-	iterator erase(const int& index, const bool& check = true)
+	iterator erase(int index, bool check = true)
 	{
 		if (index < 0 || index >= size())
 		{
@@ -38,7 +38,7 @@ public:
 		checkLock();
 		mVector.clear();
 	}
-	void insert(const iterator& iter, const T& elem, const bool& check = true)
+	void insert(const iterator& iter, const T& elem, bool check = true)
 	{
 		if (check)
 		{
@@ -58,7 +58,7 @@ public:
 	{
 		return mVector.end();
 	}
-	const T& operator[](const int& i) const
+	const T& operator[](int i) const
 	{
 		if (i < 0 || i >= size())
 		{
@@ -66,7 +66,7 @@ public:
 		}
 		return mVector[i];
 	}
-	T& operator[](const int& i)
+	T& operator[](int i)
 	{
 		if (i < 0 || i >= size())
 		{
@@ -74,7 +74,7 @@ public:
 		}
 		return mVector[i];
 	}
-	void resize(const int& s)
+	void resize(int s)
 	{
 		checkLock();
 		mVector.resize(s);

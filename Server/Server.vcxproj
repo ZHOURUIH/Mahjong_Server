@@ -20,13 +20,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -192,6 +192,7 @@
     <ClCompile Include="Thread\CustomThread.cpp" />
     <ClCompile Include="Thread\ThreadLock.cpp" />
     <ClCompile Include="Thread\TimeLock.cpp" />
+    <ClCompile Include="Utility\BinaryUtility.cpp" />
     <ClCompile Include="Utility\ServerUtility.cpp" />
     <ClCompile Include="Utility\txFileUtility.cpp" />
     <ClCompile Include="Utility\txMathUtility.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="Common\ServerConfig.h" />
     <ClInclude Include="Common\ServerDefine.h" />
     <ClInclude Include="Common\ServerEnum.h" />
+    <ClInclude Include="Common\StreamBuffer.h" />
     <ClInclude Include="Common\txFactoryManager.h" />
     <ClInclude Include="Common\txSingleton.h" />
     <ClInclude Include="Component\BaseComponent\txComponent.h" />
@@ -365,6 +367,7 @@
     <ClInclude Include="Thread\CustomThread.h" />
     <ClInclude Include="Thread\ThreadLock.h" />
     <ClInclude Include="Thread\TimeLock.h" />
+    <ClInclude Include="Utility\BinaryUtility.h" />
     <ClInclude Include="Utility\ServerUtility.h" />
     <ClInclude Include="Utility\txFileUtility.h" />
     <ClInclude Include="Utility\txMathUtility.h" />

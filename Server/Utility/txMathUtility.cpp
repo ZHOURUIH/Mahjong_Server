@@ -4,7 +4,7 @@
 const float txMath::MATH_PI = 3.1415926f;
 const float txMath::MIN_DELTA = 0.00001f;
 
-void txMath::checkInt(float& value, const float& precision)
+void txMath::checkInt(float& value, float precision)
 {
 	// 先判断是否为0
 	if (isFloatZero(value, precision))
@@ -55,7 +55,7 @@ void txMath::checkInt(float& value, const float& precision)
 	}
 }
 
-int txMath::getGreaterPowerValue(const int& value, const int& pow)
+int txMath::getGreaterPowerValue(int value, int pow)
 {
 	int powValue = 1;
 	for (int i = 0; i < 100; ++i)
@@ -69,7 +69,7 @@ int txMath::getGreaterPowerValue(const int& value, const int& pow)
 	return powValue;
 }
 
-int txMath::getForwardInt(const float& value)
+int txMath::getForwardInt(float value)
 {
 	if (value >= 0.0f)
 	{
@@ -89,7 +89,7 @@ int txMath::getForwardInt(const float& value)
 	}
 }
 
-bool txMath::replaceKeywordAndCalculate(std::string& str, const std::string& keyword, const int& replaceValue, const bool& floatOrInt)
+bool txMath::replaceKeywordAndCalculate(std::string& str, const std::string& keyword, int replaceValue, bool floatOrInt)
 {
 	// 如果最后的表达式中存在i,则需要把i替换为i具体的值,然后计算出最后的表达式的值
 	bool replaced = false;
@@ -110,7 +110,7 @@ bool txMath::replaceKeywordAndCalculate(std::string& str, const std::string& key
 	return replaced;
 }
 
-bool txMath::replaceStringKeyword(std::string& str, const std::string& keyword, const int& keyValue, const bool& floatOrInt)
+bool txMath::replaceStringKeyword(std::string& str, const std::string& keyword, int keyValue, bool floatOrInt)
 {
 	bool replaced = false;
 	int expressionBegin = -1;
@@ -130,13 +130,13 @@ bool txMath::replaceStringKeyword(std::string& str, const std::string& keyword, 
 	return replaced;
 }
 
-float txMath::powerFloat(const float& f, int p)
+float txMath::powerFloat(float f, int p)
 {
+	clampMin(p, 0);
 	float ret = 1.0f;
-	while (p)
+	while (p--)
 	{
 		ret *= f;
-		--p;
 	}
 	return ret;
 }
@@ -144,36 +144,10 @@ float txMath::powerFloat(const float& f, int p)
 float txMath::calculateFloat(std::string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	for (int i = 0; i < (int)str.length();)
-	{
-		if ((str[i] < '0' || str[i] > '9') && str[i] != '.' && str[i] != '+'
-			&& str[i] != '-' && str[i] != '*' && str[i] != '/' && str[i] != '(' && str[i] != ')')
-		{
-			str.erase(i, 1);
-		}
-		else
-		{
-			++i;
-		}
-	}
+	txStringUtility::checkString(str, "0123456789.+-*/()");
 	// 判断左右括号数量是否相等
-	int leftBracketCount = 0;
-	int rightBracketCount = 0;
-	int strLen = (int)str.length();
-	for (int i = 0; i < strLen; ++i)
+	if (txStringUtility::getCharCount(str, '(') != txStringUtility::getCharCount(str, ')'))
 	{
-		if (str[i] == '(')
-		{
-			++leftBracketCount;
-		}
-		else if (str[i] == ')')
-		{
-			++rightBracketCount;
-		}
-	}
-	if (leftBracketCount != rightBracketCount)
-	{
-		// 计算错误,左右括号数量不对应
 		return 0;
 	}
 
@@ -243,15 +217,14 @@ float txMath::calculateFloat(std::string str)
 	txVector<char> factors;
 	// 表示上一个运算符的下标+1
 	int beginpos = 0;
-	strLen = (int)str.length();
+	int strLen = (int)str.length();
 	for (int i = 0; i < strLen; ++i)
 	{
 		// 遍历到了最后一个字符,则直接把最后一个数字放入列表,然后退出循环
 		if (i == strLen - 1)
 		{
 			std::string num = str.substr(beginpos, strLen - beginpos);
-			float fNum = txStringUtility::stringToFloat(num);
-			numbers.push_back(fNum);
+			numbers.push_back(txStringUtility::stringToFloat(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -260,8 +233,7 @@ float txMath::calculateFloat(std::string str)
 			if (i != 0)
 			{
 				std::string num = str.substr(beginpos, i - beginpos);
-				float fNum = txStringUtility::stringToFloat(num);
-				numbers.push_back(fNum);
+				numbers.push_back(txStringUtility::stringToFloat(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else
@@ -365,37 +337,10 @@ float txMath::calculateFloat(std::string str)
 int txMath::calculateInt(std::string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	for (int i = 0; i < (int)str.length();)
-	{
-		if ((str[i] < '0' || str[i] > '9') && str[i] != '.' && str[i] != '+'
-			&& str[i] != '-' && str[i] != '*' && str[i] != '/' && str[i] != '%'
-			&& str[i] != '(' && str[i] != ')')
-		{
-			str.erase(i, 1);
-		}
-		else
-		{
-			++i;
-		}
-	}
+	txStringUtility::checkString(str, "0123456789+-*/%()");
 	// 判断左右括号数量是否相等
-	int leftBracketCount = 0;
-	int rightBracketCount = 0;
-	int strLen = (int)str.length();
-	for (int i = 0; i < strLen; ++i)
+	if (txStringUtility::getCharCount(str, '(') != txStringUtility::getCharCount(str, ')'))
 	{
-		if (str[i] == '(')
-		{
-			++leftBracketCount;
-		}
-		else if (str[i] == ')')
-		{
-			++rightBracketCount;
-		}
-	}
-	if (leftBracketCount != rightBracketCount)
-	{
-		// 计算错误,左右括号数量不对应
 		return 0;
 	}
 
@@ -465,15 +410,14 @@ int txMath::calculateInt(std::string str)
 	txVector<char> factors;
 	// 表示上一个运算符的下标+1
 	int beginpos = 0;
-	strLen = (int)str.length();
+	int strLen = (int)str.length();
 	for (int i = 0; i < strLen; ++i)
 	{
 		// 遍历到了最后一个字符,则直接把最后一个数字放入列表,然后退出循环
 		if (i == strLen - 1)
 		{
 			std::string num = str.substr(beginpos, strLen - beginpos);
-			int iNum = txStringUtility::stringToInt(num);
-			numbers.push_back(iNum);
+			numbers.push_back(txStringUtility::stringToInt(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -482,8 +426,7 @@ int txMath::calculateInt(std::string str)
 			if (i != 0)
 			{
 				std::string num = str.substr(beginpos, i - beginpos);
-				int iNum = txStringUtility::stringToInt(num);
-				numbers.push_back(iNum);
+				numbers.push_back(txStringUtility::stringToInt(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else

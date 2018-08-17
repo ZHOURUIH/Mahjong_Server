@@ -52,7 +52,7 @@ bool ServerFramework::init()
 	// 初始化所有组件
 	initComponentFactory();
 	mServerConfig->init();
-	mMySQLDataBase->init("root", "zhourui", "localhost", 3306);
+	mMySQLDataBase->init("root", "zhourui", "127.0.0.1", 3306);
 	//mMySQLDataBase->init("root", "zhourui", ServerConfig::getStringParam(SDS_DOMAIN_NAME), 3306);
 	mCharacterManager->init();
 	mCommandSystem->init();
@@ -61,7 +61,7 @@ bool ServerFramework::init()
 	return true;
 }
 
-void ServerFramework::update(const float& elapsedTime)
+void ServerFramework::update(float elapsedTime)
 {
 	mMySQLDataBase->update(elapsedTime);
 	mCommandSystem->update(elapsedTime);

@@ -6,7 +6,7 @@ txMap<DATA_TYPE, DataFactoryBase*> DataBase::mDataFactoryList;
 txMap<std::string, DATA_TYPE> DataBase::mDataFileDefine;
 txMap<DATA_TYPE, std::string> DataBase::mDataDefineFile;
 
-void DataBase::init(const bool& loadAllData)
+void DataBase::init(bool loadAllData)
 {
 	initDataFactory();
 	if (loadAllData)
@@ -32,7 +32,7 @@ void DataBase::destroyDataFactory()
 	mDataFactoryList.clear();
 }
 
-bool DataBase::addData(const DATA_TYPE& type, Data* data, const int& pos)
+bool DataBase::addData(DATA_TYPE type, Data* data, int pos)
 {
 	if (data == NULL)
 	{
@@ -63,7 +63,7 @@ bool DataBase::addData(const DATA_TYPE& type, Data* data, const int& pos)
 	return true;
 }
 
-bool DataBase::deleteData(const DATA_TYPE& type, const int& index)
+bool DataBase::deleteData(DATA_TYPE type, int index)
 {
 	txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 	if (iter != mDataStructList.end())
@@ -84,7 +84,7 @@ bool DataBase::deleteData(const DATA_TYPE& type, const int& index)
 	return false;
 }
 
-Data* DataBase::createData(const DATA_TYPE& type)
+Data* DataBase::createData(DATA_TYPE type)
 {
 	DataFactoryBase* factory = getDataFactory(type);
 	if (factory != NULL)
@@ -133,7 +133,7 @@ void  DataBase::destroyAllData()
 	mDataStructList.clear();
 }
 
-void DataBase::destroyData(const DATA_TYPE& type)
+void DataBase::destroyData(DATA_TYPE type)
 {
 	txMap<DATA_TYPE, txVector<Data*> >::iterator iterStructList = mDataStructList.find(type);
 	if (iterStructList != mDataStructList.end())
@@ -153,7 +153,7 @@ void DataBase::destroyData(const DATA_TYPE& type)
 	}
 }
 
-void DataBase::loadData(const std::string& filePath, const bool& forceCover)
+void DataBase::loadData(const std::string& filePath, bool forceCover)
 {
 	// 根据文件名查找工厂类型
 	std::string fileName = txStringUtility::getFileNameNoSuffix(filePath);
@@ -212,7 +212,7 @@ void DataBase::loadData(const std::string& filePath, const bool& forceCover)
 	TRACE_DELETE_ARRAY(fileBuffer);
 }
 
-bool DataBase::writeBinaryFile(const DATA_TYPE& type)
+bool DataBase::writeBinaryFile(DATA_TYPE type)
 {
 	txMap<DATA_TYPE, txVector<Data*> >::iterator iterData = mDataStructList.find(type);
 	if (iterData == mDataStructList.end())

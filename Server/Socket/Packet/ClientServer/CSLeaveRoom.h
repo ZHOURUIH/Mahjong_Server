@@ -6,7 +6,7 @@
 class CSLeaveRoom : public Packet
 {
 public:
-	CSLeaveRoom(const PACKET_TYPE& type)
+	CSLeaveRoom(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

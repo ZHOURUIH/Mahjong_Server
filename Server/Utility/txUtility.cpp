@@ -10,7 +10,7 @@ void txUtility::stop()
 	ServerFramework::getSingletonPtr()->stop();
 }
 
-void txUtility::sleep(const unsigned long& timeMS)
+void txUtility::sleep(unsigned long timeMS)
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	Sleep(timeMS);

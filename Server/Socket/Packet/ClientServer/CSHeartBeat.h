@@ -6,7 +6,7 @@
 class CSHeartBeat : public Packet
 {
 public:
-	CSHeartBeat(const PACKET_TYPE& type)
+	CSHeartBeat(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

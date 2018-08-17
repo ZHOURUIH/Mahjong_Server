@@ -23,27 +23,27 @@ public:
 	{
 		COMMAND_DEBUG(DEBUG_EMPTY);
 	}
-	const bool& getShowDebugInfo()						{ return mShowDebugInfo; }
-	const bool& isDelayCommand()						{ return mDelayCommand; }
-	txCommandReceiver* getReceiver()					{ return mReceiver; }
-	const bool& isValid()								{ return mValid; }
-	const std::string& getType()						{ return mType; }
-	const EXECUTE_STATE& getExecuteState()				{ return mExecuteState; }
-	const int& getAssignID()							{ return mAssignID; }
-	const int& getCmdID()								{ return mCmdID; }
-	const std::string& getFile()						{ return mFile; }
-	const int& getLine()								{ return mLine; }
-	void setShowDebugInfo(const bool& show)				{ mShowDebugInfo = show; }
-	void setDelayCommand(const bool& delay)				{ mDelayCommand = delay; }
-	void setReceiver(txCommandReceiver* Reciver)		{ mReceiver = Reciver; }
-	void setValid(const bool& valid)					{ mValid = valid; }
-	void setType(const std::string& type)				{ mType = type; }
-	void setExecuteState(const EXECUTE_STATE& state)	{ mExecuteState = state; }
-	void setAssignID(const int& id)						{ mAssignID = id; }
-	void setID(const int& id)							{ mCmdID = id; }
-	void setFile(const std::string& file)				{ mFile = file; }
-	void setLine(const int& line)						{ mLine = line; }
-	void setResult(bool* result)						{ mResult = result; }
+	bool getShowDebugInfo()						{ return mShowDebugInfo; }
+	bool isDelayCommand()						{ return mDelayCommand; }
+	txCommandReceiver* getReceiver()			{ return mReceiver; }
+	bool isValid()								{ return mValid; }
+	const std::string& getType()				{ return mType; }
+	EXECUTE_STATE getExecuteState()				{ return mExecuteState; }
+	int getAssignID()							{ return mAssignID; }
+	int getCmdID()								{ return mCmdID; }
+	const std::string& getFile()				{ return mFile; }
+	int getLine()								{ return mLine; }
+	void setShowDebugInfo(bool show)			{ mShowDebugInfo = show; }
+	void setDelayCommand(bool delay)			{ mDelayCommand = delay; }
+	void setReceiver(txCommandReceiver* Reciver){ mReceiver = Reciver; }
+	void setValid(bool valid)					{ mValid = valid; }
+	void setType(const std::string& type)		{ mType = type; }
+	void setExecuteState(EXECUTE_STATE state)	{ mExecuteState = state; }
+	void setAssignID(int id)					{ mAssignID = id; }
+	void setID(int id)							{ mCmdID = id; }
+	void setFile(const std::string& file)		{ mFile = file; }
+	void setLine(int line)						{ mLine = line; }
+	void setResult(bool* result)				{ mResult = result; }
 	void addEndCommandCallback(CommandCallback cmdCallback, void* userData)
 	{
 		if (cmdCallback != NULL)

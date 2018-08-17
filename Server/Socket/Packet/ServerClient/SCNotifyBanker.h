@@ -6,7 +6,7 @@
 class SCNotifyBanker : public Packet
 {
 public:
-	SCNotifyBanker(const PACKET_TYPE& type)
+	SCNotifyBanker(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

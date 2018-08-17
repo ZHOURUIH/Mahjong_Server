@@ -6,7 +6,7 @@
 class CSRequestDrop : public Packet
 {
 public:
-	CSRequestDrop(const PACKET_TYPE& type)
+	CSRequestDrop(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

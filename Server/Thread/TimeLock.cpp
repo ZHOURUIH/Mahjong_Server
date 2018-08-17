@@ -1,7 +1,7 @@
 ﻿#include "TimeLock.h"
 #include "txUtility.h"
 
-TimeLock::TimeLock(const long& frameTimeMS)
+TimeLock::TimeLock(long frameTimeMS)
 {
 	mFrameTimeMS = frameTimeMS;
 	mForceSleep = 5;

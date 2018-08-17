@@ -5,7 +5,7 @@
 
 txMap<std::string, txComponent*> txComponentOwner::EMPTY_COMPONENT_MAP;
 
-void txComponentOwner::updatePreComponent(const float& elapsedTime)
+void txComponentOwner::updatePreComponent(float elapsedTime)
 {
 	if (mAllComponentList.size() == 0)
 	{
@@ -67,7 +67,7 @@ void txComponentOwner::updatePreComponent(const float& elapsedTime)
 	}
 }
 
-void txComponentOwner::updateComponents(const float& elapsedTime)
+void txComponentOwner::updateComponents(float elapsedTime)
 {
 	if (mAllComponentList.size() == 0)
 	{
@@ -161,7 +161,7 @@ bool txComponentOwner::notifyComponentNameChanged(const std::string& oldName, tx
 	return true;
 }
 
-txComponent* txComponentOwner::createIndependentComponent(const std::string& name, const std::string& type, const bool& initComponent)
+txComponent* txComponentOwner::createIndependentComponent(const std::string& name, const std::string& type, bool initComponent)
 {
 	// 查找工厂
 	txComponentFactoryBase* factory = mComponentFactoryManager->getFactory(type);
@@ -286,7 +286,7 @@ txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 	return ret;
 }
 
-void txComponentOwner::addComponentToList(txComponent* component, const int& componentPos)
+void txComponentOwner::addComponentToList(txComponent* component, int componentPos)
 {
 	const std::string& name = component->getName();
 	const std::string& type = component->getType();

@@ -6,7 +6,7 @@
 class SCOtherPlayerJoinRoom : public Packet
 {
 public:
-	SCOtherPlayerJoinRoom(const PACKET_TYPE& type)
+	SCOtherPlayerJoinRoom(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

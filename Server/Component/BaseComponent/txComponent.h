@@ -16,9 +16,9 @@ public:
 		setBaseType();
 	}
 	virtual void setBaseType() = 0;
-	virtual void preUpdate(const float& elapsedTime);
-	virtual void update(const float& elapsedTime);
-	virtual void lateUpdate(const float& elapsedTime);
+	virtual void preUpdate(float elapsedTime);
+	virtual void update(float elapsedTime);
+	virtual void lateUpdate(float elapsedTime);
 	void destroy();
 	bool rename(const std::string& newName);
 	bool addChild(txComponent* component);		// 将一个组件添加作为当前组件的子组件
@@ -26,12 +26,12 @@ public:
 	bool isActive();
 	// 断开与拥有者和父组件的联系,使该组件成为一个独立的组件,该组件下的所有子组件也会断开与拥有者的联系,但是父子关系仍然存在
 	// detachOwnerOnly表示是否只断开与拥有者的联系,不断开组件之间的父子关系,外部使用时一般填false
-	virtual void detachOwnerParentComponent(const bool& detachOwnerOnly = false);
+	virtual void detachOwnerParentComponent(bool detachOwnerOnly = false);
 	// 建立与拥有者和父组件的联系,使该组件成为拥有者中的一个组件,该组件下的所有子组件也会重建与拥有者的联系,父子关系仍然存在
-	virtual void attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, const int& childPos);
+	virtual void attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, int childPos);
 	int getChildPos(txComponent* component);					// 得到指定组件在当前组件中的位置
-	bool moveChildPos(txComponent* component, const int& destPos);		// 将指定组件移动到当前组件中的指定位置
-	bool moveChildPos(const std::string& name, const int& destPos);
+	bool moveChildPos(txComponent* component, int destPos);		// 将指定组件移动到当前组件中的指定位置
+	bool moveChildPos(const std::string& name, int destPos);
 	txComponent* getChildComponent(const std::string& childName)
 	{
 		txMap<std::string, txComponent*>::iterator iter = mChildComponentMap.find(childName);
@@ -43,8 +43,8 @@ public:
 	}
 
 	// 设置成员变量
-	virtual void setActive(const bool& active)						{ mActive = active; }
-	void setLockOneFrame(const bool& lock)							{ mLockOneFrame = lock; }
+	virtual void setActive(bool active)						{ mActive = active; }
+	void setLockOneFrame(bool lock)							{ mLockOneFrame = lock; }
 	virtual void setParentComponent(txComponent* component)	{ mParent = component; }
 
 	// 获得成员变量

@@ -6,7 +6,7 @@
 class CSJoinRoom : public Packet
 {
 public:
-	CSJoinRoom(const PACKET_TYPE& type)
+	CSJoinRoom(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

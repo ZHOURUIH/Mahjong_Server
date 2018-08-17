@@ -4,7 +4,7 @@
 #include "CharacterData.h"
 #include "Utility.h"
 
-Character::Character(const CHARACTER_TYPE& type, const std::string& name)
+Character::Character(CHARACTER_TYPE type, const std::string& name)
 :
 txComponentOwner(name),
 mCharacterType(type),
@@ -12,7 +12,7 @@ mCharacterData(NULL),
 mGUID(INVALID_ID)
 {}
 
-void Character::init(const CHAR_GUID& guid)
+void Character::init(CHAR_GUID guid)
 {
 	if (mCharacterData == NULL)
 	{
@@ -29,7 +29,7 @@ void Character::initComponents()
 	// 初始化默认组件
 }
 
-void Character::update(const float& elaspedTime)
+void Character::update(float elaspedTime)
 {
 	// 先更新自己的所有组件
 	txComponentOwner::updateComponents(elaspedTime);

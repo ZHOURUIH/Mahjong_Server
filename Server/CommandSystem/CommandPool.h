@@ -21,7 +21,7 @@ public:
 	}
 	void destroy();
 	template<typename T>
-	T* newCmd(const bool& show = true, const bool& delay = false)
+	T* newCmd(bool show = true, bool delay = false)
 	{
 		LOCK(mNewCmdLock); 
 		// 首先从未使用的列表中获取,获取不到再重新创建一个

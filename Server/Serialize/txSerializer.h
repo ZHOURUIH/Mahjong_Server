@@ -3,26 +3,72 @@
 
 #include "ServerDefine.h"
 #include "GameLog.h"
-#include "txUtility.h"
-#include "txStringUtility.h"
+#include "Utility.h"
 
 // 用于生成二进制文件的
 class txSerializer
 {
 public:
-	txSerializer(const bool& traceMemery = true);
-	txSerializer(char* buffer, const int& bufferSize);
+	txSerializer(bool traceMemery = true);
+	txSerializer(char* buffer, int bufferSize);
 	virtual ~txSerializer();
 	template<typename T>
-	void write(const T& value)
+	void write(T value)
+	{
+		if (!writeCheck(sizeof(T)))
+		{
+			return;
+		}
+		BinaryUtility::write<T>(mBuffer, mBufferSize, mIndex, value);
+	}
+	template<typename T>
+	void read(T& value)
+	{
+		if (!checkRead(sizeof(T)))
+		{
+			return;
+		}
+		value = BinaryUtility::read<T>(mBuffer, mBufferSize, mIndex);
+	}
+	void writeBuffer(char* buffer, int bufferSize);
+	void readBuffer(char* buffer, int readLen);
+	void writeString(const char* str);
+	void readString(char* str);
+	void writeToFile(const std::string& fullName);
+	const char* getBuffer() const { return mBuffer; }
+	int getBufferSize() { return mBufferSize; }
+	int getDataSize() { return mIndex; }
+protected:
+	void resizeBuffer(int maxSize);
+	void createBuffer(int bufferSize);
+	bool checkRead(int readLen)
+	{
+		// 如果是只写的,则不能读取
+		if (mWriteFlag)
+		{
+			LOG_ERROR("error : the buffer is write only, can not read!");
+			return false;
+		}
+		if (mBuffer == NULL)
+		{
+			LOG_ERROR("error : buffer is NULL! can not read");
+			return false;
+		}
+		if (mIndex + readLen > mBufferSize)
+		{
+			LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
+			return false;
+		}
+		return true;
+	}
+	bool writeCheck(int writeLen)
 	{
 		// 如果是只读的,则不能写入
 		if (!mWriteFlag)
 		{
 			LOG_ERROR("error : the buffer is read only, can not write!");
-			return;
+			return false;
 		}
-		int writeLen = sizeof(T);
 		// 如果缓冲区为空,则创建缓冲区
 		if (mBuffer == NULL)
 		{
@@ -33,43 +79,8 @@ public:
 		{
 			resizeBuffer(writeLen + mIndex);
 		}
-		memcpy(mBuffer + mIndex, &value, writeLen);
-		mIndex += writeLen;
+		return true;
 	}
-	template<typename T>
-	void read(T& value)
-	{
-		// 如果是只写的,则不能读取
-		if (mWriteFlag)
-		{
-			LOG_ERROR("error : the buffer is write only, can not read!");
-			return;
-		}
-		if (mBuffer == NULL)
-		{
-			LOG_ERROR("error : buffer is NULL! can not read");
-			return;
-		}
-		int readLen = sizeof(T);
-		if (mIndex + readLen > mBufferSize)
-		{
-			LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
-			return;
-		}
-		value = *((T*)(mBuffer + mIndex));
-		mIndex += readLen;
-	}
-	void writeBuffer(char* buffer, const int& bufferSize);
-	void readBuffer(char* buffer, const int& bufferSize, const int& readLen);
-	void writeString(const char* str);
-	void readString(char* str, const int& strBufferSize);
-	void writeToFile(const std::string& fullName);
-	const char* getBuffer() const { return mBuffer; }
-	const int& getBufferSize() { return mBufferSize; }
-	const int& getDataSize() { return mIndex; }
-protected:
-	void resizeBuffer(const int& maxSize);
-	void createBuffer(const int& bufferSize);
 protected:
 	char* mBuffer;
 	int mIndex;

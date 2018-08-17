@@ -6,7 +6,7 @@
 class SCCheckNameRet : public Packet
 {
 public:
-	SCCheckNameRet(const PACKET_TYPE& type)
+	SCCheckNameRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

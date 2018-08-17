@@ -13,7 +13,8 @@ public:
 	txVector<MahjongAction*> mActionList;// 玩家可选择的操作
 	MAHJONG mMahjong;						// 当前麻将
 	MahjongAction* mConfirmedAction;		// 玩家确认选择的一种操作
-	WaitActionInfo(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const txVector<MahjongAction*>& actionList, const MAHJONG& mah)
+public:
+	WaitActionInfo(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const txVector<MahjongAction*>& actionList, MAHJONG mah)
 	{
 		mPlayer = player;
 		mDroppedPlayer = droppedPlayer;

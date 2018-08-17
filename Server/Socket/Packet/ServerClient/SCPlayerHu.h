@@ -8,7 +8,7 @@
 class SCPlayerHu : public Packet
 {
 public:
-	SCPlayerHu(const PACKET_TYPE& type)
+	SCPlayerHu(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

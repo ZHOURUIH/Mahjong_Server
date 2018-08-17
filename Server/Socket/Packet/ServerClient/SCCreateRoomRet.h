@@ -6,7 +6,7 @@
 class SCCreateRoomRet : public Packet
 {
 public:
-	SCCreateRoomRet(const PACKET_TYPE& type)
+	SCCreateRoomRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

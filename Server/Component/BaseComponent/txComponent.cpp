@@ -39,7 +39,7 @@ void txComponent::destroy()
 	}
 }
 
-void txComponent::preUpdate(const float& elapsedTime)
+void txComponent::preUpdate(float elapsedTime)
 {
 	if (mLockOneFrame || !isActive())
 	{
@@ -54,7 +54,7 @@ void txComponent::preUpdate(const float& elapsedTime)
 	END_FOR_STL(mChildComponentList);
 }
 
-void txComponent::update(const float& elapsedTime)
+void txComponent::update(float elapsedTime)
 {
 	if (mLockOneFrame || !isActive())
 	{
@@ -68,7 +68,7 @@ void txComponent::update(const float& elapsedTime)
 	}
 }
 
-void txComponent::lateUpdate(const float& elapsedTime)
+void txComponent::lateUpdate(float elapsedTime)
 {
 	if (mLockOneFrame)
 	{
@@ -161,7 +161,7 @@ bool txComponent::isActive()
 	return mActive;
 }
 
-void txComponent::detachOwnerParentComponent(const bool& detachOwnerOnly)
+void txComponent::detachOwnerParentComponent(bool detachOwnerOnly)
 {
 	if (mComponentOwner != NULL)
 	{
@@ -183,7 +183,7 @@ void txComponent::detachOwnerParentComponent(const bool& detachOwnerOnly)
 	END_FOR_STL(mChildComponentList);
 }
 // 建立与布局和父窗口的联系,使该窗口成为布局中的一个窗口,该窗口下的所有子窗口也会重建与布局的联系,父子关系仍然存在
-void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, const int& childPos)
+void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, int childPos)
 {
 	if (owner != NULL && mComponentOwner == NULL)
 	{
@@ -225,7 +225,7 @@ int txComponent::getChildPos(txComponent* window)
 	return index;
 }
 
-bool txComponent::moveChildPos(txComponent* component, const int& destPos)
+bool txComponent::moveChildPos(txComponent* component, int destPos)
 {
 	if (component == NULL || destPos < 0 || destPos >= (int)mChildComponentList.size())
 	{
@@ -242,7 +242,7 @@ bool txComponent::moveChildPos(txComponent* component, const int& destPos)
 	return true;
 }
 
-bool txComponent::moveChildPos(const std::string& name, const int& destPos)
+bool txComponent::moveChildPos(const std::string& name, int destPos)
 {
 	return moveChildPos(getChildComponent(name), destPos);
 }

@@ -26,7 +26,7 @@ Room::Room(const int& id)
 	}
 }
 
-void Room::update(const float& elapsedTime)
+void Room::update(float elapsedTime)
 {
 	// 开始拿牌时,需要由麻将系统给玩家分发牌
 	if (mPlayState == MPS_GET_START)
@@ -159,7 +159,7 @@ void Room::chooseContinueGame(CharacterPlayer* player, bool continueGame)
 	}
 }
 
-void Room::notifyDiceDone(const CHAR_GUID& playerGUID)
+void Room::notifyDiceDone(CHAR_GUID playerGUID)
 {
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerGUID);
 	if (iterPlayer == mPlayerList.end())
@@ -169,7 +169,7 @@ void Room::notifyDiceDone(const CHAR_GUID& playerGUID)
 	++mDiceDoneCount;
 }
 
-void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
+void Room::notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah)
 {
 	// 正常游戏过程中,玩家打了一张牌后,判断其他玩家是否有碰或者杠,该下家摸牌
 	if (mPlayState == MPS_NORMAL_GAMING)
@@ -236,7 +236,7 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah)
 	}
 }
 
-void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
+void Room::notifyPlayerGet(CharacterPlayer* player, MAHJONG mah)
 {
 	// 判断是否可胡或者可杠
 	CharacterData* data = player->getCharacterData();
@@ -302,7 +302,7 @@ void Room::notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah)
 	}
 }
 
-void Room::playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type)
+void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 {
 	txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterWait = mWaitList.find(player);
 	if (iterWait == mWaitList.end())
@@ -520,7 +520,7 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 }
 
 // 询问玩家要选择哪种操作
-void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const txVector<MahjongAction*>& actionList)
+void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah, const txVector<MahjongAction*>& actionList)
 {
 	if (actionList.size() == 0)
 	{
@@ -536,7 +536,7 @@ void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlay
 	playerAskAction(player, actionList);
 }
 
-CharacterPlayer* Room::getMember(const CHAR_GUID& playerID)
+CharacterPlayer* Room::getMember(CHAR_GUID playerID)
 {
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerID);
 	if (iterPlayer != mPlayerList.end())
@@ -546,7 +546,7 @@ CharacterPlayer* Room::getMember(const CHAR_GUID& playerID)
 	return NULL;
 }
 
-CharacterPlayer* Room::getMemberByPosition(const CHAR_GUID& playerID)
+CharacterPlayer* Room::getMemberByPosition(CHAR_GUID playerID)
 {
 	txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.find(playerID);
 	if (iter != mPlayerPositionList.end())
@@ -604,7 +604,7 @@ void Room::removePlayer(CharacterPlayer* player)
 	data->mPosition = -1;
 }
 
-void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
+void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 {
 	mPlayState = state;
 	// 进入等待流程时,就是开始新一局的麻将游戏,需要重置麻将系统的数据
@@ -665,7 +665,7 @@ void Room::setMahjongState(const MAHJONG_PLAY_STATE& state)
 	}
 }
 
-void Room::requestDrop(CharacterPlayer* player, const int& index)
+void Room::requestDrop(CharacterPlayer* player, int index)
 {
 	MAHJONG mahjong = player->getCharacterData()->mHandIn[index];
 	CommandCharacterDrop* cmdDrop = NEW_CMD(cmdDrop);
@@ -785,7 +785,7 @@ void Room::notifyAllPlayerGetStartDone()
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::notifyAllPlayerBanker(const CHAR_GUID& banker)
+void Room::notifyAllPlayerBanker(CHAR_GUID banker)
 {
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.begin();
 	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
@@ -823,7 +823,7 @@ void Room::notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaLis
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
+void Room::playerGetStartMahjong(MAHJONG mah, CharacterPlayer* player)
 {
 	CommandCharacterGetStartMahjong* cmdGetStart = NEW_CMD(cmdGetStart);
 	cmdGetStart->mMahjong = mah;
@@ -844,7 +844,7 @@ void Room::playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player)
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player)
+void Room::playerGetMahjong(MAHJONG mah, CharacterPlayer* player)
 {
 	CommandCharacterGetMahjong* cmdGetStart = NEW_CMD(cmdGetStart);
 	cmdGetStart->mMahjong = mah;
@@ -907,7 +907,7 @@ void Room::playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList)
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
+void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah)
 {
 	CommandCharacterGang* cmdGang = NEW_CMD(cmdGang);
 	cmdGang->mMahjong = mah;
@@ -930,7 +930,7 @@ void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
+void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah)
 {
 	CommandCharacterPeng* cmdPeng = NEW_CMD(cmdPeng);
 	cmdPeng->mMahjong = mah;
@@ -953,7 +953,7 @@ void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, c
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah)
+void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah)
 {
 	CommandCharacterPass* cmdPass = NEW_CMD(cmdPass);
 	cmdPass->mDroppedPlayer = droppedPlayer;
@@ -1015,7 +1015,7 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 	END_FOR_STL(mPlayerPositionList);
 }
 
-void Room::playerShowHua(CharacterPlayer* player, const int& index, const MAHJONG& mah)
+void Room::playerShowHua(CharacterPlayer* player, int index, MAHJONG mah)
 {
 	CommandCharacterShowHua* cmdShowHua = NEW_CMD(cmdShowHua);
 	cmdShowHua->mIndex = index;

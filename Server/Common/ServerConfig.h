@@ -10,7 +10,7 @@ public:
 	ServerConfig();
 	virtual ~ServerConfig(){ destory(); }
 	void init();
-	void readConfig(const std::string& fileName, const bool& floatParam);
+	void readConfig(const std::string& fileName, bool floatParam);
 	void destory()
 	{
 		mFloatParamDefineList.clear();
@@ -18,7 +18,7 @@ public:
 		mFloatParamList.clear();
 		mStringParamList.clear();
 	}
-	static float getFloatParam(const SERVER_DEFINE_FLOAT& param)
+	static float getFloatParam(SERVER_DEFINE_FLOAT param)
 	{
 		txMap<SERVER_DEFINE_FLOAT, float>::iterator iterParam = mFloatParamList.find(param);
 		if (iterParam != mFloatParamList.end())
@@ -27,7 +27,7 @@ public:
 		}
 		return 0.0f;
 	}
-	static const std::string& getStringParam(const SERVER_DEFINE_STRING& param)
+	static const std::string& getStringParam(SERVER_DEFINE_STRING param)
 	{
 		std::map<SERVER_DEFINE_STRING, std::string>::iterator iterParam = mStringParamList.find(param);
 		if (iterParam != mStringParamList.end())
@@ -37,7 +37,7 @@ public:
 		return EMPTY_STRING;
 	}
 protected:
-	void setParam(const SERVER_DEFINE_FLOAT& param, const float& value)
+	void setParam(SERVER_DEFINE_FLOAT param, float value)
 	{
 		txMap<SERVER_DEFINE_FLOAT, float>::iterator iterParam = mFloatParamList.find(param);
 		if (iterParam == mFloatParamList.end())
@@ -49,7 +49,7 @@ protected:
 			iterParam->second = value;
 		}
 	}
-	void setParam(const SERVER_DEFINE_STRING& param, const std::string& value)
+	void setParam(SERVER_DEFINE_STRING param, const std::string& value)
 	{
 		txMap<SERVER_DEFINE_STRING, std::string>::iterator iterParam = mStringParamList.find(param);
 		if (iterParam == mStringParamList.end())

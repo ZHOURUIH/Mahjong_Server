@@ -14,12 +14,12 @@ class Packet : public txSerializedData
 #endif
 {
 public:
-	Packet(const PACKET_TYPE& type)
+	Packet(PACKET_TYPE type)
 		:
 		mType(type),
 		mClient(INVALID_ID)
 	{}
-	const PACKET_TYPE& getPacketType() { return mType; }
+	PACKET_TYPE getPacketType() { return mType; }
 	virtual void execute(){}
 	virtual std::string debugInfo()
 	{

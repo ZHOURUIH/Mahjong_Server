@@ -6,7 +6,7 @@
 class SCOtherPlayerShowHua : public Packet
 {
 public:
-	SCOtherPlayerShowHua(const PACKET_TYPE& type)
+	SCOtherPlayerShowHua(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

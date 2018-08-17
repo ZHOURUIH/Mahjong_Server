@@ -9,7 +9,7 @@
 class SCAskAction : public Packet
 {
 public:
-	SCAskAction(const PACKET_TYPE& type)
+	SCAskAction(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

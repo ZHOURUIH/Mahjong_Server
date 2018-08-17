@@ -6,7 +6,7 @@
 class CSConfirmAction : public Packet
 {
 public:
-	CSConfirmAction(const PACKET_TYPE& type)
+	CSConfirmAction(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

@@ -18,10 +18,10 @@ public:
 	ServerFramework();
 	virtual ~ServerFramework();
 	bool init();
-	void update(const float& elapsedTime);
+	void update(float elapsedTime);
 	void destroy();
 	void launch();
-	const bool& isStop() { return mStop; }
+	bool isStop() { return mStop; }
 	void stop() { mStop = true; }
 	// 获得成员变量
 #if RUN_PLATFORM == PLATFORM_LINUX

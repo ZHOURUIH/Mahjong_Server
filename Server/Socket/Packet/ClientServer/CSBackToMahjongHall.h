@@ -6,7 +6,7 @@
 class CSBackToMahjongHall : public Packet
 {
 public:
-	CSBackToMahjongHall(const PACKET_TYPE& type)
+	CSBackToMahjongHall(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

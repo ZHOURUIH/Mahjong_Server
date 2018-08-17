@@ -35,7 +35,7 @@ void ServerConfig::init()
 	readConfig(CONFIG_PATH + "GameStringConfig.txt", false);
 }
 
-void ServerConfig::readConfig(const std::string& fileName, const bool& floatParam)
+void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 {
 	std::string dataString = txFileUtility::openTxtFile(txUtility::getAvailableResourcePath(fileName));
 #if RUN_PLATFORM == PLATFORM_WINDOWS

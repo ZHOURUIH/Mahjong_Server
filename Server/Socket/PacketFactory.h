@@ -7,7 +7,7 @@
 class PacketFactoryBase
 {
 public:
-	PacketFactoryBase(const PACKET_TYPE& type)
+	PacketFactoryBase(PACKET_TYPE type)
 		:
 		mType(type)
 	{}
@@ -17,9 +17,9 @@ public:
 	{
 		TRACE_DELETE(packet);
 	}
-	const PACKET_TYPE& getType() { return mType; }
+	PACKET_TYPE getType() { return mType; }
 	template<typename T>
-	static PacketFactoryBase* createFactory(const PACKET_TYPE& type)
+	static PacketFactoryBase* createFactory(PACKET_TYPE type)
 	{
 		T* factory = TRACE_NEW(T, factory, type);
 		return factory;
@@ -32,7 +32,7 @@ template <class T>
 class PacketFactory : public PacketFactoryBase
 {
 public:
-	PacketFactory(const PACKET_TYPE& type)
+	PacketFactory(PACKET_TYPE type)
 		:
 		PacketFactoryBase(type)
 	{}

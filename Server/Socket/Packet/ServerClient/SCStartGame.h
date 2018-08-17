@@ -6,7 +6,7 @@
 class SCStartGame : public Packet
 {
 public:
-	SCStartGame(const PACKET_TYPE& type)
+	SCStartGame(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

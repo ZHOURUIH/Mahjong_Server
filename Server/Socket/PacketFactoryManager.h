@@ -21,7 +21,7 @@ public:
 		END_FOR_STL(mFactoryList);
 		mFactoryList.clear();
 	}
-	static int getPacketSize(const PACKET_TYPE& type)
+	static int getPacketSize(PACKET_TYPE type)
 	{
 		txMap<PACKET_TYPE, int>::iterator iter = mPacketSizeMap.find(type);
 		if (iter != mPacketSizeMap.end())
@@ -30,7 +30,7 @@ public:
 		}
 		return -1;
 	}
-	void addPacketSize(const PACKET_TYPE& type)
+	void addPacketSize(PACKET_TYPE type)
 	{
 		PacketFactoryBase* factory = getFactory(type);
 		if (factory == NULL)
@@ -44,7 +44,7 @@ public:
 			factory->destroyPacket(packet);
 		}
 	}
-	PacketFactoryBase* getFactory(const PACKET_TYPE& type)
+	PacketFactoryBase* getFactory(PACKET_TYPE type)
 	{
 		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
@@ -56,7 +56,7 @@ public:
 	txMap<PACKET_TYPE, PacketFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:
 	template<typename O>
-	PacketFactoryBase* addFactory(const PACKET_TYPE& type)
+	PacketFactoryBase* addFactory(PACKET_TYPE type)
 	{
 		PacketFactoryBase* factory = PacketFactoryBase::createFactory<O>(type);
 		mFactoryList.insert(factory->getType(), factory);

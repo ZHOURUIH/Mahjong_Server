@@ -7,7 +7,7 @@
 class SCOtherPlayerAskDrop : public Packet
 {
 public:
-	SCOtherPlayerAskDrop(const PACKET_TYPE& type)
+	SCOtherPlayerAskDrop(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

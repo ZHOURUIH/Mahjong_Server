@@ -17,15 +17,15 @@ public:
 	{}
 	virtual ~txComponentOwner(){ destroyAllComponents(); }
 	virtual void initComponents() = 0;
-	virtual void updatePreComponent(const float& elapsedTime);		// 更新需要最先更新的组件
-	virtual void updateComponents(const float& elapsedTime);		// 更新正常更新的组件
+	virtual void updatePreComponent(float elapsedTime);		// 更新需要最先更新的组件
+	virtual void updateComponents(float elapsedTime);		// 更新正常更新的组件
 	virtual void notifyAddComponent(txComponent* component){}
 	// 通知布局窗口断开了与布局的联系,由窗口发出
 	virtual void notifyComponentDetached(txComponent* component){ removeComponentFromList(component); }
 	// 通知布局窗口建立了与布局的联系,由窗口发出
 	virtual void notifyComponentAttached(txComponent* component);
 	virtual bool notifyComponentNameChanged(const std::string& oldName, txComponent* component);
-	static txComponent* createIndependentComponent(const std::string& name, const std::string& type, const bool& initComponent = true);
+	static txComponent* createIndependentComponent(const std::string& name, const std::string& type, bool initComponent = true);
 	txComponent* addComponent(const std::string& name, const std::string& type);
 	static void destroyComponent(txComponent* component);
 	void destroyComponent(const std::string& name);
@@ -100,7 +100,7 @@ public:
 	}
 	const txVector<txComponent*>& getRootComponentList() { return mRootComponentList; }
 protected:
-	void addComponentToList(txComponent* component, const int& componentPos = -1);
+	void addComponentToList(txComponent* component, int componentPos = -1);
 	void removeComponentFromList(txComponent* component);
 protected:
 	txVector<txComponent*> mRootComponentList;				// 一级组件列表,保存着组件之间的更新顺序

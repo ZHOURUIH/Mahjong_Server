@@ -10,7 +10,7 @@ class txUtility
 	static ThreadLock mTimeLock;
 public:
 	static void stop();
-	static void sleep(const unsigned long& timeMS);
+	static void sleep(unsigned long timeMS);
 	static long getTimeMS();
 	static const char* getTime();
 	// 返回media的路径,不带/
@@ -57,7 +57,7 @@ public:
 		}
 	}
 	template<typename T>
-	static void swapByte(T& value, const int& pos0, const int& pos1)
+	static void swapByte(T& value, int pos0, int pos1)
 	{
 		char byte0 = (value & (0xff << (8 * pos0))) >> (8 * pos0);
 		char byte1 = (value & (0xff << (8 * pos1))) >> (8 * pos1);
@@ -66,13 +66,13 @@ public:
 	}
 
 	// 秒数转换为分数和秒数
-	static void secondsToMinutesSeconds(const int& seconds, int& outMin, int& outSec)
+	static void secondsToMinutesSeconds(int seconds, int& outMin, int& outSec)
 	{
 		outMin = seconds / 60;
 		outSec = seconds - outMin * 60;
 	}
 
-	static void secondsToHoursMinutesSeconds(const int& seconds, int& outHour, int& outMin, int& outSec)
+	static void secondsToHoursMinutesSeconds(int seconds, int& outHour, int& outMin, int& outSec)
 	{
 		outHour = seconds / (60 * 60);
 		outMin = (seconds - outHour * (60 * 60)) / 60;

@@ -6,7 +6,7 @@
 class SCRequestDropRet : public Packet
 {
 public:
-	SCRequestDropRet(const PACKET_TYPE& type)
+	SCRequestDropRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

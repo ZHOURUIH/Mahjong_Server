@@ -13,7 +13,7 @@ public:
 		mThreadID = 0;
 	}
 	~ThreadLock(){}
-	void waitForUnlock(const char* file, const int& line);
+	void waitForUnlock(const char* file, int line);
 	void unlock();
 	bool isLocked(){ return mLock != 0; }
 public:

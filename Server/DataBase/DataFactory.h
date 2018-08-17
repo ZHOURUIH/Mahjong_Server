@@ -11,7 +11,7 @@
 class DataFactoryBase
 {
 public:
-	DataFactoryBase(const DATA_TYPE& type, const int& dataSize)
+	DataFactoryBase(DATA_TYPE type, int dataSize)
 		:
 		mType(type),
 		mCount(0),
@@ -26,7 +26,7 @@ public:
 	}
 	virtual Data* createData() = 0;
 	template<class T>
-	static DataFactoryBase* createDataFactory(const DATA_TYPE& type, const int& dataSize)
+	static DataFactoryBase* createDataFactory(DATA_TYPE type, int dataSize)
 	{
 		T* newDataFactory = TRACE_NEW(T, newDataFactory, type, dataSize);
 		return newDataFactory;
@@ -46,8 +46,8 @@ public:
 		TRACE_DELETE(data);
 		--mCount;
 	}
-	const DATA_TYPE& getType() { return mType; }
-	const int& getDataSize() { return mDataSize; }
+	DATA_TYPE getType() { return mType; }
+	int getDataSize() { return mDataSize; }
 protected:
 	DATA_TYPE mType;
 	int mCount;
@@ -58,7 +58,7 @@ template<typename T>
 class DataFactory : public DataFactoryBase
 {
 public:
-	DataFactory(const DATA_TYPE& type, const int& dataSize)
+	DataFactory(DATA_TYPE type, int dataSize)
 		:
 		DataFactoryBase(type, dataSize)
 	{}

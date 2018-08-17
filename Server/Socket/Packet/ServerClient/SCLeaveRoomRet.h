@@ -6,7 +6,7 @@
 class SCLeaveRoomRet : public Packet
 {
 public:
-	SCLeaveRoomRet(const PACKET_TYPE& type)
+	SCLeaveRoomRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

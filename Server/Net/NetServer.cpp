@@ -44,7 +44,7 @@ void NetServer::destroy()
 	CLOSE_SOCKET(mSocket);
 }
 
-void NetServer::init(const int& port, const int& backLog)
+void NetServer::init(int port, int backLog)
 {
 #if RUN_PLATFORM == PLATFORM_LINUX
 	signal(SIGPIPE, signalProcess);
@@ -272,7 +272,7 @@ void NetServer::processRecv()
 	UNLOCK(mClientLock);
 }
 
-void NetServer::update(const float& elapsedTime)
+void NetServer::update(float elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
 	LOCK(mClientLock);
@@ -306,7 +306,7 @@ void NetServer::update(const float& elapsedTime)
 	}
 }
 
-CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* ip)
+CLIENT_GUID NetServer::notifyAcceptClient(TX_SOCKET socket, const char* ip)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock);
@@ -333,7 +333,7 @@ CLIENT_GUID NetServer::notifyAcceptClient(const TX_SOCKET& socket, const char* i
 	return clientGUID;
 }
 
-void NetServer::disconnectSocket(const CLIENT_GUID& client)
+void NetServer::disconnectSocket(CLIENT_GUID client)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
 	LOCK(mClientLock);
@@ -352,7 +352,7 @@ void NetServer::disconnectSocket(const CLIENT_GUID& client)
 	UNLOCK(mClientLock);
 }
 
-NetClient* NetServer::getClient(const CLIENT_GUID& clientGUID)
+NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 {
 	NetClient* client = NULL;
 	LOCK(mClientLock);
@@ -365,12 +365,12 @@ NetClient* NetServer::getClient(const CLIENT_GUID& clientGUID)
 	return client;
 }
 
-void NetServer::sendMessage(Packet* packet, const CLIENT_GUID& clientGUID, const bool& destroyPacketEndSend)
+void NetServer::sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend)
 {
 	sendMessage(packet, getClient(clientGUID), destroyPacketEndSend);
 }
 
-void NetServer::sendMessage(Packet* packet, NetClient* client, const bool& destroyPacketEndSend)
+void NetServer::sendMessage(Packet* packet, NetClient* client, bool destroyPacketEndSend)
 {
 	if (client == NULL)
 	{
@@ -379,7 +379,7 @@ void NetServer::sendMessage(Packet* packet, NetClient* client, const bool& destr
 	client->sendPacket(packet, destroyPacketEndSend);
 }
 
-Packet* NetServer::createPacket(const PACKET_TYPE& type)
+Packet* NetServer::createPacket(PACKET_TYPE type)
 {
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(type);
 	if (factory == NULL)

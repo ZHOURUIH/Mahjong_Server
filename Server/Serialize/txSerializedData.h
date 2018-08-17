@@ -14,7 +14,7 @@ struct DataParameter
 		mDataPtr = NULL;
 		mDataSize = 0;
 	}
-	DataParameter(char* ptr, const int& dataSize, const std::string& dataType, const std::string& describe)
+	DataParameter(char* ptr, int dataSize, const std::string& dataType, const std::string& describe)
 	{
 		mDataPtr = ptr;
 		mDataSize = dataSize;
@@ -31,43 +31,23 @@ public:
 		mDataSize = 0;
 	}
 	virtual ~txSerializedData() { mDataParameterList.clear(); }
-	virtual bool read(char* pBuffer, const int& bufferSize);
-	virtual bool write(char* pBuffer, const int& bufferSize);
-	virtual bool writeData(const std::string& dataString, const int& paramIndex);
-	virtual bool writeData(char* buffer, const int& bufferSize, const int& paramIndex);
-	std::string getValueString(const int& paramIndex);
+	virtual bool read(char* pBuffer, int bufferSize);
+	virtual bool write(char* pBuffer, int bufferSize);
+	virtual bool writeData(const std::string& dataString, int paramIndex);
+	virtual bool writeData(char* buffer, int bufferSize, int paramIndex);
+	std::string getValueString(int paramIndex);
 	bool readStringList(const std::vector<std::string>& dataList);
-	const int& getSize() { return mDataSize; }
-	static bool readByte(char* dest, char* source, int& curSourceOffset, const int& sourceSize, const int& readSize)
-	{
-		if (curSourceOffset + readSize > sourceSize)
-		{
-			return false;
-		}
-		memcpy(dest, source + curSourceOffset, readSize);
-		curSourceOffset += readSize;
-		return true;
-	}
-	static bool writeByte(char* dest, char* source, int& destOffset, const int& destSize, const int& writeSize)
-	{
-		if (destOffset + writeSize > destSize)
-		{
-			return false;
-		}
-		memcpy(dest + destOffset, source, writeSize);
-		destOffset += writeSize;
-		return true;
-	}
+	int getSize() { return mDataSize; }
 	// 在子类构造中调用
 	virtual void fillParams() = 0;
 	void zeroParams();
 	template<typename T>
-	void pushParam(const T& param, const std::string& describe = EMPTY_STRING)
+	void pushParam(T param, const std::string& describe = EMPTY_STRING)
 	{
 		mDataParameterList.push_back(DataParameter((char*)&param, sizeof(param), typeid(T).name(), describe));
 	}
 	template<typename T>
-	void pushArrayParam(const T* param, const int& count, const std::string& describe = EMPTY_STRING)
+	void pushArrayParam(const T* param, int count, const std::string& describe = EMPTY_STRING)
 	{
 		if (count > 0)
 		{

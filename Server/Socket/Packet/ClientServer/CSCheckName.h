@@ -6,7 +6,7 @@
 class CSCheckName : public Packet
 {
 public:
-	CSCheckName(const PACKET_TYPE& type)
+	CSCheckName(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

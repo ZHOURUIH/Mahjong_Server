@@ -15,7 +15,7 @@ mLockUpdate(false)
 	mCharacterFactoryManager->init();
 }
 
-void CharacterManager::update(const float& elapsedTime)
+void CharacterManager::update(float elapsedTime)
 {
 	if (isLocked())
 	{
@@ -54,7 +54,7 @@ void CharacterManager::destroy()
 	mCharacterTypeList.clear();
 }
 
-Character* CharacterManager::createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& guid, const CLIENT_GUID& client)
+Character* CharacterManager::createCharacter(const std::string& name, CHARACTER_TYPE type, CHAR_GUID guid, CLIENT_GUID client)
 {
 	if (mCharacterList.find(name) != mCharacterList.end())
 	{
@@ -140,7 +140,7 @@ void CharacterManager::removeCharacterFromList(Character* character)
 	}
 }
 
-void CharacterManager::destroyCharacter(const CHAR_GUID& guid)
+void CharacterManager::destroyCharacter(CHAR_GUID guid)
 {
 	Character* character = getCharacter(guid);
 	if (character == NULL)
@@ -162,7 +162,7 @@ void CharacterManager::destroyCharacter(const std::string& name)
 	TRACE_DELETE(character);
 }
 
-void CharacterManager::notifyCharacterIDChanged(const CHAR_GUID& oldID)
+void CharacterManager::notifyCharacterIDChanged(CHAR_GUID oldID)
 {
 	txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(oldID);
 	if (iterID != mCharacterIDList.end())

@@ -15,30 +15,29 @@ public:
 	Room(const int& id);
 	virtual ~Room(){ destroy(); }
 	virtual void init(){}
-	virtual void update(const float& elapsedTime);
+	virtual void update(float elapsedTime);
 	void destroy(){}
 	// 房间相关
 	void joinRoom(CharacterPlayer* player);
 	void leaveRoom(CharacterPlayer* player);
 	void chooseContinueGame(CharacterPlayer* player, bool continueGame);
-	void notifyEnterGame();
-	void notifyDiceDone(const CHAR_GUID& playerGUID);
-	void notifyPlayerDrop(CharacterPlayer* player, const MAHJONG& mah);
-	void notifyPlayerGet(CharacterPlayer* player, const MAHJONG& mah);
-	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah, const txVector<MahjongAction*>& actionList);
-	void playerConfirmAction(CharacterPlayer* player, const ACTION_TYPE& type);
-	CharacterPlayer* getMember(const CHAR_GUID& playerID);
-	CharacterPlayer* getMemberByPosition(const CHAR_GUID& playerID);
+	void notifyDiceDone(CHAR_GUID playerGUID);
+	void notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah);
+	void notifyPlayerGet(CharacterPlayer* player, MAHJONG mah);
+	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah, const txVector<MahjongAction*>& actionList);
+	void playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type);
+	CharacterPlayer* getMember(CHAR_GUID playerID);
+	CharacterPlayer* getMemberByPosition(CHAR_GUID playerID);
 	// 麻将相关
-	void setMahjongState(const MAHJONG_PLAY_STATE& state);
-	void requestDrop(CharacterPlayer* player, const int& index);
+	void setMahjongState(MAHJONG_PLAY_STATE state);
+	void requestDrop(CharacterPlayer* player, int index);
 	void notifyAllPlayerDiceDone();
 	bool isAllPlayerReady();
-	const int& getID()									{ return mID; }
+	int getID()											{ return mID; }
 	bool isAllPlayerDiceDone()							{ return mDiceDoneCount == mMaxPlayer; }
 	bool isRoomFull()									{ return (int)mPlayerList.size() >= mMaxPlayer; }
 	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
-	const bool& isRoomLocked()							{ return mLockRoom; }
+	bool isRoomLocked()									{ return mLockRoom; }
 	txMap<CharacterPlayer*, bool>& getPlayerChooseList(){ return mPlayerChooseList; }
 protected:
 	void reset();
@@ -49,19 +48,19 @@ protected:
 	void endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList);
 	// 向所有玩家发送消息
 	void notifyAllPlayerGetStartDone();
-	void notifyAllPlayerBanker(const CHAR_GUID& banker);
+	void notifyAllPlayerBanker(CHAR_GUID banker);
 	void notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaList);
-	void playerGetStartMahjong(const MAHJONG& mah, CharacterPlayer* player);
-	void playerGetMahjong(const MAHJONG& mah, CharacterPlayer* player);
+	void playerGetStartMahjong(MAHJONG mah, CharacterPlayer* player);
+	void playerGetMahjong(MAHJONG mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
 	// 可能同时会有多个玩家可以胡牌
 	void playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList);
-	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
-	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
-	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, const MAHJONG& mah);
+	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
+	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
+	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
 	void playerAskDrop(CharacterPlayer* player);
 	void playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
-	void playerShowHua(CharacterPlayer* player, const int& index, const MAHJONG& mah);
+	void playerShowHua(CharacterPlayer* player, int index, MAHJONG mah);
 protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限

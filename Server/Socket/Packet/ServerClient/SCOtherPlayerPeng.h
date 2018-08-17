@@ -6,7 +6,7 @@
 class SCOtherPlayerPeng : public Packet
 {
 public:
-	SCOtherPlayerPeng(const PACKET_TYPE& type)
+	SCOtherPlayerPeng(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

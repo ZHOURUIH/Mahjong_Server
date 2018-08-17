@@ -6,7 +6,7 @@
 class SCRegisterRet : public Packet
 {
 public:
-	SCRegisterRet(const PACKET_TYPE& type)
+	SCRegisterRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

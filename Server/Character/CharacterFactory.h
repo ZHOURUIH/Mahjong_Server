@@ -9,7 +9,7 @@
 class CharacterFactoryBase
 {
 public:
-	CharacterFactoryBase(const CHARACTER_TYPE& type)
+	CharacterFactoryBase(CHARACTER_TYPE type)
 		:
 		mType(type),
 		mCurCount(0)
@@ -37,12 +37,12 @@ public:
 		--mCurCount;
 	}
 	template<typename T>
-	static CharacterFactoryBase* createFactory(const CHARACTER_TYPE& type)
+	static CharacterFactoryBase* createFactory(CHARACTER_TYPE type)
 	{
 		T* factory = TRACE_NEW(T, factory, type);
 		return factory;
 	}
-	const CHARACTER_TYPE& getType() { return mType; }
+	CHARACTER_TYPE getType() { return mType; }
 protected:
 	CHARACTER_TYPE mType;
 	int mCurCount;
@@ -52,7 +52,7 @@ template<class T>
 class CharacterFactory : public CharacterFactoryBase
 {
 public:
-	CharacterFactory(const CHARACTER_TYPE& type)
+	CharacterFactory(CHARACTER_TYPE type)
 		:
 		CharacterFactoryBase(type)
 	{}

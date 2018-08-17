@@ -6,7 +6,7 @@
 class CSCreateRoom : public Packet
 {
 public:
-	CSCreateRoom(const PACKET_TYPE& type)
+	CSCreateRoom(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

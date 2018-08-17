@@ -38,7 +38,7 @@ txMemoryTrace::~txMemoryTrace()
 	TRACE_DELETE(mShareMemoryServer);
 }
 
-void txMemoryTrace::init(const bool& writeOrDebug)
+void txMemoryTrace::init(bool writeOrDebug)
 {
 	mShareMemoryServer->Create();
 	mWriteOrDebug = writeOrDebug;

@@ -6,7 +6,7 @@
 class SCHeartBeatRet : public Packet
 {
 public:
-	SCHeartBeatRet(const PACKET_TYPE& type)
+	SCHeartBeatRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

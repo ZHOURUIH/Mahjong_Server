@@ -6,7 +6,7 @@
 class CharacterNPC : public Character
 {
 public:
-	CharacterNPC(const CHARACTER_TYPE& type, const std::string& name)
+	CharacterNPC(CHARACTER_TYPE type, const std::string& name)
 		:
 		Character(type, name)
 	{}

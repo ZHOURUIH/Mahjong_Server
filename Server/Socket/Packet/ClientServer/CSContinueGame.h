@@ -6,7 +6,7 @@
 class CSContinueGame : public Packet
 {
 public:
-	CSContinueGame(const PACKET_TYPE& type)
+	CSContinueGame(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

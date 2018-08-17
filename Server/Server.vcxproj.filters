@@ -379,6 +379,9 @@
     <ClCompile Include="Common\GameLog.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\BinaryUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -896,6 +899,12 @@
     </ClInclude>
     <ClInclude Include="Common\ServerCallback.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\StreamBuffer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\BinaryUtility.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

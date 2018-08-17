@@ -6,7 +6,7 @@
 class SCOtherPlayerGang : public Packet
 {
 public:
-	SCOtherPlayerGang(const PACKET_TYPE& type)
+	SCOtherPlayerGang(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

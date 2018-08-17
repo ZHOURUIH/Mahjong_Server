@@ -27,7 +27,7 @@ void CustomThread::destroy()
 	stop();
 }
 
-void CustomThread::start(CustomThreadCallback callback, void* args, const int& frameTimeMS)
+void CustomThread::start(CustomThreadCallback callback, void* args, int frameTimeMS)
 {
 	LOG_INFO("准备启动线程 : %s", mName.c_str());
 	if (mThread != NULL_THREAD)

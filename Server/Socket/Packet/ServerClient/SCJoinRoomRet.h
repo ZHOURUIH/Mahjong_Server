@@ -6,7 +6,7 @@
 class SCJoinRoomRet : public Packet
 {
 public:
-	SCJoinRoomRet(const PACKET_TYPE& type)
+	SCJoinRoomRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

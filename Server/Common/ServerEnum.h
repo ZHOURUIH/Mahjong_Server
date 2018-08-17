@@ -18,4 +18,11 @@ enum SERVER_DEFINE_STRING
 	SDS_MAX,
 };
 
+enum PARSE_RESULT
+{
+	PR_SUCCESS,
+	PR_NOT_ENOUGH,
+	PR_ERROR,
+};
+
 #endif

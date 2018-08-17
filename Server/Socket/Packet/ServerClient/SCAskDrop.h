@@ -7,7 +7,7 @@
 class SCAskDrop : public Packet
 {
 public:
-	SCAskDrop(const PACKET_TYPE& type)
+	SCAskDrop(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

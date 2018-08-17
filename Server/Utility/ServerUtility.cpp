@@ -27,7 +27,7 @@ void ServerUtility::init()
 }
 
 // handInMah必须是从小到大的有序数组
-bool ServerUtility::canHu(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canHu(txVector<MAHJONG>& handInMah, MAHJONG mah)
 {
 	//复制一份列表
 	txVector<MAHJONG> temp = handInMah;
@@ -74,7 +74,7 @@ void ServerUtility::toMahjongGroup(txVector<MAHJONG>& list, txVector<MahInfo>& g
 }
 
 // 得到指定牌的花色
-MAHJONG_HUASE ServerUtility::getHuaSe(const MAHJONG& mah)
+MAHJONG_HUASE ServerUtility::getHuaSe(MAHJONG mah)
 {
 	if (mah >= M_FENG_DONG && mah <= M_FENG_BAI)
 	{
@@ -87,7 +87,7 @@ MAHJONG_HUASE ServerUtility::getHuaSe(const MAHJONG& mah)
 	}
 }
 
-bool ServerUtility::isShunzi(txVector<MahInfo>& mahjongList, const int& startIndex)
+bool ServerUtility::isShunzi(txVector<MahInfo>& mahjongList, int startIndex)
 {
 	if ((int)mahjongList.size() <= startIndex + 2)
 	{
@@ -253,7 +253,7 @@ bool ServerUtility::canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJO
 	}
 }
 
-bool ServerUtility::canPeng(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canPeng(txVector<MAHJONG>& handInMah, MAHJONG mah)
 {
 	bool ret = false;
 	txVector<MahInfo> infoList;
@@ -271,7 +271,7 @@ bool ServerUtility::canPeng(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
 	return ret;
 }
 
-bool ServerUtility::canGang(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
+bool ServerUtility::canGang(txVector<MAHJONG>& handInMah, MAHJONG mah)
 {
 	bool ret = false;
 	txVector<MahInfo> infoList;
@@ -307,7 +307,7 @@ bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
 	return ret;
 }
 
-void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
+void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah)
 {
 	// 碰的前提是之前检测过可以碰
 	int mahCount = handInMah.size();
@@ -324,7 +324,7 @@ void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 	END_FOR_STL(handInMah);
 }
 
-void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah)
+void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah)
 {
 	// 杠的前提是之前检测过可以杠
 	int mahCount = handInMah.size();
@@ -342,7 +342,7 @@ void ServerUtility::gangMahjong(txVector<MAHJONG>& handInMah, const MAHJONG& mah
 }
 
 // handInIncludeDrop表示handInMah中是否已经包含了dropMah
-txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, const MAHJONG& dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop)
+txVector<HU_TYPE> ServerUtility::generateHuType(txVector<MAHJONG>& handInMah, MAHJONG dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop)
 {
 	// 将数组转换为列表
 	txVector<MAHJONG> handInList;

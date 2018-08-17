@@ -6,5 +6,6 @@
 #include "txMathUtility.h"
 #include "txStringUtility.h"
 #include "ServerUtility.h"
+#include "BinaryUtility.h"
 
 #endif

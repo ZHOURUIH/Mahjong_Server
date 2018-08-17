@@ -7,31 +7,31 @@ std::string txSerializedData::mFloatType = typeid(float).name();
 std::string txSerializedData::mCharArrayType = typeid(char*).name();
 std::string txSerializedData::mIntArrayType = typeid(int*).name();
 
-bool txSerializedData::read(char* pBuffer, const int& bufferSize)
+bool txSerializedData::read(char* pBuffer, int bufferSize)
 {
 	int bufferOffset = 0;
 	bool ret = true;
 	int parameterCount = mDataParameterList.size();
 	for (int i = 0; i < parameterCount; ++i)
 	{
-		ret = ret && readByte(mDataParameterList[i].mDataPtr, pBuffer, bufferOffset, bufferSize, mDataParameterList[i].mDataSize);
+		ret = ret && BinaryUtility::readBuffer(pBuffer, bufferSize, bufferOffset, mDataParameterList[i].mDataPtr, mDataParameterList[i].mDataSize);
 	}
 	return ret;
 }
 
-bool txSerializedData::write(char* pBuffer, const int& bufferSize)
+bool txSerializedData::write(char* pBuffer, int bufferSize)
 {
 	int curWriteSize = 0;
 	bool ret = true;
 	int parameterCount = mDataParameterList.size();
 	for (int i = 0; i < parameterCount; ++i)
 	{
-		ret = ret && writeByte(pBuffer, mDataParameterList[i].mDataPtr, curWriteSize, bufferSize, mDataParameterList[i].mDataSize);
+		ret = ret && BinaryUtility::writeBuffer(pBuffer, bufferSize, curWriteSize, mDataParameterList[i].mDataPtr, mDataParameterList[i].mDataSize);
 	}
 	return ret;
 }
 
-bool txSerializedData::writeData(const std::string& dataString, const int& paramIndex)
+bool txSerializedData::writeData(const std::string& dataString, int paramIndex)
 {
 	if (paramIndex < 0 || paramIndex >= (int)mDataParameterList.size())
 	{
@@ -70,7 +70,7 @@ bool txSerializedData::writeData(const std::string& dataString, const int& param
 	return true;
 }
 
-bool txSerializedData::writeData(char* buffer, const int& bufferSize, const int& paramIndex)
+bool txSerializedData::writeData(char* buffer, int bufferSize, int paramIndex)
 {
 	if (buffer == NULL || paramIndex < 0 || paramIndex >= (int)mDataParameterList.size())
 	{
@@ -84,7 +84,7 @@ bool txSerializedData::writeData(char* buffer, const int& bufferSize, const int&
 	return true;
 }
 
-std::string txSerializedData::getValueString(const int& paramIndex)
+std::string txSerializedData::getValueString(int paramIndex)
 {
 	const DataParameter& dataParam = mDataParameterList[paramIndex];
 	std::string dataString;

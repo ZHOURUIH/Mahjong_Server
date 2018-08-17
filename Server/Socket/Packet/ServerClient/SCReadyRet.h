@@ -6,7 +6,7 @@
 class SCReadyRet : public Packet
 {
 public:
-	SCReadyRet(const PACKET_TYPE& type)
+	SCReadyRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

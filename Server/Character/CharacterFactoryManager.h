@@ -22,7 +22,7 @@ public:
 		END_FOR_STL(mFactoryList);
 		mFactoryList.clear();
 	}
-	CharacterFactoryBase* getFactory(const CHARACTER_TYPE& type)
+	CharacterFactoryBase* getFactory(CHARACTER_TYPE type)
 	{
 		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
@@ -34,7 +34,7 @@ public:
 	txMap<CHARACTER_TYPE, CharacterFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:
 	template<typename O>
-	CharacterFactoryBase* addFactory(const CHARACTER_TYPE& type)
+	CharacterFactoryBase* addFactory(CHARACTER_TYPE type)
 	{
 		CharacterFactoryBase* factory = CharacterFactoryBase::createFactory<O>(type);
 		mFactoryList.insert(factory->getType(), factory);

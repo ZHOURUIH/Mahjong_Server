@@ -6,7 +6,7 @@
 class SCOtherPlayerPass : public Packet
 {
 public:
-	SCOtherPlayerPass(const PACKET_TYPE& type)
+	SCOtherPlayerPass(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

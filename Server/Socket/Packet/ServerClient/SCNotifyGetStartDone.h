@@ -6,7 +6,7 @@
 class SCNotifyGetStartDone : public Packet
 {
 public:
-	SCNotifyGetStartDone(const PACKET_TYPE& type)
+	SCNotifyGetStartDone(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

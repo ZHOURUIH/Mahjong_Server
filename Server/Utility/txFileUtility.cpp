@@ -17,7 +17,7 @@ std::string txFileUtility::validPath(const std::string& path)
 	return temp;
 }
 
-void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>& files, const std::string& patterns, const bool& recursive)
+void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>& files, const std::string& patterns, bool recursive)
 {
 	txVector<std::string> patternList;
 	patternList.push_back(patterns);
@@ -37,7 +37,7 @@ bool txFileUtility::isDirectory(const std::string& pszName)
 	return S_ISDIR(S_stat.st_mode);
 }
 
-void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
+void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	txVector<std::string> fileName = ASS_getFileList((char*)path.c_str());
@@ -115,7 +115,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 #endif
 }
 
-void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive)
+void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
 {
 	struct dirent* pDirent;
 	DIR* pDir = opendir(path.c_str());
@@ -148,7 +148,7 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 }
 
 #elif RUN_PLATFORM == PLATFORM_WINDOWS
-void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, const bool& recursive)
+void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
 {
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
@@ -198,7 +198,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 	::FindClose(hFind);
 }
 
-void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, const bool& recursive)
+void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
 {
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
@@ -319,7 +319,7 @@ bool txFileUtility::createFolder(const std::string& path)
 	return true;
 }
 
-bool txFileUtility::writeFile(std::string filePath, const int& length, const char* buffer)
+bool txFileUtility::writeFile(std::string filePath, int length, const char* buffer)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	return false;
@@ -368,7 +368,7 @@ bool txFileUtility::writeFile(std::string filePath, const int& length, const cha
 	return true;
 }
 
-char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, const bool& addZero)
+char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, bool addZero)
 {
 	FILE* pFile = NULL;
 #if RUN_PLATFORM == PLATFORM_WINDOWS

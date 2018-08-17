@@ -6,7 +6,7 @@
 class CSRegister : public Packet
 {
 public:
-	CSRegister(const PACKET_TYPE& type)
+	CSRegister(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

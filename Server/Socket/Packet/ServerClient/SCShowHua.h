@@ -6,7 +6,7 @@
 class SCShowHua : public Packet
 {
 public:
-	SCShowHua(const PACKET_TYPE& type)
+	SCShowHua(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

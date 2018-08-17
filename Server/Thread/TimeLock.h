@@ -6,10 +6,10 @@
 class TimeLock
 {
 public:
-	TimeLock(const long& frameTimeMS);
+	TimeLock(long frameTimeMS);
 	// 返回值表示上一帧经过的时间
 	long update();
-	void setForceSleep(const long& forceTimeMS)
+	void setForceSleep(long forceTimeMS)
 	{
 		mForceSleep = forceTimeMS;
 	}

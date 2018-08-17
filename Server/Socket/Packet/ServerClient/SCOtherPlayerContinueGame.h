@@ -6,7 +6,7 @@
 class SCOtherPlayerContinueGame : public Packet
 {
 public:
-	SCOtherPlayerContinueGame(const PACKET_TYPE& type)
+	SCOtherPlayerContinueGame(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

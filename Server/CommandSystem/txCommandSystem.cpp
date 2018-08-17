@@ -48,7 +48,7 @@ void txCommandSystem::update(float elapsedTime)
 	mExecuteList.clear();
 }
 
-bool txCommandSystem::interruptCommand(const int& assignID)
+bool txCommandSystem::interruptCommand(int assignID)
 {
 	// 如果命令系统已经销毁了,则不能再中断命令
 	if (mSystemDestroy)

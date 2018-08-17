@@ -6,7 +6,7 @@
 class SCCheckAccountRet : public Packet
 {
 public:
-	SCCheckAccountRet(const PACKET_TYPE& type)
+	SCCheckAccountRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

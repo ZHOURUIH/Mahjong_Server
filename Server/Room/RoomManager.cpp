@@ -8,7 +8,7 @@
 #include "Utility.h"
 
 int RoomManager::mRoomIDSeed = 0;
-void RoomManager::update(const float& elapsedTime)
+void RoomManager::update(float elapsedTime)
 {
 	txMap<int, Room*>::iterator iter = mRoomList.begin();
 	txMap<int, Room*>::iterator iterEnd = mRoomList.end();
@@ -27,7 +27,7 @@ Room* RoomManager::createRoom()
 	return room;
 }
 
-Room* RoomManager::getRoom(const int& id)
+Room* RoomManager::getRoom(int id)
 {
 	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())
@@ -37,7 +37,7 @@ Room* RoomManager::getRoom(const int& id)
 	return NULL;
 }
 
-void RoomManager::destroyRoom(const int& id)
+void RoomManager::destroyRoom(int id)
 {
 	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())

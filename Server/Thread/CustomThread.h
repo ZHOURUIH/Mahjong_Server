@@ -10,9 +10,9 @@ public:
 	CustomThread(const std::string& name);
 	~CustomThread();
 	void destroy();
-	void setBackground(const bool& background){mIsBackground = background;}
-	void start(CustomThreadCallback callback, void* args, const int& frameTimeMS = 15);
-	void pause(const bool& isPause){mPause = isPause;}
+	void setBackground(bool background){mIsBackground = background;}
+	void start(CustomThreadCallback callback, void* args, int frameTimeMS = 15);
+	void pause(bool isPause){mPause = isPause;}
 	void stop();
 protected:
 	THREAD_CALLBACK_DECLEAR(run)

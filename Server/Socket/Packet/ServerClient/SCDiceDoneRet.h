@@ -6,7 +6,7 @@
 class SCDiceDoneRet : public Packet
 {
 public:
-	SCDiceDoneRet(const PACKET_TYPE& type)
+	SCDiceDoneRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

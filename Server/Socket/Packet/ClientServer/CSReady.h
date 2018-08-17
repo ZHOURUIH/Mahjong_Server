@@ -6,7 +6,7 @@
 class CSReady : public Packet
 {
 public:
-	CSReady(const PACKET_TYPE& type)
+	CSReady(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

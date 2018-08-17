@@ -9,11 +9,11 @@
 class Data : public txSerializedData
 {
 public:
-	Data(const DATA_TYPE& type)
+	Data(DATA_TYPE type)
 	:
 	mType(type)
 	{}
-	const DATA_TYPE& getType() { return mType; }
+	DATA_TYPE getType() { return mType; }
 protected:
 	DATA_TYPE mType;
 };

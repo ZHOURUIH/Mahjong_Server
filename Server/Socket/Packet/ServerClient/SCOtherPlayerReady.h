@@ -6,7 +6,7 @@
 class SCOtherPlayerReady : public Packet
 {
 public:
-	SCOtherPlayerReady(const PACKET_TYPE& type)
+	SCOtherPlayerReady(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

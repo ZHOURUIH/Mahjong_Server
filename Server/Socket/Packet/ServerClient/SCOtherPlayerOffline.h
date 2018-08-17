@@ -6,7 +6,7 @@
 class SCOtherPlayerOffline : public Packet
 {
 public:
-	SCOtherPlayerOffline(const PACKET_TYPE& type)
+	SCOtherPlayerOffline(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

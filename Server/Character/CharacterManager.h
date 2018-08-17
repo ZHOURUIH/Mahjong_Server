@@ -15,14 +15,14 @@ public:
 	virtual ~CharacterManager(){ destroy(); }
 
 	void init(){}
-	void update(const float& elapsedTime);
+	void update(float elapsedTime);
 	void destroy();
 	bool isLocked() { return mLockUpdate; }
 	void lock() { mLockUpdate = true; }
 	void unlock() { mLockUpdate = false; }
-	Character* createCharacter(const std::string& name, const CHARACTER_TYPE& type, const CHAR_GUID& guid, const CLIENT_GUID& client);
+	Character* createCharacter(const std::string& name, CHARACTER_TYPE type, CHAR_GUID guid, CLIENT_GUID client);
 	void destroyCharacter(const std::string& name);
-	void destroyCharacter(const CHAR_GUID& guid);
+	void destroyCharacter(CHAR_GUID guid);
 	Character* getCharacter(const std::string& name)
 	{
 		txMap<std::string, Character*>::iterator itrFind = mCharacterList.find(name);
@@ -32,7 +32,7 @@ public:
 		}
 		return NULL;
 	}
-	Character* getCharacter(const CHAR_GUID& characterID)
+	Character* getCharacter(CHAR_GUID characterID)
 	{
 		txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(characterID);
 		if (iterID != mCharacterIDList.end())
@@ -41,7 +41,7 @@ public:
 		}
 		return NULL;
 	}
-	void getCharacterListByType(const CHARACTER_TYPE& type, txMap<std::string, Character*>& characterList)
+	void getCharacterListByType(CHARACTER_TYPE type, txMap<std::string, Character*>& characterList)
 	{
 		txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(type);
 		if (iterType != mCharacterTypeList.end())
@@ -49,9 +49,9 @@ public:
 			characterList = iterType->second;
 		}
 	}
-	void notifyCharacterIDChanged(const CHAR_GUID& oldID);
+	void notifyCharacterIDChanged(CHAR_GUID oldID);
 	void notifyCharacterNameChanged(const std::string& oldName);
-	bool isCharacterLogin(const CHAR_GUID& guid)
+	bool isCharacterLogin(CHAR_GUID guid)
 	{
 		txMap<CHAR_GUID, Character*>::iterator iter = mCharacterIDList.find(guid);
 		return iter != mCharacterIDList.end();

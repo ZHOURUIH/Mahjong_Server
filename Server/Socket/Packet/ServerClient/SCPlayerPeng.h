@@ -6,7 +6,7 @@
 class SCPlayerPeng : public Packet
 {
 public:
-	SCPlayerPeng(const PACKET_TYPE& type)
+	SCPlayerPeng(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

@@ -41,7 +41,7 @@ public:
 		checkLock();
 		return mMap.insert(std::make_pair(k, v));
 	}
-	void erase(const iterator& iter, const bool& check = true)
+	void erase(const iterator& iter, bool check = true)
 	{
 		if (check)
 		{
@@ -49,7 +49,7 @@ public:
 		}
 		mMap.erase(iter);
 	}
-	void erase(const Key& key, const bool& check = true)
+	void erase(const Key& key, bool check = true)
 	{
 		auto iter = mMap.find(key);
 		if (iter != mMap.end())

@@ -12,7 +12,7 @@ const char* MySQLDataBase::COL_NAME = "name";
 const char* MySQLDataBase::COL_MONEY = "money";
 const char* MySQLDataBase::COL_HEAD = "head";
 
-void MySQLDataBase::init(const std::string& user, const std::string& pswd, const std::string& host, const int& port)
+void MySQLDataBase::init(const std::string& user, const std::string& pswd, const std::string& host, int port)
 {
 	mUser = user;
 	mPassword = pswd;
@@ -31,13 +31,14 @@ bool MySQLDataBase::connectDataBase(const std::string& dataBase)
 	}
 	if (!mysql_real_connect(mMySQL, mHost.c_str(), mUser.c_str(), mPassword.c_str(), dataBase.c_str(), mPort, NULL, 0))
 	{
-		LOG_ERROR("can not connect DataBase %s!", dataBase.c_str());
+		const char* error = mysql_error(mMySQL);
+		LOG_ERROR("can not connect DataBase %s!   %s", dataBase.c_str(), error);
 		return false;
 	}
 	int ret = mysql_query(mMySQL, "SET NAMES UTF8"); //设置编码格式
 	if (ret != 0)
 	{
-		LOG_ERROR("set names error!");
+		LOG_ERROR("set names error!   %s", mysql_error(mMySQL));
 		return false;
 	}
 	mConnectedDataBase = dataBase;
@@ -65,7 +66,7 @@ int MySQLDataBase::getMaxGUID()
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query max GUID error!");
+		LOG_ERROR("query max GUID error!   %s", mysql_error(mMySQL));
 		return -1;
 	}
 	// 获得查询结果
@@ -100,7 +101,7 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query login error");
+		LOG_ERROR("query login error!   %s", mysql_error(mMySQL));
 		return false;
 	}
 	// 获得查询结果
@@ -128,7 +129,7 @@ bool MySQLDataBase::queryLogin(const std::string& account, const std::string& pa
 	return false;
 }
 
-bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name, int& money, short& head)
+bool MySQLDataBase::queryCharacterData(CHAR_GUID guid, std::string& name, int& money, short& head)
 {
 	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
@@ -141,7 +142,7 @@ bool MySQLDataBase::queryCharacterData(const CHAR_GUID& guid, std::string& name,
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query character data error!");
+		LOG_ERROR("query character data error!   %s", mysql_error(mMySQL));
 		return false;
 	}
 	// 获得查询结果
@@ -230,7 +231,7 @@ bool MySQLDataBase::isNameExist(const std::string& name)
 	return false;
 }
 
-int MySQLDataBase::registerAccount(const std::string& account, const std::string& password, const std::string& name, const int& money, const int& head)
+int MySQLDataBase::registerAccount(const std::string& account, const std::string& password, const std::string& name, int money, int head)
 {
 	if (!connectDataBase(DATABASE_MAHJONG_USERDATA))
 	{
@@ -256,7 +257,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
 	if (ret != 0)
 	{
-		LOG_ERROR("insert account error!");
+		LOG_ERROR("insert account error!   %s", mysql_error(mMySQL));
 		return -4;
 	}
 
@@ -268,7 +269,7 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	ret = mysql_query(mMySQL, insertCharacterDataBuffer);
 	if (ret != 0)
 	{
-		LOG_ERROR("insert character data error!");
+		LOG_ERROR("insert character data error!   %s", mysql_error(mMySQL));
 		return -5;
 	}
 	return 0;

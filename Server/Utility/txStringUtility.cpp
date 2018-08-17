@@ -117,14 +117,14 @@ void txStringUtility::split(std::string str, const std::string& deli, txVector<s
 	}
 }
 
-std::string txStringUtility::strReplace(const std::string& str, const int& begin, const int& end, const std::string& reStr)
+std::string txStringUtility::strReplace(const std::string& str, int begin, int end, const std::string& reStr)
 {
 	std::string sub1 = str.substr(0, begin);
 	std::string sub2 = str.substr(end, str.length() - end);
 	return sub1 + reStr + sub2;
 }
 
-std::string txStringUtility::intToString(const int& i, const int& limitLen)
+std::string txStringUtility::intToString(int i, int limitLen)
 {
 	char str[256];
 	SPRINTF(str, 256, "%d", i);
@@ -143,7 +143,7 @@ std::string txStringUtility::intToString(const int& i, const int& limitLen)
 	return retString;
 }
 
-std::string txStringUtility::floatToString(float f, const int& precision, const bool& removeZero)
+std::string txStringUtility::floatToString(float f, int precision, bool removeZero)
 {
 	std::string retString;
 	for (int temp = 0; temp < 1; ++temp)
@@ -224,7 +224,7 @@ std::string txStringUtility::floatToString(float f, const int& precision, const 
 	return retString;
 }
 
-bool txStringUtility::endWith(const std::string& oriString, const std::string& pattern, const bool& sensitive)
+bool txStringUtility::endWith(const std::string& oriString, const std::string& pattern, bool sensitive)
 {
 	if (oriString.length() < pattern.length())
 	{
@@ -244,7 +244,7 @@ bool txStringUtility::endWith(const std::string& oriString, const std::string& p
 	}
 }
 
-bool txStringUtility::startWith(const std::string& oriString, const std::string& pattern, const bool& sensitive)
+bool txStringUtility::startWith(const std::string& oriString, const std::string& pattern, bool sensitive)
 {
 	if (oriString.length() < pattern.length())
 	{
@@ -388,7 +388,7 @@ std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
 }
 #endif
 
-std::string txStringUtility::ANSIToUTF8(const std::string& str, const bool& addBOM)
+std::string txStringUtility::ANSIToUTF8(const std::string& str, bool addBOM)
 {
 	std::wstring unicodeStr = ANSIToUnicode(str);
 	std::string utf8Str = UnicodeToUTF8(unicodeStr);
@@ -400,7 +400,7 @@ std::string txStringUtility::ANSIToUTF8(const std::string& str, const bool& addB
 	return utf8Str;
 }
 
-std::string txStringUtility::UTF8ToANSI(const std::string& str, const bool& removeBOM)
+std::string txStringUtility::UTF8ToANSI(const std::string& str, bool removeBOM)
 {
 	std::wstring unicodeStr;
 	if (removeBOM && str.length() >= 3 && str[0] == 0xEF && str[0] == 0xBB && str[0] == 0xBF)
@@ -417,7 +417,7 @@ std::string txStringUtility::UTF8ToANSI(const std::string& str, const bool& remo
 	return ansiStr;
 }
 
-void txStringUtility::jsonStartArray(std::string& str, const int& preTableCount, const bool& returnLine)
+void txStringUtility::jsonStartArray(std::string& str, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -430,7 +430,7 @@ void txStringUtility::jsonStartArray(std::string& str, const int& preTableCount,
 	}
 }
 
-void txStringUtility::jsonEndArray(std::string& str, const int& preTableCount, const bool& returnLine)
+void txStringUtility::jsonEndArray(std::string& str, int preTableCount, bool returnLine)
 {
 	removeLastComma(str);
 	for (int i = 0; i < preTableCount; ++i)
@@ -444,7 +444,7 @@ void txStringUtility::jsonEndArray(std::string& str, const int& preTableCount, c
 	}
 }
 
-void txStringUtility::jsonStartStruct(std::string& str, const int& preTableCount, bool returnLine)
+void txStringUtility::jsonStartStruct(std::string& str, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -457,7 +457,7 @@ void txStringUtility::jsonStartStruct(std::string& str, const int& preTableCount
 	}
 }
 
-void txStringUtility::jsonEndStruct(std::string& str, const int& preTableCount, const bool& returnLine)
+void txStringUtility::jsonEndStruct(std::string& str, int preTableCount, bool returnLine)
 {
 	removeLastComma(str);
 	for (int i = 0; i < preTableCount; ++i)
@@ -471,7 +471,7 @@ void txStringUtility::jsonEndStruct(std::string& str, const int& preTableCount, 
 	}
 }
 
-void txStringUtility::jsonAddPair(std::string& str, const std::string& name, const std::string& value, const int& preTableCount, const bool& returnLine)
+void txStringUtility::jsonAddPair(std::string& str, const std::string& name, const std::string& value, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -520,7 +520,7 @@ void txStringUtility::rightToLeft(std::string& str)
 	}
 }
 
-bool txStringUtility::findSubstr(std::string res, std::string dst, const bool& sensitive, int* pos, const int& startPose, const bool& firstOrLast)
+bool txStringUtility::findSubstr(std::string res, std::string dst, bool sensitive, int* pos, int startPose, bool firstOrLast)
 {
 	// 如果不区分大小写
 	if (!sensitive)
@@ -557,7 +557,7 @@ bool txStringUtility::findSubstr(std::string res, std::string dst, const bool& s
 	return posFind != -1;
 }
 
-txVector<std::string> txStringUtility::findSubstr(txVector<std::string>& res, const std::string& dst, const bool& sensitive)
+txVector<std::string> txStringUtility::findSubstr(txVector<std::string>& res, const std::string& dst, bool sensitive)
 {
 	txVector<std::string> retList;
 	int listSize = res.size();
@@ -606,7 +606,7 @@ std::string txStringUtility::checkIntString(const std::string& str, const std::s
 	return checkString(str, "0123456789" + valid);
 }
 
-std::string txStringUtility::charToHexString(const unsigned char& byte, const bool& upper)
+std::string txStringUtility::charToHexString(unsigned char byte, bool upper)
 {
 	char byteHex[3] = { 0 };
 	const char* charPool = upper ? "ABCDEF" : "abcdef";
@@ -619,7 +619,7 @@ std::string txStringUtility::charToHexString(const unsigned char& byte, const bo
 	return byteHex;
 }
 
-std::string txStringUtility::charArrayToHexString(unsigned char* data, const int& dataCount, const bool& addSpace, const bool& upper)
+std::string txStringUtility::charArrayToHexString(unsigned char* data, int dataCount, bool addSpace, bool upper)
 {
 	int oneLength = addSpace ? 3 : 2;
 	int showCount = dataCount * oneLength + 1;
@@ -638,4 +638,18 @@ std::string txStringUtility::charArrayToHexString(unsigned char* data, const int
 	std::string str(byteData);
 	TRACE_DELETE_ARRAY(byteData);
 	return str;
+}
+
+int txStringUtility::getCharCount(const std::string& str, char key)
+{
+	int count = 0;
+	int length = str.length();
+	for (int i = 0; i < length; ++i)
+	{
+		if (str[i] == key)
+		{
+			++count;
+		}
+	}
+	return count;
 }

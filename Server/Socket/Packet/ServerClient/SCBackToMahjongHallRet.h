@@ -6,7 +6,7 @@
 class SCBackToMahjongHallRet : public Packet
 {
 public:
-	SCBackToMahjongHallRet(const PACKET_TYPE& type)
+	SCBackToMahjongHallRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

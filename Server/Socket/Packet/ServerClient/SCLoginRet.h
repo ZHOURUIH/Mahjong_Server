@@ -8,7 +8,7 @@ const int NAME_LENGTH = 16;
 class SCLoginRet : public Packet
 {
 public:
-	SCLoginRet(const PACKET_TYPE& type)
+	SCLoginRet(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

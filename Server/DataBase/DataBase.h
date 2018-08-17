@@ -19,16 +19,16 @@ public:
 	{}
 	virtual ~DataBase() { destroy(); }
 	// 初始化所有数据
-	void init(const bool& loadAllData = true);
+	void init(bool loadAllData = true);
 	virtual void initDataFactory() = 0;
 	void destroyDataFactory();
-	Data* createData(const DATA_TYPE& type);
+	Data* createData(DATA_TYPE type);
 	void loadAllDataFromFile();
 	void destroyAllData();
-	void destroyData(const DATA_TYPE& type);
-	void loadData(const std::string& filePath, const bool& forceCover);
-	bool writeBinaryFile(const DATA_TYPE& type);
-	virtual void update(const float& elapsedTime){}
+	void destroyData(DATA_TYPE type);
+	void loadData(const std::string& filePath, bool forceCover);
+	bool writeBinaryFile(DATA_TYPE type);
+	virtual void update(float elapsedTime){}
 	void destroy()
 	{
 		// 先销毁数据
@@ -39,7 +39,7 @@ public:
 		mDataDefineFile.clear();
 	}
 	// 得到数据列表
-	bool getDataList(const DATA_TYPE& type, txVector<Data*>& dataList)
+	bool getDataList(DATA_TYPE type, txVector<Data*>& dataList)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter == mDataStructList.end())
@@ -50,7 +50,7 @@ public:
 		return true;
 	}
 	// 得到数据数量
-	int getDataCount(const DATA_TYPE& type)
+	int getDataCount(DATA_TYPE type)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
@@ -60,7 +60,7 @@ public:
 		return 0;
 	}
 	// 查询数据
-	Data* queryData(const DATA_TYPE& type, const int& index)
+	Data* queryData(DATA_TYPE type, int index)
 	{
 		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
@@ -72,10 +72,10 @@ public:
 		}
 		return NULL;
 	}
-	bool addData(const DATA_TYPE& type, Data* data, const int& pos = -1);
-	bool deleteData(const DATA_TYPE& type, const int& index);
+	bool addData(DATA_TYPE type, Data* data, int pos = -1);
+	bool deleteData(DATA_TYPE type, int index);
 	// 根据数据名得到数据定义
-	const std::string& getDataNameByDataType(const DATA_TYPE& type)
+	const std::string& getDataNameByDataType(DATA_TYPE type)
 	{
 		txMap<DATA_TYPE, std::string>::iterator iter = mDataDefineFile.find(type);
 		if (iter != mDataDefineFile.end())
@@ -96,7 +96,7 @@ public:
 	}
 protected:
 	template<typename T>
-	void addDataFactory(const DATA_TYPE& type, const std::string& dataName)
+	void addDataFactory(DATA_TYPE type, const std::string& dataName)
 	{
 		T data(type);
 		mDataFileDefine.insert(dataName, type);
@@ -105,7 +105,7 @@ protected:
 		addDataFactoryToList(factory);
 	}
 	void addDataFactoryToList(DataFactoryBase* factory);
-	DataFactoryBase* getDataFactory(const DATA_TYPE& type)
+	DataFactoryBase* getDataFactory(DATA_TYPE type)
 	{
 		txMap<DATA_TYPE, DataFactoryBase*>::iterator itrFind = mDataFactoryList.find(type);
 		if (itrFind != mDataFactoryList.end())

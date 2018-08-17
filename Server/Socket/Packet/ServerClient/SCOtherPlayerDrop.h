@@ -6,7 +6,7 @@
 class SCOtherPlayerDrop : public Packet
 {
 public:
-	SCOtherPlayerDrop(const PACKET_TYPE& type)
+	SCOtherPlayerDrop(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

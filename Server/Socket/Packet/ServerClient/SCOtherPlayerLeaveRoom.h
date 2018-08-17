@@ -6,7 +6,7 @@
 class SCOtherPlayerLeaveRoom : public Packet
 {
 public:
-	SCOtherPlayerLeaveRoom(const PACKET_TYPE& type)
+	SCOtherPlayerLeaveRoom(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

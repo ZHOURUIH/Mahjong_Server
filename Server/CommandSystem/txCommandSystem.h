@@ -20,7 +20,7 @@ public:
 	virtual void update(float elapsedTime);
 	// 创建命令
 	template<typename T>
-	T* newCmd(T*& cmd, const std::string& file, const int& line, const bool& show = true, const bool& delay = false)
+	T* newCmd(T*& cmd, const std::string& file, int line, bool show = true, bool delay = false)
 	{
 		cmd = mCommandPool->newCmd<T>(show, delay);
 		cmd->setFile(file);
@@ -28,7 +28,7 @@ public:
 		return cmd;
 	}
 	// 中断延时命令,在命令还未执行时,将命令销毁
-	bool interruptCommand(const int& assignID);
+	bool interruptCommand(int assignID);
 	// 在任意线程中发送立即执行的命令,则该命令将在该线程中执行
 	void pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver);
 	// 延迟执行的命令都会在主线程中执行

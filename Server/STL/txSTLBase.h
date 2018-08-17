@@ -10,9 +10,9 @@ public:
 		mLine = 0;
 	}
 	virtual ~txSTLBase(){}
-	const bool& isLocked() { return mLock; }
+	bool isLocked() { return mLock; }
 	// 循环遍历列表之前必须锁定
-	virtual void lock(const std::string& file, const int& line) 
+	virtual void lock(const std::string& file, int line) 
 	{
 		if (mLock)
 		{

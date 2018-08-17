@@ -9,7 +9,7 @@ const int PASSOWRD_LENGTH = 16;
 class CSLogin : public Packet
 {
 public:
-	CSLogin(const PACKET_TYPE& type)
+	CSLogin(PACKET_TYPE type)
 		:
 		Packet(type)
 	{

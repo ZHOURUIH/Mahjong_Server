@@ -7,25 +7,22 @@
 #include "PacketFactoryManager.h"
 #include "Utility.h"
 
-NetClient::NetClient(const CLIENT_GUID& clientGUID, const TX_SOCKET& s, const char* ip)
+NetClient::NetClient(CLIENT_GUID clientGUID, TX_SOCKET s, const char* ip)
 :
 mSocket(s),
 mClientGUID(clientGUID),
 mCharGUID(INVALID_ID),
 mTempBuffer1(NULL),
 mTempBuffer0(NULL),
-mRecvBuffer(NULL),
-mSendBuffer(NULL),
-mSendDataCount(0),
-mRecvDataCount(0),
 mHeartBeatTime(0.0f),
 mConnectTime(0.0f),
 mIsDeadClient(false)
 {
+	mSendStreamBuffer = TRACE_NEW(StreamBuffer, mSendStreamBuffer, CLIENT_BUFFER_SIZE);
+	mRecvStreamBuffer = TRACE_NEW(StreamBuffer, mRecvStreamBuffer, CLIENT_BUFFER_SIZE);
+	mTempRecvStreamBuffer = TRACE_NEW(StreamBuffer, mTempRecvStreamBuffer, CLIENT_BUFFER_SIZE);
 	memset(mIP, 0, 16);
 	memcpy(mIP, ip, txMath::getMax(16, (int)strlen(ip)));
-	mSendBuffer = TRACE_NEW_ARRAY(char, CLIENT_BUFFER_SIZE, mSendBuffer);
-	mRecvBuffer = TRACE_NEW_ARRAY(char, CLIENT_BUFFER_SIZE, mRecvBuffer);
 	mTempBuffer0 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer0);
 	mTempBuffer1 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer1);
 }
@@ -39,68 +36,92 @@ void NetClient::destroy()
 		cmdOffline->mPlayerID = mCharGUID;
 		mCommandSystem->pushDelayCommand(cmdOffline, mCharacterManager);
 	}
-	TRACE_DELETE_ARRAY(mSendBuffer);
-	TRACE_DELETE_ARRAY(mRecvBuffer);
 	TRACE_DELETE_ARRAY(mTempBuffer0);
 	TRACE_DELETE_ARRAY(mTempBuffer1);
+	TRACE_DELETE(mSendStreamBuffer);
+	TRACE_DELETE(mRecvStreamBuffer);
+	TRACE_DELETE(mTempRecvStreamBuffer);
 	// 关闭客户端套接字,并从列表移除
 	CLOSE_SOCKET(mSocket);
 }
 
-void NetClient::update(const float& elapsedTime)
+PARSE_RESULT NetClient::parsePacket(int& index, Packet*& packet)
 {
-	txVector<Packet*> packetList;
-	LOCK(mRecvLock);
+	// 可能还没有接收完全,等待下次接收
+	if (mRecvStreamBuffer->mDataLength < index + HEADER_SIZE)
+	{
+		return PR_NOT_ENOUGH;
+	}
+	PACKET_TYPE type = (PACKET_TYPE)BinaryUtility::read<short>(mRecvStreamBuffer->mBuffer, mRecvStreamBuffer->mBufferSize, index);
+	int packetSize = (int)BinaryUtility::read<short>(mRecvStreamBuffer->mBuffer, mRecvStreamBuffer->mBufferSize, index);
+	if (packetSize < 0)
+	{
+		return PR_ERROR;
+	}
+	// 验证包长度是否正确
+	int factorySize = PacketFactoryManager::getPacketSize(type);
+	if (packetSize != factorySize)
+	{
+		return PR_ERROR;
+	}
+	// 如果该包已经接收完全
+	if (mRecvStreamBuffer->mDataLength >= index + packetSize)
+	{
+		// 执行该消息包
+		packet = NetServer::createPacket(type);
+		if (!packet->read(mRecvStreamBuffer->mBuffer + index, packetSize))
+		{
+			// 解析错误
+			NetServer::destroyPacket(packet);
+			packet = NULL;
+			return PR_ERROR;
+		}
+		packet->mClient = mClientGUID;
+		index += packetSize;
+	}
+	// 未接收完全,等待下次接收
+	else
+	{
+		// 将下标重置到包头
+		index -= HEADER_SIZE;
+		return PR_NOT_ENOUGH;
+	}
+	return PR_SUCCESS;
+}
+
+void NetClient::update(float elapsedTime)
+{
+	// 同步缓冲区
+	LOCK(mTempRecvLock);
+	mRecvStreamBuffer->addDataToInputBuffer(mTempRecvStreamBuffer->mBuffer, mTempRecvStreamBuffer->mDataLength);
+	mTempRecvStreamBuffer->clearInputBuffer();
+	UNLOCK(mTempRecvLock);
+
 	// 解析接收到的数据
-	int index = 0;
+	txVector<Packet*> packetList;
 	bool ret = true;
 	while (true)
 	{
-		// 可能还没有接收完全,等待下次接收
-		if (index + HEADER_SIZE > mRecvDataCount)
+		Packet* packet = NULL;
+		int index = 0;
+		PARSE_RESULT parseResult = parsePacket(index, packet);
+		// 数据未接收完全
+		if(parseResult == PR_SUCCESS)
 		{
-			break;
+			packetList.push_back(packet);
+			// 将已经解析的数据移除
+			mRecvStreamBuffer->removeDataFromInputBuffer(0, index);
 		}
-		PACKET_TYPE type = (PACKET_TYPE)(*(short*)(mRecvBuffer + index));
-		index += sizeof(short);
-		int packetSize = (int)(*(short*)(mRecvBuffer + index));
-		index += sizeof(short);
-		// 包长度错误
-		if (packetSize < 0)
+		// 解析出现错误
+		else if (parseResult == PR_ERROR)
 		{
+			LOG_INFO("error : wrong packet data!");
 			ret = false;
 			break;
 		}
-		
-		// 验证包长度是否正确
-		int factorySize = PacketFactoryManager::getPacketSize(type);
-		if (packetSize != factorySize)
+		// 未接收完全,继续等待接收
+		else if (parseResult == PR_NOT_ENOUGH)
 		{
-			LOG_INFO("error : wrong packet data! packet : %d, need size : %d, receive size : %d", type, factorySize, packetSize);
-			ret = false;
-			break;
-		}
-
-		// 如果该包已经接收完全
-		if (index + packetSize <= mRecvDataCount)
-		{
-			// 执行该消息包
-			Packet* packetReply = NetServer::createPacket(type);
-			packetReply->read(mRecvBuffer + index, packetSize);
-			packetReply->mClient = mClientGUID;
-			packetList.push_back(packetReply);
-			index += packetSize;
-			// 已经解析完了
-			if (index == mRecvDataCount)
-			{
-				break;
-			}
-		}
-		// 未接收完全,等待下次接收
-		else
-		{
-			// 将下标重置到包头
-			index -= HEADER_SIZE;
 			break;
 		}
 	}
@@ -110,13 +131,6 @@ void NetClient::update(const float& elapsedTime)
 		// 先设置为断开连接的客户端
 		mIsDeadClient = true;
 	}
-	// 如果没有发生解析错误,则将已解析的数据清空
-	else
-	{
-		memmove(mRecvBuffer, mRecvBuffer + index, mRecvDataCount - index);
-		mRecvDataCount -= index;
-	}
-	UNLOCK(mRecvLock);
 
 	int packetCount = packetList.size();
 	FOR_STL(packetList, int i = 0; i < packetCount; ++i)
@@ -139,66 +153,30 @@ void NetClient::update(const float& elapsedTime)
 	}
 }
 
-void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
+void NetClient::sendPacket(Packet* packet, bool autoDestroyPacket)
 {
-	// 检查客户端是否还连接
-	if (mIsDeadClient)
+	if (!sendPacketCheck(packet))
 	{
 		if (autoDestroyPacket)
 		{
 			NetServer::destroyPacket(packet);
 		}
-		return;
-	}
-	// 不需要设置消息包中的客户端ID
-	if (packet->mClient != INVALID_ID)
-	{
-		if (autoDestroyPacket)
-		{
-			NetServer::destroyPacket(packet);
-		}
-		LOG_ERROR("error : packet's client ID should be none!");
 		return;
 	}
 	// 保存发送数据
-	const short& packetSize = packet->getSize();
+	short packetSize = packet->getSize();
 	int sendSize = HEADER_SIZE + packetSize;
-	// 判断临时缓冲区大小是否足够
-	if (sendSize > CLIENT_TEMP_BUFFER_SIZE)
-	{
-		if (autoDestroyPacket)
-		{
-			NetServer::destroyPacket(packet);
-		}
-		LOG_ERROR("temp buffer is too small! send size : %d, temp buffer size : %d", sendSize, CLIENT_TEMP_BUFFER_SIZE);
-		return;
-	}
-	// 判断缓冲区是否还能存放下当前要发送的消息数据
-	if (mSendDataCount + sendSize > CLIENT_BUFFER_SIZE)
-	{
-		if (autoDestroyPacket)
-		{
-			NetServer::destroyPacket(packet);
-		}
-		// 缓冲区已堆满,客户端网络阻塞严重,断开客户端
-		LOG_INFO("client socket buffer is full!");
-		mNetServer->disconnectSocket(mClientGUID);
-		return;
-	}
 	int offset = 0;
-	const short& shortType = (short)packet->getPacketType();
-	// 写入类型(short)
-	Packet::writeByte(mTempBuffer0, (char*)(&shortType), offset, sendSize, sizeof(shortType));
-	// 写入数据长度(short)
-	Packet::writeByte(mTempBuffer0, (char*)(&packetSize), offset, sendSize, sizeof(packetSize));
-	// 写入消息内容(char*)
+	short type = (short)packet->getPacketType();
 	packet->write(mTempBuffer1, packetSize);
-	Packet::writeByte(mTempBuffer0, mTempBuffer1, offset, sendSize, packetSize);
+	// 写入类型,数据长度,消息内容
+	BinaryUtility::write(mTempBuffer0, CLIENT_TEMP_BUFFER_SIZE, offset, type);
+	BinaryUtility::write(mTempBuffer0, CLIENT_TEMP_BUFFER_SIZE, offset, packetSize);
+	BinaryUtility::writeBuffer(mTempBuffer0, CLIENT_TEMP_BUFFER_SIZE, offset, mTempBuffer1, packetSize);
 
-	LOCK(mSendLock);
 	// 将数据拷贝到客户端主缓冲区中
-	memcpy(mSendBuffer + mSendDataCount, mTempBuffer0, sendSize);
-	mSendDataCount += sendSize;
+	LOCK(mSendLock);
+	mSendStreamBuffer->addDataToInputBuffer(mTempBuffer0, sendSize);
 	UNLOCK(mSendLock);
 
 	// 销毁消息包
@@ -208,33 +186,54 @@ void NetClient::sendPacket(Packet* packet, const bool& autoDestroyPacket)
 	}
 }
 
-void NetClient::notifyDataSended(const int& sendedCount)
+void NetClient::notifyDataSended(int sendedCount)
 {
 	LOCK(mSendLock);
-	if (sendedCount < mSendDataCount)
-	{
-		// 将后面未发送的字节移动到前面,重置数据长度
-		memmove(mSendBuffer, mSendBuffer + sendedCount, mSendDataCount - sendedCount);
-	}
-	mSendDataCount -= sendedCount;
+	mSendStreamBuffer->removeDataFromInputBuffer(0, sendedCount);
 	UNLOCK(mSendLock);
 }
 
-void NetClient::notifyRecvData(const char* data, const int& dataCount)
+void NetClient::notifyRecvData(const char* data, int dataCount)
 {
-	// 检查还是否能接收数据
-	if (mRecvDataCount + dataCount > CLIENT_BUFFER_SIZE)
-	{
-		// 暂时报错
-		LOG_ERROR("error : recv data is full!");
-		return;
-	}
-	LOCK(mRecvLock);
-	memcpy(mRecvBuffer + mRecvDataCount, data, dataCount);
-	mRecvDataCount += dataCount;
-	UNLOCK(mRecvLock);
+	LOCK(mTempRecvLock);
+	mTempRecvStreamBuffer->addDataToInputBuffer(data, dataCount);
+	UNLOCK(mTempRecvLock);
 	if (NetServer::getOutputLog())
 	{
 		LOG_INFO("recv : ip : %s, size : %d", mIP, dataCount);
 	}
+}
+
+bool NetClient::sendPacketCheck(Packet* packet)
+{
+	// 检查客户端是否还连接
+	if (mIsDeadClient)
+	{
+		return false;
+	}
+	// 不需要设置消息包中的客户端ID
+	if (packet->mClient != INVALID_ID)
+	{
+		LOG_ERROR("error : packet's client ID should be none!");
+		return false;
+	}
+	// 保存发送数据
+	short packetSize = packet->getSize();
+	int sendSize = HEADER_SIZE + packetSize;
+	// 判断临时缓冲区大小是否足够
+	if (sendSize > CLIENT_TEMP_BUFFER_SIZE)
+	{
+		LOG_ERROR("temp buffer is too small! send size : %d, temp buffer size : %d", sendSize, CLIENT_TEMP_BUFFER_SIZE);
+		return false;
+	}
+	// 判断缓冲区是否还能存放下当前要发送的消息数据
+	if (!mSendStreamBuffer->isAvailable(packetSize))
+	{
+
+		// 缓冲区已堆满,客户端网络阻塞严重,断开客户端
+		LOG_INFO("client socket buffer is full!");
+		mNetServer->disconnectSocket(mClientGUID);
+		return false;
+	}
+	return true;
 }

@@ -2,7 +2,7 @@
 #include "Utility.h"
 #include "GameLog.h"
 
-void ThreadLock::waitForUnlock(const char* file, const int& line)
+void ThreadLock::waitForUnlock(const char* file, int line)
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	int threadID = GetCurrentThreadId();

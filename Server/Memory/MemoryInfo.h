@@ -5,7 +5,7 @@
 
 struct MemoryInfo
 {
-	MemoryInfo(int s, std::string f, int l, std::string t)
+	MemoryInfo(int s, const std::string& f, int l, const std::string& t)
 		:
 		size(s),
 		file(f),
