@@ -11,6 +11,7 @@
 class Packet;
 class NetClient;
 class PacketFactoryManager;
+class CharacterPlayer;
 class NetServer : public ServerBase, public txCommandReceiver
 {
 public:
@@ -26,9 +27,15 @@ public:
 	int getClientCount()				{ return mClientList.size(); }
 	
 	virtual CLIENT_GUID notifyAcceptClient(TX_SOCKET socket, const char* ip);
+	void sendMessage(Packet* packet, CharacterPlayer* player, bool destroyPacketEndSend = true);
 	void sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend = true);
 	void sendMessage(Packet* packet, NetClient* client, bool destroyPacketEndSend = true);
 	static Packet* createPacket(PACKET_TYPE type);
+	template<typename T>
+	static T* createPacket(T*& packet, PACKET_TYPE type)
+	{
+		return static_cast<T*>(createPacket(type));
+	}
 	static void destroyPacket(Packet* packet);
 	virtual void disconnectSocket(CLIENT_GUID client);	// 与客户端断开连接,只能在主线程中调用
 	NetClient* getClient(CLIENT_GUID clientGUID);

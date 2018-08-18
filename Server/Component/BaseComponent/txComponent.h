@@ -34,7 +34,7 @@ public:
 	bool moveChildPos(const std::string& name, int destPos);
 	txComponent* getChildComponent(const std::string& childName)
 	{
-		txMap<std::string, txComponent*>::iterator iter = mChildComponentMap.find(childName);
+		auto iter = mChildComponentMap.find(childName);
 		if (iter != mChildComponentMap.end())
 		{
 			return iter->second;

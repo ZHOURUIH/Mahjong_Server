@@ -7,12 +7,7 @@ class SCLeaveRoomRet : public Packet
 {
 public:
 	SCLeaveRoomRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mResult);

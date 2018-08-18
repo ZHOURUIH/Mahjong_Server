@@ -17,8 +17,8 @@ void CommandCharacterLeaveRoom::execute()
 		cmdLeave->mPlayer = player;
 		mCommandSystem->pushCommand(cmdLeave, room);
 	}
-	SCLeaveRoomRet* leaveRet = static_cast<SCLeaveRoomRet*>(mNetServer->createPacket(PT_SC_LEAVE_ROOM_RET));
+	SCLeaveRoomRet* leaveRet = NetServer::createPacket(leaveRet, PT_SC_LEAVE_ROOM_RET);
 	leaveRet->mResult = (room != NULL);
 	// 发送消息通知客户端离开房间的结果
-	mNetServer->sendMessage(leaveRet, player->getClientGUID());
+	mNetServer->sendMessage(leaveRet, player);
 }

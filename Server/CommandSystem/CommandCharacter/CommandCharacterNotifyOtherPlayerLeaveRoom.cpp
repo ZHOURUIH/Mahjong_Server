@@ -8,9 +8,9 @@ void CommandCharacterNotifyOtherPlayerLeaveRoom::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	// 发送消息通知客户端
-	SCOtherPlayerLeaveRoom* leaveRoom = static_cast<SCOtherPlayerLeaveRoom*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_LEAVE_ROOM));
+	SCOtherPlayerLeaveRoom* leaveRoom = NetServer::createPacket(leaveRoom, PT_SC_OTHER_PLAYER_LEAVE_ROOM);
 	leaveRoom->mPlayerGUID = mLeavePlayerID;
-	mNetServer->sendMessage(leaveRoom, player->getClientGUID());
+	mNetServer->sendMessage(leaveRoom, player);
 }
 
 std::string CommandCharacterNotifyOtherPlayerLeaveRoom::showDebugInfo()

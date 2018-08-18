@@ -10,12 +10,7 @@ class SCAskAction : public Packet
 {
 public:
 	SCAskAction(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushArrayParam(mAction, 4);

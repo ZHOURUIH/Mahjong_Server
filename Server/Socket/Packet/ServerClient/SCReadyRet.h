@@ -7,12 +7,7 @@ class SCReadyRet : public Packet
 {
 public:
 	SCReadyRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mReady);

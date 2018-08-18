@@ -12,7 +12,7 @@ void CSHeartBeat::execute()
 	{
 		client->notifyReceiveHeartBeat();
 	}
-	SCHeartBeatRet* heartBeat = static_cast<SCHeartBeatRet*>(mNetServer->createPacket(PT_SC_HEART_BEAT_RET));
+	SCHeartBeatRet* heartBeat = NetServer::createPacket(heartBeat, PT_SC_HEART_BEAT_RET);
 	heartBeat->mHeartBeatTimes = mHeartBeatTimes;
 	mNetServer->sendMessage(heartBeat, mClient);
 #endif

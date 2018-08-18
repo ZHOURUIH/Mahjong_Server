@@ -7,12 +7,7 @@ class SCOtherPlayerJoinRoom : public Packet
 {
 public:
 	SCOtherPlayerJoinRoom(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mPlayerGUID);

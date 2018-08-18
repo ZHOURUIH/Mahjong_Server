@@ -7,12 +7,7 @@ class SCStartGame : public Packet
 {
 public:
 	SCStartGame(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushArrayParam(mDice, 2);

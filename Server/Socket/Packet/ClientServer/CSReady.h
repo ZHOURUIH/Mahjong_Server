@@ -7,12 +7,7 @@ class CSReady : public Packet
 {
 public:
 	CSReady(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	virtual void fillParams()
 	{

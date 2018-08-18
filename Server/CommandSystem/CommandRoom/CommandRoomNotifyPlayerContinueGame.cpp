@@ -8,9 +8,9 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
 	// 通知其他已经选择继续游戏的玩家有玩家继续游戏
-	txMap<CharacterPlayer*, bool>& playerChooseList = room->getPlayerChooseList();
-	txMap<CharacterPlayer*, bool>::iterator iter = playerChooseList.begin();
-	txMap<CharacterPlayer*, bool>::iterator iterEnd = playerChooseList.end();
+	auto& playerChooseList = room->getPlayerChooseList();
+	auto iter = playerChooseList.begin();
+	auto iterEnd = playerChooseList.end();
 	FOR_STL(playerChooseList, ; iter != iterEnd; ++iter)
 	{
 		if (iter->second)

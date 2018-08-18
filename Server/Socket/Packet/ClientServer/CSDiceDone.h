@@ -7,12 +7,7 @@ class CSDiceDone : public Packet
 {
 public:
 	CSDiceDone(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	virtual void fillParams(){}
 public:

@@ -21,8 +21,8 @@ void CharacterManager::update(float elapsedTime)
 	{
 		return;
 	}
-	txMap<std::string, Character*>::iterator characterBegin = mCharacterList.begin();
-	txMap<std::string, Character*>::iterator characterEnd = mCharacterList.end();
+	auto characterBegin = mCharacterList.begin();
+	auto characterEnd = mCharacterList.end();
 	FOR_STL(mCharacterList, ; characterBegin != characterEnd; ++characterBegin)
 	{
 		Character* character = characterBegin->second;
@@ -36,13 +36,13 @@ void CharacterManager::update(float elapsedTime)
 
 void CharacterManager::destroy()
 {
-	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.begin();
-	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterTypeEnd = mCharacterTypeList.end();
+	auto iterType = mCharacterTypeList.begin();
+	auto iterTypeEnd = mCharacterTypeList.end();
 	FOR_STL(mCharacterTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
-		CharacterFactoryBase* characterFactory = mCharacterFactoryManager->getFactory(iterType->first);
-		txMap<std::string, Character*>::iterator iterChar = iterType->second.begin();
-		txMap<std::string, Character*>::iterator iterCharEnd = iterType->second.end();
+		auto characterFactory = mCharacterFactoryManager->getFactory(iterType->first);
+		auto iterChar = iterType->second.begin();
+		auto iterCharEnd = iterType->second.end();
 		FOR_STL(iterType->second, ; iterChar != iterCharEnd; ++iterChar)
 		{
 			characterFactory->destroyCharacter(iterChar->second);
@@ -90,7 +90,7 @@ void CharacterManager::addCharacterToList(Character* character)
 	// 加入到全部角色列表
 	mCharacterList.insert(character->getName(), character);
 	// 加入到角色分类列表
-	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+	auto iterType = mCharacterTypeList.find(character->getType());
 	if (iterType != mCharacterTypeList.end())
 	{
 		iterType->second.insert(character->getName(), character);
@@ -117,23 +117,23 @@ void CharacterManager::removeCharacterFromList(Character* character)
 		return;
 	}
 	// 从全部角色列表中移除
-	txMap<std::string, Character*>::iterator iter = mCharacterList.find(character->getName());
+	auto iter = mCharacterList.find(character->getName());
 	if (iter != mCharacterList.end())
 	{
 		mCharacterList.erase(iter);
 	}
 	// 从角色分类列表中移除
-	txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+	auto iterType = mCharacterTypeList.find(character->getType());
 	if (iterType != mCharacterTypeList.end())
 	{
-		txMap<std::string, Character*>::iterator iterChar = iterType->second.find(character->getName());
+		auto iterChar = iterType->second.find(character->getName());
 		if (iterChar != iterType->second.end())
 		{
 			iterType->second.erase(iterChar);
 		}
 	}
 	// 从ID索引表中移除
-	txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(character->getGUID());
+	auto iterID = mCharacterIDList.find(character->getGUID());
 	if (iterID != mCharacterIDList.end())
 	{
 		mCharacterIDList.erase(iterID);
@@ -164,7 +164,7 @@ void CharacterManager::destroyCharacter(const std::string& name)
 
 void CharacterManager::notifyCharacterIDChanged(CHAR_GUID oldID)
 {
-	txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(oldID);
+	auto iterID = mCharacterIDList.find(oldID);
 	if (iterID != mCharacterIDList.end())
 	{
 		Character* character = iterID->second;
@@ -176,7 +176,7 @@ void CharacterManager::notifyCharacterIDChanged(CHAR_GUID oldID)
 void CharacterManager::notifyCharacterNameChanged(const std::string& oldName)
 {
 	Character* character = NULL;
-	txMap<std::string, Character*>::iterator iterChar = mCharacterList.find(oldName);
+	auto iterChar = mCharacterList.find(oldName);
 	if (iterChar != mCharacterList.end())
 	{
 		character = iterChar->second;
@@ -185,10 +185,10 @@ void CharacterManager::notifyCharacterNameChanged(const std::string& oldName)
 	}
 	if (character != NULL)
 	{
-		txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(character->getType());
+		auto iterType = mCharacterTypeList.find(character->getType());
 		if (iterType != mCharacterTypeList.end())
 		{
-			txMap<std::string, Character*>::iterator iterTypeChar = iterType->second.find(oldName);
+			auto iterTypeChar = iterType->second.find(oldName);
 			if (iterTypeChar != iterType->second.end())
 			{
 				iterType->second.erase(iterTypeChar);

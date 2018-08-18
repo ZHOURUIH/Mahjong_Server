@@ -32,7 +32,7 @@ public:
 	void destroyAllComponents();
 	txComponent* getComponent(const std::string& name)
 	{
-		txMap<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
+		auto itrFind = mAllComponentList.find(name);
 		if (itrFind == mAllComponentList.end())
 		{
 			return NULL;
@@ -41,7 +41,7 @@ public:
 	}
 	const txMap<std::string, txComponent*>& getComponentsByType(const std::string& type)
 	{
-		txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
+		auto iterType = mAllComponentTypeList.find(type);
 		if (iterType != mAllComponentTypeList.end())
 		{
 			return iterType->second;
@@ -50,7 +50,7 @@ public:
 	}
 	const txMap<std::string, txComponent*>& getComponentsByBaseType(const std::string& type)
 	{
-		txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentBaseTypeList.find(type);
+		auto iterType = mAllComponentBaseTypeList.find(type);
 		if (iterType != mAllComponentBaseTypeList.end())
 		{
 			return iterType->second;
@@ -60,7 +60,7 @@ public:
 	txComponent* getFirstActiveComponentByBaseType(const std::string& type);
 	txComponent* getFirstComponentByBaseType(const std::string& type)
 	{
-		txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentBaseTypeList.find(type);
+		auto iter = mAllComponentBaseTypeList.find(type);
 		if (iter != mAllComponentBaseTypeList.end() && iter->second.size() > 0)
 		{
 			return iter->second.begin()->second;
@@ -70,7 +70,7 @@ public:
 	txComponent* getFirstActiveComponent(const std::string& type);
 	txComponent* getFirstComponent(const std::string& type)
 	{
-		txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
+		auto iter = mAllComponentTypeList.find(type);
 		if (iter != mAllComponentTypeList.end() && iter->second.size() > 0)
 		{
 			return iter->second.begin()->second;
@@ -83,7 +83,7 @@ public:
 	}
 	void removePreUpdateType(const std::string& typeName)
 	{
-		txSet<std::string>::iterator iter = mPreUpdateTypeList.find(typeName);
+		auto iter = mPreUpdateTypeList.find(typeName);
 		if (iter != mPreUpdateTypeList.end())
 		{
 			mPreUpdateTypeList.erase(iter);

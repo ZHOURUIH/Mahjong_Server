@@ -7,12 +7,7 @@ class SCHeartBeatRet : public Packet
 {
 public:
 	SCHeartBeatRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mHeartBeatTimes);

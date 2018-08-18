@@ -12,8 +12,8 @@ public:
 	virtual void init();
 	virtual void destory()
 	{
-		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.begin();
-		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iterEnd = mFactoryList.end();
+		auto iter = mFactoryList.begin();
+		auto iterEnd = mFactoryList.end();
 		FOR_STL(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
@@ -23,7 +23,7 @@ public:
 	}
 	static int getPacketSize(PACKET_TYPE type)
 	{
-		txMap<PACKET_TYPE, int>::iterator iter = mPacketSizeMap.find(type);
+		auto iter = mPacketSizeMap.find(type);
 		if (iter != mPacketSizeMap.end())
 		{
 			return iter->second;
@@ -46,7 +46,7 @@ public:
 	}
 	PacketFactoryBase* getFactory(PACKET_TYPE type)
 	{
-		txMap<PACKET_TYPE, PacketFactoryBase*>::iterator iter = mFactoryList.find(type);
+		auto iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;

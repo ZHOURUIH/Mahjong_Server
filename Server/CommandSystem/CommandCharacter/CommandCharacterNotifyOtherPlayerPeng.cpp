@@ -7,9 +7,9 @@
 void CommandCharacterNotifyOtherPlayerPeng::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerPeng* otherPeng = static_cast<SCOtherPlayerPeng*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_PENG));
+	SCOtherPlayerPeng* otherPeng = NetServer::createPacket(otherPeng, PT_SC_OTHER_PLAYER_PENG);
 	otherPeng->mOtherPlayerGUID = mOtherPlayer->getGUID();
 	otherPeng->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	otherPeng->mMahjong = mMahjong;
-	mNetServer->sendMessage(otherPeng, player->getClientGUID());
+	mNetServer->sendMessage(otherPeng, player);
 }

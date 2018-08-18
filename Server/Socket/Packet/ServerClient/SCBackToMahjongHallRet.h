@@ -7,12 +7,7 @@ class SCBackToMahjongHallRet : public Packet
 {
 public:
 	SCBackToMahjongHallRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams(){}
 public:
 };

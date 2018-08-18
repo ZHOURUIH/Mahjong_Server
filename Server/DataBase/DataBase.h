@@ -41,7 +41,7 @@ public:
 	// 得到数据列表
 	bool getDataList(DATA_TYPE type, txVector<Data*>& dataList)
 	{
-		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
+		auto iter = mDataStructList.find(type);
 		if (iter == mDataStructList.end())
 		{
 			return false;
@@ -52,7 +52,7 @@ public:
 	// 得到数据数量
 	int getDataCount(DATA_TYPE type)
 	{
-		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
+		auto iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
 		{
 			return (int)iter->second.size();
@@ -62,7 +62,7 @@ public:
 	// 查询数据
 	Data* queryData(DATA_TYPE type, int index)
 	{
-		txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
+		auto iter = mDataStructList.find(type);
 		if (iter != mDataStructList.end())
 		{
 			if (index < (int)iter->second.size())
@@ -77,7 +77,7 @@ public:
 	// 根据数据名得到数据定义
 	const std::string& getDataNameByDataType(DATA_TYPE type)
 	{
-		txMap<DATA_TYPE, std::string>::iterator iter = mDataDefineFile.find(type);
+		auto iter = mDataDefineFile.find(type);
 		if (iter != mDataDefineFile.end())
 		{
 			return iter->second;
@@ -87,7 +87,7 @@ public:
 	// 根据数据定义得到数据名
 	DATA_TYPE getDataTypeByDataName(const std::string& name)
 	{
-		txMap<std::string, DATA_TYPE>::iterator iter = mDataFileDefine.find(name);
+		auto iter = mDataFileDefine.find(name);
 		if (iter != mDataFileDefine.end())
 		{
 			return iter->second;
@@ -101,13 +101,13 @@ protected:
 		T data(type);
 		mDataFileDefine.insert(dataName, type);
 		mDataDefineFile.insert(type, dataName);
-		DataFactoryBase* factory = DataFactoryBase::createDataFactory<DataFactory<T> >(type, data.getSize());
+		auto factory = DataFactoryBase::createDataFactory<DataFactory<T> >(type, data.getSize());
 		addDataFactoryToList(factory);
 	}
 	void addDataFactoryToList(DataFactoryBase* factory);
 	DataFactoryBase* getDataFactory(DATA_TYPE type)
 	{
-		txMap<DATA_TYPE, DataFactoryBase*>::iterator itrFind = mDataFactoryList.find(type);
+		auto itrFind = mDataFactoryList.find(type);
 		if (itrFind != mDataFactoryList.end())
 		{
 			return itrFind->second;

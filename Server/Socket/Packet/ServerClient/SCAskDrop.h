@@ -8,12 +8,7 @@ class SCAskDrop : public Packet
 {
 public:
 	SCAskDrop(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams(){}
 public:
 };

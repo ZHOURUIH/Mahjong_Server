@@ -7,12 +7,7 @@ class CSRegister : public Packet
 {
 public:
 	CSRegister(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	virtual void fillParams()
 	{

@@ -8,12 +8,7 @@ class SCNotifyMahjongEnd : public Packet
 {
 public:
 	SCNotifyMahjongEnd(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushArrayParam(mCharacterGUIDList, MAX_PLAYER);
@@ -26,8 +21,8 @@ public:
 			mCharacterGUIDList[i] = INVALID_INT_ID;
 			mMoneyDeltaList[i] = 0;
 		}
-		txMap<CHAR_GUID, int>::iterator iter = infoList.begin();
-		txMap<CHAR_GUID, int>::iterator iterEnd = infoList.end();
+		auto iter = infoList.begin();
+		auto iterEnd = infoList.end();
 		for (int i = 0; iter != iterEnd; ++iter, ++i)
 		{
 			mCharacterGUIDList[i] = iter->first;

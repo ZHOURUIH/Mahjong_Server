@@ -5,6 +5,7 @@
 #include "PacketFactoryManager.h"
 #include "NetClient.h"
 #include "TimeLock.h"
+#include "CharacterPlayer.h"
 
 CLIENT_GUID NetServer::mSocketGUIDSeed = 0;
 float NetServer::mHeartBeatTimeOut = 0.0f;
@@ -27,8 +28,8 @@ txCommandReceiver(TOSTRING(NetServer))
 
 void NetServer::destroy()
 {
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
+	auto iterClient = mClientList.begin();
+	auto iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		TRACE_DELETE(iterClient->second);
@@ -156,8 +157,8 @@ void NetServer::processSend()
 	fd_set fdwrite;
 	// 等待发送列表解锁,然后锁定发送列表
 	LOCK(mClientLock);
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
+	auto iterClient = mClientList.begin();
+	auto iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdwrite);
@@ -216,14 +217,15 @@ void NetServer::processSend()
 
 void NetServer::processRecv()
 {
-	char buff[CLIENT_BUFFER_SIZE];
+	static char buff[CLIENT_BUFFER_SIZE];
+	memset(buff, 0, CLIENT_BUFFER_SIZE);
 	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock);
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.begin();
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = mClientList.end();
+	auto iterClient = mClientList.begin();
+	auto iterClientEnd = mClientList.end();
 	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 	{
 		FD_ZERO(&fdread);
@@ -276,11 +278,11 @@ void NetServer::update(float elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
 	LOCK(mClientLock);
-	txMap<CLIENT_GUID, NetClient*> tempClientList = mClientList;
+	auto tempClientList = mClientList;
 	UNLOCK(mClientLock);
 	txVector<CLIENT_GUID> logoutClientList;
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = tempClientList.begin();
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClientEnd = tempClientList.end();
+	auto iterClient = tempClientList.begin();
+	auto iterClientEnd = tempClientList.end();
 	FOR_STL(tempClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
@@ -337,7 +339,7 @@ void NetServer::disconnectSocket(CLIENT_GUID client)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
 	LOCK(mClientLock);
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(client);
+	auto iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
 		CHAR_GUID guid = iterClient->second->getCharGUID();
@@ -356,13 +358,18 @@ NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 {
 	NetClient* client = NULL;
 	LOCK(mClientLock);
-	txMap<CLIENT_GUID, NetClient*>::iterator iterClient = mClientList.find(clientGUID);
+	auto iterClient = mClientList.find(clientGUID);
 	if (iterClient != mClientList.end())
 	{
 		client = iterClient->second;
 	}
 	UNLOCK(mClientLock);
 	return client;
+}
+
+void NetServer::sendMessage(Packet* packet, CharacterPlayer* player, bool destroyPacketEndSend)
+{
+	sendMessage(packet, player->getClientGUID(), destroyPacketEndSend);
 }
 
 void NetServer::sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend)

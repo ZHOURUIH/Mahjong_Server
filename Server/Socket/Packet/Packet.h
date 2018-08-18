@@ -19,6 +19,11 @@ public:
 		mType(type),
 		mClient(INVALID_ID)
 	{}
+	virtual void init()
+	{
+		fillParams();
+		zeroParams();
+	}
 	PACKET_TYPE getPacketType() { return mType; }
 	virtual void execute(){}
 	virtual std::string debugInfo()

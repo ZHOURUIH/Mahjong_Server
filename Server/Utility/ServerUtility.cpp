@@ -64,8 +64,8 @@ void ServerUtility::toMahjongGroup(txVector<MAHJONG>& list, txVector<MahInfo>& g
 		}
 	}
 	END_FOR_STL(list);
-	txMap<MAHJONG, MahInfo>::iterator iter = groupMap.begin();
-	txMap<MAHJONG, MahInfo>::iterator iterEnd = groupMap.end();
+	auto iter = groupMap.begin();
+	auto iterEnd = groupMap.end();
 	FOR_STL(groupMap, ; iter != iterEnd; ++iter)
 	{
 		group.push_back(iter->second);

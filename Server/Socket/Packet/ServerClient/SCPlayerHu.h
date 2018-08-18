@@ -9,12 +9,7 @@ class SCPlayerHu : public Packet
 {
 public:
 	SCPlayerHu(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushArrayParam(mHuPlayerGUID, MAX_PLAYER - 1);

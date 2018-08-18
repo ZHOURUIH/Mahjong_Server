@@ -26,9 +26,9 @@ void CommandRoomNotifyPlayerJoin::execute()
 	CharacterPlayer* joinPlayer = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mPlayerGUID));
 	room->joinRoom(joinPlayer);
 	// 通知房间中的其他玩家有玩家加入
-	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+	auto& playerList = room->getPlayerList();
+	auto iterPlayer = playerList.begin();
+	auto iterPlayerEnd = playerList.end();
 	FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != joinPlayer)

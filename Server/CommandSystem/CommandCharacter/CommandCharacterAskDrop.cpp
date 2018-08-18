@@ -7,6 +7,6 @@
 void CommandCharacterAskDrop::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCAskDrop* getStartDone = static_cast<SCAskDrop*>(mNetServer->createPacket(PT_SC_ASK_DROP));
-	mNetServer->sendMessage(getStartDone, player->getClientGUID());
+	SCAskDrop* getStartDone = NetServer::createPacket(getStartDone, PT_SC_ASK_DROP);
+	mNetServer->sendMessage(getStartDone, player);
 }

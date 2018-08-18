@@ -7,6 +7,6 @@
 void CommandCharacterNotifyDiceDone::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCDiceDoneRet* diceDone = static_cast<SCDiceDoneRet*>(mNetServer->createPacket(PT_SC_DICE_DONE_RET));
-	mNetServer->sendMessage(diceDone, player->getClientGUID());
+	SCDiceDoneRet* diceDone = NetServer::createPacket(diceDone, PT_SC_DICE_DONE_RET);
+	mNetServer->sendMessage(diceDone, player);
 }

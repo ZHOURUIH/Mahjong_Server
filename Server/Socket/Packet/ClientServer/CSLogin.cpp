@@ -28,7 +28,7 @@ void CSLogin::execute()
 	// 如果登陆失败,则立即发送消息
 	if (ret != 0)
 	{
-		SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetServer->createPacket(PT_SC_LOGIN_RET));
+		SCLoginRet* loginRet = NetServer::createPacket(loginRet, PT_SC_LOGIN_RET);
 		loginRet->mLoginRet = ret;
 		mNetServer->sendMessage(loginRet, mClient);
 	}

@@ -7,12 +7,7 @@ class CSCheckAccount : public Packet
 {
 public:
 	CSCheckAccount(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushArrayParam(mAccount, 16);

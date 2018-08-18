@@ -8,7 +8,7 @@
 void CommandCharacterAskAction::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCAskAction* askAction = static_cast<SCAskAction*>(mNetServer->createPacket(PT_SC_ASK_ACTION));
+	SCAskAction* askAction = NetServer::createPacket(askAction, PT_SC_ASK_ACTION);
 	askAction->setActionList(mActionList);
-	mNetServer->sendMessage(askAction, player->getClientGUID());
+	mNetServer->sendMessage(askAction, player);
 }

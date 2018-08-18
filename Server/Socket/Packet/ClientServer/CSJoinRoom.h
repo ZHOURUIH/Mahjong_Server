@@ -7,12 +7,7 @@ class CSJoinRoom : public Packet
 {
 public:
 	CSJoinRoom(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	virtual void fillParams()
 	{

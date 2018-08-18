@@ -7,12 +7,7 @@ class SCOtherPlayerPeng : public Packet
 {
 public:
 	SCOtherPlayerPeng(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mOtherPlayerGUID);

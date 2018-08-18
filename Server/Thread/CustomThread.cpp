@@ -36,7 +36,6 @@ void CustomThread::start(CustomThreadCallback callback, void* args, int frameTim
 		return;
 	}
 	mTimeLock = TRACE_NEW(TimeLock, mTimeLock, frameTimeMS);
-	mTimeLock->setForceSleep(5);
 	mRunning = true;
 	mCallback = callback;
 	mArgs = args;

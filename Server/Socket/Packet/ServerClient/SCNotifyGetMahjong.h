@@ -8,12 +8,7 @@ class SCNotifyGetMahjong : public Packet
 {
 public:
 	SCNotifyGetMahjong(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mPlayerGUID);

@@ -7,12 +7,7 @@ class SCRequestDropRet : public Packet
 {
 public:
 	SCRequestDropRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mIndex);

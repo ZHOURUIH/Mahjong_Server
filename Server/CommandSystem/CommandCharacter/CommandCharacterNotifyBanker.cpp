@@ -8,9 +8,9 @@
 void CommandCharacterNotifyBanker::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCNotifyBanker* notifyBanker = static_cast<SCNotifyBanker*>(mNetServer->createPacket(PT_SC_NOTIFY_BANKER));
+	SCNotifyBanker* notifyBanker = NetServer::createPacket(notifyBanker, PT_SC_NOTIFY_BANKER);
 	notifyBanker->mGUID = mBankerID;
-	mNetServer->sendMessage(notifyBanker, player->getClientGUID());
+	mNetServer->sendMessage(notifyBanker, player);
 }
 
 std::string CommandCharacterNotifyBanker::showDebugInfo()

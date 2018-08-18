@@ -7,12 +7,7 @@ class SCDiceDoneRet : public Packet
 {
 public:
 	SCDiceDoneRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams(){}
 public:
 };

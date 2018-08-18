@@ -13,8 +13,8 @@ public:
 	virtual void init() = 0;
 	virtual void destory()
 	{
-		typename txMap<T, Base*>::iterator iter = mFactoryList.begin();
-		typename txMap<T, Base*>::iterator iterEnd = mFactoryList.end();
+		typename auto iter = mFactoryList.begin();
+		typename auto iterEnd = mFactoryList.end();
 		FOR_STL (mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
@@ -24,7 +24,7 @@ public:
 	}
 	Base* getFactory(const T& type)
 	{
-		typename txMap<T, Base*>::iterator iter = mFactoryList.find(type);
+		typename auto iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;
@@ -37,7 +37,7 @@ protected:
 	Base* addFactory(const T& type)
 	{
 		Base* factory = Base::createFactory<O>(type);
-		mFactoryList.insert(std::make_pair(factory->getType(), factory));
+		mFactoryList.insert(factory->getType(), factory);
 		return factory;
 	}
 protected:

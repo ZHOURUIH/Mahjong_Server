@@ -7,7 +7,7 @@
 void CommandCharacterNotifyOtherPlayerAskDrop::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerAskDrop* otherAskDrop = static_cast<SCOtherPlayerAskDrop*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_ASK_DROP));
+	SCOtherPlayerAskDrop* otherAskDrop = NetServer::createPacket(otherAskDrop, PT_SC_OTHER_PLAYER_ASK_DROP);
 	otherAskDrop->mOtherPlayerGUID = mOtherPlayer->getGUID();
-	mNetServer->sendMessage(otherAskDrop, player->getClientGUID());
+	mNetServer->sendMessage(otherAskDrop, player);
 }

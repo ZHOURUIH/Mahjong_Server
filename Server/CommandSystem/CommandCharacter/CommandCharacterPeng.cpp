@@ -9,10 +9,10 @@ void CommandCharacterPeng::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->pengMahjong(mMahjong);
-	SCPlayerPeng* peng = static_cast<SCPlayerPeng*>(mNetServer->createPacket(PT_SC_PLAYER_PENG));
+	SCPlayerPeng* peng = NetServer::createPacket(peng, PT_SC_PLAYER_PENG);
 	peng->mMahjong = mMahjong;
 	peng->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
-	mNetServer->sendMessage(peng, player->getClientGUID());
+	mNetServer->sendMessage(peng, player);
 }
 
 std::string CommandCharacterPeng::showDebugInfo()

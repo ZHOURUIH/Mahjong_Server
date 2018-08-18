@@ -132,14 +132,14 @@ bool txComponent::removeChild(txComponent* component)
 	{
 		return false;
 	}
-	txMap<std::string, txComponent*>::iterator iter = mChildComponentMap.find(component->getName());
+	auto iter = mChildComponentMap.find(component->getName());
 	if (iter == mChildComponentMap.end())
 	{
 		return false;
 	}
 	mChildComponentMap.erase(iter);
-	txVector<txComponent*>::iterator iterList = mChildComponentList.begin();
-	txVector<txComponent*>::iterator iterListEnd = mChildComponentList.end();
+	auto iterList = mChildComponentList.begin();
+	auto iterListEnd = mChildComponentList.end();
 	FOR_STL(mChildComponentList, ; iterList != iterListEnd; ++iterList)
 	{
 		if (*iterList == component)
@@ -250,10 +250,10 @@ bool txComponent::moveChildPos(const std::string& name, int destPos)
 void txComponent::notifyChildNameChanged(const std::string& oldName, txComponent* component)
 {
 	// 修改全部子窗口查找列表中的名字
-	txMap<std::string, txComponent*>::iterator iterAll = mChildComponentMap.find(oldName);
+	auto iterAll = mChildComponentMap.find(oldName);
 	if (iterAll != mChildComponentMap.end())
 	{
-		txMap<std::string, txComponent*>::iterator iterNew = mChildComponentMap.find(component->mName);
+		auto iterNew = mChildComponentMap.find(component->mName);
 		if (iterNew == mChildComponentMap.end())
 		{
 			mChildComponentMap.insert(component->mName, component);

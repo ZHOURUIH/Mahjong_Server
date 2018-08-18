@@ -22,8 +22,8 @@ void DataBase::addDataFactoryToList(DataFactoryBase* factory)
 
 void DataBase::destroyDataFactory()
 {
-	txMap<DATA_TYPE, DataFactoryBase*>::iterator iterDataFactoryList = mDataFactoryList.begin();
-	txMap<DATA_TYPE, DataFactoryBase*>::iterator iterDataFactoryListEnd = mDataFactoryList.end();
+	auto iterDataFactoryList = mDataFactoryList.begin();
+	auto iterDataFactoryListEnd = mDataFactoryList.end();
 	FOR_STL(mDataFactoryList, ; iterDataFactoryList != iterDataFactoryListEnd; ++iterDataFactoryList)
 	{
 		TRACE_DELETE(iterDataFactoryList->second);
@@ -42,7 +42,7 @@ bool DataBase::addData(DATA_TYPE type, Data* data, int pos)
 	{
 		return false;
 	}
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
+	auto iter = mDataStructList.find(type);
 	if (iter != mDataStructList.end())
 	{
 		if (pos == -1)
@@ -65,14 +65,14 @@ bool DataBase::addData(DATA_TYPE type, Data* data, int pos)
 
 bool DataBase::deleteData(DATA_TYPE type, int index)
 {
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iter = mDataStructList.find(type);
+	auto iter = mDataStructList.find(type);
 	if (iter != mDataStructList.end())
 	{
 		if (index >= (int)iter->second.size())
 		{
 			return false;
 		}
-		DataFactoryBase* dataFactory = getDataFactory(type);
+		auto dataFactory = getDataFactory(type);
 		if (dataFactory == NULL)
 		{
 			return false;
@@ -86,7 +86,7 @@ bool DataBase::deleteData(DATA_TYPE type, int index)
 
 Data* DataBase::createData(DATA_TYPE type)
 {
-	DataFactoryBase* factory = getDataFactory(type);
+	auto factory = getDataFactory(type);
 	if (factory != NULL)
 	{
 		return factory->createData();
@@ -110,11 +110,11 @@ void DataBase::loadAllDataFromFile()
 
 void  DataBase::destroyAllData()
 {
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iterStructList = mDataStructList.begin();
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iterStructListEnd = mDataStructList.end();
+	auto iterStructList = mDataStructList.begin();
+	auto iterStructListEnd = mDataStructList.end();
 	FOR_STL(mDataStructList, ; iterStructList != iterStructListEnd; ++iterStructList)
 	{
-		DataFactoryBase* factory = getDataFactory(iterStructList->first);
+		auto factory = getDataFactory(iterStructList->first);
 		if (factory != NULL)
 		{
 			int dataCount = iterStructList->second.size();
@@ -135,10 +135,10 @@ void  DataBase::destroyAllData()
 
 void DataBase::destroyData(DATA_TYPE type)
 {
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iterStructList = mDataStructList.find(type);
+	auto iterStructList = mDataStructList.find(type);
 	if (iterStructList != mDataStructList.end())
 	{
-		DataFactoryBase* factory = getDataFactory(iterStructList->first);
+		auto factory = getDataFactory(iterStructList->first);
 		if (factory != NULL)
 		{
 			int dataCount = iterStructList->second.size();
@@ -157,7 +157,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 {
 	// 根据文件名查找工厂类型
 	std::string fileName = txStringUtility::getFileNameNoSuffix(filePath);
-	txMap<std::string, DATA_TYPE>::iterator iterFileDefine = mDataFileDefine.find(fileName);
+	auto iterFileDefine = mDataFileDefine.find(fileName);
 	if(iterFileDefine == mDataFileDefine.end())
 	{
 		LOG_ERROR("error : can not find data file define, file name : %s, filePath : %s", fileName.c_str(), filePath.c_str());
@@ -165,7 +165,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 	}
 
 	// 如果该数据已经存在,并且需要覆盖,则先删除数据
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iterDataStruct = mDataStructList.find(iterFileDefine->second);
+	auto iterDataStruct = mDataStructList.find(iterFileDefine->second);
 	if (iterDataStruct != mDataStructList.end())
 	{
 		if (forceCover)
@@ -214,13 +214,13 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 
 bool DataBase::writeBinaryFile(DATA_TYPE type)
 {
-	txMap<DATA_TYPE, txVector<Data*> >::iterator iterData = mDataStructList.find(type);
+	auto iterData = mDataStructList.find(type);
 	if (iterData == mDataStructList.end())
 	{
 		return false;
 	}
 
-	DataFactoryBase* factory = getDataFactory(type);
+	auto factory = getDataFactory(type);
 	if (factory == NULL)
 	{
 		LOG_ERROR("error : can not find data factory! type : %d", type);
@@ -228,7 +228,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	}
 
 	int dataCount = iterData->second.size();
-	const int& dataSize = factory->getDataSize();
+	int dataSize = factory->getDataSize();
 	int writeBufferSize = dataSize * dataCount;
 	char* writeFileBuffer = TRACE_NEW_ARRAY(char, writeBufferSize, writeFileBuffer);
 	FOR_STL(iterData->second, int i = 0; i < dataCount; ++i)
@@ -239,7 +239,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	END_FOR_STL(iterData->second);
 
 	// 将缓冲写入文件
-	txMap<DATA_TYPE, std::string>::iterator iterDataDefine = mDataDefineFile.find(type);
+	auto iterDataDefine = mDataDefineFile.find(type);
 	if (iterDataDefine == mDataDefineFile.end())
 	{
 		LOG_ERROR("error : can not find data type in data define file list! type : %d", type);

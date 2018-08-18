@@ -7,9 +7,9 @@
 void CommandCharacterStartGame::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCStartGame* startGamePacket = static_cast<SCStartGame*>(mNetServer->createPacket(PT_SC_START_GAME));
+	SCStartGame* startGamePacket = NetServer::createPacket(startGamePacket, PT_SC_START_GAME);
 	startGamePacket->setDice(mDice[0], mDice[1]);
-	mNetServer->sendMessage(startGamePacket, player->getClientGUID());
+	mNetServer->sendMessage(startGamePacket, player);
 }
 
 std::string CommandCharacterStartGame::showDebugInfo()

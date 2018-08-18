@@ -7,7 +7,7 @@
 void CommandCharacterNotifyOtherPlayerAskAction::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerAskAction* otherAskAction = static_cast<SCOtherPlayerAskAction*>(mNetServer->createPacket(PT_SC_OTHER_PLAYER_ASK_ACTION));
+	SCOtherPlayerAskAction* otherAskAction = NetServer::createPacket(otherAskAction, PT_SC_OTHER_PLAYER_ASK_ACTION);
 	otherAskAction->mOtherPlayerGUID = mOtherPlayer->getGUID();
-	mNetServer->sendMessage(otherAskAction, player->getClientGUID());
+	mNetServer->sendMessage(otherAskAction, player);
 }

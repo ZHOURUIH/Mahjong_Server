@@ -107,13 +107,13 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 	END_FOR_STL(lineList);
 	TRACE_DELETE_ARRAY(tempBuffer);
 	// 解析valueList中的数据字符串
-	std::map<std::string, std::string>::iterator iterValue = valueList.begin();
-	std::map<std::string, std::string>::iterator iterValueEnd = valueList.end();
+	auto iterValue = valueList.begin();
+	auto iterValueEnd = valueList.end();
 	FOR_STL(valueList, ; iterValue != iterValueEnd; ++iterValue)
 	{
 		if (floatParam)
 		{
-			std::map<std::string, SERVER_DEFINE_FLOAT>::iterator iterDefine = mFloatParamDefineList.find(iterValue->first);
+			auto iterDefine = mFloatParamDefineList.find(iterValue->first);
 			if (iterDefine != mFloatParamDefineList.end())
 			{
 				setParam(iterDefine->second, (float)atof(iterValue->second.c_str()));
@@ -121,7 +121,7 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 		}
 		else
 		{
-			std::map<std::string, SERVER_DEFINE_STRING>::iterator iterDefine = mStringParamDefineList.find(iterValue->first);
+			auto iterDefine = mStringParamDefineList.find(iterValue->first);
 			if (iterDefine != mStringParamDefineList.end())
 			{
 				setParam(iterDefine->second, iterValue->second.c_str());

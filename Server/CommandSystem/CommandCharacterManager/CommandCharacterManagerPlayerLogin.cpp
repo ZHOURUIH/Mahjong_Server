@@ -26,7 +26,7 @@ void CommandCharacterManagerPlayerLogin::execute()
 	data->mReady = false;
 
 	// 玩家登陆成功后, 发回登陆成功的消息
-	SCLoginRet* loginRet = static_cast<SCLoginRet*>(mNetServer->createPacket(PT_SC_LOGIN_RET));
+	SCLoginRet* loginRet = NetServer::createPacket(loginRet, PT_SC_LOGIN_RET);
 	loginRet->mLoginRet = 0;
 	loginRet->mGUID = mGUID;
 	loginRet->mMoney = mMoney;

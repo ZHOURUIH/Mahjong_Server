@@ -10,12 +10,7 @@ class CSLogin : public Packet
 {
 public:
 	CSLogin(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	void setAccount(const std::string& account)
 	{

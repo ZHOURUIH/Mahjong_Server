@@ -25,7 +25,7 @@ public:
 	void destroyCharacter(CHAR_GUID guid);
 	Character* getCharacter(const std::string& name)
 	{
-		txMap<std::string, Character*>::iterator itrFind = mCharacterList.find(name);
+		auto itrFind = mCharacterList.find(name);
 		if (mCharacterList.end() != itrFind)
 		{
 			return itrFind->second;
@@ -34,7 +34,7 @@ public:
 	}
 	Character* getCharacter(CHAR_GUID characterID)
 	{
-		txMap<CHAR_GUID, Character*>::iterator iterID = mCharacterIDList.find(characterID);
+		auto iterID = mCharacterIDList.find(characterID);
 		if (iterID != mCharacterIDList.end())
 		{
 			return iterID->second;
@@ -43,7 +43,7 @@ public:
 	}
 	void getCharacterListByType(CHARACTER_TYPE type, txMap<std::string, Character*>& characterList)
 	{
-		txMap<CHARACTER_TYPE, txMap<std::string, Character*> >::iterator iterType = mCharacterTypeList.find(type);
+		auto iterType = mCharacterTypeList.find(type);
 		if (iterType != mCharacterTypeList.end())
 		{
 			characterList = iterType->second;
@@ -53,7 +53,7 @@ public:
 	void notifyCharacterNameChanged(const std::string& oldName);
 	bool isCharacterLogin(CHAR_GUID guid)
 	{
-		txMap<CHAR_GUID, Character*>::iterator iter = mCharacterIDList.find(guid);
+		auto iter = mCharacterIDList.find(guid);
 		return iter != mCharacterIDList.end();
 	}
 protected:

@@ -7,12 +7,7 @@ class SCNotifyGetStartDone : public Packet
 {
 public:
 	SCNotifyGetStartDone(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams(){}
 public:
 };

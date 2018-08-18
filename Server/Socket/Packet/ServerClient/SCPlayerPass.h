@@ -7,12 +7,7 @@ class SCPlayerPass : public Packet
 {
 public:
 	SCPlayerPass(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mDroppedPlayerGUID);

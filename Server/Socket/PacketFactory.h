@@ -39,6 +39,7 @@ public:
 	Packet* createPacket()
 	{
 		T* newPacket = TRACE_NEW(T, newPacket, mType);
+		newPacket->init();
 		return newPacket;
 	}
 };

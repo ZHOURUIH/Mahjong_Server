@@ -9,10 +9,10 @@ void CommandCharacterShowHua::execute()
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->showHua(mIndex);
 
-	SCShowHua* hua = static_cast<SCShowHua*>(mNetServer->createPacket(PT_SC_SHOW_HUA));
+	SCShowHua* hua = NetServer::createPacket(hua, PT_SC_SHOW_HUA);
 	hua->mIndex = mIndex;
 	hua->mMahjong = mMahjong;
-	mNetServer->sendMessage(hua, player->getClientGUID());
+	mNetServer->sendMessage(hua, player);
 }
 
 std::string CommandCharacterShowHua::showDebugInfo()

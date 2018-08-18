@@ -15,7 +15,6 @@ int main()
 	trace->init(true);
 #endif
 	TimeLock timeLock(30);
-	timeLock.setForceSleep(5);
 	ServerFramework* mServerFramework = TRACE_NEW(ServerFramework, mServerFramework);
 	mServerFramework->init();
 	// 创建完窗口后启动客户端

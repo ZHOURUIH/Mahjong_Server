@@ -114,7 +114,7 @@ void Room::leaveRoom(CharacterPlayer* player)
 		if (mPlayerList.size() > 0)
 		{
 			int nextPos = (prePosition + 1) % mMaxPlayer;
-			txMap<int, CharacterPlayer*>::iterator iterNext = mPlayerPositionList.find(nextPos);
+			auto iterNext = mPlayerPositionList.find(nextPos);
 			while (true)
 			{
 				if (iterNext == mPlayerPositionList.end())
@@ -161,7 +161,7 @@ void Room::chooseContinueGame(CharacterPlayer* player, bool continueGame)
 
 void Room::notifyDiceDone(CHAR_GUID playerGUID)
 {
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerGUID);
+	auto iterPlayer = mPlayerList.find(playerGUID);
 	if (iterPlayer == mPlayerList.end())
 	{
 		return;
@@ -176,8 +176,8 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah)
 	{
 		// 判断其他玩家是否可以碰或者杠
 		bool hasAction = false;
-		txMap<CHAR_GUID, CharacterPlayer*>::iterator iter = mPlayerList.begin();
-		txMap<CHAR_GUID, CharacterPlayer*>::iterator iterEnd = mPlayerList.end();
+		auto iter = mPlayerList.begin();
+		auto iterEnd = mPlayerList.end();
 		FOR_STL (mPlayerList, ; iter != iterEnd; ++iter)
 		{
 			if (iter->second != player)
@@ -187,7 +187,7 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah)
 				// 是否可胡
 				if (ServerUtility::canHu(data->mHandIn, mah))
 				{
-					txVector<HU_TYPE> huList = ServerUtility::generateHuType(data->mHandIn, mah, data->mPengGangList, false, false);
+					auto huList = ServerUtility::generateHuType(data->mHandIn, mah, data->mPengGangList, false, false);
 					MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_HU, iter->second, player, mah, huList);
 					checkActionList.push_back(action);
 				}
@@ -304,14 +304,14 @@ void Room::notifyPlayerGet(CharacterPlayer* player, MAHJONG mah)
 
 void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 {
-	txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterWait = mWaitList.find(player);
+	auto iterWait = mWaitList.find(player);
 	if (iterWait == mWaitList.end())
 	{
 		LOG_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
 		return;
 	}
 	MahjongAction* action = NULL;
-	txVector<MahjongAction*>& actionList = iterWait->second->mActionList;
+	auto& actionList = iterWait->second->mActionList;
 	int actionCount = actionList.size();
 	FOR_STL (actionList, int i = 0; i < actionCount; ++i)
 	{
@@ -332,8 +332,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 	{
 		// 查找所有可以胡牌的玩家
 		txMap<CharacterPlayer*, HuInfo*> huPlayerList;
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
+		auto iter = mWaitList.begin();
+		auto iterEnd = mWaitList.end();
 		FOR_STL(mWaitList, ; iter != iterEnd; ++iter)
 		{
 			WaitActionInfo* waitInfo = iter->second;
@@ -364,8 +364,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 		bool allConfirm = true;
 		CharacterPlayer* highestActionPlayer = NULL;
 		MahjongAction* highestAction = NULL;
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
+		auto iter = mWaitList.begin();
+		auto iterEnd = mWaitList.end();
 		FOR_STL(mWaitList, ; iter != iterEnd; ++iter)
 		{
 			WaitActionInfo* info = iter->second;
@@ -449,8 +449,8 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 	if (huPlayerList.size() == 1)
 	{
 		huPlayerList.begin()->first->getCharacterData()->mBanker = true;
-		txMap<int, CharacterPlayer*>::iterator iter0 = mPlayerPositionList.begin();
-		txMap<int, CharacterPlayer*>::iterator iterEnd0 = mPlayerPositionList.end();
+		auto iter0 = mPlayerPositionList.begin();
+		auto iterEnd0 = mPlayerPositionList.end();
 		FOR_STL(mPlayerPositionList, ; iter0 != iterEnd0; ++iter0)
 		{
 			bool isBanker = (huPlayerList.begin()->first == iter0->second);
@@ -461,8 +461,8 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 	// 多个人胡,则点炮的人是庄家
 	else if (huPlayerList.size() > 1)
 	{
-		txMap<int, CharacterPlayer*>::iterator iter0 = mPlayerPositionList.begin();
-		txMap<int, CharacterPlayer*>::iterator iterEnd0 = mPlayerPositionList.end();
+		auto iter0 = mPlayerPositionList.begin();
+		auto iterEnd0 = mPlayerPositionList.end();
 		FOR_STL(mPlayerPositionList, ; iter0 != iterEnd0; ++iter0)
 		{
 			bool isBanker = (huPlayerList.begin()->second->mDroppedPlayer == iter0->second);
@@ -472,15 +472,15 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 	}
 	// 通知所有玩家本局结束,计算所有玩家的输赢,暂时不计算杠的牌
 	txMap<CharacterPlayer*, int> moneyDeltaList;
-	txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterEnd = mPlayerPositionList.end();
+	auto iter = mPlayerPositionList.begin();
+	auto iterEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, int i = 0; iter != iterEnd; (++iter, ++i))
 	{
 		moneyDeltaList.insert(iter->second, 0);
 	}
 	END_FOR_STL(mPlayerPositionList);
-	txMap<CharacterPlayer*, HuInfo*>::iterator iterHu = huPlayerList.begin();
-	txMap<CharacterPlayer*, HuInfo*>::iterator iterHuEnd = huPlayerList.end();
+	auto iterHu = huPlayerList.begin();
+	auto iterHuEnd = huPlayerList.end();
 	FOR_STL(huPlayerList, ; iterHu != iterHuEnd; ++iterHu)
 	{
 		int huCount = iterHu->second->mHuList.size();
@@ -493,8 +493,8 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 		// 自摸,所有人都一样
 		if (iterHu->second->mDroppedPlayer == iterHu->second->mHuPlayer)
 		{
-			txMap<CharacterPlayer*, int>::iterator iterMoney = moneyDeltaList.begin();
-			txMap<CharacterPlayer*, int>::iterator iterMoneyEnd = moneyDeltaList.end();
+			auto iterMoney = moneyDeltaList.begin();
+			auto iterMoneyEnd = moneyDeltaList.end();
 			FOR_STL(moneyDeltaList, ; iterMoney != iterMoneyEnd; ++iterMoney)
 			{
 				if (iterMoney->first != iterHu->first)
@@ -538,7 +538,7 @@ void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlay
 
 CharacterPlayer* Room::getMember(CHAR_GUID playerID)
 {
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(playerID);
+	auto iterPlayer = mPlayerList.find(playerID);
 	if (iterPlayer != mPlayerList.end())
 	{
 		return iterPlayer->second;
@@ -548,7 +548,7 @@ CharacterPlayer* Room::getMember(CHAR_GUID playerID)
 
 CharacterPlayer* Room::getMemberByPosition(CHAR_GUID playerID)
 {
-	txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.find(playerID);
+	auto iter = mPlayerPositionList.find(playerID);
 	if (iter != mPlayerPositionList.end())
 	{
 		return iter->second;
@@ -563,8 +563,8 @@ void Room::addPlayer(CharacterPlayer* player)
 	mPlayerList.insert(playerID, player);
 	data->mPosition = -1;
 	// 找到一个空的位置,将玩家设置到该位置上
-	txMap<int, CharacterPlayer*>::iterator iterPosition = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPositionEnd = mPlayerPositionList.end();
+	auto iterPosition = mPlayerPositionList.begin();
+	auto iterPositionEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPosition != iterPositionEnd; ++iterPosition)
 	{
 		if (iterPosition->second == NULL)
@@ -584,12 +584,12 @@ void Room::addPlayer(CharacterPlayer* player)
 void Room::removePlayer(CharacterPlayer* player)
 {
 	CharacterData* data = player->getCharacterData();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.find(data->mGUID);
+	auto iterPlayer = mPlayerList.find(data->mGUID);
 	if (iterPlayer != mPlayerList.end())
 	{
 		mPlayerList.erase(iterPlayer);
 	}
-	txMap<int, CharacterPlayer*>::iterator iterPosition = mPlayerPositionList.find(data->mPosition);
+	auto iterPosition = mPlayerPositionList.find(data->mPosition);
 	if (iterPosition != mPlayerPositionList.end())
 	{
 		if (iterPosition->second == player)
@@ -622,8 +622,8 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	{
 		resetMahjongPool(true, true);
 		// 判断当前谁是庄家
-		txMap<int, CharacterPlayer*>::iterator iter = mPlayerPositionList.begin();
-		txMap<int, CharacterPlayer*>::iterator iterEnd = mPlayerPositionList.end();
+		auto iter = mPlayerPositionList.begin();
+		auto iterEnd = mPlayerPositionList.end();
 		FOR_STL(mPlayerPositionList, ; iter != iterEnd; ++iter)
 		{
 			if (iter->second->getCharacterData()->mBanker)
@@ -649,8 +649,8 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	}
 	else if (mPlayState == MPS_ENDING)
 	{
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iter = mWaitList.begin();
-		txMap<CharacterPlayer*, WaitActionInfo*>::iterator iterEnd = mWaitList.end();
+		auto iter = mWaitList.begin();
+		auto iterEnd = mWaitList.end();
 		FOR_STL(mWaitList, ; iter != iterEnd; ++iter)
 		{
 			int actionCount = iter->second->mActionList.size();
@@ -674,8 +674,8 @@ void Room::requestDrop(CharacterPlayer* player, int index)
 	mCommandSystem->pushCommand(cmdDrop, player);
 
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -760,8 +760,8 @@ MAHJONG Room::requestGet()
 bool Room::isAllPlayerReady()
 {
 	bool allReady = true;
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iter = mPlayerList.begin();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterEnd = mPlayerList.end();
+	auto iter = mPlayerList.begin();
+	auto iterEnd = mPlayerList.end();
 	for (; iter != iterEnd; ++iter)
 	{
 		if (!iter->second->getCharacterData()->mReady)
@@ -775,8 +775,8 @@ bool Room::isAllPlayerReady()
 
 void Room::notifyAllPlayerGetStartDone()
 {
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		CommandCharacterNotifyGetStartDone* cmd = NEW_CMD(cmd);
@@ -787,8 +787,8 @@ void Room::notifyAllPlayerGetStartDone()
 
 void Room::notifyAllPlayerBanker(CHAR_GUID banker)
 {
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.begin();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
+	auto iterPlayer = mPlayerList.begin();
+	auto iterPlayerEnd = mPlayerList.end();
 	FOR_STL(mPlayerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		CommandCharacterNotifyBanker* cmdNotifyBanker = NEW_CMD(cmdNotifyBanker);
@@ -800,8 +800,8 @@ void Room::notifyAllPlayerBanker(CHAR_GUID banker)
 
 void Room::notifyAllPlayerDiceDone()
 {
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = mPlayerList.begin();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerList.end();
+	auto iterPlayer = mPlayerList.begin();
+	auto iterPlayerEnd = mPlayerList.end();
 	FOR_STL(mPlayerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		CommandCharacterNotifyDiceDone* cmd = NEW_CMD(cmd);
@@ -812,8 +812,8 @@ void Room::notifyAllPlayerDiceDone()
 
 void Room::notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaList)
 {
-	txMap<int, CharacterPlayer*>::iterator iterPos = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPosEnd = mPlayerPositionList.end();
+	auto iterPos = mPlayerPositionList.begin();
+	auto iterPosEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPos != iterPosEnd; ++iterPos)
 	{
 		CommandCharacterMahjongEnd* cmd = NEW_CMD(cmd);
@@ -829,8 +829,8 @@ void Room::playerGetStartMahjong(MAHJONG mah, CharacterPlayer* player)
 	cmdGetStart->mMahjong = mah;
 	mCommandSystem->pushCommand(cmdGetStart, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -850,8 +850,8 @@ void Room::playerGetMahjong(MAHJONG mah, CharacterPlayer* player)
 	cmdGetStart->mMahjong = mah;
 	mCommandSystem->pushCommand(cmdGetStart, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -871,8 +871,8 @@ void Room::playerReorderMahjong(CharacterPlayer* player)
 	mCommandSystem->pushCommand(cmd, player);
 
 	// 通知其他玩家有玩家的牌重新排列
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -888,16 +888,16 @@ void Room::playerReorderMahjong(CharacterPlayer* player)
 void Room::playerHu(txMap<CharacterPlayer*, HuInfo*>& huInfoList)
 {
 	txVector<std::pair<CharacterPlayer*, txVector<HU_TYPE>>> huList;
-	txMap<CharacterPlayer*, HuInfo*>::iterator iterInfo = huInfoList.begin();
-	txMap<CharacterPlayer*, HuInfo*>::iterator iterInfoEnd = huInfoList.end();
+	auto iterInfo = huInfoList.begin();
+	auto iterInfoEnd = huInfoList.end();
 	FOR_STL(huInfoList, ; iterInfo != iterInfoEnd; ++iterInfo)
 	{
 		huList.push_back(std::make_pair(iterInfo->first, iterInfo->second->mHuList));
 	}
 	END_FOR_STL(huInfoList);
 	// 通知所有玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		CommandCharacterPlayerHu* cmdOtherHu = NEW_CMD(cmdOtherHu);
@@ -914,8 +914,8 @@ void Room::playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, M
 	cmdGang->mDroppedPlayer = droppedPlayer;
 	mCommandSystem->pushCommand(cmdGang, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -937,8 +937,8 @@ void Room::playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, M
 	cmdPeng->mDroppedPlayer = droppedPlayer;
 	mCommandSystem->pushCommand(cmdPeng, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -960,8 +960,8 @@ void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, M
 	cmdPass->mMahjong = mah;
 	mCommandSystem->pushCommand(cmdPass, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -981,8 +981,8 @@ void Room::playerAskDrop(CharacterPlayer* player)
 	CommandCharacterAskDrop* cmd = NEW_CMD(cmd);
 	mCommandSystem->pushCommand(cmd, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -1001,8 +1001,8 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 	cmdAskAction->mActionList = actionList;
 	mCommandSystem->pushCommand(cmdAskAction, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)
@@ -1022,8 +1022,8 @@ void Room::playerShowHua(CharacterPlayer* player, int index, MAHJONG mah)
 	cmdShowHua->mMahjong = mah;
 	mCommandSystem->pushCommand(cmdShowHua, player);
 	// 通知其他玩家
-	txMap<int, CharacterPlayer*>::iterator iterPlayer = mPlayerPositionList.begin();
-	txMap<int, CharacterPlayer*>::iterator iterPlayerEnd = mPlayerPositionList.end();
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
 	FOR_STL(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != player)

@@ -7,12 +7,7 @@ class SCOtherPlayerReady : public Packet
 {
 public:
 	SCOtherPlayerReady(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mReady);

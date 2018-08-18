@@ -7,12 +7,7 @@ class SCJoinRoomRet : public Packet
 {
 public:
 	SCJoinRoomRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mResult);

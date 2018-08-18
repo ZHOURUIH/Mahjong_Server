@@ -17,7 +17,7 @@ void CSCreateRoom::execute()
 	mCommandSystem->pushCommand(cmdCreate, mRoomManager);
 
 	// 创建完毕后立即发送消息
-	SCCreateRoomRet* packet = static_cast<SCCreateRoomRet*>(mNetServer->createPacket(PT_SC_CREATE_ROOM_RET));
+	SCCreateRoomRet* packet = NetServer::createPacket(packet, PT_SC_CREATE_ROOM_RET);
 	if (room != NULL)
 	{
 		packet->mResult = 1;

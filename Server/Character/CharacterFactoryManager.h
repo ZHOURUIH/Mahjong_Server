@@ -13,8 +13,8 @@ public:
 	virtual void init();
 	virtual void destory()
 	{
-		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.begin();
-		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iterEnd = mFactoryList.end();
+		auto iter = mFactoryList.begin();
+		auto iterEnd = mFactoryList.end();
 		FOR_STL(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
@@ -24,7 +24,7 @@ public:
 	}
 	CharacterFactoryBase* getFactory(CHARACTER_TYPE type)
 	{
-		txMap<CHARACTER_TYPE, CharacterFactoryBase*>::iterator iter = mFactoryList.find(type);
+		auto iter = mFactoryList.find(type);
 		if (iter != mFactoryList.end())
 		{
 			return iter->second;

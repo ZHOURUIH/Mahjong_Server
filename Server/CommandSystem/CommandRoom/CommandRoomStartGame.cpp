@@ -9,9 +9,9 @@ void CommandRoomStartGame::execute()
 	Room* room = static_cast<Room*>(mReceiver);
 	int dice0 = txMath::randomInt(0, MAX_DICE - 1);
 	int dice1 = txMath::randomInt(0, MAX_DICE - 1);
-	txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
-	txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+	auto& playerList = room->getPlayerList();
+	auto iterPlayer = playerList.begin();
+	auto iterPlayerEnd = playerList.end();
 	FOR_STL (playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		// 取消玩家的准备标记

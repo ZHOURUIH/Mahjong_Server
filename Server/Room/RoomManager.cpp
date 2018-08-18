@@ -10,8 +10,8 @@
 int RoomManager::mRoomIDSeed = 0;
 void RoomManager::update(float elapsedTime)
 {
-	txMap<int, Room*>::iterator iter = mRoomList.begin();
-	txMap<int, Room*>::iterator iterEnd = mRoomList.end();
+	auto iter = mRoomList.begin();
+	auto iterEnd = mRoomList.end();
 	FOR_STL(mRoomList, ; iter != iterEnd; ++iter)
 	{
 		iter->second->update(elapsedTime);
@@ -29,7 +29,7 @@ Room* RoomManager::createRoom()
 
 Room* RoomManager::getRoom(int id)
 {
-	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
+	auto iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())
 	{
 		return iterRoom->second;
@@ -39,7 +39,7 @@ Room* RoomManager::getRoom(int id)
 
 void RoomManager::destroyRoom(int id)
 {
-	txMap<int, Room*>::iterator iterRoom = mRoomList.find(id);
+	auto iterRoom = mRoomList.find(id);
 	if (iterRoom != mRoomList.end())
 	{
 		TRACE_DELETE(iterRoom->second);
@@ -49,8 +49,8 @@ void RoomManager::destroyRoom(int id)
 
 void RoomManager::destroyAllRoom()
 {
-	txMap<int, Room*>::iterator iterRoom = mRoomList.begin();
-	txMap<int, Room*>::iterator iterRoomEnd = mRoomList.end();
+	auto iterRoom = mRoomList.begin();
+	auto iterRoomEnd = mRoomList.end();
 	FOR_STL(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 	{
 		TRACE_DELETE(iterRoom->second);

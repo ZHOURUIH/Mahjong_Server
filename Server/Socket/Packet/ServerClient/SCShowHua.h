@@ -7,12 +7,7 @@ class SCShowHua : public Packet
 {
 public:
 	SCShowHua(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mIndex);

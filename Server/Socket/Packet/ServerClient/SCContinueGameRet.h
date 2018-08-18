@@ -7,12 +7,7 @@ class SCContinueGameRet : public Packet
 {
 public:
 	SCContinueGameRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mBanker);

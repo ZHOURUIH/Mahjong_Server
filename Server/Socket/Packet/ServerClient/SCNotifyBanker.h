@@ -7,12 +7,7 @@ class SCNotifyBanker : public Packet
 {
 public:
 	SCNotifyBanker(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mGUID);

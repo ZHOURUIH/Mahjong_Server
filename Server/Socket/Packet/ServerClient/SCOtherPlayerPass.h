@@ -7,12 +7,7 @@ class SCOtherPlayerPass : public Packet
 {
 public:
 	SCOtherPlayerPass(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mOtherPlayerGUID);

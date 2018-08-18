@@ -8,9 +8,9 @@
 void CommandCharacterPlayerHu::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCPlayerHu* hu = static_cast<SCPlayerHu*>(mNetServer->createPacket(PT_SC_PLAYER_HU));
+	SCPlayerHu* hu = NetServer::createPacket(hu, PT_SC_PLAYER_HU);
 	hu->setHuList(mHuList);
-	mNetServer->sendMessage(hu, player->getClientGUID());
+	mNetServer->sendMessage(hu, player);
 }
 
 std::string CommandCharacterPlayerHu::showDebugInfo()

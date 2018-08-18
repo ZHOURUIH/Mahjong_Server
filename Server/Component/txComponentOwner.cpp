@@ -135,7 +135,7 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 	{
 		return;
 	}
-	txMap<std::string, txComponent*>::iterator iter = mAllComponentList.find(component->getName());
+	auto iter = mAllComponentList.find(component->getName());
 	if (iter == mAllComponentList.end())
 	{
 		addComponentToList(component);
@@ -145,13 +145,13 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 bool txComponentOwner::notifyComponentNameChanged(const std::string& oldName, txComponent* component)
 {
 	// 先查找是否有该名字的组件
-	txMap<std::string, txComponent*>::iterator it = mAllComponentList.find(oldName);
+	auto it = mAllComponentList.find(oldName);
 	if (it == mAllComponentList.end())
 	{
 		return false;
 	}
 	// 再查找改名后会不会重名
-	txMap<std::string, txComponent*>::iterator itNew = mAllComponentList.find(component->getName());
+	auto itNew = mAllComponentList.find(component->getName());
 	if (itNew != mAllComponentList.end())
 	{
 		return false;
@@ -212,7 +212,7 @@ void txComponentOwner::destroyComponent(txComponent* component)
 void txComponentOwner::destroyComponent(const std::string& name)
 {
 	// 在总列表中查找
-	txMap<std::string, txComponent*>::iterator itrFind = mAllComponentList.find(name);
+	auto itrFind = mAllComponentList.find(name);
 	if (itrFind == mAllComponentList.end())
 	{
 		return;
@@ -222,8 +222,8 @@ void txComponentOwner::destroyComponent(const std::string& name)
 
 void txComponentOwner::destroyAllComponents()
 {
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.begin();
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterTypeEnd = mAllComponentTypeList.end();
+	auto iterType = mAllComponentTypeList.begin();
+	auto iterTypeEnd = mAllComponentTypeList.end();
 	FOR_STL(mAllComponentTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
 		txComponentFactoryBase* factory = mComponentFactoryManager->getFactory(iterType->first);
@@ -232,9 +232,9 @@ void txComponentOwner::destroyAllComponents()
 			continue;
 		}
 		// 因为在销毁过程中会修改列表,复制一份是为了避免迭代器失效
-		txMap<std::string, txComponent*> componentList = iterType->second;
-		txMap<std::string, txComponent*>::iterator iterCom = componentList.begin();
-		txMap<std::string, txComponent*>::iterator iterComEnd = componentList.end();
+		auto componentList = iterType->second;
+		auto iterCom = componentList.begin();
+		auto iterComEnd = componentList.end();
 		FOR_STL(componentList, ; iterCom != iterComEnd; ++iterCom)
 		{
 			factory->destroyComponent(iterCom->second);
@@ -247,11 +247,11 @@ void txComponentOwner::destroyAllComponents()
 txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::string& type)
 {
 	txComponent* ret = NULL;
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(type);
+	auto iterBaseType = mAllComponentBaseTypeList.find(type);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		txMap<std::string, txComponent*>::iterator iterTypeCom = iterBaseType->second.begin();
-		txMap<std::string, txComponent*>::iterator iterTypeComEnd = iterBaseType->second.end();
+		auto iterTypeCom = iterBaseType->second.begin();
+		auto iterTypeComEnd = iterBaseType->second.end();
 		FOR_STL(iterBaseType->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
@@ -268,11 +268,11 @@ txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::stri
 txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 {
 	txComponent* ret = NULL;
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iter = mAllComponentTypeList.find(type);
+	auto iter = mAllComponentTypeList.find(type);
 	if (iter != mAllComponentTypeList.end())
 	{
-		txMap<std::string, txComponent*>::iterator iterTypeCom = iter->second.begin();
-		txMap<std::string, txComponent*>::iterator iterTypeComEnd = iter->second.end();
+		auto iterTypeCom = iter->second.begin();
+		auto iterTypeComEnd = iter->second.end();
 		FOR_STL(iter->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
@@ -288,9 +288,9 @@ txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 
 void txComponentOwner::addComponentToList(txComponent* component, int componentPos)
 {
-	const std::string& name = component->getName();
-	const std::string& type = component->getType();
-	const std::string& baseType = component->getBaseType();
+	const auto& name = component->getName();
+	const auto& type = component->getType();
+	const auto& baseType = component->getBaseType();
 
 	// 如果没有父组件,则将组件放入第一级组件列表中
 	if (component->getParentComponent() == NULL)
@@ -309,7 +309,7 @@ void txComponentOwner::addComponentToList(txComponent* component, int componentP
 	mAllComponentList.insert(name, component);
 
 	// 添加到组件类型分组列表中
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(type);
+	auto iterType = mAllComponentTypeList.find(type);
 	if (iterType != mAllComponentTypeList.end())
 	{
 		iterType->second.insert(name, component);
@@ -322,7 +322,7 @@ void txComponentOwner::addComponentToList(txComponent* component, int componentP
 	}
 
 	// 添加到基础组件类型分组列表中
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
+	auto iterBaseType = mAllComponentBaseTypeList.find(baseType);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
 		iterBaseType->second.insert(name, component);
@@ -353,19 +353,19 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 	}
 
 	// 从所有组件列表中移除
-	const std::string& componentName = component->getName();
-	txMap<std::string, txComponent*>::iterator iterCom = mAllComponentList.find(componentName);
+	const auto& componentName = component->getName();
+	auto iterCom = mAllComponentList.find(componentName);
 	if (iterCom != mAllComponentList.end())
 	{
 		mAllComponentList.erase(iterCom);
 	}
 
 	// 从组件类型分组列表中移除
-	const std::string& realType = component->getType();
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterType = mAllComponentTypeList.find(realType);
+	const auto& realType = component->getType();
+	auto iterType = mAllComponentTypeList.find(realType);
 	if (iterType != mAllComponentTypeList.end())
 	{
-		txMap<std::string, txComponent*>::iterator iterCom = iterType->second.find(componentName);
+		auto iterCom = iterType->second.find(componentName);
 		if (iterCom != iterType->second.end())
 		{
 			iterType->second.erase(iterCom);
@@ -373,11 +373,11 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 	}
 
 	// 从基础组件类型分组列表中移除
-	const std::string& baseType = component->getBaseType();
-	txMap<std::string, txMap<std::string, txComponent*> >::iterator iterBaseType = mAllComponentBaseTypeList.find(baseType);
+	const auto& baseType = component->getBaseType();
+	auto iterBaseType = mAllComponentBaseTypeList.find(baseType);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		txMap<std::string, txComponent*>::iterator iter = iterBaseType->second.find(componentName);
+		auto iter = iterBaseType->second.find(componentName);
 		if (iter != iterBaseType->second.end())
 		{
 			iterBaseType->second.erase(iter);

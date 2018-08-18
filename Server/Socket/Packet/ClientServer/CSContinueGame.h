@@ -7,12 +7,7 @@ class CSContinueGame : public Packet
 {
 public:
 	CSContinueGame(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void execute();
 	virtual void fillParams(){}
 public:

@@ -7,12 +7,7 @@ class SCRegisterRet : public Packet
 {
 public:
 	SCRegisterRet(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mResult);

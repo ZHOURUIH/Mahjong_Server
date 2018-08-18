@@ -42,7 +42,7 @@ public:
 	virtual void fillParams() = 0;
 	void zeroParams();
 	template<typename T>
-	void pushParam(T param, const std::string& describe = EMPTY_STRING)
+	void pushParam(T& param, const std::string& describe = EMPTY_STRING)
 	{
 		mDataParameterList.push_back(DataParameter((char*)&param, sizeof(param), typeid(T).name(), describe));
 	}

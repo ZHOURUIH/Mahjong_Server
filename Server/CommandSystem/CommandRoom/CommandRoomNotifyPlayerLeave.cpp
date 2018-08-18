@@ -18,9 +18,9 @@ void CommandRoomNotifyPlayerLeave::execute()
 		// 如果需要通知其他玩家
 		if (mNotifyOtherPlayer)
 		{
-			txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
-			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
-			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+			auto& playerList = room->getPlayerList();
+			auto iterPlayer = playerList.begin();
+			auto iterPlayerEnd = playerList.end();
 			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD(cmdLeave);

@@ -16,8 +16,8 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 		{
 			// 通知角色同房间中的其他玩家有玩家离线
 			txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
-			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayer = playerList.begin();
-			txMap<CHAR_GUID, CharacterPlayer*>::iterator iterPlayerEnd = playerList.end();
+			auto iterPlayer = playerList.begin();
+			auto iterPlayerEnd = playerList.end();
 			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				// 已经离线的玩家不作通知

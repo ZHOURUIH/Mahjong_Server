@@ -7,12 +7,7 @@ class SCOtherPlayerDrop : public Packet
 {
 public:
 	SCOtherPlayerDrop(PACKET_TYPE type)
-		:
-		Packet(type)
-	{
-		fillParams();
-		zeroParams();
-	}
+		:Packet(type) {}
 	virtual void fillParams()
 	{
 		pushParam(mPlayerGUID);
