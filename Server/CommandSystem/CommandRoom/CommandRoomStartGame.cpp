@@ -7,8 +7,8 @@
 void CommandRoomStartGame::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
-	int dice0 = txMath::randomInt(0, MAX_DICE - 1);
-	int dice1 = txMath::randomInt(0, MAX_DICE - 1);
+	int dice0 = MathUtility::randomInt(0, MAX_DICE - 1);
+	int dice1 = MathUtility::randomInt(0, MAX_DICE - 1);
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();

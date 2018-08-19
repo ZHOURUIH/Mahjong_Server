@@ -1,8 +1,6 @@
-﻿#include "txStringUtility.h"
-#include "txUtility.h"
-#include "txMathUtility.h"
+﻿#include "Utility.h"
 
-std::string txStringUtility::removeSuffix(const std::string& str)
+std::string StringUtility::removeSuffix(const std::string& str)
 {
 	int dotPos = str.find_last_of('.');
 	if (dotPos != -1)
@@ -12,7 +10,7 @@ std::string txStringUtility::removeSuffix(const std::string& str)
 	return str;
 }
 
-void txStringUtility::removeLastComma(std::string& stream)
+void StringUtility::removeLastComma(std::string& stream)
 {
 	int streamSize = stream.length();
 	for (int i = 0; i < streamSize; ++i)
@@ -25,7 +23,7 @@ void txStringUtility::removeLastComma(std::string& stream)
 	}
 }
 
-std::string txStringUtility::getFileName(std::string str)
+std::string StringUtility::getFileName(std::string str)
 {
 	rightToLeft(str);
 	int dotPos = str.find_last_of('/');
@@ -36,7 +34,7 @@ std::string txStringUtility::getFileName(std::string str)
 	return str;
 }
 
-std::string txStringUtility::getFileNameNoSuffix(std::string str)
+std::string StringUtility::getFileNameNoSuffix(std::string str)
 {
 	rightToLeft(str);
 	int namePos = str.find_last_of('/');
@@ -48,7 +46,7 @@ std::string txStringUtility::getFileNameNoSuffix(std::string str)
 	return str;
 }
 
-std::string txStringUtility::getFilePath(std::string dir)
+std::string StringUtility::getFilePath(std::string dir)
 {
 	rightToLeft(dir);
 	int pos = dir.find_last_of('/');
@@ -60,7 +58,7 @@ std::string txStringUtility::getFilePath(std::string dir)
 	return tempDir;
 }
 
-std::string txStringUtility::getFileSuffix(const std::string& fileName)
+std::string StringUtility::getFileSuffix(const std::string& fileName)
 {
 	int dotPos = fileName.find_last_of('.');
 	if (dotPos != -1)
@@ -70,7 +68,7 @@ std::string txStringUtility::getFileSuffix(const std::string& fileName)
 	return fileName;
 }
 
-int txStringUtility::getLastNotNumberPos(const std::string& str)
+int StringUtility::getLastNotNumberPos(const std::string& str)
 {
 	int strLen = str.length();
 	for (int i = 0; i < strLen; ++i)
@@ -83,7 +81,7 @@ int txStringUtility::getLastNotNumberPos(const std::string& str)
 	return -1;
 }
 
-int txStringUtility::getLastNumber(const std::string& str)
+int StringUtility::getLastNumber(const std::string& str)
 {
 	int lastPos = getLastNotNumberPos(str);
 	if (lastPos == -1)
@@ -98,7 +96,7 @@ int txStringUtility::getLastNumber(const std::string& str)
 	return stringToInt(numStr);
 }
 
-void txStringUtility::split(std::string str, const std::string& deli, txVector<std::string>& vec)
+void StringUtility::split(std::string str, const std::string& deli, txVector<std::string>& vec)
 {
 	while (true)
 	{
@@ -117,14 +115,14 @@ void txStringUtility::split(std::string str, const std::string& deli, txVector<s
 	}
 }
 
-std::string txStringUtility::strReplace(const std::string& str, int begin, int end, const std::string& reStr)
+std::string StringUtility::strReplace(const std::string& str, int begin, int end, const std::string& reStr)
 {
 	std::string sub1 = str.substr(0, begin);
 	std::string sub2 = str.substr(end, str.length() - end);
 	return sub1 + reStr + sub2;
 }
 
-std::string txStringUtility::intToString(int i, int limitLen)
+std::string StringUtility::intToString(int i, int limitLen)
 {
 	char str[256];
 	SPRINTF(str, 256, "%d", i);
@@ -143,14 +141,14 @@ std::string txStringUtility::intToString(int i, int limitLen)
 	return retString;
 }
 
-std::string txStringUtility::floatToString(float f, int precision, bool removeZero)
+std::string StringUtility::floatToString(float f, int precision, bool removeZero)
 {
 	std::string retString;
 	for (int temp = 0; temp < 1; ++temp)
 	{
-		if (!txMath::isFloatZero(f))
+		if (!MathUtility::isFloatZero(f))
 		{
-			f = f * txMath::powerFloat(10.0f, precision) + f / std::abs(f) * 0.5f;
+			f = f * MathUtility::powerFloat(10.0f, precision) + f / std::abs(f) * 0.5f;
 		}
 		int MAX_INT = 0x7FFFFFFF;
 		if (f > (float)MAX_INT)
@@ -224,7 +222,7 @@ std::string txStringUtility::floatToString(float f, int precision, bool removeZe
 	return retString;
 }
 
-bool txStringUtility::endWith(const std::string& oriString, const std::string& pattern, bool sensitive)
+bool StringUtility::endWith(const std::string& oriString, const std::string& pattern, bool sensitive)
 {
 	if (oriString.length() < pattern.length())
 	{
@@ -244,7 +242,7 @@ bool txStringUtility::endWith(const std::string& oriString, const std::string& p
 	}
 }
 
-bool txStringUtility::startWith(const std::string& oriString, const std::string& pattern, bool sensitive)
+bool StringUtility::startWith(const std::string& oriString, const std::string& pattern, bool sensitive)
 {
 	if (oriString.length() < pattern.length())
 	{
@@ -265,7 +263,7 @@ bool txStringUtility::startWith(const std::string& oriString, const std::string&
 }
 
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-std::wstring txStringUtility::ANSIToUnicode(const std::string& str)
+std::wstring StringUtility::ANSIToUnicode(const std::string& str)
 {
 	int unicodeLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 	wchar_t* pUnicode = TRACE_NEW_ARRAY(wchar_t, unicodeLen + 1, pUnicode);
@@ -276,7 +274,7 @@ std::wstring txStringUtility::ANSIToUnicode(const std::string& str)
 	return rt;
 }
 
-std::string txStringUtility::UnicodeToANSI(const std::wstring& str)
+std::string StringUtility::UnicodeToANSI(const std::wstring& str)
 {
 	int iTextLen = WideCharToMultiByte(CP_ACP, 0, str.c_str(), -1, NULL, 0, NULL, NULL);
 	char* pElementText = TRACE_NEW_ARRAY(char, iTextLen + 1, pElementText);
@@ -286,7 +284,7 @@ std::string txStringUtility::UnicodeToANSI(const std::wstring& str)
 	TRACE_DELETE_ARRAY(pElementText);
 	return strText;
 }
-std::string txStringUtility::UnicodeToUTF8(const std::wstring& str)
+std::string StringUtility::UnicodeToUTF8(const std::wstring& str)
 {
 	// wide char to multi char
 	int iTextLen = WideCharToMultiByte(CP_UTF8, 0, str.c_str(), -1, NULL, 0, NULL, NULL);
@@ -298,7 +296,7 @@ std::string txStringUtility::UnicodeToUTF8(const std::wstring& str)
 	return strText;
 }
 
-std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
+std::wstring StringUtility::UTF8ToUnicode(const std::string& str)
 {
 	int unicodeLen = ::MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
 	wchar_t* pUnicode = TRACE_NEW_ARRAY(wchar_t, unicodeLen + 1, pUnicode);
@@ -310,7 +308,7 @@ std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
 }
 
 #elif RUN_PLATFORM == PLATFORM_ANDROID
-std::wstring txStringUtility::ANSIToUnicode(const std::string& str)
+std::wstring StringUtility::ANSIToUnicode(const std::string& str)
 {
 	if (str == EMPTY_STRING)
 	{
@@ -330,7 +328,7 @@ std::wstring txStringUtility::ANSIToUnicode(const std::string& str)
 	return strText;
 }
 
-std::string txStringUtility::UnicodeToANSI(const std::wstring& str)
+std::string StringUtility::UnicodeToANSI(const std::wstring& str)
 {
 	if (str == L"")
 	{
@@ -348,7 +346,7 @@ std::string txStringUtility::UnicodeToANSI(const std::wstring& str)
 	TRACE_DELETE_ARRAY(dBuf);
 	return strText;
 }
-std::string txStringUtility::UnicodeToUTF8(const std::wstring& str)
+std::string StringUtility::UnicodeToUTF8(const std::wstring& str)
 {
 	if (str == L"")
 	{
@@ -367,7 +365,7 @@ std::string txStringUtility::UnicodeToUTF8(const std::wstring& str)
 	return strText;
 }
 
-std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
+std::wstring StringUtility::UTF8ToUnicode(const std::string& str)
 {
 	if (str == EMPTY_STRING)
 	{
@@ -388,7 +386,7 @@ std::wstring txStringUtility::UTF8ToUnicode(const std::string& str)
 }
 #endif
 
-std::string txStringUtility::ANSIToUTF8(const std::string& str, bool addBOM)
+std::string StringUtility::ANSIToUTF8(const std::string& str, bool addBOM)
 {
 	std::wstring unicodeStr = ANSIToUnicode(str);
 	std::string utf8Str = UnicodeToUTF8(unicodeStr);
@@ -400,7 +398,7 @@ std::string txStringUtility::ANSIToUTF8(const std::string& str, bool addBOM)
 	return utf8Str;
 }
 
-std::string txStringUtility::UTF8ToANSI(const std::string& str, bool removeBOM)
+std::string StringUtility::UTF8ToANSI(const std::string& str, bool removeBOM)
 {
 	std::wstring unicodeStr;
 	if (removeBOM && str.length() >= 3 && str[0] == 0xEF && str[0] == 0xBB && str[0] == 0xBF)
@@ -417,7 +415,7 @@ std::string txStringUtility::UTF8ToANSI(const std::string& str, bool removeBOM)
 	return ansiStr;
 }
 
-void txStringUtility::jsonStartArray(std::string& str, int preTableCount, bool returnLine)
+void StringUtility::jsonStartArray(std::string& str, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -430,7 +428,7 @@ void txStringUtility::jsonStartArray(std::string& str, int preTableCount, bool r
 	}
 }
 
-void txStringUtility::jsonEndArray(std::string& str, int preTableCount, bool returnLine)
+void StringUtility::jsonEndArray(std::string& str, int preTableCount, bool returnLine)
 {
 	removeLastComma(str);
 	for (int i = 0; i < preTableCount; ++i)
@@ -444,7 +442,7 @@ void txStringUtility::jsonEndArray(std::string& str, int preTableCount, bool ret
 	}
 }
 
-void txStringUtility::jsonStartStruct(std::string& str, int preTableCount, bool returnLine)
+void StringUtility::jsonStartStruct(std::string& str, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -457,7 +455,7 @@ void txStringUtility::jsonStartStruct(std::string& str, int preTableCount, bool 
 	}
 }
 
-void txStringUtility::jsonEndStruct(std::string& str, int preTableCount, bool returnLine)
+void StringUtility::jsonEndStruct(std::string& str, int preTableCount, bool returnLine)
 {
 	removeLastComma(str);
 	for (int i = 0; i < preTableCount; ++i)
@@ -471,7 +469,7 @@ void txStringUtility::jsonEndStruct(std::string& str, int preTableCount, bool re
 	}
 }
 
-void txStringUtility::jsonAddPair(std::string& str, const std::string& name, const std::string& value, int preTableCount, bool returnLine)
+void StringUtility::jsonAddPair(std::string& str, const std::string& name, const std::string& value, int preTableCount, bool returnLine)
 {
 	for (int i = 0; i < preTableCount; ++i)
 	{
@@ -484,7 +482,7 @@ void txStringUtility::jsonAddPair(std::string& str, const std::string& name, con
 	}
 }
 
-void txStringUtility::strToLower(std::string& str)
+void StringUtility::strToLower(std::string& str)
 {
 	std::string::size_type size = str.length();
 	for (std::string::size_type i = 0; i != size; ++i)
@@ -496,7 +494,7 @@ void txStringUtility::strToLower(std::string& str)
 	}
 }
 
-void txStringUtility::strToUpper(std::string& str)
+void StringUtility::strToUpper(std::string& str)
 {
 	std::string::size_type size = str.length();
 	for (std::string::size_type i = 0; i != size; ++i)
@@ -508,7 +506,7 @@ void txStringUtility::strToUpper(std::string& str)
 	}
 }
 
-void txStringUtility::rightToLeft(std::string& str)
+void StringUtility::rightToLeft(std::string& str)
 {
 	int pathLength = str.length();
 	for (int i = 0; i < pathLength; ++i)
@@ -520,7 +518,7 @@ void txStringUtility::rightToLeft(std::string& str)
 	}
 }
 
-bool txStringUtility::findSubstr(std::string res, std::string dst, bool sensitive, int* pos, int startPose, bool firstOrLast)
+bool StringUtility::findSubstr(std::string res, std::string dst, bool sensitive, int* pos, int startPose, bool firstOrLast)
 {
 	// 如果不区分大小写
 	if (!sensitive)
@@ -557,7 +555,7 @@ bool txStringUtility::findSubstr(std::string res, std::string dst, bool sensitiv
 	return posFind != -1;
 }
 
-txVector<std::string> txStringUtility::findSubstr(txVector<std::string>& res, const std::string& dst, bool sensitive)
+txVector<std::string> StringUtility::findSubstr(txVector<std::string>& res, const std::string& dst, bool sensitive)
 {
 	txVector<std::string> retList;
 	int listSize = res.size();
@@ -572,7 +570,7 @@ txVector<std::string> txStringUtility::findSubstr(txVector<std::string>& res, co
 	return retList;
 }
 
-std::string txStringUtility::checkString(const std::string& str, const std::string& valid)
+std::string StringUtility::checkString(const std::string& str, const std::string& valid)
 {
 	std::string newString = "";
 	int validCount = valid.length();
@@ -596,17 +594,17 @@ std::string txStringUtility::checkString(const std::string& str, const std::stri
 	return newString;
 }
 
-std::string txStringUtility::checkFloatString(const std::string& str, const std::string& valid)
+std::string StringUtility::checkFloatString(const std::string& str, const std::string& valid)
 {
 	return checkIntString(str, "." + valid);
 }
 
-std::string txStringUtility::checkIntString(const std::string& str, const std::string& valid)
+std::string StringUtility::checkIntString(const std::string& str, const std::string& valid)
 {
 	return checkString(str, "0123456789" + valid);
 }
 
-std::string txStringUtility::charToHexString(unsigned char byte, bool upper)
+std::string StringUtility::charToHexString(unsigned char byte, bool upper)
 {
 	char byteHex[3] = { 0 };
 	const char* charPool = upper ? "ABCDEF" : "abcdef";
@@ -619,7 +617,7 @@ std::string txStringUtility::charToHexString(unsigned char byte, bool upper)
 	return byteHex;
 }
 
-std::string txStringUtility::charArrayToHexString(unsigned char* data, int dataCount, bool addSpace, bool upper)
+std::string StringUtility::charArrayToHexString(unsigned char* data, int dataCount, bool addSpace, bool upper)
 {
 	int oneLength = addSpace ? 3 : 2;
 	int showCount = dataCount * oneLength + 1;
@@ -640,7 +638,7 @@ std::string txStringUtility::charArrayToHexString(unsigned char* data, int dataC
 	return str;
 }
 
-int txStringUtility::getCharCount(const std::string& str, char key)
+int StringUtility::getCharCount(const std::string& str, char key)
 {
 	int count = 0;
 	int length = str.length();

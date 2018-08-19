@@ -1,10 +1,9 @@
-﻿#include "txMathUtility.h"
-#include "txStringUtility.h"
+﻿#include "Utility.h"
 
-const float txMath::MATH_PI = 3.1415926f;
-const float txMath::MIN_DELTA = 0.00001f;
+const float MathUtility::MATH_PI = 3.1415926f;
+const float MathUtility::MIN_DELTA = 0.00001f;
 
-void txMath::checkInt(float& value, float precision)
+void MathUtility::checkInt(float& value, float precision)
 {
 	// 先判断是否为0
 	if (isFloatZero(value, precision))
@@ -55,7 +54,7 @@ void txMath::checkInt(float& value, float precision)
 	}
 }
 
-int txMath::getGreaterPowerValue(int value, int pow)
+int MathUtility::getGreaterPowerValue(int value, int pow)
 {
 	int powValue = 1;
 	for (int i = 0; i < 100; ++i)
@@ -69,7 +68,7 @@ int txMath::getGreaterPowerValue(int value, int pow)
 	return powValue;
 }
 
-int txMath::getForwardInt(float value)
+int MathUtility::getForwardInt(float value)
 {
 	if (value >= 0.0f)
 	{
@@ -89,7 +88,7 @@ int txMath::getForwardInt(float value)
 	}
 }
 
-bool txMath::replaceKeywordAndCalculate(std::string& str, const std::string& keyword, int replaceValue, bool floatOrInt)
+bool MathUtility::replaceKeywordAndCalculate(std::string& str, const std::string& keyword, int replaceValue, bool floatOrInt)
 {
 	// 如果最后的表达式中存在i,则需要把i替换为i具体的值,然后计算出最后的表达式的值
 	bool replaced = false;
@@ -97,40 +96,40 @@ bool txMath::replaceKeywordAndCalculate(std::string& str, const std::string& key
 	while ((iPos = str.find_first_of(keyword)) != -1)
 	{
 		replaced = true;
-		str = txStringUtility::strReplace(str, iPos, iPos + keyword.length(), txStringUtility::intToString(replaceValue));
+		str = StringUtility::strReplace(str, iPos, iPos + keyword.length(), StringUtility::intToString(replaceValue));
 	}
 	if (floatOrInt)
 	{
-		str = txStringUtility::floatToString(calculateFloat(str), 4);
+		str = StringUtility::floatToString(calculateFloat(str), 4);
 	}
 	else
 	{
-		str = txStringUtility::intToString(calculateInt(str));
+		str = StringUtility::intToString(calculateInt(str));
 	}
 	return replaced;
 }
 
-bool txMath::replaceStringKeyword(std::string& str, const std::string& keyword, int keyValue, bool floatOrInt)
+bool MathUtility::replaceStringKeyword(std::string& str, const std::string& keyword, int keyValue, bool floatOrInt)
 {
 	bool replaced = false;
 	int expressionBegin = -1;
 	int expressionEnd = -1;
 	// 倒序寻找
-	while (txStringUtility::findSubstr(str, std::string("\\("), true, &expressionBegin, 0, false))
+	while (StringUtility::findSubstr(str, std::string("\\("), true, &expressionBegin, 0, false))
 	{
 		replaced = true;
 		// 找到匹配的)
-		txStringUtility::findSubstr(str, std::string(")"), true, &expressionEnd, 0, false);
+		StringUtility::findSubstr(str, std::string(")"), true, &expressionEnd, 0, false);
 		// expressionBegin + 1 去掉 /
 		std::string calculateValue = str.substr(expressionBegin + 1, expressionEnd - expressionBegin + 1);
 		replaceKeywordAndCalculate(calculateValue, keyword, keyValue, floatOrInt);
 		// 替换掉最后一个\\()之间的内容
-		str = txStringUtility::strReplace(str, expressionBegin, expressionEnd + 1, calculateValue);
+		str = StringUtility::strReplace(str, expressionBegin, expressionEnd + 1, calculateValue);
 	}
 	return replaced;
 }
 
-float txMath::powerFloat(float f, int p)
+float MathUtility::powerFloat(float f, int p)
 {
 	clampMin(p, 0);
 	float ret = 1.0f;
@@ -141,12 +140,12 @@ float txMath::powerFloat(float f, int p)
 	return ret;
 }
 
-float txMath::calculateFloat(std::string str)
+float MathUtility::calculateFloat(std::string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	txStringUtility::checkString(str, "0123456789.+-*/()");
+	StringUtility::checkString(str, "0123456789.+-*/()");
 	// 判断左右括号数量是否相等
-	if (txStringUtility::getCharCount(str, '(') != txStringUtility::getCharCount(str, ')'))
+	if (StringUtility::getCharCount(str, '(') != StringUtility::getCharCount(str, ')'))
 	{
 		return 0;
 	}
@@ -169,8 +168,8 @@ float txMath::calculateFloat(std::string str)
 				isMinus = true;
 			}
 			// 将括号中的计算结果替换原来的表达式,包括括号也一起替换
-			std::string floatStr = txStringUtility::floatToString(ret, 4);
-			str = txStringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, floatStr);
+			std::string floatStr = StringUtility::floatToString(ret, 4);
+			str = StringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, floatStr);
 			if (isMinus)
 			{
 				// 如果括号中计算出来是负数,则将负号提取出来,将左边的第一个加减号改为相反的符号
@@ -194,7 +193,7 @@ float txMath::calculateFloat(std::string str)
 						}
 						else
 						{
-							str = txStringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
+							str = StringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
 						}
 						changeMark = true;
 						break;
@@ -224,7 +223,7 @@ float txMath::calculateFloat(std::string str)
 		if (i == strLen - 1)
 		{
 			std::string num = str.substr(beginpos, strLen - beginpos);
-			numbers.push_back(txStringUtility::stringToFloat(num));
+			numbers.push_back(StringUtility::stringToFloat(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -233,7 +232,7 @@ float txMath::calculateFloat(std::string str)
 			if (i != 0)
 			{
 				std::string num = str.substr(beginpos, i - beginpos);
-				numbers.push_back(txStringUtility::stringToFloat(num));
+				numbers.push_back(StringUtility::stringToFloat(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else
@@ -334,12 +333,12 @@ float txMath::calculateFloat(std::string str)
 	}
 }
 
-int txMath::calculateInt(std::string str)
+int MathUtility::calculateInt(std::string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	txStringUtility::checkString(str, "0123456789+-*/%()");
+	StringUtility::checkString(str, "0123456789+-*/%()");
 	// 判断左右括号数量是否相等
-	if (txStringUtility::getCharCount(str, '(') != txStringUtility::getCharCount(str, ')'))
+	if (StringUtility::getCharCount(str, '(') != StringUtility::getCharCount(str, ')'))
 	{
 		return 0;
 	}
@@ -362,8 +361,8 @@ int txMath::calculateInt(std::string str)
 				isMinus = true;
 			}
 			// 将括号中的计算结果替换原来的表达式,包括括号也一起替换
-			std::string intStr = txStringUtility::intToString(ret, 4);
-			str = txStringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, intStr);
+			std::string intStr = StringUtility::intToString(ret, 4);
+			str = StringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, intStr);
 			if (isMinus)
 			{
 				// 如果括号中计算出来是负数,则将负号提取出来,将左边的第一个加减号改为相反的符号
@@ -387,7 +386,7 @@ int txMath::calculateInt(std::string str)
 						}
 						else
 						{
-							str = txStringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
+							str = StringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
 						}
 						changeMark = true;
 						break;
@@ -417,7 +416,7 @@ int txMath::calculateInt(std::string str)
 		if (i == strLen - 1)
 		{
 			std::string num = str.substr(beginpos, strLen - beginpos);
-			numbers.push_back(txStringUtility::stringToInt(num));
+			numbers.push_back(StringUtility::stringToInt(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -426,7 +425,7 @@ int txMath::calculateInt(std::string str)
 			if (i != 0)
 			{
 				std::string num = str.substr(beginpos, i - beginpos);
-				numbers.push_back(txStringUtility::stringToInt(num));
+				numbers.push_back(StringUtility::stringToInt(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else
@@ -532,20 +531,20 @@ int txMath::calculateInt(std::string str)
 }
 
 // 秒数转换为分数和秒数
-void txMath::secondsToMinutesSeconds(int seconds, int& outMin, int& outSec)
+void MathUtility::secondsToMinutesSeconds(int seconds, int& outMin, int& outSec)
 {
 	outMin = seconds / 60;
 	outSec = seconds - outMin * 60;
 }
 
-void txMath::secondsToHoursMinutesSeconds(int seconds, int& outHour, int& outMin, int& outSec)
+void MathUtility::secondsToHoursMinutesSeconds(int seconds, int& outHour, int& outMin, int& outSec)
 {
 	outHour = seconds / (60 * 60);
 	outMin = (seconds - outHour * (60 * 60)) / 60;
 	outSec = seconds - outHour * (60 * 60) - outMin * 60;
 }
 
-float txMath::HueToRGB(float v1, float v2, float vH)
+float MathUtility::HueToRGB(float v1, float v2, float vH)
 {
 	if (vH < 0.0f)
 	{

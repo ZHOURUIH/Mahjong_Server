@@ -23,7 +23,7 @@ std::string CommandCharacterPlayerHu::showDebugInfo()
 		int huCount = mHuList[i].second.size();
 		for (int j = 0; j < huCount; ++j)
 		{
-			info += "hu list : " + txStringUtility::intToString((int)mHuList[i].second[j]);
+			info += "hu list : " + StringUtility::intToString((int)mHuList[i].second[j]);
 		}
 	}
 	COMMAND_DEBUG("%s", info.c_str());

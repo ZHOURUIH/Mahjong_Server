@@ -1,7 +1,5 @@
 ﻿#include "txMemoryCheck.h"
-#include "GameLog.h"
-#include "txUtility.h"
-#include "txStringUtility.h"
+#include "Utility.h"
 
 txSet<void*> txMemoryCheck::mUsedPtrs;
 ThreadLock txMemoryCheck::mLock;

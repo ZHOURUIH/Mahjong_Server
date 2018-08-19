@@ -10,7 +10,7 @@
 
 Room::Room(const int& id)
 	:
-	txCommandReceiver("room" + txStringUtility::intToString(id)),
+	txCommandReceiver("room" + StringUtility::intToString(id)),
 	mID(id),
 	mMaxPlayer(MAX_PLAYER),
 	mLockRoom(false),
@@ -735,7 +735,7 @@ void Room::resetMahjongPool(bool feng, int hua)
 	txVector<MAHJONG> tempPool = mMahjongPool;
 	FOR_STL(mMahjongPool, int i = 0; i < mahjongCount; ++i)
 	{
-		int randIndex = txMath::randomInt(0, tempPool.size() - 1);
+		int randIndex = MathUtility::randomInt(0, tempPool.size() - 1);
 		mMahjongPool[i] = tempPool[randIndex];
 		// 填充临时麻将池中的空隙
 		tempPool[randIndex] = tempPool[mahjongCount - i - 1];

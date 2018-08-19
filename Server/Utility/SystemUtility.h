@@ -2,10 +2,9 @@
 #define _TX_UTILITY_H_
 
 #include "txMemoryTrace.h"
-#include "ServerDefine.h"
 #include "ThreadLock.h"
 
-class txUtility
+class SystemUtility
 {
 	static ThreadLock mTimeLock;
 public:
@@ -21,7 +20,7 @@ public:
 	// 通过一个media下的相对路径,或者绝对路径,转化为一个可直接打开的路径
 	static std::string getAvailableResourcePath(std::string name)
 	{
-		std::string mediaPath = txUtility::getMediaPath();
+		std::string mediaPath = getMediaPath();
 		// 如果文件名已经是不带media路径并且不是绝对路径
 		if (mediaPath != "" && (name.length() <= mediaPath.length() || name.substr(0, mediaPath.length()) != mediaPath) && (name.length() > 1 && name[1] != ':'))
 		{
@@ -45,38 +44,6 @@ public:
 		getpeername(socket, (struct sockaddr *)(&addr_conn), (socklen_t*)&nSize);
 #endif
 		return std::string(inet_ntoa(addr_conn.sin_addr));
-	}
-
-	template<typename T>
-	static void inverseByte(T& value)
-	{
-		int typeSize = sizeof(T);
-		for (int i = 0; i < typeSize / 2; ++i)
-		{
-			swapByte(value, i, typeSize - i - 1);
-		}
-	}
-	template<typename T>
-	static void swapByte(T& value, int pos0, int pos1)
-	{
-		char byte0 = (value & (0xff << (8 * pos0))) >> (8 * pos0);
-		char byte1 = (value & (0xff << (8 * pos1))) >> (8 * pos1);
-		SET_BYTE(value, byte0, pos1);
-		SET_BYTE(value, byte1, pos0);
-	}
-
-	// 秒数转换为分数和秒数
-	static void secondsToMinutesSeconds(int seconds, int& outMin, int& outSec)
-	{
-		outMin = seconds / 60;
-		outSec = seconds - outMin * 60;
-	}
-
-	static void secondsToHoursMinutesSeconds(int seconds, int& outHour, int& outMin, int& outSec)
-	{
-		outHour = seconds / (60 * 60);
-		outMin = (seconds - outHour * (60 * 60)) / 60;
-		outSec = seconds - outHour * (60 * 60) - outMin * 60;
 	}
 };
 

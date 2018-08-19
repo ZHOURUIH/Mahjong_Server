@@ -10,14 +10,16 @@ GameLog::GameLog(const std::string& name)
 	:FrameComponent(name)
 {
 	mLog = true;
-	mLogFileName = txUtility::getAvailableResourcePath(LOG_PATH + "log.txt");
-	mErrorFileName = txUtility::getAvailableResourcePath(LOG_PATH + "error.txt");
+	mLogFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "log.txt");
+	mErrorFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "error.txt");
 	mLogThread = TRACE_NEW(CustomThread, mLogThread, "LogThread");
 	mErrorThread = TRACE_NEW(CustomThread, mErrorThread, "ErrorThread");
 }
 
 void GameLog::init()
 {
+	FileUtility::deleteFile(mLogFileName);
+	FileUtility::deleteFile(mErrorFileName);
 	mLogThread->start(writeLogFile, this);
 	mErrorThread->start(writeErrorFile, this);
 }
@@ -37,7 +39,7 @@ bool GameLog::writeLogFile(void* args)
 	int writeCount = mGameLog->mLogWriteBuffer.size();
 	for (int i = 0; i < writeCount; ++i)
 	{
-		txFileUtility::writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
+		FileUtility::writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
 	}
 	mGameLog->mLogWriteBuffer.clear();
 	return true;
@@ -58,7 +60,7 @@ bool GameLog::writeErrorFile(void* args)
 	int writeCount = mGameLog->mErrorWriteBuffer.size();
 	for (int i = 0; i < writeCount; ++i)
 	{
-		txFileUtility::writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
+		FileUtility::writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
 	}
 	mGameLog->mErrorWriteBuffer.clear();
 	return true;
@@ -80,7 +82,7 @@ void GameLog::error(const std::string& info)
 
 void GameLog::logError(const std::string& info)
 {
-	std::string fullInfo = std::string(txUtility::getTime()) + " | 程序错误 : " + info;
+	std::string fullInfo = std::string(SystemUtility::getTime()) + " | 程序错误 : " + info;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	std::cout << fullInfo << std::endl;
 #elif RUN_PLATFORM == PLATFORM_LINUX
@@ -90,7 +92,7 @@ void GameLog::logError(const std::string& info)
 }
 void GameLog::logInfo(const std::string& info)
 {
-	std::string fullInfo = std::string(txUtility::getTime()) + " | : " + info;
+	std::string fullInfo = std::string(SystemUtility::getTime()) + " | : " + info;
 	if (mLog)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS

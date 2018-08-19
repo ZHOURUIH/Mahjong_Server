@@ -195,10 +195,10 @@
     <ClCompile Include="Thread\TimeLock.cpp" />
     <ClCompile Include="Utility\BinaryUtility.cpp" />
     <ClCompile Include="Utility\ServerUtility.cpp" />
-    <ClCompile Include="Utility\txFileUtility.cpp" />
-    <ClCompile Include="Utility\txMathUtility.cpp" />
-    <ClCompile Include="Utility\txStringUtility.cpp" />
-    <ClCompile Include="Utility\txUtility.cpp" />
+    <ClCompile Include="Utility\FileUtility.cpp" />
+    <ClCompile Include="Utility\MathUtility.cpp" />
+    <ClCompile Include="Utility\StringUtility.cpp" />
+    <ClCompile Include="Utility\SystemUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h" />
@@ -372,10 +372,10 @@
     <ClInclude Include="Thread\TimeLock.h" />
     <ClInclude Include="Utility\BinaryUtility.h" />
     <ClInclude Include="Utility\ServerUtility.h" />
-    <ClInclude Include="Utility\txFileUtility.h" />
-    <ClInclude Include="Utility\txMathUtility.h" />
-    <ClInclude Include="Utility\txStringUtility.h" />
-    <ClInclude Include="Utility\txUtility.h" />
+    <ClInclude Include="Utility\FileUtility.h" />
+    <ClInclude Include="Utility\MathUtility.h" />
+    <ClInclude Include="Utility\StringUtility.h" />
+    <ClInclude Include="Utility\SystemUtility.h" />
     <ClInclude Include="Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

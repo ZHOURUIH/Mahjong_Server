@@ -352,18 +352,6 @@
     <ClCompile Include="Serialize\txSerializer.cpp">
       <Filter>Serialize</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\txFileUtility.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility\txMathUtility.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility\txStringUtility.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility\txUtility.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Thread\CustomThread.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
@@ -387,6 +375,18 @@
     </ClCompile>
     <ClCompile Include="Log\GameLogWrap.cpp">
       <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\FileUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\MathUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\StringUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\SystemUtility.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -849,18 +849,6 @@
     <ClInclude Include="Serialize\txSerializer.h">
       <Filter>Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\txFileUtility.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\txMathUtility.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\txStringUtility.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\txUtility.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Thread\CustomThread.h">
       <Filter>Thread</Filter>
     </ClInclude>
@@ -917,6 +905,18 @@
     </ClInclude>
     <ClInclude Include="Log\GameLogWrap.h">
       <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\FileUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\MathUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\StringUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\SystemUtility.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

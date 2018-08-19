@@ -22,7 +22,7 @@ mIsDeadClient(false)
 	mRecvStreamBuffer = TRACE_NEW(StreamBuffer, mRecvStreamBuffer, CLIENT_BUFFER_SIZE);
 	mTempRecvStreamBuffer = TRACE_NEW(StreamBuffer, mTempRecvStreamBuffer, CLIENT_BUFFER_SIZE);
 	memset(mIP, 0, 16);
-	memcpy(mIP, ip, txMath::getMax(16, (int)strlen(ip)));
+	memcpy(mIP, ip, MathUtility::getMax(16, (int)strlen(ip)));
 	mTempBuffer0 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer0);
 	mTempBuffer1 = TRACE_NEW_ARRAY(char, CLIENT_TEMP_BUFFER_SIZE, mTempBuffer1);
 }

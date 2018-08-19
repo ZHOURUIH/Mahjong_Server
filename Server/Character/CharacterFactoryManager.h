@@ -1,7 +1,7 @@
 ﻿#ifndef _CHARACTER_FACTORY_MANAGER_H_
 #define _CHARACTER_FACTORY_MANAGER_H_
 
-#include "txUtility.h"
+#include "Utility.h"
 #include "CharacterFactory.h"
 #include "CharacterDefine.h"
 

@@ -1,6 +1,5 @@
 ﻿#include "ThreadLock.h"
 #include "Utility.h"
-#include "GameLog.h"
 
 void ThreadLock::waitForUnlock(const char* file, int line)
 {
@@ -12,7 +11,7 @@ void ThreadLock::waitForUnlock(const char* file, int line)
 	// 原子自旋操作
 	while (mLock.test_and_set())
 	{
-		txUtility::sleep(1);
+		SystemUtility::sleep(1);
 	}
 	memset((char*)mFile, 0, 256);
 	memcpy((char*)mFile, file, strlen(file));

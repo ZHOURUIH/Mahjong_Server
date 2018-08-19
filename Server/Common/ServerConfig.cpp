@@ -38,7 +38,7 @@ void ServerConfig::init()
 
 void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 {
-	std::string dataString = txFileUtility::openTxtFile(txUtility::getAvailableResourcePath(fileName));
+	std::string dataString = FileUtility::openTxtFile(SystemUtility::getAvailableResourcePath(fileName));
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	char returnChar = '\r';
 	const char* returnNextLine = "\r\n";
@@ -95,10 +95,10 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 		tempBuffer[curLen] = 0;
 		std::string newString(tempBuffer);
 		// 如果该行是空的,或者是注释,则不进行处理
-		if (newString.length() > 0 && !txStringUtility::startWith(newString, "//"))
+		if (newString.length() > 0 && !StringUtility::startWith(newString, "//"))
 		{
 			txVector<std::string> valueVector;
-			txStringUtility::split(newString, "=", valueVector);
+			StringUtility::split(newString, "=", valueVector);
 			if (valueVector.size() == 2)
 			{
 				valueList.insert(valueVector[0], valueVector[1]);

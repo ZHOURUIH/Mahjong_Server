@@ -99,7 +99,7 @@ void DataBase::loadAllDataFromFile()
 	FOR_STL(mDataFactoryList, ; iter != iterEnd; ++iter)
 	{
 		const std::string& fileName = mDataDefineFile.tryGet(iter->first, EMPTY_STRING);
-		loadData(txUtility::getAvailableResourcePath(GAME_DATA_PATH) + fileName + ".table", true);
+		loadData(SystemUtility::getAvailableResourcePath(GAME_DATA_PATH) + fileName + ".table", true);
 	}
 	END_FOR_STL(mDataFactoryList);
 }
@@ -152,7 +152,7 @@ void DataBase::destroyData(DATA_TYPE type)
 void DataBase::loadData(const std::string& filePath, bool forceCover)
 {
 	// 根据文件名查找工厂类型
-	std::string fileName = txStringUtility::getFileNameNoSuffix(filePath);
+	std::string fileName = StringUtility::getFileNameNoSuffix(filePath);
 	auto fileDefine = mDataFileDefine.tryGet(fileName, DT_MIN);
 	if(fileDefine == DT_MIN)
 	{
@@ -184,7 +184,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 
 	// 打开文件
 	int fileSize = 0;
-	char* fileBuffer = txFileUtility::openBinaryFile(txUtility::getAvailableResourcePath(filePath), &fileSize);
+	char* fileBuffer = FileUtility::openBinaryFile(SystemUtility::getAvailableResourcePath(filePath), &fileSize);
 
 	// 解析文件
 	txVector<Data*> dataList;
@@ -241,7 +241,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 		LOG_ERROR("error : can not find data type in data define file list! type : %d", type);
 		return false;
 	}
-	txFileUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeFileBuffer, writeBufferSize);
+	FileUtility::writeFile(SystemUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeFileBuffer, writeBufferSize);
 	TRACE_DELETE_ARRAY(writeFileBuffer);
 	return true;
 }

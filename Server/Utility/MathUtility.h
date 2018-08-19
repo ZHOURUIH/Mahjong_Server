@@ -1,9 +1,9 @@
-﻿#ifndef _TX_MATH_UTILITY_H_
-#define _TX_MATH_UTILITY_H_
+﻿#ifndef _MATH_UTILITY_H_
+#define _MATH_UTILITY_H_
 
 #include "ServerDefine.h"
 
-class txMath
+class MathUtility
 {
 public:
 	static const float MATH_PI;

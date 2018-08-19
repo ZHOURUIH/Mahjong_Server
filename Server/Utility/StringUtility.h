@@ -1,9 +1,9 @@
-﻿#ifndef _TX_STRING_UTILITY_H_
-#define _TX_STRING_UTILITY_H_
+﻿#ifndef _STRING_UTILITY_H_
+#define _STRING_UTILITY_H_
 
 #include "ServerDefine.h"
 
-class txStringUtility
+class StringUtility
 {
 public:
 	static std::string removeSuffix(const std::string& str);

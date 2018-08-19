@@ -1,9 +1,6 @@
-﻿#include "txFileUtility.h"
-#include "txStringUtility.h"
-#include "GameLog.h"
-#include "txUtility.h"
+﻿#include "Utility.h"
 
-std::string txFileUtility::validPath(const std::string& path)
+std::string FileUtility::validPath(const std::string& path)
 {
 	std::string temp = path;
 	if (temp.length() > 0)
@@ -17,7 +14,7 @@ std::string txFileUtility::validPath(const std::string& path)
 	return temp;
 }
 
-void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>& files, const std::string& patterns, bool recursive)
+void FileUtility::findFiles(const std::string& pathName, txVector<std::string>& files, const std::string& patterns, bool recursive)
 {
 	txVector<std::string> patternList;
 	patternList.push_back(patterns);
@@ -25,7 +22,7 @@ void txFileUtility::findFiles(const std::string& pathName, txVector<std::string>
 }
 #if RUN_PLATFORM == PLATFORM_ANDROID
 // 判断是否为目录
-bool txFileUtility::isDirectory(const std::string& pszName)
+bool FileUtility::isDirectory(const std::string& pszName)
 {
 	struct stat S_stat;
 	// 取得文件状态
@@ -37,7 +34,7 @@ bool txFileUtility::isDirectory(const std::string& pszName)
 	return S_ISDIR(S_stat.st_mode);
 }
 
-void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
+void FileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	txVector<std::string> fileName = ASS_getFileList((char*)path.c_str());
@@ -115,7 +112,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 #endif
 }
 
-void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
+void FileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
 {
 	struct dirent* pDirent;
 	DIR* pDir = opendir(path.c_str());
@@ -146,9 +143,13 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 	}
 	closedir(pDir);
 }
+void FileUtility::deleteFile(const std::string& path)
+{
+	remove(path.c_str());
+}
 
 #elif RUN_PLATFORM == PLATFORM_WINDOWS
-void txFileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
+void FileUtility::findFiles(const std::string& path, txVector<std::string>& files, const txVector<std::string>& patterns, bool recursive)
 {
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
@@ -183,7 +184,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 			{
 				for(int i = 0; i < patternCount; ++i)
 				{
-					if (txStringUtility::endWith(fullname, patterns[i], false))
+					if (StringUtility::endWith(fullname, patterns[i], false))
 					{
 						files.push_back(fullname);
 					}
@@ -198,7 +199,7 @@ void txFileUtility::findFiles(const std::string& path, txVector<std::string>& fi
 	::FindClose(hFind);
 }
 
-void txFileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
+void FileUtility::findFolders(const std::string& path, txVector<std::string>& folders, bool recursive)
 {
 	std::string tempPath = validPath(path);
 	WIN32_FIND_DATAA FindFileData;
@@ -232,7 +233,7 @@ void txFileUtility::findFolders(const std::string& path, txVector<std::string>& 
 	::FindClose(hFind);
 }
 
-void txFileUtility::deleteFolder(const std::string& path)
+void FileUtility::deleteFolder(const std::string& path)
 {
 	WIN32_FIND_DATAA FindData;
 	// 构造路径
@@ -268,9 +269,14 @@ void txFileUtility::deleteFolder(const std::string& path)
 	// 删除文件夹自身
 	RemoveDirectoryA(path.c_str());
 }
+
+void FileUtility::deleteFile(const std::string& path)
+{
+	DeleteFileA(path.c_str());
+}
 #endif
 
-bool txFileUtility::isFileExist(const std::string& fullPath)
+bool FileUtility::isFileExist(const std::string& fullPath)
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	int ret = _access(fullPath.c_str(), 0);
@@ -284,10 +290,10 @@ bool txFileUtility::isFileExist(const std::string& fullPath)
 	return ret == 0;
 }
 
-bool txFileUtility::copyFile(const std::string& sourceFile, const std::string& destFile, bool overWrite)
+bool FileUtility::copyFile(const std::string& sourceFile, const std::string& destFile, bool overWrite)
 {
 	// 如果目标文件所在的目录不存在,则先创建目录
-	std::string parentDir = txStringUtility::getFilePath(destFile);
+	std::string parentDir = StringUtility::getFilePath(destFile);
 	createFolder(parentDir);
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	return CopyFileA(sourceFile.c_str(), destFile.c_str(), !overWrite) == TRUE;
@@ -296,7 +302,7 @@ bool txFileUtility::copyFile(const std::string& sourceFile, const std::string& d
 #endif
 }
 
-bool txFileUtility::createFolder(const std::string& path)
+bool FileUtility::createFolder(const std::string& path)
 {
 	// 如果目录已经存在,则返回true
 	if (isFileExist(path))
@@ -307,7 +313,7 @@ bool txFileUtility::createFolder(const std::string& path)
 	if (!isFileExist(path))
 	{
 		// 如果有上一级目录,并且上一级目录不存在,则先创建上一级目录
-		std::string parentDir = txStringUtility::getFilePath(path);
+		std::string parentDir = StringUtility::getFilePath(path);
 		if (parentDir != path)
 		{
 			createFolder(parentDir);
@@ -324,12 +330,12 @@ bool txFileUtility::createFolder(const std::string& path)
 	return true;
 }
 
-bool txFileUtility::writeFile(std::string filePath, const std::string& text, bool append)
+bool FileUtility::writeFile(std::string filePath, const std::string& text, bool append)
 {
 	return writeFile(filePath, text.c_str(), text.length(), append);
 }
 
-bool txFileUtility::writeFile(std::string filePath, const char* buffer, int length, bool append)
+bool FileUtility::writeFile(std::string filePath, const char* buffer, int length, bool append)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	return false;
@@ -346,7 +352,7 @@ bool txFileUtility::writeFile(std::string filePath, const char* buffer, int leng
 		return false;
 	}
 	// 检查路径
-	txStringUtility::rightToLeft(filePath);
+	StringUtility::rightToLeft(filePath);
 	int pos = filePath.find_last_of('/');
 	if (pos != -1)
 	{
@@ -361,7 +367,7 @@ bool txFileUtility::writeFile(std::string filePath, const char* buffer, int leng
 	return true;
 }
 
-bool txFileUtility::writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append)
+bool FileUtility::writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append)
 {
 #ifdef _USE_SAFE_API
 	FILE* pFile = NULL;
@@ -383,12 +389,12 @@ bool txFileUtility::writeFileSimple(const std::string& fileName, const char* buf
 	return true;
 }
 
-bool txFileUtility::writeFileSimple(const std::string& fileName, const std::string& text, bool append)
+bool FileUtility::writeFileSimple(const std::string& fileName, const std::string& text, bool append)
 {
 	return writeFileSimple(fileName, text.c_str(), text.length(), append);
 }
 
-char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, bool addZero)
+char* FileUtility::openFile(const std::string& filePath, int* bufferSize, bool addZero)
 {
 	FILE* pFile = NULL;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
@@ -417,7 +423,7 @@ char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, bool
 	return buffer;
 }
 
-std::string txFileUtility::openTxtFile(const std::string& filePath)
+std::string FileUtility::openTxtFile(const std::string& filePath)
 {
 	char* buffer = openFile(filePath, NULL, true);
 	if (buffer == NULL)
@@ -429,7 +435,7 @@ std::string txFileUtility::openTxtFile(const std::string& filePath)
 	return str;
 }
 
-char* txFileUtility::openBinaryFile(const std::string& filePath, int* bufferSize)
+char* FileUtility::openBinaryFile(const std::string& filePath, int* bufferSize)
 {
 	return openFile(filePath, bufferSize, false);
 }

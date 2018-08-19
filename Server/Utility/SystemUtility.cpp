@@ -1,16 +1,16 @@
-﻿#include "txUtility.h"
+﻿#include "SystemUtility.h"
 
 #include "GameLog.h"
 #include "ServerFramework.h"
 
-ThreadLock txUtility::mTimeLock;
+ThreadLock SystemUtility::mTimeLock;
 
-void txUtility::stop()
+void SystemUtility::stop()
 {
 	ServerFramework::getSingletonPtr()->stop();
 }
 
-void txUtility::sleep(unsigned long timeMS)
+void SystemUtility::sleep(unsigned long timeMS)
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	Sleep(timeMS);
@@ -19,7 +19,7 @@ void txUtility::sleep(unsigned long timeMS)
 #endif
 }
 
-long txUtility::getTimeMS()
+long SystemUtility::getTimeMS()
 {
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	return timeGetTime();
@@ -33,7 +33,7 @@ long txUtility::getTimeMS()
 #endif
 }
 
-const char* txUtility::getTime()
+const char* SystemUtility::getTime()
 {
 	static char timeBuffer[128] = { 0 };
 	LOCK(mTimeLock);

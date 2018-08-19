@@ -45,7 +45,7 @@ public:
 	const std::string& getType() { return mType; }
 	std::string createUniqueName()
 	{
-		return mType + txStringUtility::intToString(mNameCount++);
+		return mType + StringUtility::intToString(mNameCount++);
 	}
 protected:
 	std::string mType;

@@ -1,27 +1,27 @@
 ﻿#include "TimeLock.h"
-#include "txUtility.h"
+#include "Utility.h"
 
 TimeLock::TimeLock(long frameTimeMS, long forceSleep)
 {
 	mFrameTimeMS = frameTimeMS;
 	mForceSleep = 5;
-	mLastTime = txUtility::getTimeMS();
+	mLastTime = SystemUtility::getTimeMS();
 	mCurTime = mLastTime;
 }
 
 long TimeLock::update()
 {
-	long endTime = txUtility::getTimeMS();
+	long endTime = SystemUtility::getTimeMS();
 	long remainMS = mFrameTimeMS - (endTime - mCurTime);
 	if (remainMS > 0)
 	{
-		txUtility::sleep(remainMS);
+		SystemUtility::sleep(remainMS);
 	}
 	else if (mForceSleep > 0)
 	{
-		txUtility::sleep(mForceSleep);
+		SystemUtility::sleep(mForceSleep);
 	}
-	mCurTime = txUtility::getTimeMS();
+	mCurTime = SystemUtility::getTimeMS();
 	long frameTime = mCurTime - mLastTime;
 	mLastTime = mCurTime;
 	return frameTime;

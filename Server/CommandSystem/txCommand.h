@@ -1,7 +1,7 @@
 ﻿#ifndef _TX_COMMAND_H_
 #define _TX_COMMAND_H_
 
-#include "txUtility.h"
+#include "Utility.h"
 
 #include "CommandDefine.h"
 #include "ServerDefine.h"
