@@ -6,13 +6,10 @@ txMap<DATA_TYPE, DataFactoryBase*> DataBase::mDataFactoryList;
 txMap<std::string, DATA_TYPE> DataBase::mDataFileDefine;
 txMap<DATA_TYPE, std::string> DataBase::mDataDefineFile;
 
-void DataBase::init(bool loadAllData)
+void DataBase::init()
 {
 	initDataFactory();
-	if (loadAllData)
-	{
-		loadAllDataFromFile();
-	}
+	loadAllDataFromFile();
 }
 
 void DataBase::addDataFactoryToList(DataFactoryBase* factory)
@@ -97,15 +94,14 @@ Data* DataBase::createData(DATA_TYPE type)
 void DataBase::loadAllDataFromFile()
 {
 	// 读取配置文件，获得需要加载的所有数据列表
-	// 遍历每一个文件名，加载相应的文件
-	txVector<std::string> fileList;
-	txFileUtility::findFiles(txUtility::getAvailableResourcePath(GAME_DATA_PATH).c_str(), fileList, ".table");
-	int listSize = fileList.size();
-	FOR_STL(fileList, int i = 0; i < listSize; ++i)
+	auto iter = mDataFactoryList.begin();
+	auto iterEnd = mDataFactoryList.end();
+	FOR_STL(mDataFactoryList, ; iter != iterEnd; ++iter)
 	{
-		loadData(fileList[i], true);
+		const std::string& fileName = mDataDefineFile.tryGet(iter->first, EMPTY_STRING);
+		loadData(txUtility::getAvailableResourcePath(GAME_DATA_PATH) + fileName + ".table", true);
 	}
-	END_FOR_STL(fileList);
+	END_FOR_STL(mDataFactoryList);
 }
 
 void  DataBase::destroyAllData()
@@ -157,15 +153,15 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 {
 	// 根据文件名查找工厂类型
 	std::string fileName = txStringUtility::getFileNameNoSuffix(filePath);
-	auto iterFileDefine = mDataFileDefine.find(fileName);
-	if(iterFileDefine == mDataFileDefine.end())
+	auto fileDefine = mDataFileDefine.tryGet(fileName, DT_MIN);
+	if(fileDefine == DT_MIN)
 	{
 		LOG_ERROR("error : can not find data file define, file name : %s, filePath : %s", fileName.c_str(), filePath.c_str());
 		return;
 	}
 
 	// 如果该数据已经存在,并且需要覆盖,则先删除数据
-	auto iterDataStruct = mDataStructList.find(iterFileDefine->second);
+	auto iterDataStruct = mDataStructList.find(fileDefine);
 	if (iterDataStruct != mDataStructList.end())
 	{
 		if (forceCover)
@@ -179,10 +175,10 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 	}
 
 	// 查找工厂
-	DataFactoryBase* factory = getDataFactory(iterFileDefine->second);
+	DataFactoryBase* factory = getDataFactory(fileDefine);
 	if(factory == NULL)
 	{
-		LOG_ERROR("error : can not find factory, type : %d, filename : %s, filePath : %s", (int)iterFileDefine->second, fileName.c_str(), filePath.c_str());
+		LOG_ERROR("error : can not find factory, type : %d, filename : %s, filePath : %s", (int)fileDefine, fileName.c_str(), filePath.c_str());
 		return;
 	}
 
@@ -245,7 +241,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 		LOG_ERROR("error : can not find data type in data define file list! type : %d", type);
 		return false;
 	}
-	txFileUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeBufferSize, writeFileBuffer);
+	txFileUtility::writeFile(txUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeFileBuffer, writeBufferSize);
 	TRACE_DELETE_ARRAY(writeFileBuffer);
 	return true;
 }

@@ -1,21 +1,20 @@
 ﻿#ifndef _CHARACTER_MANAGER_H_
 #define _CHARACTER_MANAGER_H_
 
-#include "txCommandReceiver.h"
+#include "FrameComponent.h"
 
 #include "CharacterDefine.h"
 
 class Character;
 class CharacterMyself;
 class CharacterFactoryManager;
-class CharacterManager : public txCommandReceiver
+class CharacterManager : public FrameComponent
 {
 public:
-	CharacterManager();
+	CharacterManager(const std::string& name);
 	virtual ~CharacterManager(){ destroy(); }
-
-	void init(){}
-	void update(float elapsedTime);
+	virtual void init();
+	virtual void update(float elapsedTime);
 	void destroy();
 	bool isLocked() { return mLockUpdate; }
 	void lock() { mLockUpdate = true; }

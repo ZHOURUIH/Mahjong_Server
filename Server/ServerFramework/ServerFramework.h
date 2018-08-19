@@ -2,16 +2,24 @@
 #define _SERVER_FRAMEWORK_H_
 
 #include "txSingleton.h"
+#include "ServerConfig.h"
+#include "CharacterManager.h"
+#include "txCommandSystem.h"
+#include "NetServer.h"
+#include "RoomManager.h"
+#include "MySQLDataBase.h"
+#include "txComponentFactoryManager.h"
+#include "DataBase.h"
+#include "GameLog.h"
 
-class DataBaseServer;
-class ComponentFactoryBase;
-class NetServer;
-class txCommandSystem;
-class CharacterManager;
-class ServerConfig;
-class RoomManager;
-class MySQLDataBase;
-class txComponentFactoryManager;
+#define GET_SYSTEM(type) getSystem<type>(TOSTRING(type))
+
+#define REGISTE_FRAME_COMPONENT(type)								\
+	{type* component = TRACE_NEW(type, component, TOSTRING(type));	\
+	mFrameComponentVector.push_back(component);						\
+	mFrameComponentMap.insert(TOSTRING(type), component);}
+
+class FrameComponent;
 class ServerFramework : public txSingleton<ServerFramework>
 {
 public:
@@ -27,13 +35,11 @@ public:
 #if RUN_PLATFORM == PLATFORM_LINUX
 	const unsigned long& getStartMiliTime() {return mStartMiliTime;}
 #endif
-	ServerConfig* getServerConfig() { return mServerConfig; }
-	txCommandSystem* getCommandSystem() { return mCommandSystem; }
-	NetServer* getNetManagerServer(){ return mNetServer; }
-	CharacterManager* getCharacterManager() { return mCharacterManager; }
-	RoomManager* getRoomManager() { return mRoomManager; }
-	MySQLDataBase* getMySQLDataBase() { return mMySQLDataBase; }
-	txComponentFactoryManager* getComponentFactoryManager() { return mComponentFactoryManager; }
+	template<typename T>
+	T* getSystem(const std::string& name)
+	{
+		return static_cast<T*>(mFrameComponentMap.tryGet(name, NULL));
+	}
 protected:
 	void initComponentFactory();
 	void destroyComponentFactory();
@@ -42,13 +48,8 @@ protected:
 	unsigned long mStartMiliTime;
 #endif
 	bool mStop;
-	MySQLDataBase* mMySQLDataBase;
-	ServerConfig* mServerConfig;
-	txCommandSystem* mCommandSystem;
-	NetServer* mNetServer;
-	CharacterManager* mCharacterManager;
-	RoomManager* mRoomManager;
-	txComponentFactoryManager* mComponentFactoryManager;
+	txVector<FrameComponent*> mFrameComponentVector;
+	txMap<std::string, FrameComponent*> mFrameComponentMap;
 };
 
 #endif

@@ -22,12 +22,14 @@ ThreadLock txMemoryTrace::mInfoLock;
 bool txMemoryTrace::mWriteOrDebug = false;
 CustomThread* txMemoryTrace::mThread = NULL;
 
-txMemoryTrace::txMemoryTrace()
+txMemoryTrace::txMemoryTrace(const std::string& name)
+	:FrameComponent(name)
 {
 	mShowDetail = true;
 	mShowStatistics = true;
 	mShowTotalCount = true;
 	mShowAll = true;
+	mWriteOrDebug = true;
 	mShareMemoryServer = TRACE_NEW(txShareMemoryServer, mShareMemoryServer);
 	mThread = TRACE_NEW(CustomThread, mThread, "MemoryTrace");
 }
@@ -38,10 +40,9 @@ txMemoryTrace::~txMemoryTrace()
 	TRACE_DELETE(mShareMemoryServer);
 }
 
-void txMemoryTrace::init(bool writeOrDebug)
+void txMemoryTrace::init()
 {
 	mShareMemoryServer->Create();
-	mWriteOrDebug = writeOrDebug;
 	mThread->start(mWriteOrDebug ? writeMemoryTrace : debugMemoryTrace, NULL, 1000);
 }
 
@@ -53,7 +54,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 	{
 		// 首先检测是否可以读取,如果不可以,则等待解锁读取
 		LOCK(mInfoLock);
-		LOG_INFO("\n\n---------------------------------------------memery info begin-----------------------------------------------------------\n");
+		LOG_INFO("\n\n---------------------------------------------memory info begin-----------------------------------------------------------\n");
 
 		// 内存详细信息
 		auto iter = mMemoryInfo.begin();
@@ -101,7 +102,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 		if (mShowTotalCount)
 		{
-			LOG_INFO("-------------------------------------------------memery count : %d, total size : %.3fKB\n", memoryCount, memorySize / 1000.0f);
+			LOG_INFO("-------------------------------------------------memory count : %d, total size : %.3fKB\n", memoryCount, memorySize / 1000.0f);
 		}
 		// 显示统计数据
 		if (mShowStatistics)
@@ -140,7 +141,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 			}
 			END_FOR_STL(mMemoryType);
 		}
-		LOG_INFO("---------------------------------------------memery info end-----------------------------------------------------------\n");
+		LOG_INFO("---------------------------------------------memory info end-----------------------------------------------------------\n");
 	}
 	return true;
 }
@@ -158,7 +159,7 @@ bool txMemoryTrace::writeMemoryTrace(void* args)
 	auto iterInfoEnd = mMemoryInfo.end();
 	FOR_STL(mMemoryInfo, ; iterInfo != iterInfoEnd; ++iterInfo)
 	{
-		serializer.write(iterInfo->first);						// 地址
+		serializer.write((int)iterInfo->first);						// 地址
 		serializer.write(iterInfo->second.size);				// 内存大小
 		serializer.writeString(iterInfo->second.file.c_str());	// 文件名
 		serializer.write(iterInfo->second.line);				// 行号
@@ -224,11 +225,6 @@ void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 				mMemoryTypeIndex.insert(info.type, mMemoryCount);
 				mMemoryList[mMemoryCount] = iterType->second;
 				++mMemoryCount;
-			}
-			else
-			{
-				UNLOCK(mInfoLock);
-				return;
 			}
 		}
 	}

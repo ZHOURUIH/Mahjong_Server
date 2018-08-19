@@ -12,9 +12,14 @@ txCommandReceiver::~txCommandReceiver()
 {
 	// 通知命令系统有一个命令接受者已经被销毁了,需要取消命令缓冲区中的即将发给该接受者的命令
 	// 此时需要确认引擎和命令系统没有被销毁
-	if (ServerFramework::getSingletonPtr() != NULL && ServerFramework::getSingletonPtr()->getCommandSystem() != NULL)
+	ServerFramework* framework = ServerFramework::getSingletonPtr();
+	if (framework != NULL)
 	{
-		ServerFramework::getSingletonPtr()->getCommandSystem()->notifyReceiverDestroied(this);
+		txCommandSystem* commandSystem = framework->GET_SYSTEM(txCommandSystem);
+		if (commandSystem != NULL)
+		{
+			commandSystem->notifyReceiverDestroied(this);
+		}
 	}
 }
 

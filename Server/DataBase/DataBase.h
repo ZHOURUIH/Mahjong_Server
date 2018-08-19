@@ -5,22 +5,19 @@
 
 #include "DataDefine.h"
 #include "DataFactory.h"
-#include "ServerBase.h"
+#include "FrameComponent.h"
 
 class Data;
 class DataFactoryBase;
-
-class DataBase : public txCommandReceiver, public ServerBase
+class DataBase : public FrameComponent
 {
 public:
-	DataBase()
-		:
-		txCommandReceiver("DataBase")
-	{}
+	DataBase(const std::string& name)
+		:FrameComponent(name){}
 	virtual ~DataBase() { destroy(); }
 	// 初始化所有数据
-	void init(bool loadAllData = true);
-	virtual void initDataFactory() = 0;
+	virtual void init();
+	virtual void initDataFactory() {}
 	void destroyDataFactory();
 	Data* createData(DATA_TYPE type);
 	void loadAllDataFromFile();

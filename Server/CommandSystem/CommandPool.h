@@ -23,9 +23,9 @@ public:
 	template<typename T>
 	T* newCmd(bool show = true, bool delay = false)
 	{
+		T* cmd = NULL;
 		LOCK(mNewCmdLock); 
 		// 首先从未使用的列表中获取,获取不到再重新创建一个
-		T* cmd = NULL;
 		std::string type = typeid(T).name();
 		auto iterUnuse = mUnusedList.find(type);
 		if (iterUnuse != mUnusedList.end() && iterUnuse->second.size() > 0)

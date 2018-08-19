@@ -9,12 +9,8 @@ void ThreadLock::waitForUnlock(const char* file, int line)
 #elif RUN_PLATFORM == PLATFORM_ANDROID
 	int threadID = pthread_self();
 #endif
-	if (isLocked() && threadID == mThreadID)
-	{
-		LOG_ERROR("can not lock in the same thread!");
-	}
-	// 暂不区分读锁定和写锁定
-	while (mLock.exchange(1) == 1)
+	// 原子自旋操作
+	while (mLock.test_and_set())
 	{
 		txUtility::sleep(1);
 	}
@@ -26,5 +22,5 @@ void ThreadLock::waitForUnlock(const char* file, int line)
 
 void ThreadLock::unlock()
 {
-	mLock.exchange(0);
+	mLock.clear();
 }

@@ -28,6 +28,18 @@ public:
 	{
 		return mMap.end();
 	}
+	Value tryGet(const Key& k, Value defaultValue)
+	{
+		iterator iter = find(k);
+		if (iter != end())
+		{
+			return iter->second;
+		}
+		else
+		{
+			return defaultValue;
+		}
+	}
 	iterator find(const Key& k)
 	{
 		return mMap.find(k);

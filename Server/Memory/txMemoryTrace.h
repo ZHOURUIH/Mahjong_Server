@@ -6,23 +6,24 @@
 #include "MemoryInfo.h"
 #include "CustomThread.h"
 #include "MemoryDefine.h"
-
+#include "FrameComponent.h"
+#define TRACE_MEMORY
 #ifdef TRACE_MEMORY
 #include "txShareMemoryServer.h"
 // 注意事项!!!
-// 需要确保MemeryTrace对象只有一个
+// 需要确保MemoryTrace对象只有一个
 // 所有的堆内存申请和释放都必须使用TRACE_NEW,TRACE_NEW_ARRAY,TRACE_DELETE,TRACE_DELETE_ARRAY
 // TRACE_NEW申请的内存只能用TRACE_DELETE释放,TRACE_NEW_ARRAY申请的内存只能用TRACE_DELETE_ARRAY释放
 // 虽然可以像new和delete一样的语法使用TRACE相关宏,但是不能直接在return后面加TRACE相关宏
 // TRACE相关宏也不能在构造函数初始化列表中使用
 const int MAX_COUNT = 1000;
-class txMemoryTrace
+class txMemoryTrace : public FrameComponent
 {
 public:
-	txMemoryTrace();
+	txMemoryTrace(const std::string& name);
 	virtual ~txMemoryTrace();
-	// writeOrDebug为真则表示将信息写入共享内存,然后使用MemeryViewer查看,为假时表示在控制台显示内存信息
-	void init(bool writeOrDebug);
+	// writeOrDebug为真则表示将信息写入共享内存,然后使用MemoryViewer查看,为假时表示在控制台显示内存信息
+	virtual void init();
 	static bool debugMemoryTrace(void* args);
 	static bool writeMemoryTrace(void* args);
 	static void insertPtr(void* ptr, MemoryInfo& info);

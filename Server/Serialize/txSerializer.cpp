@@ -97,7 +97,7 @@ void txSerializer::writeToFile(const std::string& fullName)
 	{
 		return;
 	}
-	txFileUtility::writeFile(fullName, mIndex, mBuffer);
+	txFileUtility::writeFile(fullName, mBuffer, mIndex);
 }
 
 void txSerializer::resizeBuffer(int maxSize)

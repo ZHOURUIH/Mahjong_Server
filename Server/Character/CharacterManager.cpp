@@ -6,12 +6,16 @@
 #include "CharacterPlayer.h"
 #include "CharacterFactoryManager.h"
 
-CharacterManager::CharacterManager()
+CharacterManager::CharacterManager(const std::string& name)
 :
-txCommandReceiver("CharacterManager"),
+FrameComponent(name),
 mLockUpdate(false)
 {
 	mCharacterFactoryManager = TRACE_NEW(CharacterFactoryManager, mCharacterFactoryManager);
+}
+
+void CharacterManager::init()
+{
 	mCharacterFactoryManager->init();
 }
 

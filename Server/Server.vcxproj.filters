@@ -70,6 +70,9 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{fc22492a-c8b8-4f1b-aa76-b559b28093f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{a1af1d2b-ac24-4bb2-b448-31bc3de07e19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character\Character.cpp">
@@ -376,11 +379,14 @@
     <ClCompile Include="CommandSystem\CommandPool.cpp">
       <Filter>CommandSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Common\GameLog.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\BinaryUtility.cpp">
       <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\GameLog.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\GameLogWrap.cpp">
+      <Filter>Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -470,9 +476,6 @@
     </ClInclude>
     <ClInclude Include="Room\RoomManager.h">
       <Filter>Room</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\GameLog.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\ServerConfig.h">
       <Filter>Common</Filter>
@@ -905,6 +908,15 @@
     </ClInclude>
     <ClInclude Include="Utility\BinaryUtility.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFramework\FrameComponent.h">
+      <Filter>ServerFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\GameLog.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\GameLogWrap.h">
+      <Filter>Log</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

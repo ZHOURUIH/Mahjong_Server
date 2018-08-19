@@ -298,15 +298,20 @@ bool txFileUtility::copyFile(const std::string& sourceFile, const std::string& d
 
 bool txFileUtility::createFolder(const std::string& path)
 {
-	// 如果有上一级目录,并且上一级目录不存在,则先创建上一级目录
-	std::string parentDir = txStringUtility::getFilePath(path);
-	if (parentDir != path)
+	// 如果目录已经存在,则返回true
+	if (isFileExist(path))
 	{
-		createFolder(parentDir);
+		return true;
 	}
-	// 如果文件不存在则创建文件
+	// 如果文件不存在则检查父目录是否存在
 	if (!isFileExist(path))
 	{
+		// 如果有上一级目录,并且上一级目录不存在,则先创建上一级目录
+		std::string parentDir = txStringUtility::getFilePath(path);
+		if (parentDir != path)
+		{
+			createFolder(parentDir);
+		}
 #ifdef _USE_SAFE_API
 		if (0 != _mkdir(path.c_str()))
 #else
@@ -319,18 +324,28 @@ bool txFileUtility::createFolder(const std::string& path)
 	return true;
 }
 
-bool txFileUtility::writeFile(std::string filePath, int length, const char* buffer)
+bool txFileUtility::writeFile(std::string filePath, const std::string& text, bool append)
+{
+	return writeFile(filePath, text.c_str(), text.length(), append);
+}
+
+bool txFileUtility::writeFile(std::string filePath, const char* buffer, int length, bool append)
 {
 #ifdef LOAD_FROM_ASSETMANAGER
 	return false;
-#else
-
-	if (length <= 0 || NULL == buffer)
+#endif
+	// 检查参数
+	if (length < 0 || buffer == NULL)
 	{
-		LOG_ERROR("error : file length is 0 or buffer is NULL! can not write file! file path : %s", filePath.c_str());
+		LOG_ERROR("error : file length error! can not write file! file path : %s", filePath.c_str());
 		return false;
 	}
-
+	if (length > 0 && buffer == NULL)
+	{
+		LOG_ERROR("error : buffer is NULL! can not write file! file path : %s", filePath.c_str());
+		return false;
+	}
+	// 检查路径
 	txStringUtility::rightToLeft(filePath);
 	int pos = filePath.find_last_of('/');
 	if (pos != -1)
@@ -342,30 +357,35 @@ bool txFileUtility::writeFile(std::string filePath, int length, const char* buff
 			return false;
 		}
 	}
-	else
-	{
-		if (!createFolder(filePath))
-		{
-			LOG_ERROR("error : can not create folder, name : %s", filePath.c_str());
-			return false;
-		}
-	}
+	writeFileSimple(filePath, buffer, length, append);
+	return true;
+}
 
+bool txFileUtility::writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append)
+{
 #ifdef _USE_SAFE_API
 	FILE* pFile = NULL;
-	fopen_s(&pFile, filePath.c_str(), "wb");
+	fopen_s(&pFile, fileName.c_str(), "a+");
 #else
-	FILE* pFile = fopen(filePath.c_str(), "wb");
+	FILE* pFile = fopen(filePath.c_str(), "a+");
 #endif
 	if (pFile == NULL)
 	{
-		LOG_ERROR("error : can not write file, name : %s", filePath.c_str());
+		LOG_ERROR("error : can not write file, name : %s", fileName.c_str());
 		return false;
 	}
-	fwrite(buffer, sizeof(char), length, pFile);
+	if (append)
+	{
+		fseek(pFile, 0, SEEK_END);
+	}
+	fwrite(buffer, sizeof(char), writeCount, pFile);
 	fclose(pFile);
-#endif
 	return true;
+}
+
+bool txFileUtility::writeFileSimple(const std::string& fileName, const std::string& text, bool append)
+{
+	return writeFileSimple(fileName, text.c_str(), text.length(), append);
 }
 
 char* txFileUtility::openFile(const std::string& filePath, int* bufferSize, bool addZero)

@@ -2,23 +2,21 @@
 #define _NET_SERVER_H_
 
 #include "PacketDefine.h"
-#include "ServerDefine.h"
 #include "ThreadLock.h"
-#include "ServerBase.h"
 #include "CustomThread.h"
-#include "txCommandReceiver.h"
+#include "FrameComponent.h"
 
 class Packet;
 class NetClient;
 class PacketFactoryManager;
 class CharacterPlayer;
-class NetServer : public ServerBase, public txCommandReceiver
+class NetServer : public FrameComponent
 {
 public:
-	NetServer();
+	NetServer(const std::string& name);
 	virtual ~NetServer(){ destroy(); }
 	void destroy();
-	virtual void init(int port, int backLog);
+	virtual void init();
 	virtual void update(float elapsedTime);
 
 	static float getHeartBeatTimeOut()	{ return mHeartBeatTimeOut; }

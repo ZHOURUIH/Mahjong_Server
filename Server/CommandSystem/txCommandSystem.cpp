@@ -4,7 +4,8 @@
 #include "txCommand.h"
 #include "GameLog.h"
 
-txCommandSystem::txCommandSystem()
+txCommandSystem::txCommandSystem(const std::string& name)
+	:FrameComponent(name)
 {
 	mCommandPool = TRACE_NEW(CommandPool, mCommandPool);
 	mSystemDestroy = false;

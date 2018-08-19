@@ -3,16 +3,19 @@
 
 #include "txUtility.h"
 #include "txComponentFactory.h"
+#include "FrameComponent.h"
 
 #define ADD_COMPONENT_FACTORY(t) addFactory<txComponentFactory<t> >(TOSTRING(t));
 
 class txComponentFactoryBase;
-class txComponentFactoryManager
+class txComponentFactoryManager : public FrameComponent
 {
 public:
+	txComponentFactoryManager(const std::string& name)
+		:FrameComponent(name) {}
 	virtual ~txComponentFactoryManager(){destory();}
 	virtual void init();
-	virtual void destory();
+	void destory();
 	txComponentFactoryBase* getFactory(const std::string& type);
 	txMap<std::string, txComponentFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:

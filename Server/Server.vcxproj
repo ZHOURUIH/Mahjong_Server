@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Log;./Thread;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -80,7 +80,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Thread;./Log;%MYSQL_HOME%/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -154,7 +154,6 @@
     <ClCompile Include="CommandSystem\txCommand.cpp" />
     <ClCompile Include="CommandSystem\txCommandReceiver.cpp" />
     <ClCompile Include="CommandSystem\txCommandSystem.cpp" />
-    <ClCompile Include="Common\GameLog.cpp" />
     <ClCompile Include="Common\ServerBase.cpp" />
     <ClCompile Include="Common\ServerConfig.cpp" />
     <ClCompile Include="Component\BaseComponent\txComponent.cpp" />
@@ -163,6 +162,8 @@
     <ClCompile Include="DataBase\Data.cpp" />
     <ClCompile Include="DataBase\DataBase.cpp" />
     <ClCompile Include="DataBase\MySQLDataBase.cpp" />
+    <ClCompile Include="Log\GameLog.cpp" />
+    <ClCompile Include="Log\GameLogWrap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory\txMemoryCheck.cpp" />
     <ClCompile Include="Memory\txMemoryTrace.cpp" />
@@ -266,7 +267,6 @@
     <ClInclude Include="CommandSystem\txCommandReceiver.h" />
     <ClInclude Include="CommandSystem\txCommandSystem.h" />
     <ClInclude Include="Common\GameDefine.h" />
-    <ClInclude Include="Common\GameLog.h" />
     <ClInclude Include="Common\ServerBase.h" />
     <ClInclude Include="Common\ServerCallback.h" />
     <ClInclude Include="Common\ServerConfig.h" />
@@ -286,6 +286,8 @@
     <ClInclude Include="DataBase\DataFactory.h" />
     <ClInclude Include="DataBase\DataPlayerInfo.h" />
     <ClInclude Include="DataBase\MySQLDataBase.h" />
+    <ClInclude Include="Log\GameLog.h" />
+    <ClInclude Include="Log\GameLogWrap.h" />
     <ClInclude Include="Memory\MemoryDefine.h" />
     <ClInclude Include="Memory\MemoryInfo.h" />
     <ClInclude Include="Memory\txMemoryCheck.h" />
@@ -300,6 +302,7 @@
     <ClInclude Include="Room\WaitActionInfo.h" />
     <ClInclude Include="Serialize\txSerializedData.h" />
     <ClInclude Include="Serialize\txSerializer.h" />
+    <ClInclude Include="ServerFramework\FrameComponent.h" />
     <ClInclude Include="ServerFramework\ServerFramework.h" />
     <ClInclude Include="Socket\PacketDefine.h" />
     <ClInclude Include="Socket\PacketFactory.h" />

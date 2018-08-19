@@ -1,18 +1,18 @@
 ﻿#ifndef _MYSQL_DATA_BASE_H_
 #define _MYSQL_DATA_BASE_H_
 
-#include "ServerDefine.h"
+#include "FrameComponent.h"
 
-class MySQLDataBase
+class MySQLDataBase : public FrameComponent
 {
 public:
-	MySQLDataBase()
-	:
+	MySQLDataBase(const std::string& name)
+		:FrameComponent(name),
 		mMySQL(NULL),
 		mPort(0)
 	{}
 	virtual ~MySQLDataBase(){ destroy(); }
-	virtual void init(const std::string& user, const std::string& pswd, const std::string& host, int port);
+	virtual void init();
 	virtual void update(float elapsedTime){}
 	void destroy();
 	// 查询登陆

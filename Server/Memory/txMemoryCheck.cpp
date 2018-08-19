@@ -33,8 +33,9 @@ void txMemoryCheck::unusePtr(void* ptr)
 
 bool txMemoryCheck::canAccess(void* ptr)
 {
+	bool ret = false;
 	LOCK(mLock);
-	bool ret = mUsedPtrs.find(ptr) != mUsedPtrs.end();
+	ret = (mUsedPtrs.find(ptr) != mUsedPtrs.end());
 	UNLOCK(mLock);
 	return ret;
 }

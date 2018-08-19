@@ -9,7 +9,8 @@ class CharacterManager;
 class RoomManager;
 class MySQLDataBase;
 class txComponentFactoryManager;
-
+class DataBase;
+class GameLog;
 class ServerBase
 {
 public:
@@ -23,6 +24,8 @@ public:
 	static RoomManager* mRoomManager;
 	static MySQLDataBase* mMySQLDataBase;
 	static txComponentFactoryManager* mComponentFactoryManager;
+	static DataBase* mDataBase;
+	static GameLog* mGameLog;
 };
 
 #endif

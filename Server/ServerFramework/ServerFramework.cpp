@@ -1,35 +1,32 @@
 ﻿#include "Utility.h"
 #include "txCommandSystem.h"
 #include "txComponentFactory.h"
-#include "txComponentFactoryManager.h"
 #include "ServerFramework.h"
-#include "NetServer.h"
-#include "CharacterManager.h"
-#include "ServerConfig.h"
 #include "ServerBase.h"
-#include "RoomManager.h"
-#include "MySQLDataBase.h"
 
 template<>ServerFramework *txSingleton<ServerFramework>::ms_Singleton = 0;
 
 ServerFramework::ServerFramework()
 :
-mStop(false),
-mMySQLDataBase(NULL),
-mServerConfig(NULL),
-mCommandSystem(NULL),
-mNetServer(NULL),
-mCharacterManager(NULL),
-mRoomManager(NULL),
-mComponentFactoryManager(NULL)
+mStop(false)
 {
-	// 设置随机数种子
-	srand((unsigned int)time(0));
 #if RUN_PLATFORM == PLATFORM_LINUX
 	struct timeval startTime;
 	gettimeofday(&startTime, NULL);
 	mStartMiliTime = startTime.tv_sec * 1000 + startTime.tv_usec / 1000;
 #endif
+	REGISTE_FRAME_COMPONENT(ServerConfig);
+	REGISTE_FRAME_COMPONENT(CharacterManager);
+	REGISTE_FRAME_COMPONENT(txCommandSystem);
+	REGISTE_FRAME_COMPONENT(NetServer);
+	REGISTE_FRAME_COMPONENT(RoomManager);
+	REGISTE_FRAME_COMPONENT(MySQLDataBase);
+	REGISTE_FRAME_COMPONENT(txComponentFactoryManager);
+	REGISTE_FRAME_COMPONENT(DataBase);
+	REGISTE_FRAME_COMPONENT(GameLog);
+	REGISTE_FRAME_COMPONENT(txMemoryTrace);
+	ServerBase::notifyConstructDone();
+	LOG_ERROR("1");
 }
 
 ServerFramework::~ServerFramework()
@@ -39,55 +36,47 @@ ServerFramework::~ServerFramework()
 
 bool ServerFramework::init()
 {
-	// 创建所有组件
-	mComponentFactoryManager = TRACE_NEW(txComponentFactoryManager, mComponentFactoryManager);
-	mServerConfig = TRACE_NEW(ServerConfig, mServerConfig);
-	mCharacterManager = TRACE_NEW(CharacterManager, mCharacterManager);
-	mCommandSystem = TRACE_NEW(txCommandSystem, mCommandSystem);
-	mNetServer = TRACE_NEW(NetServer, mNetServer);
-	mRoomManager = TRACE_NEW(RoomManager, mRoomManager);
-	mMySQLDataBase = TRACE_NEW(MySQLDataBase, mMySQLDataBase);
-	ServerBase::notifyConstructDone();
-
-	// 初始化所有组件
 	initComponentFactory();
-	mServerConfig->init();
-	mMySQLDataBase->init("root", "zhourui", "127.0.0.1", 3306);
-	//mMySQLDataBase->init("root", "zhourui", ServerConfig::getStringParam(SDS_DOMAIN_NAME), 3306);
-	mCharacterManager->init();
-	mCommandSystem->init();
-	mNetServer->init((int)ServerConfig::getFloatParam(SDF_SOCKET_PORT), (int)ServerConfig::getFloatParam(SDF_BACK_LOG));
-	mRoomManager->init();
+	// 初始化所有组件
+	int count = mFrameComponentVector.size();
+	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	{
+		mFrameComponentVector[i]->init();
+	}
+	END_FOR_STL(mFrameComponentVector);
 	return true;
 }
 
 void ServerFramework::update(float elapsedTime)
 {
-	mMySQLDataBase->update(elapsedTime);
-	mCommandSystem->update(elapsedTime);
-	mCharacterManager->update(elapsedTime);
-	mNetServer->update(elapsedTime);
-	mRoomManager->update(elapsedTime);
+	int count = mFrameComponentVector.size();
+	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	{
+		mFrameComponentVector[i]->update(elapsedTime);
+	}
+	END_FOR_STL(mFrameComponentVector);
 }
 
 void ServerFramework::destroy()
 {
-	TRACE_DELETE(mRoomManager);
-	TRACE_DELETE(mNetServer);
-	TRACE_DELETE(mCharacterManager);
-	TRACE_DELETE(mCommandSystem);
-	TRACE_DELETE(mServerConfig);
-	TRACE_DELETE(mComponentFactoryManager);
-	TRACE_DELETE(mMySQLDataBase);
+	int count = mFrameComponentVector.size();
+	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	{
+		TRACE_DELETE(mFrameComponentVector[i]);
+	}
+	END_FOR_STL(mFrameComponentVector);
+	mFrameComponentVector.clear();
+	mFrameComponentMap.clear();
 	destroyComponentFactory();
-	LOG_INFO("关闭服务器！");
+	LOG_INFO("关闭服务器!");
 }
 
 void ServerFramework::launch()
 {
-	if (mNetServer != NULL)
+	NetServer* server = GET_SYSTEM(NetServer);
+	if (server != NULL)
 	{
-		LOG_INFO("启动服务器,端口 : %d", mNetServer->getPort());
+		LOG_INFO("启动服务器,端口 : %d", server->getPort());
 	}
 	else
 	{

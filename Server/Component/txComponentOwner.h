@@ -7,7 +7,7 @@
 
 class txProperty;
 class txComponent;
-class txComponentOwner : public txCommandReceiver, public ServerBase
+class txComponentOwner : public txCommandReceiver
 {
 public:
 	txComponentOwner(const std::string& name)

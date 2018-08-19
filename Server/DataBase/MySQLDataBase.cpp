@@ -1,6 +1,7 @@
 ﻿#include "MySQLDataBase.h"
 #include "GameLog.h"
 #include "Utility.h"
+#include "ServerConfig.h"
 
 const char* MySQLDataBase::DATABASE_MAHJONG_USERDATA = "mahjong_userdata";
 const char* MySQLDataBase::TABLE_ACCOUNT = "account";
@@ -12,12 +13,13 @@ const char* MySQLDataBase::COL_NAME = "name";
 const char* MySQLDataBase::COL_MONEY = "money";
 const char* MySQLDataBase::COL_HEAD = "head";
 
-void MySQLDataBase::init(const std::string& user, const std::string& pswd, const std::string& host, int port)
+void MySQLDataBase::init()
 {
-	mUser = user;
-	mPassword = pswd;
-	mHost = host;
-	mPort = port;
+	mUser = "root";
+	mPassword = "zhourui";
+	mHost = "127.0.0.1";
+	//mHost = ServerConfig::getStringParam(SDS_DOMAIN_NAME);
+	mPort = 3306;
 	mMySQL = TRACE_NEW(MYSQL, mMySQL);
 	mysql_init(mMySQL);
 }

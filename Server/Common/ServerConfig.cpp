@@ -10,7 +10,8 @@ txMap<SERVER_DEFINE_STRING, std::string> ServerConfig::mStringParamList;
 #define ADD_FLOAT_PARAM(t) mFloatParamDefineList.insert(TOSTRING(t), t);
 #define ADD_STRING_PARAM(t) mStringParamDefineList.insert(TOSTRING(t), t);
 
-ServerConfig::ServerConfig()
+ServerConfig::ServerConfig(const std::string& name)
+	:FrameComponent(name)
 {
 	ADD_FLOAT_PARAM(SDF_SOCKET_PORT);
 	ADD_FLOAT_PARAM(SDF_HEART_BEAT_TIME_OUT);

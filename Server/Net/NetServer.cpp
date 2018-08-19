@@ -7,14 +7,13 @@
 #include "TimeLock.h"
 #include "CharacterPlayer.h"
 
-CLIENT_GUID NetServer::mSocketGUIDSeed = 0;
+CLIENT_GUID NetServer::mSocketGUIDSeed = 1;
 float NetServer::mHeartBeatTimeOut = 0.0f;
 bool NetServer::mOutputLog = true;
 PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
 
-NetServer::NetServer()
-:
-txCommandReceiver(TOSTRING(NetServer))
+NetServer::NetServer(const std::string& name)
+:FrameComponent(name)
 {
 	mReceiveThread = TRACE_NEW(CustomThread, mReceiveThread, "ReceiveSocket");
 	mAcceptThread = TRACE_NEW(CustomThread, mAcceptThread, "AcceptSocket");
@@ -45,13 +44,12 @@ void NetServer::destroy()
 	CLOSE_SOCKET(mSocket);
 }
 
-void NetServer::init(int port, int backLog)
+void NetServer::init()
 {
 #if RUN_PLATFORM == PLATFORM_LINUX
 	signal(SIGPIPE, signalProcess);
 #endif
-
-	mPort = port;
+	mPort = (int)ServerConfig::getFloatParam(SDF_SOCKET_PORT);
 	mHeartBeatTimeOut = ServerConfig::getFloatParam(SDF_HEART_BEAT_TIME_OUT);
 	mOutputLog = (int)ServerConfig::getFloatParam(SDF_OUTPUT_NET_LOG) > 0;
 	// 初始化工厂
@@ -92,7 +90,7 @@ void NetServer::init(int port, int backLog)
 		return;
 	}
 	//在Sockets Server上进行监听
-	if (listen(mSocket, backLog) != 0)
+	if (listen(mSocket, (int)ServerConfig::getFloatParam(SDF_BACK_LOG)) != 0)
 	{
 		LOG_ERROR("listen failed!");
 		return;
@@ -157,60 +155,66 @@ void NetServer::processSend()
 	fd_set fdwrite;
 	// 等待发送列表解锁,然后锁定发送列表
 	LOCK(mClientLock);
-	auto iterClient = mClientList.begin();
-	auto iterClientEnd = mClientList.end();
-	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
+	try
 	{
-		FD_ZERO(&fdwrite);
-		selectedClient.clear();
-		// 不能超过最大并发连接数,采用FD_SETSIZE一组的轮询方式
-		for (int i = 0; iterClient != iterClientEnd && i < FD_SETSIZE; ++iterClient, ++i)
+		auto iterClient = mClientList.begin();
+		auto iterClientEnd = mClientList.end();
+		FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 		{
-			// 只检查有数据需要写的客户端
-			if (iterClient->second->getSendDataCount() > 0)
+			FD_ZERO(&fdwrite);
+			selectedClient.clear();
+			// 不能超过最大并发连接数,采用FD_SETSIZE一组的轮询方式
+			for (int i = 0; iterClient != iterClientEnd && i < FD_SETSIZE; ++iterClient, ++i)
 			{
-				selectedClient.push_back(iterClient->second);
-				FD_SET(iterClient->second->getSocket(), &fdwrite);
-			}
-		}
-		// select第一个参数在windows中可以为0,但是在其他系统中需要设置
-		int selectRet = select(mMaxSocket + 1, NULL, &fdwrite, NULL, &tv);
-		// 如果有客户端可写
-		if (selectRet > 0)
-		{
-			int selectedClientCount = selectedClient.size();
-			FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
-			{
-				if (FD_ISSET(selectedClient[i]->getSocket(), &fdwrite))
+				// 只检查有数据需要写的客户端
+				if (iterClient->second->getSendDataCount() > 0)
 				{
-					if (mOutputLog)
-					{
-						LOG_INFO("send to client : %s", selectedClient[i]->getIP());
-					}
-					int sendedCount = send(selectedClient[i]->getSocket(), selectedClient[i]->getSendData(), selectedClient[i]->getSendDataCount(), 0);
-					// 检查是否send有错误
-					if (sendedCount < 0)
-					{
-						if (errno == EPIPE)
-						{
-							LOG_ERROR("管道损坏错误信号，send error : EPIPE");
-						}
-						else if (errno == EAGAIN)
-						{
-							LOG_ERROR("重试错误信号，send error : EAGAIN");
-						}
-					}
-					else
-					{
-						selectedClient[i]->notifyDataSended(sendedCount);
-					}
+					selectedClient.push_back(iterClient->second);
+					FD_SET(iterClient->second->getSocket(), &fdwrite);
 				}
 			}
-			END_FOR_STL(selectedClient);
+			// select第一个参数在windows中可以为0,但是在其他系统中需要设置
+			int selectRet = select(mMaxSocket + 1, NULL, &fdwrite, NULL, &tv);
+			// 如果有客户端可写
+			if (selectRet > 0)
+			{
+				int selectedClientCount = selectedClient.size();
+				FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
+				{
+					if (FD_ISSET(selectedClient[i]->getSocket(), &fdwrite))
+					{
+						if (mOutputLog)
+						{
+							LOG_INFO("send to client : %s", selectedClient[i]->getIP());
+						}
+						int sendedCount = send(selectedClient[i]->getSocket(), selectedClient[i]->getSendData(), selectedClient[i]->getSendDataCount(), 0);
+						// 检查是否send有错误
+						if (sendedCount < 0)
+						{
+							if (errno == EPIPE)
+							{
+								LOG_ERROR("管道损坏错误信号，send error : EPIPE");
+							}
+							else if (errno == EAGAIN)
+							{
+								LOG_ERROR("重试错误信号，send error : EAGAIN");
+							}
+						}
+						else
+						{
+							selectedClient[i]->notifyDataSended(sendedCount);
+						}
+					}
+				}
+				END_FOR_STL(selectedClient);
+			}
 		}
+		END_FOR_STL(mClientList);
 	}
-	END_FOR_STL(mClientList);
-
+	catch (std::exception e)
+	{
+		LOG_ERROR("exception : %s", e.what());
+	}
 	// 解锁发送列表
 	UNLOCK(mClientLock);
 }
@@ -224,52 +228,58 @@ void NetServer::processRecv()
 	fd_set fdread;
 	// 等待解锁accept列表的读写,并锁定accept列表
 	LOCK(mClientLock);
-	auto iterClient = mClientList.begin();
-	auto iterClientEnd = mClientList.end();
-	FOR_STL(mClientList, ; iterClient != iterClientEnd;)
+	try
 	{
-		FD_ZERO(&fdread);
-		selectedClient.clear();
-		// 不能超过最大并发连接数,采用FD_SETSIZE一组的轮询方式
-		for (int i = 0; iterClient != iterClientEnd && i < FD_SETSIZE; ++iterClient, ++i)
+		auto iterClient = mClientList.begin();
+		auto iterClientEnd = mClientList.end();
+		FOR_STL(mClientList, ; iterClient != iterClientEnd;)
 		{
-			selectedClient.push_back(iterClient->second);
-			FD_SET(iterClient->second->getSocket(), &fdread);
-		}
-		// select第一个参数在windows中可以为0,但是在其他系统中需要设置
-		int selectRet = select(mMaxSocket + 1, &fdread, NULL, NULL, &tv);
-		if (selectRet > 0)
-		{
-			int selectedClientCount = selectedClient.size();
-			FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
+			FD_ZERO(&fdread);
+			selectedClient.clear();
+			// 不能超过最大并发连接数,采用FD_SETSIZE一组的轮询方式
+			for (int i = 0; iterClient != iterClientEnd && i < FD_SETSIZE; ++iterClient, ++i)
 			{
-				if (!selectedClient[i]->isDeadClient() && FD_ISSET(selectedClient[i]->getSocket(), &fdread))
+				selectedClient.push_back(iterClient->second);
+				FD_SET(iterClient->second->getSocket(), &fdread);
+			}
+			// select第一个参数在windows中可以为0,但是在其他系统中需要设置
+			int selectRet = select(mMaxSocket + 1, &fdread, NULL, NULL, &tv);
+			if (selectRet > 0)
+			{
+				int selectedClientCount = selectedClient.size();
+				FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
 				{
-					int nRecv = recv(selectedClient[i]->getSocket(), buff, CLIENT_BUFFER_SIZE, 0);
-					if (nRecv <= 0)
+					if (!selectedClient[i]->isDeadClient() && FD_ISSET(selectedClient[i]->getSocket(), &fdread))
 					{
-						if (errno == EPIPE)
+						int nRecv = recv(selectedClient[i]->getSocket(), buff, CLIENT_BUFFER_SIZE, 0);
+						if (nRecv <= 0)
 						{
-							LOG_ERROR("管道损坏错误信号，recv error : EPIPE");
+							if (errno == EPIPE)
+							{
+								LOG_ERROR("管道损坏错误信号，recv error : EPIPE");
+							}
+							else if (errno == EAGAIN)
+							{
+								LOG_ERROR("重试错误信号，recv error : EAGAIN");
+							}
+							// 客户端可能已经与服务器断开了连接,先立即标记该客户端已断开,然后再移除
+							selectedClient[i]->notifyRecvEmpty();
 						}
-						else if (errno == EAGAIN)
+						else
 						{
-							LOG_ERROR("重试错误信号，recv error : EAGAIN");
+							selectedClient[i]->notifyRecvData(buff, nRecv);
 						}
-						// 客户端可能已经与服务器断开了连接,先立即标记该客户端已断开,然后再移除
-						selectedClient[i]->notifyRecvEmpty();
-					}
-					else
-					{
-						selectedClient[i]->notifyRecvData(buff, nRecv);
 					}
 				}
+				END_FOR_STL(selectedClient);
 			}
-			END_FOR_STL(selectedClient);
 		}
+		END_FOR_STL(mClientList);
 	}
-	END_FOR_STL(mClientList);
-
+	catch (std::exception e)
+	{
+		LOG_ERROR("exception : %s", e.what());
+	}
 	// 解锁accept列表
 	UNLOCK(mClientLock);
 }
@@ -277,8 +287,9 @@ void NetServer::processRecv()
 void NetServer::update(float elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
+	txMap<CLIENT_GUID, NetClient*> tempClientList;
 	LOCK(mClientLock);
-	auto tempClientList = mClientList;
+	tempClientList = mClientList;
 	UNLOCK(mClientLock);
 	txVector<CLIENT_GUID> logoutClientList;
 	auto iterClient = tempClientList.begin();
@@ -311,8 +322,9 @@ void NetServer::update(float elapsedTime)
 CLIENT_GUID NetServer::notifyAcceptClient(TX_SOCKET socket, const char* ip)
 {
 	// 等待解锁accept列表的读写,并锁定accept列表
+	CLIENT_GUID clientGUID = 0;
 	LOCK(mClientLock);
-	CLIENT_GUID clientGUID = generateSocketGUID();
+	clientGUID = generateSocketGUID();
 	if (mClientList.find(clientGUID) == mClientList.end())
 	{
 		NetClient* client = TRACE_NEW(NetClient, client, clientGUID, socket, ip);

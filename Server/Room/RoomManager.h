@@ -1,19 +1,15 @@
 ﻿#ifndef _ROOM_MANAGER_H_
 #define _ROOM_MANAGER_H_
 
-#include "ServerDefine.h"
-#include "ServerBase.h"
-#include "txCommandReceiver.h"
+#include "FrameComponent.h"
 
 class Room;
 class CharacterPlayer;
-class RoomManager : public ServerBase, public txCommandReceiver
+class RoomManager : public FrameComponent
 {
 public:
-	RoomManager()
-		:
-		txCommandReceiver(TOSTRING(RoomManager))
-	{}
+	RoomManager(const std::string& name)
+		:FrameComponent(name){}
 	virtual ~RoomManager(){ destroy(); }
 	virtual void init(){}
 	virtual void update(float elapsedTime);

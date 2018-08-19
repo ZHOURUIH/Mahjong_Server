@@ -35,8 +35,8 @@ long txUtility::getTimeMS()
 
 const char* txUtility::getTime()
 {
-	LOCK(mTimeLock);
 	static char timeBuffer[128] = { 0 };
+	LOCK(mTimeLock);
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	SYSTEMTIME sys;
 	GetLocalTime(&sys);

@@ -2,9 +2,10 @@
 #define _TX_COMMAND_RECEIVER_H_
 
 #include "ServerDefine.h"
+#include "ServerBase.h"
 
 class txCommand;
-class txCommandReceiver
+class txCommandReceiver : public ServerBase
 {
 public:
 	txCommandReceiver(const std::string& name);

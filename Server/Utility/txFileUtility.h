@@ -19,7 +19,10 @@ public:
 	static bool copyFile(const std::string& sourceFile, const std::string& destFile, bool overWrite = true);
 	// 创建一个文件夹,path是一个不以/结尾的可直接访问的相对或者绝对的文件夹名
 	static bool createFolder(const std::string& path);
-	static bool writeFile(std::string filePath, int length, const char* buffer);
+	static bool writeFile(std::string filePath, const char* buffer, int length, bool append = false);
+	static bool writeFile(std::string filePath, const std::string& text, bool append = false);
+	static bool writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append = false);
+	static bool writeFileSimple(const std::string& fileName, const std::string& text, bool append = false);
 	static char* openFile(const std::string& filePath, int* bufferSize, bool addZero);
 	static std::string openTxtFile(const std::string& filePath);
 	static char* openBinaryFile(const std::string& filePath, int* bufferSize);

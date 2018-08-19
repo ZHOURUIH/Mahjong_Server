@@ -5,13 +5,13 @@
 #include "ServerDefine.h"
 #include "ThreadLock.h"
 #include "CommandPool.h"
+#include "FrameComponent.h"
 
 class txCommand;
-class txCommandReceiver;
-class txCommandSystem
+class txCommandSystem : public FrameComponent
 {
 public:
-	txCommandSystem();
+	txCommandSystem(const std::string& name);
 	virtual ~txCommandSystem(){ destroy(); }
 	virtual void init()
 	{

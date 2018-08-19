@@ -10,10 +10,9 @@
 
 int main()
 {
-#ifdef TRACE_MEMORY
-	txMemoryTrace* trace = TRACE_NEW(txMemoryTrace, trace);
-	trace->init(true);
-#endif
+	// 设置随机数种子
+	srand((unsigned int)time(0));
+
 	TimeLock timeLock(30);
 	ServerFramework* mServerFramework = TRACE_NEW(ServerFramework, mServerFramework);
 	mServerFramework->init();
@@ -25,10 +24,5 @@ int main()
 		mServerFramework->update(frameTime / 1000.0f);
 	}
 	TRACE_DELETE(mServerFramework);
-
-#ifdef TRACE_MEMORY
-	TRACE_DELETE(trace);
-#endif
-
 	return 0;
 }

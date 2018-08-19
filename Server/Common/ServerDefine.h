@@ -150,10 +150,16 @@ typedef unsigned long CLIENT_GUID;
 #define FD_SETSIZE 64
 #endif
 
-#define LOCK(l) l.waitForUnlock(__FILE__, __LINE__)
-#define UNLOCK(l) l.unlock()
+#define LOCK(l) \
+l.waitForUnlock(__FILE__, __LINE__);\
+try\
+{
 
-#include "GameLog.h"
+#define UNLOCK(l) \
+}catch(...){}\
+l.unlock()
+
+#include "GameLogWrap.h"
 #include "txVector.h"
 #include "txMap.h"
 #include "txSet.h"
@@ -172,6 +178,7 @@ const int HEADER_SIZE = sizeof(short) + sizeof(short);
 const std::string MEDIA_PATH = "../media";
 const std::string GAME_DATA_PATH = "GameDataFile/";
 const std::string CONFIG_PATH = "Config/";
+const std::string LOG_PATH = "Log/";
 const std::string EMPTY_STRING = "";
 
 #endif

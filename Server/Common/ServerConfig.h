@@ -1,15 +1,14 @@
 ﻿#ifndef _SERVER_CONFIG_H_
 #define _SERVER_CONFIG_H_
 
-#include "ServerDefine.h"
-#include "ServerBase.h"
+#include "FrameComponent.h"
 
-class ServerConfig : public ServerBase
+class ServerConfig : public FrameComponent
 {
 public:
-	ServerConfig();
+	ServerConfig(const std::string& name);
 	virtual ~ServerConfig(){ destory(); }
-	void init();
+	virtual void init();
 	void readConfig(const std::string& fileName, bool floatParam);
 	void destory()
 	{

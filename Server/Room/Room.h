@@ -9,7 +9,7 @@ class CharacterPlayer;
 class WaitActionInfo;
 class MahjongAction;
 class HuInfo;
-class Room : public ServerBase, public txCommandReceiver
+class Room : public txCommandReceiver
 {
 public:
 	Room(const int& id);
