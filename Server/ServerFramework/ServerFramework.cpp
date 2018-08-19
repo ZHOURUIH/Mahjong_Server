@@ -26,7 +26,6 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
 	ServerBase::notifyConstructDone();
-	LOG_ERROR("1");
 }
 
 ServerFramework::~ServerFramework()
