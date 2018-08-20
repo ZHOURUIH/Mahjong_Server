@@ -135,8 +135,7 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 	{
 		return;
 	}
-	auto iter = mAllComponentList.find(component->getName());
-	if (iter == mAllComponentList.end())
+	if (!mAllComponentList.contains(component->getName()))
 	{
 		addComponentToList(component);
 	}
@@ -145,14 +144,12 @@ void txComponentOwner::notifyComponentAttached(txComponent* component)
 bool txComponentOwner::notifyComponentNameChanged(const std::string& oldName, txComponent* component)
 {
 	// 先查找是否有该名字的组件
-	auto it = mAllComponentList.find(oldName);
-	if (it == mAllComponentList.end())
+	if (!mAllComponentList.contains(oldName))
 	{
 		return false;
 	}
 	// 再查找改名后会不会重名
-	auto itNew = mAllComponentList.find(component->getName());
-	if (itNew != mAllComponentList.end())
+	if (mAllComponentList.contains(component->getName()))
 	{
 		return false;
 	}
@@ -182,7 +179,7 @@ txComponent* txComponentOwner::createIndependentComponent(const std::string& nam
 txComponent* txComponentOwner::addComponent(const std::string& name, const std::string& type)
 {
 	// 不能创建重名的组件
-	if (mAllComponentList.find(name) != mAllComponentList.end())
+	if (mAllComponentList.contains(name))
 	{
 		LOG_ERROR("error : there is component named : %s in the list", name.c_str());
 		return NULL;
@@ -212,12 +209,11 @@ void txComponentOwner::destroyComponent(txComponent* component)
 void txComponentOwner::destroyComponent(const std::string& name)
 {
 	// 在总列表中查找
-	auto itrFind = mAllComponentList.find(name);
-	if (itrFind == mAllComponentList.end())
+	auto component = mAllComponentList.tryGet(name, NULL);
+	if (component != NULL)
 	{
-		return;
+		destroyComponent(component);
 	}
-	destroyComponent(itrFind->second);
 }
 
 void txComponentOwner::destroyAllComponents()
@@ -354,22 +350,14 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 
 	// 从所有组件列表中移除
 	const auto& componentName = component->getName();
-	auto iterCom = mAllComponentList.find(componentName);
-	if (iterCom != mAllComponentList.end())
-	{
-		mAllComponentList.erase(iterCom);
-	}
+	mAllComponentList.tryErase(componentName);
 
 	// 从组件类型分组列表中移除
 	const auto& realType = component->getType();
 	auto iterType = mAllComponentTypeList.find(realType);
 	if (iterType != mAllComponentTypeList.end())
 	{
-		auto iterCom = iterType->second.find(componentName);
-		if (iterCom != iterType->second.end())
-		{
-			iterType->second.erase(iterCom);
-		}
+		iterType->second.tryErase(componentName);
 	}
 
 	// 从基础组件类型分组列表中移除
@@ -377,10 +365,6 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 	auto iterBaseType = mAllComponentBaseTypeList.find(baseType);
 	if (iterBaseType != mAllComponentBaseTypeList.end())
 	{
-		auto iter = iterBaseType->second.find(componentName);
-		if (iter != iterBaseType->second.end())
-		{
-			iterBaseType->second.erase(iter);
-		}
+		iterBaseType->second.tryErase(componentName);
 	}
 }

@@ -29,12 +29,7 @@ Room* RoomManager::createRoom()
 
 Room* RoomManager::getRoom(int id)
 {
-	auto iterRoom = mRoomList.find(id);
-	if (iterRoom != mRoomList.end())
-	{
-		return iterRoom->second;
-	}
-	return NULL;
+	return mRoomList.tryGet(id, NULL);
 }
 
 void RoomManager::destroyRoom(int id)

@@ -12,22 +12,10 @@ public:
 public:
 	txMap(){}
 	virtual ~txMap(){ clear(); }
-	reverse_iterator rbegin()
-	{
-		return mMap.rbegin();
-	}
-	reverse_iterator rend()
-	{
-		return mMap.rend();
-	}
-	iterator begin()
-	{
-		return mMap.begin();
-	}
-	iterator end()
-	{
-		return mMap.end();
-	}
+	reverse_iterator rbegin(){return mMap.rbegin();}
+	reverse_iterator rend(){return mMap.rend();}
+	iterator begin(){return mMap.begin();}
+	iterator end(){return mMap.end();}
 	Value tryGet(const Key& k, Value defaultValue)
 	{
 		iterator iter = find(k);
@@ -40,18 +28,33 @@ public:
 			return defaultValue;
 		}
 	}
-	iterator find(const Key& k)
+	void trySet(const Key& k, Value value)
 	{
-		return mMap.find(k);
+		auto iter = find(k);
+		if (iter != end())
+		{
+			iter->second = value;
+		}
+		else
+		{
+			insert(k, value);
+		}
 	}
-	bool contains(const Key& key)
-	{
-		return mMap.find(key) != mMap.end();
-	}
+	iterator find(const Key& k){return mMap.find(k);}
+	bool contains(const Key& key){return mMap.find(key) != mMap.end();}
 	std::pair<iterator, bool> insert(const Key& k, const Value& v)
 	{
 		checkLock();
 		return mMap.insert(std::make_pair(k, v));
+	}
+	iterator tryInsert(const Key& k, Value value)
+	{
+		auto iter = find(k);
+		if (iter == end())
+		{
+			iter = insert(k, value).first;
+		}
+		return iter;
 	}
 	void erase(const iterator& iter, bool check = true)
 	{
@@ -61,27 +64,24 @@ public:
 		}
 		mMap.erase(iter);
 	}
-	void erase(const Key& key, bool check = true)
+	// 返回值表示移除成功或失败
+	bool tryErase(const Key& key, bool check = true)
 	{
 		auto iter = mMap.find(key);
 		if (iter != mMap.end())
 		{
 			erase(iter);
+			return true;
 		}
+		return false;
 	}
 	void clear()
 	{
 		checkLock();
 		mMap.clear();
 	}
-	int size()
-	{
-		return (int)mMap.size();
-	}
-	Value& operator[](const Key& k)
-	{
-		return mMap[k];
-	}
+	int size(){return (int)mMap.size();}
+	Value& operator[](const Key& k){return mMap[k];}
 protected:
 	std::map<Key, Value> mMap;
 };

@@ -229,8 +229,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	char* writeFileBuffer = TRACE_NEW_ARRAY(char, writeBufferSize, writeFileBuffer);
 	FOR_STL(iterData->second, int i = 0; i < dataCount; ++i)
 	{
-		Data* pData = iterData->second[i];
-		pData->write(writeFileBuffer + i * dataSize, dataSize);
+		iterData->second[i]->write(writeFileBuffer + i * dataSize, dataSize);
 	}
 	END_FOR_STL(iterData->second);
 

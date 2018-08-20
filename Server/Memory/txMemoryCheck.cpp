@@ -17,12 +17,7 @@ void txMemoryCheck::usePtr(void* ptr)
 void txMemoryCheck::unusePtr(void* ptr)
 {
 	LOCK(mLock);
-	auto iter = mUsedPtrs.find(ptr);
-	if (iter != mUsedPtrs.end())
-	{
-		mUsedPtrs.erase(iter);
-	}
-	else
+	if (!mUsedPtrs.tryErase(ptr))
 	{
 		LOG_ERROR("error : not find ptr! can not unuse it!");
 	}
@@ -33,7 +28,7 @@ bool txMemoryCheck::canAccess(void* ptr)
 {
 	bool ret = false;
 	LOCK(mLock);
-	ret = (mUsedPtrs.find(ptr) != mUsedPtrs.end());
+	ret = mUsedPtrs.contains(ptr);
 	UNLOCK(mLock);
 	return ret;
 }

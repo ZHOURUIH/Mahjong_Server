@@ -46,12 +46,7 @@ void CommandPool::addInuse(txCommand* cmd)
 {
 	LOCK(mInuseLock);
 	// 添加到使用列表中
-	const std::string& type = cmd->getType();
-	auto iterInuse = mInusedList.find(type);
-	if (iterInuse == mInusedList.end())
-	{
-		iterInuse = mInusedList.insert(type, txVector<txCommand*>()).first;
-	}
+	auto iterInuse = mInusedList.tryInsert(cmd->getType(), txVector<txCommand*>());
 	iterInuse->second.push_back(cmd);
 	UNLOCK(mInuseLock);
 }
@@ -59,34 +54,19 @@ void CommandPool::addUnuse(txCommand* cmd)
 {
 	LOCK(mUnuseLock);
 	// 添加到未使用列表中
-	const std::string& type = cmd->getType();
-	auto iterUnuse = mUnusedList.find(type);
-	if (iterUnuse == mUnusedList.end())
-	{
-		iterUnuse = mUnusedList.insert(type, txVector<txCommand*>()).first;
-	}
+	auto iterUnuse = mUnusedList.tryInsert(cmd->getType(), txVector<txCommand*>());
 	iterUnuse->second.push_back(cmd);
 	UNLOCK(mUnuseLock);
 }
 void CommandPool::removeInuse(txCommand* cmd)
 {
 	LOCK(mInuseLock);
-	const std::string& type = cmd->getType();
-	auto iterInuse = mInusedList.find(type);
-	if (iterInuse != mInusedList.end())
-	{
-		mInusedList.erase(iterInuse);
-	}
+	mInusedList.tryErase(cmd->getType());
 	UNLOCK(mInuseLock);
 }
 void CommandPool::removeUnuse(txCommand* cmd)
 {
 	LOCK(mUnuseLock);
-	const std::string& type = cmd->getType();
-	auto iterUnuse = mUnusedList.find(type);
-	if (iterUnuse != mUnusedList.end())
-	{
-		mUnusedList.erase(iterUnuse);
-	}
+	mUnusedList.tryErase(cmd->getType());
 	UNLOCK(mUnuseLock);
 }

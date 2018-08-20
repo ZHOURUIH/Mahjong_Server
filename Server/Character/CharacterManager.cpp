@@ -1,4 +1,4 @@
-﻿#include "txUtility.h"
+﻿#include "Utility.h"
 
 #include "CharacterManager.h"
 #include "CharacterFactory.h"
@@ -121,27 +121,15 @@ void CharacterManager::removeCharacterFromList(Character* character)
 		return;
 	}
 	// 从全部角色列表中移除
-	auto iter = mCharacterList.find(character->getName());
-	if (iter != mCharacterList.end())
-	{
-		mCharacterList.erase(iter);
-	}
+	mCharacterList.tryErase(character->getName());
 	// 从角色分类列表中移除
 	auto iterType = mCharacterTypeList.find(character->getType());
 	if (iterType != mCharacterTypeList.end())
 	{
-		auto iterChar = iterType->second.find(character->getName());
-		if (iterChar != iterType->second.end())
-		{
-			iterType->second.erase(iterChar);
-		}
+		iterType->second.tryErase(character->getName());
 	}
 	// 从ID索引表中移除
-	auto iterID = mCharacterIDList.find(character->getGUID());
-	if (iterID != mCharacterIDList.end())
-	{
-		mCharacterIDList.erase(iterID);
-	}
+	mCharacterIDList.tryErase(character->getGUID());
 }
 
 void CharacterManager::destroyCharacter(CHAR_GUID guid)

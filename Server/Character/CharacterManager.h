@@ -24,36 +24,21 @@ public:
 	void destroyCharacter(CHAR_GUID guid);
 	Character* getCharacter(const std::string& name)
 	{
-		auto itrFind = mCharacterList.find(name);
-		if (mCharacterList.end() != itrFind)
-		{
-			return itrFind->second;
-		}
-		return NULL;
+		return mCharacterList.tryGet(name, NULL);
 	}
 	Character* getCharacter(CHAR_GUID characterID)
 	{
-		auto iterID = mCharacterIDList.find(characterID);
-		if (iterID != mCharacterIDList.end())
-		{
-			return iterID->second;
-		}
-		return NULL;
+		return mCharacterIDList.tryGet(characterID, NULL);
 	}
 	void getCharacterListByType(CHARACTER_TYPE type, txMap<std::string, Character*>& characterList)
 	{
-		auto iterType = mCharacterTypeList.find(type);
-		if (iterType != mCharacterTypeList.end())
-		{
-			characterList = iterType->second;
-		}
+		characterList = mCharacterTypeList.tryGet(type, txMap<std::string, Character*>());
 	}
 	void notifyCharacterIDChanged(CHAR_GUID oldID);
 	void notifyCharacterNameChanged(const std::string& oldName);
 	bool isCharacterLogin(CHAR_GUID guid)
 	{
-		auto iter = mCharacterIDList.find(guid);
-		return iter != mCharacterIDList.end();
+		return mCharacterIDList.find(guid) != mCharacterIDList.end();
 	}
 protected:
 	void addCharacterToList(Character* character);

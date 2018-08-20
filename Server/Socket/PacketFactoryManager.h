@@ -23,12 +23,7 @@ public:
 	}
 	static int getPacketSize(PACKET_TYPE type)
 	{
-		auto iter = mPacketSizeMap.find(type);
-		if (iter != mPacketSizeMap.end())
-		{
-			return iter->second;
-		}
-		return -1;
+		return mPacketSizeMap.tryGet(type, -1);
 	}
 	void addPacketSize(PACKET_TYPE type)
 	{
@@ -46,12 +41,7 @@ public:
 	}
 	PacketFactoryBase* getFactory(PACKET_TYPE type)
 	{
-		auto iter = mFactoryList.find(type);
-		if (iter != mFactoryList.end())
-		{
-			return iter->second;
-		}
-		return NULL;
+		return mFactoryList.tryGet(type, NULL);
 	}
 	txMap<PACKET_TYPE, PacketFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:

@@ -19,46 +19,20 @@ public:
 	}
 	static float getFloatParam(SERVER_DEFINE_FLOAT param)
 	{
-		auto iterParam = mFloatParamList.find(param);
-		if (iterParam != mFloatParamList.end())
-		{
-			return iterParam->second;
-		}
-		return 0.0f;
+		return mFloatParamList.tryGet(param, 0.0f);
 	}
 	static const std::string& getStringParam(SERVER_DEFINE_STRING param)
 	{
-		auto iterParam = mStringParamList.find(param);
-		if (iterParam != mStringParamList.end())
-		{
-			return iterParam->second;
-		}
-		return EMPTY_STRING;
+		return mStringParamList.tryGet(param, EMPTY_STRING);
 	}
 protected:
 	void setParam(SERVER_DEFINE_FLOAT param, float value)
 	{
-		auto iterParam = mFloatParamList.find(param);
-		if (iterParam == mFloatParamList.end())
-		{
-			mFloatParamList.insert(param, value);
-		}
-		else
-		{
-			iterParam->second = value;
-		}
+		mFloatParamList.trySet(param, value);
 	}
 	void setParam(SERVER_DEFINE_STRING param, const std::string& value)
 	{
-		auto iterParam = mStringParamList.find(param);
-		if (iterParam == mStringParamList.end())
-		{
-			mStringParamList.insert(param, value);
-		}
-		else
-		{
-			iterParam->second = value;
-		}
+		mStringParamList.trySet(param, value);
 	}
 protected:
 	static txMap<std::string, SERVER_DEFINE_FLOAT> mFloatParamDefineList;

@@ -25,12 +25,7 @@ public:
 	static bool isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& pengList, txVector<MAHJONG>& gangList);
 	static int getHuMultiple(HU_TYPE type)
 	{
-		auto iter = mMultipleList.find(type);
-		if (iter != mMultipleList.end())
-		{
-			return iter->second;
-		}
-		return 0;
+		return mMultipleList.tryGet(type, 0);
 	}
 };
 

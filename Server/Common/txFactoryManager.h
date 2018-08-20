@@ -24,12 +24,7 @@ public:
 	}
 	Base* getFactory(const T& type)
 	{
-		typename auto iter = mFactoryList.find(type);
-		if (iter != mFactoryList.end())
-		{
-			return iter->second;
-		}
-		return NULL;
+		return mFactoryList.tryGet(type, NULL);
 	}
 	txMap<T, Base*>& getFactoryList() { return mFactoryList; }
 protected:

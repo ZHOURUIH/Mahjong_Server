@@ -34,12 +34,7 @@ public:
 	bool moveChildPos(const std::string& name, int destPos);
 	txComponent* getChildComponent(const std::string& childName)
 	{
-		auto iter = mChildComponentMap.find(childName);
-		if (iter != mChildComponentMap.end())
-		{
-			return iter->second;
-		}
-		return NULL;
+		return mChildComponentMap.tryGet(childName, NULL);
 	}
 
 	// 设置成员变量

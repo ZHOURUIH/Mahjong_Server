@@ -11,18 +11,9 @@ public:
 public:
 	txSet(){}
 	virtual ~txSet(){ clear(); }
-	iterator find(const T& elem) const
-	{
-		return mSet.find(elem);
-	}
-	iterator begin() const
-	{
-		return mSet.begin();
-	}
-	iterator end() const
-	{
-		return mSet.end();
-	}
+	iterator find(const T& elem) const{return mSet.find(elem);}
+	iterator begin() const{return mSet.begin();}
+	iterator end() const{return mSet.end();}
 	std::pair<iterator, bool> insert(const T& elem)
 	{
 		checkLock();
@@ -33,7 +24,7 @@ public:
 		checkLock();
 		mSet.erase(iter);
 	}
-	bool erase(const T& value)
+	bool tryErase(const T& value)
 	{
 		iterator iter = mSet.find(value);
 		if (iter != mSet.end())
@@ -43,19 +34,13 @@ public:
 		}
 		return false;
 	}
-	bool contains(const T& value)
-	{
-		return mSet.find(value) != mSet.end();
-	}
+	bool contains(const T& value){return mSet.find(value) != mSet.end();}
 	void clear()
 	{
 		checkLock();
 		mSet.clear();
 	}
-	int size() const
-	{
-		return mSet.size();
-	}
+	int size() const{return mSet.size();}
 protected:
 	std::set<T> mSet;
 };

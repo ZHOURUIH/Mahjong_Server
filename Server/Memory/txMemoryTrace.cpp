@@ -67,7 +67,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 				continue;
 			}
 			// 如果该类型已忽略,则不显示
-			if (mIgnoreClass.find(iter->second.type) != mIgnoreClass.end())
+			if (mIgnoreClass.contains(iter->second.type))
 			{
 				continue;
 			}
@@ -112,7 +112,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 			FOR_STL (mMemoryType, ; iterType != iterTypeEnd; ++iterType)
 			{
 				// 如果该类型已忽略,则不显示
-				if (mIgnoreClass.find(iterType->first) != mIgnoreClass.end())
+				if (mIgnoreClass.contains(iterType->first))
 				{
 					continue;
 				}

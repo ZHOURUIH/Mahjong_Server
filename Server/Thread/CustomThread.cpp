@@ -1,9 +1,7 @@
 ﻿#include "CustomThread.h"
-#include "txUtility.h"
+#include "Utility.h"
 #include "txMemoryTrace.h"
 #include "TimeLock.h"
-#include "GameLog.h"
-#include "txStringUtility.h"
 
 CustomThread::CustomThread(const std::string& name)
 {

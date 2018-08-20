@@ -325,7 +325,7 @@ CLIENT_GUID NetServer::notifyAcceptClient(TX_SOCKET socket, const char* ip)
 	CLIENT_GUID clientGUID = 0;
 	LOCK(mClientLock);
 	clientGUID = generateSocketGUID();
-	if (mClientList.find(clientGUID) == mClientList.end())
+	if (!mClientList.contains(clientGUID))
 	{
 		NetClient* client = TRACE_NEW(NetClient, client, clientGUID, socket, ip);
 		mClientList.insert(clientGUID, client);
@@ -370,11 +370,7 @@ NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 {
 	NetClient* client = NULL;
 	LOCK(mClientLock);
-	auto iterClient = mClientList.find(clientGUID);
-	if (iterClient != mClientList.end())
-	{
-		client = iterClient->second;
-	}
+	client = mClientList.tryGet(clientGUID, NULL);
 	UNLOCK(mClientLock);
 	return client;
 }

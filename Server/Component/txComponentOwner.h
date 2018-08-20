@@ -32,30 +32,15 @@ public:
 	void destroyAllComponents();
 	txComponent* getComponent(const std::string& name)
 	{
-		auto itrFind = mAllComponentList.find(name);
-		if (itrFind == mAllComponentList.end())
-		{
-			return NULL;
-		}
-		return itrFind->second;
+		return mAllComponentList.tryGet(name, NULL);
 	}
 	const txMap<std::string, txComponent*>& getComponentsByType(const std::string& type)
 	{
-		auto iterType = mAllComponentTypeList.find(type);
-		if (iterType != mAllComponentTypeList.end())
-		{
-			return iterType->second;
-		}
-		return EMPTY_COMPONENT_MAP;
+		return mAllComponentTypeList.tryGet(type, EMPTY_COMPONENT_MAP);
 	}
 	const txMap<std::string, txComponent*>& getComponentsByBaseType(const std::string& type)
 	{
-		auto iterType = mAllComponentBaseTypeList.find(type);
-		if (iterType != mAllComponentBaseTypeList.end())
-		{
-			return iterType->second;
-		}
-		return EMPTY_COMPONENT_MAP;
+		return mAllComponentBaseTypeList.tryGet(type, EMPTY_COMPONENT_MAP);
 	}
 	txComponent* getFirstActiveComponentByBaseType(const std::string& type);
 	txComponent* getFirstComponentByBaseType(const std::string& type)
@@ -83,15 +68,11 @@ public:
 	}
 	void removePreUpdateType(const std::string& typeName)
 	{
-		auto iter = mPreUpdateTypeList.find(typeName);
-		if (iter != mPreUpdateTypeList.end())
-		{
-			mPreUpdateTypeList.erase(iter);
-		}
+		mPreUpdateTypeList.tryErase(typeName);
 	}
 	bool isPreUpdateType(const std::string& type)
 	{
-		return mPreUpdateTypeList.find(type) != mPreUpdateTypeList.end();
+		return mPreUpdateTypeList.contains(type);
 	}
 	const txMap<std::string, txMap<std::string, txComponent*> >& getComponentTypeList() { return mAllComponentTypeList; }
 	virtual void notifyComponentDestroied(txComponent* component)

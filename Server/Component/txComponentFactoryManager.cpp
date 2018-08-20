@@ -21,10 +21,5 @@ void txComponentFactoryManager::destory()
 
 txComponentFactoryBase* txComponentFactoryManager::getFactory(const std::string& type)
 {
-	auto iter = mFactoryList.find(type);
-	if (iter != mFactoryList.end())
-	{
-		return iter->second;
-	}
-	return NULL;
+	return mFactoryList.tryGet(type, NULL);
 }

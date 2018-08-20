@@ -24,12 +24,7 @@ public:
 	}
 	CharacterFactoryBase* getFactory(CHARACTER_TYPE type)
 	{
-		auto iter = mFactoryList.find(type);
-		if (iter != mFactoryList.end())
-		{
-			return iter->second;
-		}
-		return NULL;
+		return mFactoryList.tryGet(type, NULL);
 	}
 	txMap<CHARACTER_TYPE, CharacterFactoryBase*>& getFactoryList() { return mFactoryList; }
 protected:

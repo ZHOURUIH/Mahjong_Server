@@ -132,12 +132,10 @@ bool txComponent::removeChild(txComponent* component)
 	{
 		return false;
 	}
-	auto iter = mChildComponentMap.find(component->getName());
-	if (iter == mChildComponentMap.end())
+	if (!mChildComponentMap.tryErase(component->getName()))
 	{
 		return false;
 	}
-	mChildComponentMap.erase(iter);
 	auto iterList = mChildComponentList.begin();
 	auto iterListEnd = mChildComponentList.end();
 	FOR_STL(mChildComponentList, ; iterList != iterListEnd; ++iterList)

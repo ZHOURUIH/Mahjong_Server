@@ -38,23 +38,13 @@ public:
 	// 得到数据列表
 	bool getDataList(DATA_TYPE type, txVector<Data*>& dataList)
 	{
-		auto iter = mDataStructList.find(type);
-		if (iter == mDataStructList.end())
-		{
-			return false;
-		}
-		dataList = iter->second;
-		return true;
+		dataList = mDataStructList.tryGet(type, txVector<Data*>());
+		return dataList.size() > 0;
 	}
 	// 得到数据数量
 	int getDataCount(DATA_TYPE type)
 	{
-		auto iter = mDataStructList.find(type);
-		if (iter != mDataStructList.end())
-		{
-			return (int)iter->second.size();
-		}
-		return 0;
+		return mDataStructList.tryGet(type, txVector<Data*>()).size();
 	}
 	// 查询数据
 	Data* queryData(DATA_TYPE type, int index)
@@ -74,22 +64,12 @@ public:
 	// 根据数据名得到数据定义
 	const std::string& getDataNameByDataType(DATA_TYPE type)
 	{
-		auto iter = mDataDefineFile.find(type);
-		if (iter != mDataDefineFile.end())
-		{
-			return iter->second;
-		}
-		return EMPTY_STRING;
+		return mDataDefineFile.tryGet(type, EMPTY_STRING);
 	}
 	// 根据数据定义得到数据名
 	DATA_TYPE getDataTypeByDataName(const std::string& name)
 	{
-		auto iter = mDataFileDefine.find(name);
-		if (iter != mDataFileDefine.end())
-		{
-			return iter->second;
-		}
-		return DT_MIN;
+		return mDataFileDefine.tryGet(name, DT_MIN);
 	}
 protected:
 	template<typename T>
@@ -104,12 +84,7 @@ protected:
 	void addDataFactoryToList(DataFactoryBase* factory);
 	DataFactoryBase* getDataFactory(DATA_TYPE type)
 	{
-		auto itrFind = mDataFactoryList.find(type);
-		if (itrFind != mDataFactoryList.end())
-		{
-			return itrFind->second;
-		}
-		return NULL;
+		return mDataFactoryList.tryGet(type, NULL);
 	}
 protected:
 	txMap<DATA_TYPE, txVector<Data*> > mDataStructList;

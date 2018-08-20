@@ -117,10 +117,6 @@ void Room::leaveRoom(CharacterPlayer* player)
 			auto iterNext = mPlayerPositionList.find(nextPos);
 			while (true)
 			{
-				if (iterNext == mPlayerPositionList.end())
-				{
-					iterNext = mPlayerPositionList.begin();
-				}
 				if (iterNext->second != NULL)
 				{
 					iterNext->second->getCharacterData()->mBanker = true;
@@ -133,7 +129,10 @@ void Room::leaveRoom(CharacterPlayer* player)
 				}
 				else
 				{
-					++iterNext;
+					if (++iterNext == mPlayerPositionList.end())
+					{
+						iterNext = mPlayerPositionList.begin();
+					}
 				}
 			}
 		}
@@ -538,22 +537,12 @@ void Room::askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlay
 
 CharacterPlayer* Room::getMember(CHAR_GUID playerID)
 {
-	auto iterPlayer = mPlayerList.find(playerID);
-	if (iterPlayer != mPlayerList.end())
-	{
-		return iterPlayer->second;
-	}
-	return NULL;
+	return mPlayerList.tryGet(playerID, NULL);
 }
 
 CharacterPlayer* Room::getMemberByPosition(CHAR_GUID playerID)
 {
-	auto iter = mPlayerPositionList.find(playerID);
-	if (iter != mPlayerPositionList.end())
-	{
-		return iter->second;
-	}
-	return NULL;
+	return mPlayerPositionList.tryGet(playerID, NULL);
 }
 
 void Room::addPlayer(CharacterPlayer* player)
@@ -584,11 +573,7 @@ void Room::addPlayer(CharacterPlayer* player)
 void Room::removePlayer(CharacterPlayer* player)
 {
 	CharacterData* data = player->getCharacterData();
-	auto iterPlayer = mPlayerList.find(data->mGUID);
-	if (iterPlayer != mPlayerList.end())
-	{
-		mPlayerList.erase(iterPlayer);
-	}
+	mPlayerList.tryErase(data->mGUID);
 	auto iterPosition = mPlayerPositionList.find(data->mPosition);
 	if (iterPosition != mPlayerPositionList.end())
 	{

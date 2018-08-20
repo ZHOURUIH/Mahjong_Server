@@ -121,7 +121,7 @@ void ServerUtility::getHuaseList(txVector<MahInfo>& infoList, txMap<MAHJONG_HUAS
 	FOR_STL(infoList, int i = 0; i < size; ++i)
 	{
 		MAHJONG_HUASE huase = getHuaSe(infoList[i].mMah);
-		if (huaseList.find(huase) == huaseList.end())
+		if (!huaseList.contains(huase))
 		{
 			if (includeFeng || huase != MH_FENG)
 			{
