@@ -39,7 +39,7 @@ void CSLogin::execute()
 		int money = 0;
 		short head = 0;
 		mMySQLDataBase->queryCharacterData(guid, playerName, money, head);
-		CommandCharacterManagerPlayerLogin* cmdLogin = NEW_CMD(cmdLogin);
+		CommandCharacterManagerPlayerLogin* cmdLogin = NEW_CMD_INFO(cmdLogin);
 		cmdLogin->mClient = mClient;
 		cmdLogin->mGUID = guid;
 		cmdLogin->mName = playerName;

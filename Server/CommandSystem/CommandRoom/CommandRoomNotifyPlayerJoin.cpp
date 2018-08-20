@@ -33,7 +33,7 @@ void CommandRoomNotifyPlayerJoin::execute()
 	{
 		if (iterPlayer->second != joinPlayer)
 		{
-			CommandCharacterNotifyOtherPlayerJoinRoom* cmdJoin = NEW_CMD(cmdJoin);
+			CommandCharacterNotifyOtherPlayerJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 			cmdJoin->mJoinPlayer = joinPlayer;
 			mCommandSystem->pushCommand(cmdJoin, iterPlayer->second);
 		}

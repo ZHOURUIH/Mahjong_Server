@@ -13,7 +13,7 @@ void CommandCharacterLeaveRoom::execute()
 	if (room != NULL)
 	{
 		// 通知房间有玩家离开
-		CommandRoomNotifyPlayerLeave* cmdLeave = NEW_CMD(cmdLeave);
+		CommandRoomNotifyPlayerLeave* cmdLeave = NEW_CMD_INFO(cmdLeave);
 		cmdLeave->mPlayer = player;
 		mCommandSystem->pushCommand(cmdLeave, room);
 	}

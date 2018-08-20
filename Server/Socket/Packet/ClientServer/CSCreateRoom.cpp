@@ -12,7 +12,7 @@ void CSCreateRoom::execute()
 {
 	// 发送命令创建房间
 	Room* room = NULL;
-	CommandRoomManagerCreateRoom* cmdCreate = NEW_CMD(cmdCreate);
+	CommandRoomManagerCreateRoom* cmdCreate = NEW_CMD_INFO(cmdCreate);
 	cmdCreate->mRoomPtr = &room;
 	mCommandSystem->pushCommand(cmdCreate, mRoomManager);
 
@@ -25,7 +25,7 @@ void CSCreateRoom::execute()
 
 		// 将玩家加入房间
 		NetClient* client = mNetServer->getClient(mClient);
-		CommandCharacterJoinRoom* cmdJoin = NEW_CMD(cmdJoin);
+		CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 		cmdJoin->mRoomID = room->getID();
 		mCommandSystem->pushCommand(cmdJoin, mCharacterManager->getCharacter(client->getCharGUID()));
 	}

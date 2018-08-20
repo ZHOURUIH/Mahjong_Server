@@ -23,7 +23,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 			auto iterPlayerEnd = playerList.end();
 			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
-				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD(cmdLeave);
+				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD_INFO(cmdLeave);
 				cmdLeave->mLeavePlayerID = mPlayer->getGUID();
 				mCommandSystem->pushCommand(cmdLeave, iterPlayer->second);
 			}
@@ -33,7 +33,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 	// 如果房间中没有人了,则销毁房间
 	else
 	{
-		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD(cmdDestroyRoom);
+		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD_INFO(cmdDestroyRoom);
 		cmdDestroyRoom->mRoomID = room->getID();
 		mCommandSystem->pushCommand(cmdDestroyRoom, mRoomManager);
 	}

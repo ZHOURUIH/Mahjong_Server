@@ -42,7 +42,6 @@ public:
 			cmd->init();
 			cmd->setType(type);
 			++mNewCount;
-			LOG_INFO("new cmd : %d, type : %s", mNewCount, type.c_str());
 		}
 		// 设置为可用命令
 		cmd->setValid(true);

@@ -23,7 +23,7 @@ void CommandCharacterJoinRoom::execute()
 		if (room != NULL)
 		{
 			JOIN_ROOM_RESULT result = JRR_NO_ROOM;
-			CommandRoomNotifyPlayerJoin* cmdJoin = NEW_CMD(cmdJoin);
+			CommandRoomNotifyPlayerJoin* cmdJoin = NEW_CMD_INFO(cmdJoin);
 			cmdJoin->mPlayerGUID = player->getGUID();
 			cmdJoin->mResult = &result;
 			mCommandSystem->pushCommand(cmdJoin, room);
@@ -64,7 +64,7 @@ void CommandCharacterJoinRoom::execute()
 			// 玩家自己不再通知
 			if (iter->second != player)
 			{
-				CommandCharacterNotifyOtherPlayerJoinRoom* cmd = NEW_CMD(cmd);
+				CommandCharacterNotifyOtherPlayerJoinRoom* cmd = NEW_CMD_INFO(cmd);
 				cmd->mJoinPlayer = iter->second;
 				mCommandSystem->pushCommand(cmd, player);
 			}

@@ -24,7 +24,7 @@ void CommandCharacterContinueGame::execute()
 
 	// 通知房间有玩家选择是否继续游戏
 	Room* curRoom = mRoomManager->getRoom(player->getCharacterData()->mRoomID);
-	CommandRoomNotifyPlayerContinueGame* cmdPlayerContinue = NEW_CMD(cmdPlayerContinue);
+	CommandRoomNotifyPlayerContinueGame* cmdPlayerContinue = NEW_CMD_INFO(cmdPlayerContinue);
 	cmdPlayerContinue->mPlayer = player;
 	cmdPlayerContinue->mContinue = mContinue;
 	mCommandSystem->pushCommand(cmdPlayerContinue, curRoom);
