@@ -82,7 +82,7 @@ void GameLog::error(const std::string& info)
 
 void GameLog::logError(const std::string& info)
 {
-	std::string fullInfo = std::string(SystemUtility::getTime()) + " | 程序错误 : " + info;
+	std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	std::cout << fullInfo << std::endl;
 #elif RUN_PLATFORM == PLATFORM_LINUX
@@ -92,7 +92,7 @@ void GameLog::logError(const std::string& info)
 }
 void GameLog::logInfo(const std::string& info)
 {
-	std::string fullInfo = std::string(SystemUtility::getTime()) + " | : " + info;
+	std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
 	if (mLog)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
