@@ -46,8 +46,9 @@ bool SQLCharacterData::queryCharacterData(CharacterDataTable* tableData, CHAR_GU
 
 bool SQLCharacterData::isNameExist(const std::string& name)
 {
+	std::string utf8Name = StringUtility::ANSIToUTF8(name);
 	char queryStr[256];
-	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s", mTableName, COL_NAME, ("\"" + name + "\"").c_str());
+	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s", mTableName, COL_NAME, ("\"" + utf8Name + "\"").c_str());
 	// 查询
 	mysql_query(mMySQL, queryStr);
 	// 获得查询结果
@@ -68,8 +69,9 @@ bool SQLCharacterData::registeAccount(int money, int head, const std::string& na
 	std::string moneyStr = StringUtility::intToString(money);
 	std::string headStr = StringUtility::intToString(head);
 	std::string guidStr = StringUtility::intToString(guid);
+	std::string utf8Name = StringUtility::ANSIToUTF8(name);
 	char insertCharacterDataBuffer[256];
-	SPRINTF(insertCharacterDataBuffer, 256, "INSERT INTO %s VALUES(%s, %s, %s, %s)", mTableName, guidStr.c_str(), ("\"" + name + "\"").c_str(), moneyStr.c_str(), headStr.c_str());
+	SPRINTF(insertCharacterDataBuffer, 256, "INSERT INTO %s VALUES(%s, %s, %s, %s)", mTableName, guidStr.c_str(), ("\"" + utf8Name + "\"").c_str(), moneyStr.c_str(), headStr.c_str());
 	int ret = mysql_query(mMySQL, insertCharacterDataBuffer);
 	if (ret != 0)
 	{
