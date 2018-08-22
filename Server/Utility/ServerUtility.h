@@ -18,7 +18,7 @@ public:
 	static bool canHu(txVector<MahInfo> mahjongList, txVector<txVector<MAHJONG>>& devideList);
 	static bool canPeng(txVector<MAHJONG>& handInMah, MAHJONG mah);
 	static bool canGang(txVector<MAHJONG>& handInMah, MAHJONG mah);
-	static bool canGang(txVector<MAHJONG>& handInMah);
+	static MAHJONG canGang(txVector<MAHJONG>& handInMah);
 	static void pengMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah);
 	static void gangMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah);
 	static txVector<HU_TYPE> generateHuType(txVector<MAHJONG>& handInMah, MAHJONG dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop);

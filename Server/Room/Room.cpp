@@ -267,14 +267,16 @@ void Room::notifyPlayerGet(CharacterPlayer* player, MAHJONG mah)
 		actionList.push_back(action);
 	}
 	// 是否可以杠
-	else if (ServerUtility::canGang(data->mHandIn))
-	{
-		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_GANG, player, player, mah);
-		actionList.push_back(action);
-	}
-	// 摸了一张自己碰的牌,可以开杠
 	else
 	{
+		// 摸完牌后自己手里有四张相同的牌,可以杠,注意,这里杠的牌不一定是摸的牌,可能是自己手里原本就有四张
+		MAHJONG gangMahjong = ServerUtility::canGang(data->mHandIn);
+		if (gangMahjong != M_MAX)
+		{
+			MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_GANG, player, player, gangMahjong);
+			actionList.push_back(action);
+		}
+		// 摸了一张自己碰的牌,可以开杠
 		int pengGangCount = data->mPengGangList.size();
 		FOR_STL (data->mPengGangList, int i = 0; i < pengGangCount; ++i)
 		{

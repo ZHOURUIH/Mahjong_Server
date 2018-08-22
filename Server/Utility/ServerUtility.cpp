@@ -289,9 +289,9 @@ bool ServerUtility::canGang(txVector<MAHJONG>& handInMah, MAHJONG mah)
 	return ret;
 }
 
-bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
+MAHJONG ServerUtility::canGang(txVector<MAHJONG>& handInMah)
 {
-	bool ret = false;
+	MAHJONG gangMahjong = M_MAX;
 	txVector<MahInfo> infoList;
 	toMahjongGroup(handInMah, infoList);
 	int count = infoList.size();
@@ -299,12 +299,12 @@ bool ServerUtility::canGang(txVector<MAHJONG>& handInMah)
 	{
 		if (infoList[i].mCount == MAX_SINGLE_COUNT)
 		{
-			ret = true;
+			gangMahjong = infoList[i].mMah;
 			break;
 		}
 	}
 	END_FOR_STL(infoList);
-	return ret;
+	return gangMahjong;
 }
 
 void ServerUtility::pengMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah)
