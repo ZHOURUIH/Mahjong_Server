@@ -24,6 +24,7 @@ enum PACKET_TYPE
 	PT_CS_CONFIRM_ACTION,                   // 向服务器确认麻将操作
 	PT_CS_CONTINUE_GAME,                    // 向服务器请求继续游戏
 	PT_CS_BACK_TO_MAHJONG_HALL,				// 向服务器请求返回大厅
+	PT_CS_ADD_MAHJONG_ROBOT,				// 向服务器请求添加机器人打麻将,用作测试
 	PT_CS_MAX,
 
 	// SC表示Server->Client
@@ -68,6 +69,7 @@ enum PACKET_TYPE
 	PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL,// 通知客户端有其他玩家选择返回大厅
 	PT_SC_SHOW_HUA,							// 通知客户端摆出花牌
 	PT_SC_OTHER_PLAYER_SHOW_HUA,			// 通知客户端有其他玩家摆出花牌
+	PT_SC_ADD_MAHJONG_ROBOT_RET,			// 通知客户端添加麻将机器人的结果
 	PT_SC_MAX,
 
 	PT_MAX,

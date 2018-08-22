@@ -11,6 +11,7 @@ MySQLDataBase* ServerBase::mMySQLDataBase = NULL;
 txComponentFactoryManager* ServerBase::mComponentFactoryManager = NULL;
 DataBase* ServerBase::mDataBase = NULL;
 GameLog* ServerBase::mGameLog = NULL;
+MahjongRobotManager* ServerBase::mMahjongRobotManager = NULL;
 
 void ServerBase::notifyConstructDone()
 {
@@ -24,4 +25,5 @@ void ServerBase::notifyConstructDone()
 	mComponentFactoryManager = mServerFramework->GET_SYSTEM(txComponentFactoryManager);
 	mDataBase = mServerFramework->GET_SYSTEM(DataBase);
 	mGameLog = mServerFramework->GET_SYSTEM(GameLog);
+	mMahjongRobotManager = mServerFramework->GET_SYSTEM(MahjongRobotManager);
 }

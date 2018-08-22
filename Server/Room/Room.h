@@ -35,9 +35,9 @@ public:
 	bool isAllPlayerReady();
 	int getID()											{ return mID; }
 	bool isAllPlayerDiceDone()							{ return mDiceDoneCount == mMaxPlayer; }
-	bool isRoomFull()									{ return (int)mPlayerList.size() >= mMaxPlayer; }
+	bool isFull()										{ return (int)mPlayerList.size() >= mMaxPlayer; }
 	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
-	bool isRoomLocked()									{ return mLockRoom; }
+	bool isPublic()										{ return mPublicRoom; }
 	txMap<CharacterPlayer*, bool>& getPlayerChooseList(){ return mPlayerChooseList; }
 protected:
 	void reset();
@@ -64,7 +64,7 @@ protected:
 protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限
-	bool mLockRoom;										// 房间是否已锁定,房间锁定后,其他玩家不能再加入
+	bool mPublicRoom;									// 房间是否公开,公开的房间可以显示到房间列表中,不公开的房间只能通过输入房间号进入
 	int mDiceDoneCount;									// 骰子掷完的人数
 	txMap<CHAR_GUID, CharacterPlayer*> mPlayerList;		// 房间中的玩家列表
 	txMap<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定

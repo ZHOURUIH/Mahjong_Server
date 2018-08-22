@@ -23,6 +23,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSConfirmAction, PT_CS_CONFIRM_ACTION);
 	ADD_PACKET_FACTORY(CSContinueGame, PT_CS_CONTINUE_GAME);
 	ADD_PACKET_FACTORY(CSBackToMahjongHall, PT_CS_BACK_TO_MAHJONG_HALL);
+	ADD_PACKET_FACTORY(CSAddMahjongRobot, PT_CS_ADD_MAHJONG_ROBOT);
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{
@@ -69,6 +70,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCOtherPlayerBackToMahjongHall, PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL);
 	ADD_PACKET_FACTORY(SCShowHua, PT_SC_SHOW_HUA);
 	ADD_PACKET_FACTORY(SCOtherPlayerShowHua, PT_SC_OTHER_PLAYER_SHOW_HUA);
+	ADD_PACKET_FACTORY(SCAddMahjongRobotRet, PT_SC_ADD_MAHJONG_ROBOT_RET);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{

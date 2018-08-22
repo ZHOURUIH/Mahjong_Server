@@ -11,6 +11,7 @@ class MySQLDataBase;
 class txComponentFactoryManager;
 class DataBase;
 class GameLog;
+class MahjongRobotManager;
 class ServerBase
 {
 public:
@@ -26,6 +27,7 @@ public:
 	static txComponentFactoryManager* mComponentFactoryManager;
 	static DataBase* mDataBase;
 	static GameLog* mGameLog;
+	static MahjongRobotManager* mMahjongRobotManager;
 };
 
 #endif

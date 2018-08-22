@@ -13,7 +13,7 @@ Room::Room(const int& id)
 	txCommandReceiver("room" + StringUtility::intToString(id)),
 	mID(id),
 	mMaxPlayer(MAX_PLAYER),
-	mLockRoom(false),
+	mPublicRoom(true),
 	mDiceDoneCount(0),
 	mPlayState(MPS_WAITING),
 	mBankerPos(-1),

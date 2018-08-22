@@ -9,6 +9,7 @@
 #include "RoomManager.h"
 #include "MySQLDataBase.h"
 #include "txComponentFactoryManager.h"
+#include "MahjongRobotManager.h"
 #include "DataBase.h"
 #include "GameLog.h"
 

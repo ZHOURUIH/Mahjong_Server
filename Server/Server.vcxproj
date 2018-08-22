@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Log;./Thread;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Character;./CommandSystem;./CommandSystem/CommandCharacterManager;./CommandSystem/CommandRoomManager;./CommandSystem/CommandCharacter;./CommandSystem/CommandRoom;./CommandSystem/CommandServer;./Component;./Component/BaseComponent;./DataBase;./DataBase/ServerTable;./DataBase/MySQL;./Common;./FileSystem;./Net;./Room;./Socket;./Socket/Packet;./Socket/Packet/ClientServer;./Socket/Packet/ServerClient;./ServerFramework;./Memory;./Serialize;./Utility;./STL;./Log;./Thread;$(MYSQL_HOME)/include;./MahjongRobot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Character\CharacterFactoryManager.cpp" />
+    <ClCompile Include="Character\CharacterMahjongRobot.cpp" />
     <ClCompile Include="Character\CharacterManager.cpp" />
     <ClCompile Include="Character\CharacterNPC.cpp" />
     <ClCompile Include="Character\CharacterPlayer.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp" />
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.cpp" />
     <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.cpp" />
@@ -159,11 +161,15 @@
     <ClCompile Include="Component\BaseComponent\txComponent.cpp" />
     <ClCompile Include="Component\txComponentFactoryManager.cpp" />
     <ClCompile Include="Component\txComponentOwner.cpp" />
-    <ClCompile Include="DataBase\Data.cpp" />
-    <ClCompile Include="DataBase\DataBase.cpp" />
-    <ClCompile Include="DataBase\MySQLDataBase.cpp" />
+    <ClCompile Include="DataBase\MySQL\MySQLDataBase.cpp" />
+    <ClCompile Include="DataBase\MySQL\SQLAccount.cpp" />
+    <ClCompile Include="DataBase\MySQL\SQLCharacterData.cpp" />
+    <ClCompile Include="DataBase\MySQL\SQLTableBase.cpp" />
+    <ClCompile Include="DataBase\ServerTable\Data.cpp" />
+    <ClCompile Include="DataBase\ServerTable\DataBase.cpp" />
     <ClCompile Include="Log\GameLog.cpp" />
     <ClCompile Include="Log\GameLogWrap.cpp" />
+    <ClCompile Include="MahjongRobot\MahjongRobotManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory\txMemoryCheck.cpp" />
     <ClCompile Include="Memory\txMemoryTrace.cpp" />
@@ -176,6 +182,7 @@
     <ClCompile Include="Serialize\txSerializer.cpp" />
     <ClCompile Include="ServerFramework\ServerFramework.cpp" />
     <ClCompile Include="Socket\PacketFactoryManager.cpp" />
+    <ClCompile Include="Socket\Packet\ClientServer\CSAddMahjongRobot.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSBackToMahjongHall.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp" />
     <ClCompile Include="Socket\Packet\ClientServer\CSCheckName.cpp" />
@@ -206,6 +213,7 @@
     <ClInclude Include="Character\CharacterDefine.h" />
     <ClInclude Include="Character\CharacterFactory.h" />
     <ClInclude Include="Character\CharacterFactoryManager.h" />
+    <ClInclude Include="Character\CharacterMahjongRobot.h" />
     <ClInclude Include="Character\CharacterManager.h" />
     <ClInclude Include="Character\CharacterNPC.h" />
     <ClInclude Include="Character\CharacterPlayer.h" />
@@ -213,6 +221,7 @@
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h" />
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h" />
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h" />
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.h" />
     <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.h" />
@@ -280,14 +289,18 @@
     <ClInclude Include="Component\txComponentFactoryManager.h" />
     <ClInclude Include="Component\txComponentHeader.h" />
     <ClInclude Include="Component\txComponentOwner.h" />
-    <ClInclude Include="DataBase\Data.h" />
-    <ClInclude Include="DataBase\DataBase.h" />
-    <ClInclude Include="DataBase\DataDefine.h" />
-    <ClInclude Include="DataBase\DataFactory.h" />
-    <ClInclude Include="DataBase\DataPlayerInfo.h" />
-    <ClInclude Include="DataBase\MySQLDataBase.h" />
+    <ClInclude Include="DataBase\MySQL\MySQLDataBase.h" />
+    <ClInclude Include="DataBase\MySQL\SQLAccount.h" />
+    <ClInclude Include="DataBase\MySQL\SQLCharacterData.h" />
+    <ClInclude Include="DataBase\MySQL\SQLTableBase.h" />
+    <ClInclude Include="DataBase\ServerTable\Data.h" />
+    <ClInclude Include="DataBase\ServerTable\DataBase.h" />
+    <ClInclude Include="DataBase\ServerTable\DataDefine.h" />
+    <ClInclude Include="DataBase\ServerTable\DataFactory.h" />
+    <ClInclude Include="DataBase\ServerTable\DataPlayerInfo.h" />
     <ClInclude Include="Log\GameLog.h" />
     <ClInclude Include="Log\GameLogWrap.h" />
+    <ClInclude Include="MahjongRobot\MahjongRobotManager.h" />
     <ClInclude Include="Memory\MemoryDefine.h" />
     <ClInclude Include="Memory\MemoryInfo.h" />
     <ClInclude Include="Memory\txMemoryCheck.h" />
@@ -307,6 +320,7 @@
     <ClInclude Include="Socket\PacketDefine.h" />
     <ClInclude Include="Socket\PacketFactory.h" />
     <ClInclude Include="Socket\PacketFactoryManager.h" />
+    <ClInclude Include="Socket\Packet\ClientServer\CSAddMahjongRobot.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSBackToMahjongHall.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSCheckAccount.h" />
     <ClInclude Include="Socket\Packet\ClientServer\CSCheckName.h" />
@@ -323,6 +337,7 @@
     <ClInclude Include="Socket\Packet\ClientServer\CSConfirmAction.h" />
     <ClInclude Include="Socket\Packet\Packet.h" />
     <ClInclude Include="Socket\Packet\PacketHeader.h" />
+    <ClInclude Include="Socket\Packet\ServerClient\SCAddMahjongRobotRet.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCAskAction.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCAskDrop.h" />
     <ClInclude Include="Socket\Packet\ServerClient\SCBackToMahjongHallRet.h" />

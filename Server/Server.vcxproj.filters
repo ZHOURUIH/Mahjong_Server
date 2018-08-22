@@ -73,6 +73,15 @@
     <Filter Include="Log">
       <UniqueIdentifier>{a1af1d2b-ac24-4bb2-b448-31bc3de07e19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MahjongRobot">
+      <UniqueIdentifier>{a03bfd95-1cef-46e4-88af-926713fc720e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataBase\ServerTable">
+      <UniqueIdentifier>{d080675b-ea29-44f8-9480-b2568a6c473c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataBase\MySQL">
+      <UniqueIdentifier>{7ff4808e-0fcb-4251-9d18-1bebb99e6603}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character\Character.cpp">
@@ -95,12 +104,6 @@
     </ClCompile>
     <ClCompile Include="CommandSystem\txCommandSystem.cpp">
       <Filter>CommandSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="DataBase\Data.cpp">
-      <Filter>DataBase</Filter>
-    </ClCompile>
-    <ClCompile Include="DataBase\DataBase.cpp">
-      <Filter>DataBase</Filter>
     </ClCompile>
     <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp">
       <Filter>Socket\Packet\ClientServer</Filter>
@@ -168,9 +171,6 @@
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
       <Filter>CommandSystem\CommandRoom</Filter>
-    </ClCompile>
-    <ClCompile Include="DataBase\MySQLDataBase.cpp">
-      <Filter>DataBase</Filter>
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp">
       <Filter>CommandSystem\CommandServer</Filter>
@@ -388,6 +388,36 @@
     <ClCompile Include="Utility\SystemUtility.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Socket\Packet\ClientServer\CSAddMahjongRobot.cpp">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="MahjongRobot\MahjongRobotManager.cpp">
+      <Filter>MahjongRobot</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterMahjongRobot.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\MySQL\MySQLDataBase.cpp">
+      <Filter>DataBase\MySQL</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\ServerTable\Data.cpp">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\ServerTable\DataBase.cpp">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\MySQL\SQLAccount.cpp">
+      <Filter>DataBase\MySQL</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\MySQL\SQLCharacterData.cpp">
+      <Filter>DataBase\MySQL</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase\MySQL\SQLTableBase.cpp">
+      <Filter>DataBase\MySQL</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.cpp">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Character.h">
@@ -425,21 +455,6 @@
     </ClInclude>
     <ClInclude Include="CommandSystem\txCommandSystem.h">
       <Filter>CommandSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\Data.h">
-      <Filter>DataBase</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\DataBase.h">
-      <Filter>DataBase</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\DataDefine.h">
-      <Filter>DataBase</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\DataFactory.h">
-      <Filter>DataBase</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\DataPlayerInfo.h">
-      <Filter>DataBase</Filter>
     </ClInclude>
     <ClInclude Include="Socket\Packet\Packet.h">
       <Filter>Socket\Packet</Filter>
@@ -542,9 +557,6 @@
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
       <Filter>CommandSystem\CommandRoom</Filter>
-    </ClInclude>
-    <ClInclude Include="DataBase\MySQLDataBase.h">
-      <Filter>DataBase</Filter>
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h">
       <Filter>CommandSystem\CommandServer</Filter>
@@ -917,6 +929,48 @@
     </ClInclude>
     <ClInclude Include="Utility\SystemUtility.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ClientServer\CSAddMahjongRobot.h">
+      <Filter>Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\Packet\ServerClient\SCAddMahjongRobotRet.h">
+      <Filter>Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="MahjongRobot\MahjongRobotManager.h">
+      <Filter>MahjongRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterMahjongRobot.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\MySQL\MySQLDataBase.h">
+      <Filter>DataBase\MySQL</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\MySQL\SQLAccount.h">
+      <Filter>DataBase\MySQL</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\MySQL\SQLCharacterData.h">
+      <Filter>DataBase\MySQL</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\ServerTable\Data.h">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\ServerTable\DataBase.h">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\ServerTable\DataDefine.h">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\ServerTable\DataFactory.h">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\ServerTable\DataPlayerInfo.h">
+      <Filter>DataBase\ServerTable</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase\MySQL\SQLTableBase.h">
+      <Filter>DataBase\MySQL</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.h">
+      <Filter>CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
