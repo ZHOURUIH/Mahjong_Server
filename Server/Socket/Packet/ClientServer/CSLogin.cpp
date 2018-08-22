@@ -42,7 +42,7 @@ void CSLogin::execute()
 		CommandCharacterManagerPlayerLogin* cmdLogin = NEW_CMD_INFO(cmdLogin);
 		cmdLogin->mClient = mClient;
 		cmdLogin->mGUID = guid;
-		cmdLogin->mName = playerName;
+		cmdLogin->mName = StringUtility::UTF8ToANSI(playerName);
 		cmdLogin->mMoney = money;
 		cmdLogin->mHead = head;
 		mCommandSystem->pushCommand(cmdLogin, mCharacterManager);
