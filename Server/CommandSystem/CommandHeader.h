@@ -8,6 +8,7 @@
 #include "CommandCharacterManagerCreateCharacter.h"
 #include "CommandCharacterManagerNotifyPlayerOffline.h"
 #include "CommandCharacterManagerDestroyCharacter.h"
+#include "CommandCharacterManagerRobotLogin.h"
 
 #include "CommandRoomManagerCreateRoom.h"
 #include "CommandRoomManagerDestroyRoom.h"

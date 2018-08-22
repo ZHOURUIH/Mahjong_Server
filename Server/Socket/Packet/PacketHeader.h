@@ -15,6 +15,7 @@
 #include "CSConfirmAction.h"
 #include "CSContinueGame.h"
 #include "CSBackToMahjongHall.h"
+#include "CSAddMahjongRobot.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -56,5 +57,6 @@
 #include "SCOtherPlayerBackToMahjongHall.h"
 #include "SCShowHua.h"
 #include "SCOtherPlayerShowHua.h"
+#include "SCAddMahjongRobotRet.h"
 
 #endif

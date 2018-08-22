@@ -13,7 +13,6 @@ GameLog::GameLog(const std::string& name)
 	mLogFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "log.txt");
 	mErrorFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "error.txt");
 	mLogThread = TRACE_NEW(CustomThread, mLogThread, "LogThread");
-	mErrorThread = TRACE_NEW(CustomThread, mErrorThread, "ErrorThread");
 }
 
 void GameLog::init()
@@ -21,48 +20,62 @@ void GameLog::init()
 	FileUtility::deleteFile(mLogFileName);
 	FileUtility::deleteFile(mErrorFileName);
 	mLogThread->start(writeLogFile, this);
-	mErrorThread->start(writeErrorFile, this);
+}
+
+void GameLog::destroy()
+{
+	TRACE_DELETE(mLogThread);
 }
 
 bool GameLog::writeLogFile(void* args)
 {
+	// 普通日志
 	LOCK(mGameLog->mLogBufferLock);
 	// 将日志信息同步到写入列表
 	int logCount = mGameLog->mLogBuffer.size();
-	for (int i = 0; i < logCount; ++i)
+	if (logCount > 0)
 	{
-		mGameLog->mLogWriteBuffer.push_back(mGameLog->mLogBuffer[i]);
+		for (int i = 0; i < logCount; ++i)
+		{
+			mGameLog->mLogWriteBuffer.push_back(mGameLog->mLogBuffer[i]);
+		}
+		mGameLog->mLogBuffer.clear();
 	}
-	mGameLog->mLogBuffer.clear();
 	UNLOCK(mGameLog->mLogBufferLock);
 	// 写入文件
-	int writeCount = mGameLog->mLogWriteBuffer.size();
-	for (int i = 0; i < writeCount; ++i)
+	int writeLogCount = mGameLog->mLogWriteBuffer.size();
+	if (writeLogCount > 0)
 	{
-		FileUtility::writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
+		for (int i = 0; i < writeLogCount; ++i)
+		{
+			FileUtility::writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
+		}
+		mGameLog->mLogWriteBuffer.clear();
 	}
-	mGameLog->mLogWriteBuffer.clear();
-	return true;
-}
 
-bool GameLog::writeErrorFile(void* args)
-{
+	// 错误信息
 	LOCK(mGameLog->mErrorBufferLock);
 	// 将错误信息同步到写入列表
 	int errorCount = mGameLog->mErrorBuffer.size();
-	for (int i = 0; i < errorCount; ++i)
+	if (errorCount > 0)
 	{
-		mGameLog->mErrorWriteBuffer.push_back(mGameLog->mErrorBuffer[i]);
+		for (int i = 0; i < errorCount; ++i)
+		{
+			mGameLog->mErrorWriteBuffer.push_back(mGameLog->mErrorBuffer[i]);
+		}
+		mGameLog->mErrorBuffer.clear();
 	}
-	mGameLog->mErrorBuffer.clear();
 	UNLOCK(mGameLog->mErrorBufferLock);
 	// 写入文件
-	int writeCount = mGameLog->mErrorWriteBuffer.size();
-	for (int i = 0; i < writeCount; ++i)
+	int writeErrorCount = mGameLog->mErrorWriteBuffer.size();
+	if (writeErrorCount > 0)
 	{
-		FileUtility::writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
+		for (int i = 0; i < writeErrorCount; ++i)
+		{
+			FileUtility::writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
+		}
+		mGameLog->mErrorWriteBuffer.clear();
 	}
-	mGameLog->mErrorWriteBuffer.clear();
 	return true;
 }
 

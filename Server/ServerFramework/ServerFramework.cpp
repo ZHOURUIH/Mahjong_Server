@@ -25,6 +25,7 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(DataBase);
 	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
+	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
 	ServerBase::notifyConstructDone();
 }
 
@@ -73,9 +74,9 @@ void ServerFramework::destroy()
 void ServerFramework::launch()
 {
 	NetServer* server = GET_SYSTEM(NetServer);
-	if (server != NULL)
+	if (server != NULL && server->isAvailable())
 	{
-		LOG_INFO("启动服务器,端口 : %d", server->getPort());
+		LOG_INFO("启动服务器, 端口 : %d", server->getPort());
 	}
 	else
 	{

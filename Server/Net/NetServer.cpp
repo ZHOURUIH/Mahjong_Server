@@ -86,12 +86,14 @@ void NetServer::init()
 	//绑定Sockets Server
 	if (bind(mSocket, (const struct sockaddr*)&addrServ, sizeof(SOCKADDR_IN)) != 0)
 	{
+		mSocket = INVALID_SOCKET;
 		LOG_ERROR("bind failed!");
 		return;
 	}
 	//在Sockets Server上进行监听
 	if (listen(mSocket, (int)ServerConfig::getFloatParam(SDF_BACK_LOG)) != 0)
 	{
+		mSocket = INVALID_SOCKET;
 		LOG_ERROR("listen failed!");
 		return;
 	}
@@ -108,7 +110,7 @@ bool NetServer::acceptSocket(void* args)
 #elif RUN_PLATFORM == PLATFORM_LINUX
 	socklen_t nLen = sizeof(addr);
 #endif
-	char ip[16] = { 0 };
+	char ip[32] = { 0 };
 	TX_SOCKET sClient = accept(netManager->mSocket, (struct sockaddr*)&addr, &nLen);
 	if (sClient == (TX_SOCKET)INVALID_SOCKET)
 	{
@@ -119,7 +121,7 @@ bool NetServer::acceptSocket(void* args)
 	if (netManager->mOutputLog)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-		SPRINTF(ip, 16, "%d.%d.%d.%d", addr.sin_addr.S_un.S_un_b.s_b1, addr.sin_addr.S_un.S_un_b.s_b2, addr.sin_addr.S_un.S_un_b.s_b3, addr.sin_addr.S_un.S_un_b.s_b4);
+		SPRINTF(ip, 32, "%d.%d.%d.%d", addr.sin_addr.S_un.S_un_b.s_b1, addr.sin_addr.S_un.S_un_b.s_b2, addr.sin_addr.S_un.S_un_b.s_b3, addr.sin_addr.S_un.S_un_b.s_b4);
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		int ip0 = GET_BYTE(addr.sin_addr.s_addr, 0);
 		int ip1 = GET_BYTE(addr.sin_addr.s_addr, 1);
@@ -377,11 +379,19 @@ NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 
 void NetServer::sendMessage(Packet* packet, CharacterPlayer* player, bool destroyPacketEndSend)
 {
+	if (player == NULL)
+	{
+		return;
+	}
 	sendMessage(packet, player->getClientGUID(), destroyPacketEndSend);
 }
 
 void NetServer::sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend)
 {
+	if (clientGUID == INVALID_ID)
+	{
+		return;
+	}
 	sendMessage(packet, getClient(clientGUID), destroyPacketEndSend);
 }
 

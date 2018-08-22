@@ -21,7 +21,7 @@ void CommandRoomNotifyPlayerReady::execute()
 	}
 	END_FOR_STL(playerList);
 	// 所有玩家都准备完毕后,通知房间开始游戏
-	if (room->isRoomFull() && room->isAllPlayerReady())
+	if (room->isFull() && room->isAllPlayerReady())
 	{
 		CommandRoomStartGame* cmd = NEW_CMD_INFO(cmd);
 		mCommandSystem->pushCommand(cmd, room);

@@ -1,10 +1,12 @@
 ﻿#include "CommandHeader.h"
 #include "CharacterManager.h"
+#include "MySQLDataBase.h"
 
 void CommandCharacterManagerCreateCharacter::execute()
 {
 	CharacterManager* characterManager = static_cast<CharacterManager*>(mReceiver);
 	characterManager->createCharacter(mName, mType, mCharGUID, mClientGUID);
+	mMySQLDataBase->notifyAccountLogin(mCharGUID);
 }
 
 std::string CommandCharacterManagerCreateCharacter::showDebugInfo()

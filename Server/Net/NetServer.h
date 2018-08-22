@@ -23,6 +23,7 @@ public:
 	static bool getOutputLog()			{ return mOutputLog; }
 	int getPort()						{ return mPort; }
 	int getClientCount()				{ return mClientList.size(); }
+	bool isAvailable()					{ return mSocket != INVALID_SOCKET; }
 	
 	virtual CLIENT_GUID notifyAcceptClient(TX_SOCKET socket, const char* ip);
 	void sendMessage(Packet* packet, CharacterPlayer* player, bool destroyPacketEndSend = true);

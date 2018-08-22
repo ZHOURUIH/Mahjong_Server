@@ -4,12 +4,12 @@
 #include "CharacterNPC.h"
 #include "GameDefine.h"
 
-class CharacterPlayer : public CharacterNPC
+class CharacterPlayer : public Character
 {
 public:
 	CharacterPlayer(CHARACTER_TYPE type, const std::string& name)
 		:
-		CharacterNPC(type, name),
+		Character(type, name),
 		mClientGUID(INVALID_ID)
 	{}
 	virtual ~CharacterPlayer(){ destroy(); }
@@ -26,7 +26,6 @@ public:
 protected:
 	void addPeng(MAHJONG mahjong);
 	void addGang(MAHJONG mahjong);
-	void pengToGang(MAHJONG mahjong);
 	bool hasPeng(MAHJONG mahjong, int& pengIndex);
 protected:
 	CLIENT_GUID mClientGUID;	// 玩家所在客户端的GUID

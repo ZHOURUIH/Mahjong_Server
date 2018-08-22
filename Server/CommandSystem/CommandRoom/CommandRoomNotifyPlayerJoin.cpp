@@ -7,7 +7,7 @@
 void CommandRoomNotifyPlayerJoin::execute()
 {
 	Room* room = static_cast<Room*>(mReceiver);
-	if (room->isRoomFull())
+	if (room->isFull())
 	{
 		setResult(JRR_FULL);
 		return;
@@ -15,11 +15,6 @@ void CommandRoomNotifyPlayerJoin::execute()
 	if (room->getMember(mPlayerGUID) != NULL)
 	{
 		setResult(JRR_PLAYER_IN_ROOM);
-		return;
-	}
-	if (room->isRoomLocked())
-	{
-		setResult(JRR_ROOM_LOCKED);
 		return;
 	}
 	// 将玩家加入房间中

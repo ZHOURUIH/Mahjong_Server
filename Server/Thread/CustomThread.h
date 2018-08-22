@@ -8,7 +8,7 @@ class CustomThread
 {
 public:
 	CustomThread(const std::string& name);
-	~CustomThread();
+	virtual ~CustomThread();
 	void destroy();
 	void setBackground(bool background){mIsBackground = background;}
 	void start(CustomThreadCallback callback, void* args, int frameTimeMS = 15);
