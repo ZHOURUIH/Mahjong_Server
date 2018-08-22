@@ -31,7 +31,8 @@ bool SQLCharacterData::queryCharacterData(CharacterDataTable* tableData, CHAR_GU
 			}
 			txVector<txMap<std::string, std::string>> resultData;
 			getResultData(resultData, result);
-			tableData->mName = getColumn(resultData[0], COL_NAME);
+			// 字符串类型的字段需要转换为GB2312编码
+			tableData->mName = StringUtility::UTF8ToANSI(getColumn(resultData[0], COL_NAME));
 			tableData->mMoney = StringUtility::stringToInt(getColumn(resultData[0], COL_MONEY));
 			tableData->mHead = StringUtility::stringToInt(getColumn(resultData[0], COL_HEAD));
 			ret = true;
