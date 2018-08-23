@@ -132,7 +132,7 @@ bool SQLAccount::registerAccount(const std::string& account, const std::string& 
 bool SQLAccount::getFirstNotLoginRobot(std::string& account, std::string& password)
 {
 	char queryStr[256];
-	SPRINTF(queryStr, 256, "SELECT top 1 * FROM %s WHERE %s = %s", mTableName, COL_IS_LOGIN, "0");
+	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s && %s = %s LIMIT 1", mTableName, COL_IS_LOGIN, "0", COL_IS_ROBOT, "1");
 	// 查询
 	mysql_query(mMySQL, queryStr);
 	bool ret = false;

@@ -27,6 +27,7 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 		std::string account, password;
 		if (!mMySQLDataBase->getFirstNotLoginAccount(account, password))
 		{
+			bool registeRet = false;
 			// 最多只尝试10次
 			for(int i = 0; i < 10; ++i)
 			{
@@ -35,8 +36,13 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 				int registeRet = mMySQLDataBase->registerAccount(account, password, generateRobotName(), 100, 0, true);
 				if (registeRet == 0)
 				{
+					registeRet = true;
 					break;
 				}
+			}
+			if (!registeRet)
+			{
+				LOG_ERROR("registe robot failed!");
 			}
 		}
 		// 登录机器人账号,获得GUID
@@ -56,6 +62,19 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 		robot = static_cast<CharacterMahjongRobot*>(mCharacterManager->getCharacter(guid));
 	}
 	return robot;
+}
+
+void MahjongRobotManager::destroy()
+{
+	auto iter = mRobotList.begin();
+	auto iterEnd = mRobotList.end();
+	FOR_STL(mRobotList, ; iter != iterEnd; ++iter)
+	{
+		CommandCharacterManagerDestroyCharacter* cmd = NEW_CMD_INFO(cmd);
+		cmd->mGUID = iter->second->getGUID();
+		mCommandSystem->pushCommand(cmd, mCharacterManager);
+	}
+	END_FOR_STL(mRobotList);
 }
 
 std::string MahjongRobotManager::generateRobotName()

@@ -9,6 +9,8 @@ class MahjongRobotManager : public FrameComponent
 public:
 	MahjongRobotManager(const std::string& name)
 		:FrameComponent(name){}
+	virtual ~MahjongRobotManager() { destroy(); }
+	void destroy();
 	virtual void init(){}
 	CharacterMahjongRobot* createRobot();
 protected:
