@@ -1,14 +1,14 @@
 ﻿#ifndef _CHARACTER_MAHJONG_ROBOT_H_
 #define _CHARACTER_MAHJONG_ROBOT_H_
 
-#include "Character.h"
+#include "CharacterPlayer.h"
 
-class CharacterMahjongRobot : public Character
+class CharacterMahjongRobot : public CharacterPlayer
 {
 public:
 	CharacterMahjongRobot(CHARACTER_TYPE type, const std::string& name)
 		:
-		Character(type, name)
+		CharacterPlayer(type, name)
 	{}
 	virtual ~CharacterMahjongRobot(){ destroy(); }
 	void destroy(){}
