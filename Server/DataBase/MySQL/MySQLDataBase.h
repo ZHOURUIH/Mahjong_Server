@@ -5,6 +5,8 @@
 
 class SQLAccount;
 class SQLCharacterData;
+class AccountTable;
+class CharacterDataTable;
 class MySQLDataBase : public FrameComponent
 {
 public:
@@ -13,18 +15,17 @@ public:
 	virtual void init();
 	virtual void update(float elapsedTime){}
 	void destroy();
-	// 查询登陆
-	bool queryLogin(const std::string& account, const std::string& password, CHAR_GUID& guid, bool robotLogin = false);
+	// 查询登陆,根据账号密码获得GUID,需要指定是否为机器人登录
+	bool queryLogin(AccountTable* data);
 	// 查询角色信息
-	bool queryCharacterData(CHAR_GUID guid, std::string& name, int& money, short& head);
+	bool queryCharacterData(CHAR_GUID guid, CharacterDataTable* data);
 	// 账号是否存在
 	bool isAccountExist(const std::string& account);
 	// 名字是否存在
 	bool isNameExist(const std::string& name);
 	// 注册账号,0表示成功,-1表示账号已存在,-2表示名字已存在, -3代表GUID计算错误, -4表示账号插入错误, -5表示角色数据插入错误,-6表示连接数据库失败
-	int registerAccount(const std::string& account, const std::string& password, const std::string& name, int money, int head, bool isRobot);
-	bool getFirstNotLoginAccount(std::string& account, std::string& password);
-	void notifyAccountLogin(CHAR_GUID guid, bool login = true);
+	int registerAccount(AccountTable* accountData, CharacterDataTable* data);
+	bool getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccountList);
 protected:
 	bool connectDataBase(const std::string& dataBase);
 	int getMaxGUID();

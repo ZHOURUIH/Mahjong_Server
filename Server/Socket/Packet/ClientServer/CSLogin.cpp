@@ -5,6 +5,8 @@
 #include "CharacterManager.h"
 #include "CommandHeader.h"
 #include "MySQLDataBase.h"
+#include "SQLAccount.h"
+#include "SQLCharacterData.h"
 #endif
 
 void CSLogin::execute()
@@ -12,8 +14,11 @@ void CSLogin::execute()
 #ifdef _SERVER
 	// 玩家登陆成功后,通知网络管理器有玩家登陆
 	// 查询数据库
-	CHAR_GUID guid;
-	bool qeuryRet = mMySQLDataBase->queryLogin(mAccount, mPassword, guid);
+	AccountTable* accountData = TRACE_NEW(AccountTable, accountData);
+	accountData->mAccount = mAccount;
+	accountData->mPassword = mPassword;
+	accountData->mIsRobot = false;
+	bool qeuryRet = mMySQLDataBase->queryLogin(accountData);
 	int ret = 0;
 	// 账号不存在或者密码错误
 	if (!qeuryRet)
@@ -21,7 +26,7 @@ void CSLogin::execute()
 		ret = 1;
 	}
 	// 已在其他地方登录
-	else if (mCharacterManager->isCharacterLogin(guid))
+	else if (mCharacterManager->isCharacterLogin(accountData->mGUID))
 	{
 		ret = 2;
 	}
@@ -35,17 +40,17 @@ void CSLogin::execute()
 	// 登陆成功,则先创建角色,角色创建完成后再发送消息
 	else
 	{
-		std::string playerName;
-		int money = 0;
-		short head = 0;
-		mMySQLDataBase->queryCharacterData(guid, playerName, money, head);
+		CharacterDataTable* characterData = TRACE_NEW(CharacterDataTable, characterData);
+		mMySQLDataBase->queryCharacterData(accountData->mGUID, characterData);
 		CommandCharacterManagerPlayerLogin* cmdLogin = NEW_CMD_INFO(cmdLogin);
 		cmdLogin->mClient = mClient;
-		cmdLogin->mGUID = guid;
-		cmdLogin->mName = playerName;
-		cmdLogin->mMoney = money;
-		cmdLogin->mHead = head;
+		cmdLogin->mGUID = accountData->mGUID;
+		cmdLogin->mName = characterData->mName;
+		cmdLogin->mMoney = characterData->mMoney;
+		cmdLogin->mHead = characterData->mHead;
 		mCommandSystem->pushCommand(cmdLogin, mCharacterManager);
+		TRACE_DELETE(characterData);
 	}
+	TRACE_DELETE(accountData);
 #endif
 }

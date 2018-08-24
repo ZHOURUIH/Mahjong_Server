@@ -21,9 +21,9 @@ public:
 	{
 		SQLTableBase::init(mysql);
 	}
-	bool queryCharacterData(CharacterDataTable* tableData, CHAR_GUID guid);
+	bool queryCharacterData(CHAR_GUID guid, CharacterDataTable* tableData);
 	bool isNameExist(const std::string& name);
-	bool registeAccount(int money, int head, const std::string& name, int guid);
+	bool registeAccount(CharacterDataTable* data);
 protected:
 	static const char* COL_GUID;
 	static const char* COL_NAME;

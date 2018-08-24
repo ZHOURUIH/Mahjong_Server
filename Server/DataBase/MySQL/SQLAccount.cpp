@@ -6,13 +6,12 @@
 const char* SQLAccount::COL_ACCOUNT = "account";
 const char* SQLAccount::COL_PASSWORD = "password";
 const char* SQLAccount::COL_IS_ROBOT = "isRobot";
-const char* SQLAccount::COL_IS_LOGIN = "isLogin";
 const char* SQLAccount::COL_GUID = "guid";
 
-bool SQLAccount::queryData(AccountTable* tableData, const std::string& account, const std::string& password)
+bool SQLAccount::queryData(AccountTable* tableData)
 {
 	char queryStr[256];
-	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s && %s = %s", mTableName, COL_ACCOUNT, ("\"" + account + "\"").c_str(), COL_PASSWORD, ("\"" + password + "\"").c_str());
+	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s && %s = %s", mTableName, COL_ACCOUNT, ("\"" + tableData->mAccount + "\"").c_str(), COL_PASSWORD, ("\"" + tableData->mPassword + "\"").c_str());
 	// 查询
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
@@ -20,8 +19,6 @@ bool SQLAccount::queryData(AccountTable* tableData, const std::string& account, 
 		LOG_ERROR("query login error!   %s", mysql_error(mMySQL));
 		return false;
 	}
-	tableData->mAccount = account;
-	tableData->mPassword = password;
 	// 获得查询结果
 	MYSQL_RES* result = mysql_store_result(mMySQL);
 	if (result != NULL)
@@ -29,17 +26,10 @@ bool SQLAccount::queryData(AccountTable* tableData, const std::string& account, 
 		bool ret = false;
 		if (result->row_count > 0)
 		{
-			txMap<std::string, std::string> rowData;
-			MYSQL_ROW sql_row = mysql_fetch_row(result);
-			int fieldCount = mysql_num_fields(result);
-			for (int i = 0; i < fieldCount; ++i)
-			{
-				MYSQL_FIELD* fd = mysql_fetch_field(result);
-				rowData.insert(fd->name, sql_row[i]);
-			}
-			tableData->mGUID = StringUtility::stringToInt(getColumn(rowData, COL_GUID));
-			tableData->mIsRobot = StringUtility::stringToInt(getColumn(rowData, COL_IS_ROBOT)) > 0;
-			tableData->mIsLogin = StringUtility::stringToInt(getColumn(rowData, COL_IS_LOGIN)) > 0;
+			txVector<txMap<std::string, std::string>> resultDataList;
+			getResultData(resultDataList, result);
+			tableData->mGUID = StringUtility::stringToInt(getColumn(resultDataList[0], COL_GUID));
+			tableData->mIsRobot = StringUtility::stringToInt(getColumn(resultDataList[0], COL_IS_ROBOT)) > 0;
 			ret = true;
 		}
 		// 释放结果资源
@@ -47,18 +37,6 @@ bool SQLAccount::queryData(AccountTable* tableData, const std::string& account, 
 		return ret;
 	}
 	return false;
-}
-
-void SQLAccount::notifyAccountLogin(CHAR_GUID guid, bool login)
-{
-	std::string guidStr = StringUtility::intToString(guid);
-	char queryStr[256];
-	SPRINTF(queryStr, 256, "UPDATE %s SET %s = %s WHERE %s = %s", mTableName, COL_IS_LOGIN, (login ? "1" : "0"), COL_GUID, guidStr.c_str());
-	int ret = mysql_query(mMySQL, queryStr);
-	if (ret != 0)
-	{
-		LOG_ERROR("can not set login state, guid : %s", guidStr.c_str());
-	}
 }
 
 int SQLAccount::getMaxGUID()
@@ -112,14 +90,13 @@ bool SQLAccount::isAccountExist(const std::string& account)
 	return false;
 }
 
-bool SQLAccount::registerAccount(const std::string& account, const std::string& password, int guid, bool isRobot)
+bool SQLAccount::registerAccount(AccountTable* tableData)
 {
-	std::string guidStr = StringUtility::intToString(guid);
-	std::string isRobotStr = StringUtility::intToString(isRobot ? 1 : 0);
-	std::string isLoginStr = "0";
+	std::string guidStr = StringUtility::intToString(tableData->mGUID);
+	std::string isRobotStr = StringUtility::intToString(tableData->mIsRobot ? 1 : 0);
 	char insertAccountBuffer[256];
-	SPRINTF(insertAccountBuffer, 256, "INSERT INTO %s VALUES(%s, %s, %s, %s, %s)", 
-		mTableName, ("\"" + account + "\"").c_str(), ("\"" + password + "\"").c_str(), guidStr.c_str(), isRobotStr.c_str(), isLoginStr.c_str());
+	SPRINTF(insertAccountBuffer, 256, "INSERT INTO %s VALUES(%s, %s, %s, %s)", 
+		mTableName, ("\"" + tableData->mAccount + "\"").c_str(), ("\"" + tableData->mPassword + "\"").c_str(), guidStr.c_str(), isRobotStr.c_str());
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
 	if (ret != 0)
 	{
@@ -129,10 +106,10 @@ bool SQLAccount::registerAccount(const std::string& account, const std::string& 
 	return true;
 }
 
-bool SQLAccount::getFirstNotLoginRobot(std::string& account, std::string& password)
+bool SQLAccount::getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccountList)
 {
 	char queryStr[256];
-	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s && %s = %s LIMIT 1", mTableName, COL_IS_LOGIN, "0", COL_IS_ROBOT, "1");
+	SPRINTF(queryStr, 256, "SELECT * FROM %s WHERE %s = %s", mTableName, COL_IS_ROBOT, "1");
 	// 查询
 	mysql_query(mMySQL, queryStr);
 	bool ret = false;
@@ -142,10 +119,18 @@ bool SQLAccount::getFirstNotLoginRobot(std::string& account, std::string& passwo
 	{
 		if (result->row_count > 0)
 		{
-			txVector<txMap<std::string, std::string>> resultData;
-			getResultData(resultData, result);
-			account = getColumn(resultData[0], COL_ACCOUNT);
-			password = getColumn(resultData[0], COL_PASSWORD);
+			txVector<txMap<std::string, std::string>> resultDataList;
+			getResultData(resultDataList, result);
+			int count = resultDataList.size();
+			FOR_STL(resultDataList, int i = 0; i < count; ++i)
+			{
+				AccountTable* accountData = TRACE_NEW(AccountTable, accountData);
+				accountData->mAccount = getColumn(resultDataList[i], COL_ACCOUNT);
+				accountData->mPassword = getColumn(resultDataList[i], COL_PASSWORD);
+				accountData->mGUID = StringUtility::stringToInt(getColumn(resultDataList[i], COL_GUID));
+				accountData->mIsRobot = StringUtility::stringToInt(getColumn(resultDataList[i], COL_IS_ROBOT)) > 0;
+				robotAccountList.insert(accountData->mGUID, accountData);
+			}
 			ret = true;
 		}
 		// 释放结果资源

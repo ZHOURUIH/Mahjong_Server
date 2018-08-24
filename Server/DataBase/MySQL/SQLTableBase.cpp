@@ -10,6 +10,8 @@ void SQLTableBase::getResultData(txVector<txMap<std::string, std::string>>& resu
 			break;
 		}
 		resultData.push_back(txMap<std::string, std::string>());
+		// 重置列的下标
+		mysql_field_seek(result, 0);
 		int fieldCount = mysql_num_fields(result);
 		for (int i = 0; i < fieldCount; ++i)
 		{

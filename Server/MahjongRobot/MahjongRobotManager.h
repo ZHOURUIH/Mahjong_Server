@@ -4,6 +4,7 @@
 #include "FrameComponent.h"
 
 class CharacterMahjongRobot;
+class AccountTable;
 class MahjongRobotManager : public FrameComponent
 {
 public:
@@ -11,14 +12,17 @@ public:
 		:FrameComponent(name){}
 	virtual ~MahjongRobotManager() { destroy(); }
 	void destroy();
-	virtual void init(){}
+	virtual void init();
 	CharacterMahjongRobot* createRobot();
 protected:
 	std::string generateRobotAccount();
 	std::string generateRobotPassword();
 	std::string generateRobotName();
+	CharacterMahjongRobot* loginRobot(CHAR_GUID guid);
+	CHAR_GUID registeRobot();
 protected:
-	txMap<std::string, CharacterMahjongRobot*> mRobotList;
+	txMap<CHAR_GUID, CharacterMahjongRobot*> mRobotList;
+	txMap<CHAR_GUID, AccountTable*> mRobotAccountList;
 };
 
 #endif

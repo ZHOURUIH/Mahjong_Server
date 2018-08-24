@@ -67,40 +67,24 @@ int MySQLDataBase::getMaxGUID()
 	return mSQLAccount->getMaxGUID();
 }
 
-bool MySQLDataBase::queryLogin(const std::string& account, const std::string& password, CHAR_GUID& guid, bool robotLogin)
+bool MySQLDataBase::queryLogin(AccountTable* data)
 {
-	AccountTable* tableData = TRACE_NEW(AccountTable, tableData);
-	bool ret = mSQLAccount->queryData(tableData, account, password);
+	bool isRobot = data->mIsRobot;
+	bool ret = mSQLAccount->queryData(data);
 	if (ret)
 	{
 		// 在不是进行机器人登录操作时登录了机器人账号,则返回失败
-		if (!robotLogin && tableData->mIsRobot)
+		if (!isRobot && data->mIsRobot)
 		{
 			ret = false;
 		}
-		guid = tableData->mGUID;
 	}
-	TRACE_DELETE(tableData);
 	return ret;
 }
 
-void MySQLDataBase::notifyAccountLogin(CHAR_GUID guid, bool login)
+bool MySQLDataBase::queryCharacterData(CHAR_GUID guid, CharacterDataTable* data)
 {
-	mSQLAccount->notifyAccountLogin(guid, login);
-}
-
-bool MySQLDataBase::queryCharacterData(CHAR_GUID guid, std::string& name, int& money, short& head)
-{
-	CharacterDataTable* tableData = TRACE_NEW(CharacterDataTable, tableData);
-	bool ret = mSQLCharacterData->queryCharacterData(tableData, guid);
-	if (ret)
-	{
-		name = tableData->mName;
-		money = tableData->mMoney;
-		head = tableData->mHead;
-	}
-	TRACE_DELETE(tableData);
-	return ret;
+	return mSQLCharacterData->queryCharacterData(guid, data);
 }
 
 bool MySQLDataBase::isAccountExist(const std::string& account)
@@ -113,18 +97,18 @@ bool MySQLDataBase::isNameExist(const std::string& name)
 	return mSQLCharacterData->isNameExist(name);
 }
 
-bool MySQLDataBase::getFirstNotLoginAccount(std::string& account, std::string& password)
+bool MySQLDataBase::getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccountList)
 {
-	return mSQLAccount->getFirstNotLoginRobot(account, password);
+	return mSQLAccount->getAllRobotAccount(robotAccountList);
 }
 
-int MySQLDataBase::registerAccount(const std::string& account, const std::string& password, const std::string& name, int money, int head, bool isRobot)
+int MySQLDataBase::registerAccount(AccountTable* accountData, CharacterDataTable* data)
 {
-	if (isAccountExist(account))
+	if (isAccountExist(accountData->mAccount))
 	{
 		return -1;
 	}
-	if (isNameExist(name))
+	if (isNameExist(data->mName))
 	{
 		return -2;
 	}
@@ -133,14 +117,15 @@ int MySQLDataBase::registerAccount(const std::string& account, const std::string
 	{
 		return -3;
 	}
+	accountData->mGUID = ++curMaxGUID;
+	data->mGUID = accountData->mGUID;
 	// 插入账号信息
-	if (!mSQLAccount->registerAccount(account, password, ++curMaxGUID, isRobot))
+	if (!mSQLAccount->registerAccount(accountData))
 	{
 		return -4;
 	}
-
 	// 向角色数据表中插入数据
-	if (!mSQLCharacterData->registeAccount(money, head, name, curMaxGUID))
+	if (!mSQLCharacterData->registeAccount(data))
 	{
 		return -5;
 	}

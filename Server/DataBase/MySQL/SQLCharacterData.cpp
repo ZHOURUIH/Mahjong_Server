@@ -6,7 +6,7 @@ const char* SQLCharacterData::COL_NAME = "name";
 const char* SQLCharacterData::COL_MONEY = "money";
 const char* SQLCharacterData::COL_HEAD = "head";
 
-bool SQLCharacterData::queryCharacterData(CharacterDataTable* tableData, CHAR_GUID guid)
+bool SQLCharacterData::queryCharacterData(CHAR_GUID guid, CharacterDataTable* tableData)
 {
 	std::string guidStr = StringUtility::intToString(guid);
 	char queryStr[256];
@@ -64,12 +64,12 @@ bool SQLCharacterData::isNameExist(const std::string& name)
 	return false;
 }
 
-bool SQLCharacterData::registeAccount(int money, int head, const std::string& name, int guid)
+bool SQLCharacterData::registeAccount(CharacterDataTable* data)
 {
-	std::string moneyStr = StringUtility::intToString(money);
-	std::string headStr = StringUtility::intToString(head);
-	std::string guidStr = StringUtility::intToString(guid);
-	std::string utf8Name = StringUtility::ANSIToUTF8(name);
+	std::string moneyStr = StringUtility::intToString(data->mMoney);
+	std::string headStr = StringUtility::intToString(data->mHead);
+	std::string guidStr = StringUtility::intToString(data->mGUID);
+	std::string utf8Name = StringUtility::ANSIToUTF8(data->mName);
 	char insertCharacterDataBuffer[256];
 	SPRINTF(insertCharacterDataBuffer, 256, "INSERT INTO %s VALUES(%s, %s, %s, %s)", mTableName, guidStr.c_str(), ("\"" + utf8Name + "\"").c_str(), moneyStr.c_str(), headStr.c_str());
 	int ret = mysql_query(mMySQL, insertCharacterDataBuffer);
