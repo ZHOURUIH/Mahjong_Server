@@ -82,6 +82,9 @@
     <Filter Include="DataBase\MySQL">
       <UniqueIdentifier>{7ff4808e-0fcb-4251-9d18-1bebb99e6603}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DebugSystem">
+      <UniqueIdentifier>{46a2a81a-3f77-44e7-8750-c5a7219183d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character\Character.cpp">
@@ -417,6 +420,9 @@
     </ClCompile>
     <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.cpp">
       <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugSystem\DebugSystem.cpp">
+      <Filter>DebugSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -971,6 +977,9 @@
     </ClInclude>
     <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.h">
       <Filter>CommandSystem\CommandCharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSystem\DebugSystem.h">
+      <Filter>DebugSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
