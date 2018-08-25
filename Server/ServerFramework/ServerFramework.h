@@ -12,6 +12,7 @@
 #include "MahjongRobotManager.h"
 #include "DataBase.h"
 #include "GameLog.h"
+#include "DebugSystem.h"
 
 #define GET_SYSTEM(type) getSystem<type>(TOSTRING(type))
 
@@ -21,6 +22,7 @@
 	mFrameComponentMap.insert(TOSTRING(type), component);}
 
 class FrameComponent;
+class txShareMemoryServer;
 class ServerFramework : public txSingleton<ServerFramework>
 {
 public:

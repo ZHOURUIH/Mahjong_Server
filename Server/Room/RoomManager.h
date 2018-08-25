@@ -18,7 +18,7 @@ public:
 	Room* getRoom(int id);
 	void destroyRoom(int id);
 	void destroyAllRoom();
-	const txMap<int, Room*>& getRoomList() { return mRoomList; }
+	txMap<int, Room*>& getRoomList() { return mRoomList; }
 protected:
 	txMap<int, Room*> mRoomList;
 	static int mRoomIDSeed;

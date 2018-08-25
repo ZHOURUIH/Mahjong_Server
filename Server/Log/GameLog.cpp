@@ -27,6 +27,44 @@ void GameLog::destroy()
 	TRACE_DELETE(mLogThread);
 }
 
+void GameLog::update(float elapsedTime)
+{
+	LOCK(mLogDelayLock);
+	int logCount = mLogDelayBuffer.size();
+	FOR_STL(mLogDelayBuffer, int i = 0; i < logCount; ++i)
+	{
+		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
+		if (mLog)
+		{
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+			std::cout << fullInfo << std::endl;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+			printf("%s\n", fullInfo.c_str());
+#endif
+		}
+		log(mLogDelayBuffer[i]);
+	}
+	END_FOR_STL(mLogDelayBuffer);
+	mLogDelayBuffer.clear();
+	UNLOCK(mLogDelayLock);
+
+	LOCK(mErrorDelayLock);
+	int errorCount = mErrorDelayBuffer.size();
+	FOR_STL(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
+	{
+		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+		std::cout << fullInfo << std::endl;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+		printf("%s\n", fullInfo.c_str());
+#endif
+		error(mErrorDelayBuffer[i]);
+	}
+	END_FOR_STL(mErrorDelayBuffer);
+	mErrorDelayBuffer.clear();
+	UNLOCK(mErrorDelayLock);
+}
+
 bool GameLog::writeLogFile(void* args)
 {
 	// 普通日志
@@ -93,26 +131,54 @@ void GameLog::error(const std::string& info)
 	UNLOCK(mErrorBufferLock);
 }
 
-void GameLog::logError(const std::string& info)
+void GameLog::logDelay(const std::string& info)
 {
-	std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-	std::cout << fullInfo << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-	printf("%s\n", fullInfo.c_str());
-#endif
-	mGameLog->error(fullInfo);
+	LOCK(mLogDelayLock);
+	mLogDelayBuffer.push_back(info);
+	UNLOCK(mLogDelayLock);
 }
-void GameLog::logInfo(const std::string& info)
+
+void GameLog::errorDelay(const std::string& info)
 {
-	std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
-	if (mLog)
+	LOCK(mErrorDelayLock);
+	mErrorDelayBuffer.push_back(info);
+	UNLOCK(mErrorDelayLock);
+}
+
+void GameLog::logError(const std::string& info, bool delay)
+{
+	if (!delay)
 	{
+		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 		std::cout << fullInfo << std::endl;
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		printf("%s\n", fullInfo.c_str());
 #endif
+		mGameLog->error(fullInfo);
 	}
-	mGameLog->log(fullInfo);
+	else
+	{
+		mGameLog->errorDelay(info);
+	}
+}
+void GameLog::logInfo(const std::string& info, bool delay)
+{
+	if (!delay)
+	{
+		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
+		if (mLog)
+		{
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+			std::cout << fullInfo << std::endl;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+			printf("%s\n", fullInfo.c_str());
+#endif
+		}
+		mGameLog->log(fullInfo);
+	}
+	else
+	{
+		mGameLog->logDelay(info);
+	}
 }

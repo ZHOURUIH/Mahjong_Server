@@ -1,8 +1,6 @@
 ﻿#include "Utility.h"
-#include "txCommandSystem.h"
 #include "txComponentFactory.h"
 #include "ServerFramework.h"
-#include "ServerBase.h"
 
 template<>ServerFramework *txSingleton<ServerFramework>::ms_Singleton = 0;
 
@@ -26,6 +24,7 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
 	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
+	REGISTE_FRAME_COMPONENT(DebugSystem);
 	ServerBase::notifyConstructDone();
 }
 

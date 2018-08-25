@@ -8,7 +8,15 @@
 
 void CommandCharacterManagerRobotLogin::execute()
 {
-	CommandCharacterManagerCreateCharacter* cmdCreate = NEW_CMD_INFO(cmdCreate);
+	CommandCharacterManagerCreateCharacter* cmdCreate = NULL;
+	if (mShowDebugInfo)
+	{
+		cmdCreate = NEW_CMD_INFO(cmdCreate);
+	}
+	else
+	{
+		cmdCreate = NEW_CMD(cmdCreate);
+	}
 	cmdCreate->mCharGUID = mGUID;
 	cmdCreate->mName = mName;
 	cmdCreate->mType = CT_MAHJONG_ROBOT;

@@ -18,7 +18,7 @@ protected:
 	std::string generateRobotAccount();
 	std::string generateRobotPassword();
 	std::string generateRobotName();
-	CharacterMahjongRobot* loginRobot(CHAR_GUID guid);
+	CharacterMahjongRobot* loginRobot(CHAR_GUID guid, bool showInfo = true);
 	CHAR_GUID registeRobot();
 protected:
 	txMap<CHAR_GUID, CharacterMahjongRobot*> mRobotList;

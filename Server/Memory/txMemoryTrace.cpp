@@ -42,7 +42,7 @@ txMemoryTrace::~txMemoryTrace()
 
 void txMemoryTrace::init()
 {
-	mShareMemoryServer->Create();
+	mShareMemoryServer->Create("MemoryTrace", 1024 * 1024);
 	mThread->start(mWriteOrDebug ? writeMemoryTrace : debugMemoryTrace, NULL, 1000);
 }
 
@@ -181,7 +181,10 @@ bool txMemoryTrace::writeMemoryTrace(void* args)
 	END_FOR_STL(mMemoryTypeIndex);
 	// 解锁列表
 	UNLOCK(mInfoLock);
-	mShareMemoryServer->WriteCmdData(1, serializer.getDataSize(), (void*)serializer.getBuffer());
+	DATA_HEADER header;
+	header.mCmd = MEMORY_TRACE_CMD;
+	header.mDataSize = serializer.getDataSize();
+	mShareMemoryServer->WriteCmdData(header, (void*)serializer.getBuffer());
 	return true;
 }
 

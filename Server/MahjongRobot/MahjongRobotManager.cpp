@@ -25,7 +25,7 @@ void MahjongRobotManager::init()
 	FOR_STL(mRobotAccountList, ; iter != iterEnd; ++iter)
 	{
 		// 登录机器人
-		loginRobot(iter->first);
+		loginRobot(iter->first, false);
 	}
 	END_FOR_STL(mRobotAccountList);
 }
@@ -115,7 +115,7 @@ std::string MahjongRobotManager::generateRobotPassword()
 	return "robot";
 }
 
-CharacterMahjongRobot* MahjongRobotManager::loginRobot(CHAR_GUID guid)
+CharacterMahjongRobot* MahjongRobotManager::loginRobot(CHAR_GUID guid, bool showInfo)
 {
 	if (mRobotList.contains(guid))
 	{
@@ -124,7 +124,15 @@ CharacterMahjongRobot* MahjongRobotManager::loginRobot(CHAR_GUID guid)
 	// 登录机器人
 	CharacterDataTable* data = TRACE_NEW(CharacterDataTable, data);
 	mMySQLDataBase->queryCharacterData(guid, data);
-	CommandCharacterManagerRobotLogin* cmdLogin = NEW_CMD_INFO(cmdLogin);
+	CommandCharacterManagerRobotLogin* cmdLogin = NULL;
+	if (showInfo)
+	{
+		cmdLogin = NEW_CMD_INFO(cmdLogin);
+	}
+	else
+	{
+		cmdLogin = NEW_CMD(cmdLogin);
+	}
 	cmdLogin->mGUID = guid;
 	cmdLogin->mName = data->mName;
 	cmdLogin->mMoney = data->mMoney;
@@ -132,6 +140,7 @@ CharacterMahjongRobot* MahjongRobotManager::loginRobot(CHAR_GUID guid)
 	mCommandSystem->pushCommand(cmdLogin, mCharacterManager);
 	CharacterMahjongRobot* robot = static_cast<CharacterMahjongRobot*>(mCharacterManager->getCharacter(guid));
 	mRobotList.insert(guid, robot);
+	TRACE_DELETE(data);
 	return robot;
 }
 

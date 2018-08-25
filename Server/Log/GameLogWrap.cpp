@@ -1,11 +1,11 @@
 ﻿#include "GameLog.h"
 #include "GameLogWrap.h"
 
-void GameLogWrap::logError(const std::string& info)
+void GameLogWrap::logError(const std::string& info, bool delay)
 {
-	GameLog::logError(info);
+	GameLog::logError(info, delay);
 }
-void GameLogWrap::logInfo(const std::string& info)
+void GameLogWrap::logInfo(const std::string& info, bool delay)
 {
-	GameLog::logInfo(info);
+	GameLog::logInfo(info, delay);
 }

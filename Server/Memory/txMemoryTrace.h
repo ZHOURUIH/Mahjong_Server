@@ -17,6 +17,7 @@
 // 虽然可以像new和delete一样的语法使用TRACE相关宏,但是不能直接在return后面加TRACE相关宏
 // TRACE相关宏也不能在构造函数初始化列表中使用
 const int MAX_COUNT = 1000;
+const int MEMORY_TRACE_CMD = 1;
 class txMemoryTrace : public FrameComponent
 {
 public:

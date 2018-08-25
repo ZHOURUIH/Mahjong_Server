@@ -11,14 +11,16 @@ public:
 	GameLog(const std::string& name);
 	virtual ~GameLog() { destroy(); }
 	virtual void init();
-	virtual void update(float elapsedTime) {}
+	virtual void update(float elapsedTime);
 	void destroy();
-	static void logError(const std::string& info);
-	static void logInfo(const std::string& info);
+	static void logError(const std::string& info, bool delay = false);
+	static void logInfo(const std::string& info, bool delay = false);
 	static void setLog(bool log) { mLog = log; }
 protected:
 	void log(const std::string& info);
 	void error(const std::string& info);
+	void logDelay(const std::string& info);
+	void errorDelay(const std::string& info);
 	static bool writeLogFile(void* args);
 public:
 	static volatile std::atomic<bool> mLog;
@@ -29,8 +31,12 @@ public:
 	txVector<std::string> mErrorBuffer;
 	txVector<std::string> mLogWriteBuffer;
 	txVector<std::string> mErrorWriteBuffer;
+	txVector<std::string> mLogDelayBuffer;
+	txVector<std::string> mErrorDelayBuffer;
 	ThreadLock mLogBufferLock;
 	ThreadLock mErrorBufferLock;
+	ThreadLock mLogDelayLock;
+	ThreadLock mErrorDelayLock;
 };
 
 #endif

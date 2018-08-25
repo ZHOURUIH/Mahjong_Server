@@ -131,6 +131,7 @@ bool SQLAccount::getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccoun
 				accountData->mIsRobot = StringUtility::stringToInt(getColumn(resultDataList[i], COL_IS_ROBOT)) > 0;
 				robotAccountList.insert(accountData->mGUID, accountData);
 			}
+			END_FOR_STL(resultDataList);
 			ret = true;
 		}
 		// 释放结果资源
