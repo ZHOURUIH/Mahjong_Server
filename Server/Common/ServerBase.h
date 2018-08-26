@@ -16,6 +16,7 @@ class ServerBase
 {
 public:
 	static void notifyConstructDone();
+	static void notifyComponentDeconstruct();
 public:
 	static ServerFramework* mServerFramework;
 	static ServerConfig* mServerConfig;

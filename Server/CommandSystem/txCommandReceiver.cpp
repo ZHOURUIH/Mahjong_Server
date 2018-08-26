@@ -16,7 +16,7 @@ txCommandReceiver::~txCommandReceiver()
 	if (framework != NULL)
 	{
 		txCommandSystem* commandSystem = framework->GET_SYSTEM(txCommandSystem);
-		if (commandSystem != NULL)
+		if (commandSystem != NULL && commandSystem != this)
 		{
 			commandSystem->notifyReceiverDestroied(this);
 		}

@@ -4,6 +4,8 @@
 #include "FrameComponent.h"
 
 const int DEBUG_SYSTEM_CMD = 2;
+const std::string ROOM_LIST = "RoomList";
+const std::string PLAYER_LIST = "PlayerList";
 
 class txShareMemoryServer;
 class DebugSystem : public FrameComponent

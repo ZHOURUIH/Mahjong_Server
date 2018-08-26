@@ -79,6 +79,10 @@ public:
 		checkLock();
 		mVector.resize(s);
 	}
+	bool contains(const T& value)
+	{
+		return std::find(begin(), end(), value) != end();
+	}
 protected:
 protected:
 	std::vector<T> mVector;

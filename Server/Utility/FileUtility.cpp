@@ -369,20 +369,17 @@ bool FileUtility::writeFile(std::string filePath, const char* buffer, int length
 
 bool FileUtility::writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append)
 {
-#ifdef _USE_SAFE_API
+	char* accesMode = append ? "ab+" : "wb+";
+#if RUN_PLATFORM == PLATFORM_WINDOWS
 	FILE* pFile = NULL;
-	fopen_s(&pFile, fileName.c_str(), "a+");
-#else
-	FILE* pFile = fopen(filePath.c_str(), "a+");
+	fopen_s(&pFile, fileName.c_str(), accesMode);
+#elif RUN_PLATFORM == PLATFORM_LINUX
+	FILE* pFile = fopen(filePath.c_str(), accesMode);
 #endif
 	if (pFile == NULL)
 	{
 		LOG_ERROR("error : can not write file, name : %s", fileName.c_str());
 		return false;
-	}
-	if (append)
-	{
-		fseek(pFile, 0, SEEK_END);
 	}
 	fwrite(buffer, sizeof(char), writeCount, pFile);
 	fclose(pFile);

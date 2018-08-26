@@ -45,6 +45,24 @@ public:
 #endif
 		return std::string(inet_ntoa(addr_conn.sin_addr));
 	}
+
+	static void print(const std::string& str)
+	{
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+		std::cout << str;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+		printf(str.c_str());
+#endif
+	}
+	static void input(std::string& str)
+	{
+		scanf_s(str.c_str());
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+		//std::cin >> str;
+#elif RUN_PLATFORM == PLATFORM_LINUX
+		scanf(str.c_str());
+#endif
+	}
 };
 
 #endif

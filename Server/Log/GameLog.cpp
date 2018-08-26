@@ -36,11 +36,7 @@ void GameLog::update(float elapsedTime)
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
 		if (mLog)
 		{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-			std::cout << fullInfo << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-			printf("%s\n", fullInfo.c_str());
-#endif
+			SystemUtility::print((fullInfo + "\n").c_str());
 		}
 		log(mLogDelayBuffer[i]);
 	}
@@ -53,11 +49,7 @@ void GameLog::update(float elapsedTime)
 	FOR_STL(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << fullInfo << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-		printf("%s\n", fullInfo.c_str());
-#endif
+		SystemUtility::print((fullInfo + "\n").c_str());
 		error(mErrorDelayBuffer[i]);
 	}
 	END_FOR_STL(mErrorDelayBuffer);
@@ -150,16 +142,18 @@ void GameLog::logError(const std::string& info, bool delay)
 	if (!delay)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << fullInfo << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-		printf("%s\n", fullInfo.c_str());
-#endif
-		mGameLog->error(fullInfo);
+		SystemUtility::print((fullInfo + "\n").c_str());
+		if (mGameLog != NULL)
+		{
+			mGameLog->error(fullInfo);
+		}
 	}
 	else
 	{
-		mGameLog->errorDelay(info);
+		if (mGameLog != NULL)
+		{
+			mGameLog->errorDelay(info);
+		}
 	}
 }
 void GameLog::logInfo(const std::string& info, bool delay)
@@ -169,16 +163,18 @@ void GameLog::logInfo(const std::string& info, bool delay)
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
 		if (mLog)
 		{
-#if RUN_PLATFORM == PLATFORM_WINDOWS
-			std::cout << fullInfo << std::endl;
-#elif RUN_PLATFORM == PLATFORM_LINUX
-			printf("%s\n", fullInfo.c_str());
-#endif
+			SystemUtility::print((fullInfo + "\n").c_str());
 		}
-		mGameLog->log(fullInfo);
+		if (mGameLog != NULL)
+		{
+			mGameLog->log(fullInfo);
+		}
 	}
 	else
 	{
-		mGameLog->logDelay(info);
+		if (mGameLog != NULL)
+		{
+			mGameLog->logDelay(info);
+		}
 	}
 }

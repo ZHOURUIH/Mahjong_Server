@@ -14,6 +14,7 @@ mStop(false)
 	mStartMiliTime = startTime.tv_sec * 1000 + startTime.tv_usec / 1000;
 #endif
 	REGISTE_FRAME_COMPONENT(ServerConfig);
+	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(CharacterManager);
 	REGISTE_FRAME_COMPONENT(txCommandSystem);
 	REGISTE_FRAME_COMPONENT(NetServer);
@@ -21,7 +22,6 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(MySQLDataBase);
 	REGISTE_FRAME_COMPONENT(txComponentFactoryManager);
 	REGISTE_FRAME_COMPONENT(DataBase);
-	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
 	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
 	REGISTE_FRAME_COMPONENT(DebugSystem);
@@ -48,26 +48,34 @@ bool ServerFramework::init()
 
 void ServerFramework::update(float elapsedTime)
 {
+	LOCK(mLock);
 	int count = mFrameComponentVector.size();
 	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
 		mFrameComponentVector[i]->update(elapsedTime);
 	}
 	END_FOR_STL(mFrameComponentVector);
+	UNLOCK(mLock);
 }
 
 void ServerFramework::destroy()
 {
+	LOCK(mLock);
 	int count = mFrameComponentVector.size();
 	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
-		TRACE_DELETE(mFrameComponentVector[i]);
+		// 销毁顺序与初始化顺序相反
+		std::string componentName = mFrameComponentVector[count - 1 - i]->getName();
+		TRACE_DELETE(mFrameComponentVector[count - 1 - i]);
+		mFrameComponentMap[componentName] = NULL;
+		ServerBase::notifyComponentDeconstruct();
 	}
 	END_FOR_STL(mFrameComponentVector);
 	mFrameComponentVector.clear();
 	mFrameComponentMap.clear();
 	destroyComponentFactory();
 	LOG_INFO("关闭服务器!");
+	UNLOCK(mLock);
 }
 
 void ServerFramework::launch()

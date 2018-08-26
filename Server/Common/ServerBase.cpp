@@ -27,3 +27,10 @@ void ServerBase::notifyConstructDone()
 	mGameLog = mServerFramework->GET_SYSTEM(GameLog);
 	mMahjongRobotManager = mServerFramework->GET_SYSTEM(MahjongRobotManager);
 }
+
+
+void ServerBase::notifyComponentDeconstruct()
+{
+	// 重新再获取一下所有组件
+	notifyConstructDone();
+}

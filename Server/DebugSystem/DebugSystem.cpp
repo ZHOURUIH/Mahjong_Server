@@ -9,6 +9,7 @@
 #include "CharacterData.h"
 #include "NetServer.h"
 #include "NetClient.h"
+#include "CharacterManager.h"
 
 DebugSystem::DebugSystem(const std::string& name)
 	:FrameComponent(name)
@@ -47,37 +48,72 @@ void DebugSystem::parseCmd(const std::string& param)
 	LOG_INFO("从控制台收到数据 : %s", param.c_str());
 	txVector<std::string> paramList;
 	StringUtility::split(param, "-", paramList);
-	if (paramList[0] == "RoomList")
+	std::string allInfo;
+	if (paramList[0] == ROOM_LIST)
 	{
-		std::string allRoomInfo;
 		auto& roomList = mRoomManager->getRoomList();
-		allRoomInfo += "room count : " + StringUtility::intToString(roomList.size()) + "\r\n";
+		allInfo += "room count : " + StringUtility::intToString(roomList.size()) + "\r\n";
 		auto iterRoom = roomList.begin();
 		auto iterRoomEnd = roomList.end();
 		FOR_STL(roomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 		{
-			allRoomInfo += "room id : " + StringUtility::intToString(iterRoom->second->getID()) + " -> ";
+			allInfo += "room id : " + StringUtility::intToString(iterRoom->second->getID()) + " -> ";
 			auto& playerList = iterRoom->second->getPlayerList();
 			auto iterPlayer = playerList.begin();
 			auto iterPlayerEnd = playerList.end();
 			FOR_STL(playerList, ;  iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
-				allRoomInfo += "player id : " + StringUtility::intToString(iterPlayer->second->getCharacterData()->mGUID) + ", ";
-				allRoomInfo += "player name : " + iterPlayer->second->getName() + ", ";
+				allInfo += "player id : " + StringUtility::intToString(iterPlayer->second->getCharacterData()->mGUID) + ", ";
+				allInfo += "player name : " + iterPlayer->second->getName() + ", ";
 				NetClient* client = mNetServer->getClient(iterPlayer->second->getClientGUID());
 				std::string ip = client != NULL ? client->getIP() : "null";
-				allRoomInfo += "player ip : " + ip;
-				allRoomInfo += ";  ";
+				allInfo += "player ip : " + ip;
+				allInfo += ";  ";
 			}
 			END_FOR_STL(playerList);
-			allRoomInfo += "\r\n";
+			allInfo += "\r\n";
 		}
 		END_FOR_STL(roomList);
-		DATA_HEADER writeHeader;
-		writeHeader.mCmd = DEBUG_SYSTEM_CMD;
-		writeHeader.mDataSize = allRoomInfo.length() + 1;
-		memcpy(writeHeader.mUserData, param.c_str(), mUserDataLength);
-		mMemoryServer->WriteCmdData(writeHeader, allRoomInfo.c_str());
 	}
+	else if (paramList[0] == PLAYER_LIST)
+	{
+		txMap<std::string, Character*> playerList;
+		if (paramList.contains("p"))
+		{
+			mCharacterManager->getCharacterListByType(CT_PLAYER, playerList);
+		}
+		txMap<std::string, Character*> robotList;
+		if (paramList.contains("r"))
+		{
+			mCharacterManager->getCharacterListByType(CT_MAHJONG_ROBOT, robotList);
+		}
+		auto iterRobot = robotList.begin();
+		auto iterRobotEnd = robotList.end();
+		FOR_STL(robotList, ; iterRobot != iterRobotEnd; ++iterRobot)
+		{
+			playerList.insert(iterRobot->first, iterRobot->second);
+		}
+		END_FOR_STL(robotList);
+
+		allInfo = "player count : " + StringUtility::intToString(playerList.size()) + "\r\n";
+		auto iterPlayer = playerList.begin();
+		auto iterPlayerEnd = playerList.end();
+		FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+		{
+			CharacterPlayer* player = static_cast<CharacterPlayer*>(iterPlayer->second);
+			allInfo += "player id : " + StringUtility::intToString(player->getCharacterData()->mGUID) + ", ";
+			allInfo += "player name : " + player->getName() + ", ";
+			NetClient* client = mNetServer->getClient(player->getClientGUID());
+			std::string ip = client != NULL ? client->getIP() : "null";
+			allInfo += "player ip : " + ip;
+			allInfo += "\r\n";
+		}
+		END_FOR_STL(playerList);
+	}
+	DATA_HEADER writeHeader;
+	writeHeader.mCmd = DEBUG_SYSTEM_CMD;
+	writeHeader.mDataSize = allInfo.length() + 1;
+	memcpy(writeHeader.mUserData, param.c_str(), mUserDataLength);
+	mMemoryServer->WriteCmdData(writeHeader, allInfo.c_str());
 	LOG_INFO("已发送数据");
 }

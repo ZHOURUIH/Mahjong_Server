@@ -84,7 +84,7 @@ void MahjongRobotManager::destroy()
 	auto iterEnd = mRobotList.end();
 	FOR_STL(mRobotList, ; iter != iterEnd; ++iter)
 	{
-		CommandCharacterManagerDestroyCharacter* cmd = NEW_CMD_INFO(cmd);
+		CommandCharacterManagerDestroyCharacter* cmd = NEW_CMD(cmd);
 		cmd->mGUID = iter->second->getGUID();
 		mCommandSystem->pushCommand(cmd, mCharacterManager);
 	}
