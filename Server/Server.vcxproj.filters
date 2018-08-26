@@ -1,985 +1,1000 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Character">
-      <UniqueIdentifier>{c636cf25-44ba-44aa-b3c3-6b4c88586f5c}</UniqueIdentifier>
+    <Filter Include="Game">
+      <UniqueIdentifier>{7e2cc296-3c08-4f95-85af-726400ee8dd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem">
-      <UniqueIdentifier>{4dfe3eaa-5b4e-4e77-88f9-a63bbbe72e3d}</UniqueIdentifier>
+    <Filter Include="Frame">
+      <UniqueIdentifier>{bb50531f-3f3f-4788-808f-472f213d8abd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{a044c63a-78c4-457b-aacc-25869893b460}</UniqueIdentifier>
+    <Filter Include="Frame\CommandSystem">
+      <UniqueIdentifier>{fbccae8d-ab95-4438-83a0-077c1030c423}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataBase">
-      <UniqueIdentifier>{15a52ba3-9673-426a-82a1-ca2b9dc2cfa6}</UniqueIdentifier>
+    <Filter Include="Frame\CommandSystem\CommandServer">
+      <UniqueIdentifier>{5bc5e824-8331-4c60-a0c2-62510910cec3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ServerFramework">
-      <UniqueIdentifier>{5f0ed812-4bd3-47bc-bc12-d4b4058d3171}</UniqueIdentifier>
+    <Filter Include="Frame\Common">
+      <UniqueIdentifier>{a282d0f2-4163-4c29-a788-208231dd86dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Socket">
-      <UniqueIdentifier>{a3d7229f-7c28-4072-9fae-657a38528b07}</UniqueIdentifier>
+    <Filter Include="Frame\Component">
+      <UniqueIdentifier>{32fd3086-7270-44bd-8b3d-31a71e993932}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Socket\Packet">
-      <UniqueIdentifier>{fc456ebe-85d8-4ce5-90da-7887816bb20c}</UniqueIdentifier>
+    <Filter Include="Frame\Component\BaseComponent">
+      <UniqueIdentifier>{81c9aad3-fc26-4220-88a5-4e91843ea464}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\BaseComponent">
-      <UniqueIdentifier>{224a9c2c-66a4-4623-8f49-2a9cc96aebbb}</UniqueIdentifier>
+    <Filter Include="Frame\Log">
+      <UniqueIdentifier>{7b0a6e25-2683-4fbd-957f-4d7710b0ecba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Socket\Packet\ClientServer">
-      <UniqueIdentifier>{09845bca-338f-4cf5-aa1e-a32b40f3cb7c}</UniqueIdentifier>
+    <Filter Include="Frame\Memory">
+      <UniqueIdentifier>{8ec29250-20fc-4ee9-88f5-0898a9a31228}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Socket\Packet\ServerClient">
-      <UniqueIdentifier>{579cb9fe-1f86-4ccb-9a97-d1e231b04f32}</UniqueIdentifier>
+    <Filter Include="Frame\Serialize">
+      <UniqueIdentifier>{9a30cc50-3fc1-47b7-b451-e1fa4df2e90f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Room">
-      <UniqueIdentifier>{24c07ab3-5bb2-4cf3-8f58-a499c6ab1c15}</UniqueIdentifier>
+    <Filter Include="Frame\ServerFramework">
+      <UniqueIdentifier>{55cd574c-d854-4ce3-a321-63178415fdd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common">
-      <UniqueIdentifier>{345ff81f-526e-4c6a-a4d6-b6d7ca8e8921}</UniqueIdentifier>
+    <Filter Include="Frame\STL">
+      <UniqueIdentifier>{39570171-939b-441a-8738-cdb354581991}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Net">
-      <UniqueIdentifier>{0766192b-3fa8-4e04-b652-591c94d26d88}</UniqueIdentifier>
+    <Filter Include="Frame\Thread">
+      <UniqueIdentifier>{fe25c988-cf1b-4eb0-818b-9a0160d22aa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem\CommandCharacterManager">
-      <UniqueIdentifier>{ab3a1eda-4b25-4893-ac61-bc5dcf6f9457}</UniqueIdentifier>
+    <Filter Include="Frame\Utility">
+      <UniqueIdentifier>{ef43b60c-920b-4453-9d37-a60006afa4d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem\CommandRoomManager">
-      <UniqueIdentifier>{b270f1b5-b814-4022-9689-204b1220b6bf}</UniqueIdentifier>
+    <Filter Include="Game\Character">
+      <UniqueIdentifier>{0e7177c4-56e4-4f04-a48e-9dd8292d47ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem\CommandCharacter">
-      <UniqueIdentifier>{bda0b299-f12e-4631-b28e-118eccd74082}</UniqueIdentifier>
+    <Filter Include="Game\CommandSystem">
+      <UniqueIdentifier>{36b1fa28-e72a-49c3-a048-d239db4a5a89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem\CommandRoom">
-      <UniqueIdentifier>{6da336b9-c2ab-448f-be55-89de37fa3bb7}</UniqueIdentifier>
+    <Filter Include="Game\CommandSystem\CommandCharacter">
+      <UniqueIdentifier>{3940f062-366e-4772-a93c-059c4c19568c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CommandSystem\CommandServer">
-      <UniqueIdentifier>{0b0839af-7b85-417b-aa92-d60a592dc7e9}</UniqueIdentifier>
+    <Filter Include="Game\CommandSystem\CommandCharacterManager">
+      <UniqueIdentifier>{78c1a3f0-c2e5-405b-ab8c-8c919b73b49b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="STL">
-      <UniqueIdentifier>{94e4fc1e-fdea-48f3-9ab0-299a78862f3e}</UniqueIdentifier>
+    <Filter Include="Game\CommandSystem\CommandRoom">
+      <UniqueIdentifier>{9d657f0d-872f-45c7-8c1f-54876043163b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Memory">
-      <UniqueIdentifier>{d55d7d09-eba2-4615-b7e2-8e88af1f9ad3}</UniqueIdentifier>
+    <Filter Include="Game\CommandSystem\CommandRoomManager">
+      <UniqueIdentifier>{54a03bd2-0410-4dd5-b572-4732be606308}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utility">
-      <UniqueIdentifier>{98501655-b1d2-48cb-9bfc-4d851fd4179e}</UniqueIdentifier>
+    <Filter Include="Game\Common">
+      <UniqueIdentifier>{46e9b421-b664-48c5-963b-46d854c2441b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Serialize">
-      <UniqueIdentifier>{a2ed4d05-3d8c-4231-a46f-265defab86a2}</UniqueIdentifier>
+    <Filter Include="Game\DataBase">
+      <UniqueIdentifier>{b01a78f5-7980-4c71-9aba-1eb0222f78b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Thread">
-      <UniqueIdentifier>{fc22492a-c8b8-4f1b-aa76-b559b28093f4}</UniqueIdentifier>
+    <Filter Include="Game\DataBase\MySQL">
+      <UniqueIdentifier>{6ec1b15f-b628-46be-b54a-0259951463fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Log">
-      <UniqueIdentifier>{a1af1d2b-ac24-4bb2-b448-31bc3de07e19}</UniqueIdentifier>
+    <Filter Include="Game\DataBase\ServerTable">
+      <UniqueIdentifier>{eb027330-ecc4-437d-814c-b1effe7b2baa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MahjongRobot">
-      <UniqueIdentifier>{a03bfd95-1cef-46e4-88af-926713fc720e}</UniqueIdentifier>
+    <Filter Include="Game\DebugSystem">
+      <UniqueIdentifier>{25aa5589-26e5-4f50-beec-664848ce9d2a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataBase\ServerTable">
-      <UniqueIdentifier>{d080675b-ea29-44f8-9480-b2568a6c473c}</UniqueIdentifier>
+    <Filter Include="Game\MahjongRobot">
+      <UniqueIdentifier>{a31dae2f-9650-4dcd-b5dd-d93725acc5c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataBase\MySQL">
-      <UniqueIdentifier>{7ff4808e-0fcb-4251-9d18-1bebb99e6603}</UniqueIdentifier>
+    <Filter Include="Game\Net">
+      <UniqueIdentifier>{a3d5f183-5526-4fd5-868a-34e4f60ca1e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DebugSystem">
-      <UniqueIdentifier>{46a2a81a-3f77-44e7-8750-c5a7219183d8}</UniqueIdentifier>
+    <Filter Include="Game\Room">
+      <UniqueIdentifier>{4939e9b9-7fff-4bca-bd2e-076f790fbca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Socket">
+      <UniqueIdentifier>{088ce6f5-a486-4863-938f-130e7e8a29ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Socket\Packet">
+      <UniqueIdentifier>{a8ba85f5-16f3-4ad9-8a99-a9df49e93412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Socket\Packet\ClientServer">
+      <UniqueIdentifier>{df6208b7-b89c-49fd-a219-b51748727c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Socket\Packet\ServerClient">
+      <UniqueIdentifier>{69055410-3ed6-417e-a7e9-3a99bcc9b6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Utility">
+      <UniqueIdentifier>{7fa713ec-918b-4fd0-9510-a1a9c4f1b139}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Character\Character.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\CharacterManager.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\CharacterNPC.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\CharacterPlayer.cpp">
-      <Filter>Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandSystem\txCommand.cpp">
-      <Filter>CommandSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandSystem\txCommandReceiver.cpp">
-      <Filter>CommandSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandSystem\txCommandSystem.cpp">
-      <Filter>CommandSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSHeartBeat.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSLogin.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Socket\PacketFactoryManager.cpp">
-      <Filter>Socket</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ServerFramework\ServerFramework.cpp">
-      <Filter>ServerFramework</Filter>
+    <ClCompile Include="Frame\CommandSystem\CommandPool.cpp">
+      <Filter>Frame\CommandSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Room\Room.cpp">
-      <Filter>Room</Filter>
+    <ClCompile Include="Frame\CommandSystem\txCommand.cpp">
+      <Filter>Frame\CommandSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Room\RoomManager.cpp">
-      <Filter>Room</Filter>
+    <ClCompile Include="Frame\CommandSystem\txCommandReceiver.cpp">
+      <Filter>Frame\CommandSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ServerConfig.cpp">
-      <Filter>Common</Filter>
+    <ClCompile Include="Frame\CommandSystem\txCommandSystem.cpp">
+      <Filter>Frame\CommandSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ServerBase.cpp">
-      <Filter>Common</Filter>
+    <ClCompile Include="Frame\CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp">
+      <Filter>Frame\CommandSystem\CommandServer</Filter>
     </ClCompile>
-    <ClCompile Include="Character\CharacterFactoryManager.cpp">
-      <Filter>Character</Filter>
+    <ClCompile Include="Frame\Common\ServerBase.cpp">
+      <Filter>Frame\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Component\BaseComponent\txComponent.cpp">
-      <Filter>Component\BaseComponent</Filter>
+    <ClCompile Include="Frame\Component\BaseComponent\txComponent.cpp">
+      <Filter>Frame\Component\BaseComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Component\txComponentFactoryManager.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Frame\Component\txComponentFactoryManager.cpp">
+      <Filter>Frame\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\txComponentOwner.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Frame\Component\txComponentOwner.cpp">
+      <Filter>Frame\Component</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClCompile Include="Frame\Log\GameLog.cpp">
+      <Filter>Frame\Log</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.cpp">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClCompile Include="Frame\Log\GameLogWrap.cpp">
+      <Filter>Frame\Log</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClCompile Include="Frame\Memory\txMemoryCheck.cpp">
+      <Filter>Frame\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClCompile Include="Frame\Memory\txMemoryTrace.cpp">
+      <Filter>Frame\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Frame\Memory\txShareMemoryServer.cpp">
+      <Filter>Frame\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Frame\Serialize\txSerializedData.cpp">
+      <Filter>Frame\Serialize</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClCompile Include="Frame\Serialize\txSerializer.cpp">
+      <Filter>Frame\Serialize</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Frame\ServerFramework\ServerFramework.cpp">
+      <Filter>Frame\ServerFramework</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomStartGame.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Frame\Thread\CustomThread.cpp">
+      <Filter>Frame\Thread</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Frame\Thread\ThreadLock.cpp">
+      <Filter>Frame\Thread</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.cpp">
-      <Filter>CommandSystem\CommandServer</Filter>
+    <ClCompile Include="Frame\Thread\TimeLock.cpp">
+      <Filter>Frame\Thread</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSRegister.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Frame\Utility\BinaryUtility.cpp">
+      <Filter>Frame\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClCompile Include="Frame\Utility\FileUtility.cpp">
+      <Filter>Frame\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSCheckName.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Frame\Utility\MathUtility.cpp">
+      <Filter>Frame\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSCheckAccount.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Frame\Utility\StringUtility.cpp">
+      <Filter>Frame\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSCreateRoom.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Frame\Utility\SystemUtility.cpp">
+      <Filter>Frame\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\Character\Character.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\Character\CharacterFactoryManager.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\Character\CharacterMahjongRobot.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\Character\CharacterManager.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\Character\CharacterNPC.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\Character\CharacterPlayer.cpp">
+      <Filter>Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSJoinRoom.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterAskAction.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSReady.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterAskDrop.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReady.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterContinueGame.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterDrop.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGang.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSLeaveRoom.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSDiceDone.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSRequestDrop.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGang.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterDrop.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSConfirmAction.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPass.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterGang.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPeng.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGang.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPass.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPeng.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPass.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterPass.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPeng.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterPeng.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterPlayerHu.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterReady.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Net\NetClient.cpp">
-      <Filter>Net</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Net\NetServer.cpp">
-      <Filter>Net</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.cpp">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSContinueGame.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.cpp">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.cpp">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.cpp">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.cpp">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSBackToMahjongHall.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Memory\txMemoryCheck.cpp">
-      <Filter>Memory</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Memory\txMemoryTrace.cpp">
-      <Filter>Memory</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Memory\txShareMemoryServer.cpp">
-      <Filter>Memory</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Serialize\txSerializedData.cpp">
-      <Filter>Serialize</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Serialize\txSerializer.cpp">
-      <Filter>Serialize</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Thread\CustomThread.cpp">
-      <Filter>Thread</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Thread\ThreadLock.cpp">
-      <Filter>Thread</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp">
+      <Filter>Game\CommandSystem\CommandRoomManager</Filter>
     </ClCompile>
-    <ClCompile Include="Thread\TimeLock.cpp">
-      <Filter>Thread</Filter>
+    <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp">
+      <Filter>Game\CommandSystem\CommandRoomManager</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\ServerUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\Common\ServerConfig.cpp">
+      <Filter>Game\Common</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandPool.cpp">
-      <Filter>CommandSystem</Filter>
+    <ClCompile Include="Game\DataBase\MySQL\MySQLDataBase.cpp">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\BinaryUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\DataBase\MySQL\SQLAccount.cpp">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClCompile>
-    <ClCompile Include="Log\GameLog.cpp">
-      <Filter>Log</Filter>
+    <ClCompile Include="Game\DataBase\MySQL\SQLCharacterData.cpp">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClCompile>
-    <ClCompile Include="Log\GameLogWrap.cpp">
-      <Filter>Log</Filter>
+    <ClCompile Include="Game\DataBase\MySQL\SQLTableBase.cpp">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\FileUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\DataBase\ServerTable\Data.cpp">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\MathUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\DataBase\ServerTable\DataBase.cpp">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\StringUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\DebugSystem\DebugSystem.cpp">
+      <Filter>Game\DebugSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\SystemUtility.cpp">
-      <Filter>Utility</Filter>
+    <ClCompile Include="Game\MahjongRobot\MahjongRobotManager.cpp">
+      <Filter>Game\MahjongRobot</Filter>
     </ClCompile>
-    <ClCompile Include="Socket\Packet\ClientServer\CSAddMahjongRobot.cpp">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClCompile Include="Game\Net\NetClient.cpp">
+      <Filter>Game\Net</Filter>
     </ClCompile>
-    <ClCompile Include="MahjongRobot\MahjongRobotManager.cpp">
-      <Filter>MahjongRobot</Filter>
+    <ClCompile Include="Game\Net\NetServer.cpp">
+      <Filter>Game\Net</Filter>
     </ClCompile>
-    <ClCompile Include="Character\CharacterMahjongRobot.cpp">
-      <Filter>Character</Filter>
+    <ClCompile Include="Game\Room\Room.cpp">
+      <Filter>Game\Room</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\MySQL\MySQLDataBase.cpp">
-      <Filter>DataBase\MySQL</Filter>
+    <ClCompile Include="Game\Room\RoomManager.cpp">
+      <Filter>Game\Room</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\ServerTable\Data.cpp">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\ServerTable\DataBase.cpp">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\MySQL\SQLAccount.cpp">
-      <Filter>DataBase\MySQL</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSCheckAccount.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\MySQL\SQLCharacterData.cpp">
-      <Filter>DataBase\MySQL</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSCheckName.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="DataBase\MySQL\SQLTableBase.cpp">
-      <Filter>DataBase\MySQL</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSConfirmAction.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.cpp">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSContinueGame.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
-    <ClCompile Include="DebugSystem\DebugSystem.cpp">
-      <Filter>DebugSystem</Filter>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSCreateRoom.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSDiceDone.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSHeartBeat.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSJoinRoom.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSLeaveRoom.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSLogin.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSReady.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSRegister.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSRequestDrop.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\PacketFactoryManager.cpp">
+      <Filter>Game\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Utility\ServerUtility.cpp">
+      <Filter>Game\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Character\Character.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\CommandDefine.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterData.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\CommandHeader.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterDefine.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\CommandPool.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterFactory.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\txCommand.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterManager.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\txCommandReceiver.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterNPC.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\txCommandSystem.h">
+      <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterPlayer.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h">
+      <Filter>Frame\CommandSystem\CommandServer</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandDefine.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Frame\Common\ServerBase.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandHeader.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Frame\Common\ServerCallback.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\txCommand.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Frame\Common\ServerDefine.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\txCommandReceiver.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Frame\Common\ServerEnum.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\txCommandSystem.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Frame\Common\StreamBuffer.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\Packet.h">
-      <Filter>Socket\Packet</Filter>
+    <ClInclude Include="Frame\Common\txFactoryManager.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\PacketHeader.h">
-      <Filter>Socket\Packet</Filter>
+    <ClInclude Include="Frame\Common\txSingleton.h">
+      <Filter>Frame\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSHeartBeat.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Frame\Component\BaseComponent\txComponent.h">
+      <Filter>Frame\Component\BaseComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSLogin.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Frame\Component\txComponentFactory.h">
+      <Filter>Frame\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCLoginRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Frame\Component\txComponentFactoryManager.h">
+      <Filter>Frame\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\PacketDefine.h">
-      <Filter>Socket</Filter>
+    <ClInclude Include="Frame\Component\txComponentHeader.h">
+      <Filter>Frame\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\PacketFactory.h">
-      <Filter>Socket</Filter>
+    <ClInclude Include="Frame\Component\txComponentOwner.h">
+      <Filter>Frame\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\PacketFactoryManager.h">
-      <Filter>Socket</Filter>
+    <ClInclude Include="Frame\Log\GameLog.h">
+      <Filter>Frame\Log</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCHeartBeatRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Frame\Log\GameLogWrap.h">
+      <Filter>Frame\Log</Filter>
     </ClInclude>
-    <ClInclude Include="ServerFramework\ServerFramework.h">
-      <Filter>ServerFramework</Filter>
+    <ClInclude Include="Frame\Memory\MemoryDefine.h">
+      <Filter>Frame\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Room\Room.h">
-      <Filter>Room</Filter>
+    <ClInclude Include="Frame\Memory\MemoryInfo.h">
+      <Filter>Frame\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Room\RoomManager.h">
-      <Filter>Room</Filter>
+    <ClInclude Include="Frame\Memory\txMemoryCheck.h">
+      <Filter>Frame\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ServerConfig.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Frame\Memory\txMemoryTrace.h">
+      <Filter>Frame\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ServerDefine.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Frame\Memory\txShareMemoryServer.h">
+      <Filter>Frame\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Common\txFactoryManager.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Frame\Serialize\txSerializedData.h">
+      <Filter>Frame\Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Common\txSingleton.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Frame\Serialize\txSerializer.h">
+      <Filter>Frame\Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ServerBase.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Frame\ServerFramework\FrameComponent.h">
+      <Filter>Frame\ServerFramework</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterFactoryManager.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Frame\ServerFramework\ServerFramework.h">
+      <Filter>Frame\ServerFramework</Filter>
     </ClInclude>
-    <ClInclude Include="Component\BaseComponent\txComponent.h">
-      <Filter>Component\BaseComponent</Filter>
+    <ClInclude Include="Frame\STL\txMap.h">
+      <Filter>Frame\STL</Filter>
     </ClInclude>
-    <ClInclude Include="Component\txComponentFactory.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Frame\STL\txSet.h">
+      <Filter>Frame\STL</Filter>
     </ClInclude>
-    <ClInclude Include="Component\txComponentFactoryManager.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Frame\STL\txSTLBase.h">
+      <Filter>Frame\STL</Filter>
     </ClInclude>
-    <ClInclude Include="Component\txComponentOwner.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Frame\STL\txVector.h">
+      <Filter>Frame\STL</Filter>
     </ClInclude>
-    <ClInclude Include="Component\txComponentHeader.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Frame\Thread\CustomThread.h">
+      <Filter>Frame\Thread</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClInclude Include="Frame\Thread\ThreadLock.h">
+      <Filter>Frame\Thread</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.h">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClInclude Include="Frame\Thread\TimeLock.h">
+      <Filter>Frame\Thread</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClInclude Include="Frame\Utility\BinaryUtility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h">
-      <Filter>CommandSystem\CommandRoomManager</Filter>
+    <ClInclude Include="Frame\Utility\FileUtility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Frame\Utility\MathUtility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCStartGame.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Frame\Utility\StringUtility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterStartGame.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Frame\Utility\SystemUtility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClInclude Include="Frame\Utility\Utility.h">
+      <Filter>Frame\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Character\Character.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomStartGame.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\Character\CharacterData.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\Character\CharacterDefine.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h">
-      <Filter>CommandSystem\CommandServer</Filter>
+    <ClInclude Include="Game\Character\CharacterFactory.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSRegister.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Character\CharacterFactoryManager.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCRegisterRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Character\CharacterMahjongRobot.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClInclude Include="Game\Character\CharacterManager.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCCheckNameRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Character\CharacterNPC.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSCheckName.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Character\CharacterPlayer.h">
+      <Filter>Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSCheckAccount.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterAskAction.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCCheckAccountRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterAskDrop.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSCreateRoom.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterContinueGame.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCCreateRoomRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterDrop.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGang.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyBanker.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerLeaveRoom.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerOffline.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCJoinRoomRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSJoinRoom.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSReady.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerReady.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGang.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCReadyRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReady.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerLeaveRoom.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSLeaveRoom.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerOffline.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCLeaveRoomRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPass.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Room\MahjongAction.h">
-      <Filter>Room</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPeng.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReady.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSDiceDone.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCDiceDoneRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterPass.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterPeng.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterPlayerHu.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartMahjong.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterReady.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyReorderMahjong.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Common\GameDefine.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterShowHua.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetStartDone.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerCreateCharacter.h">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskDrop.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerDestroyCharacter.h">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCAskDrop.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerNotifyPlayerOffline.h">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerPlayerLogin.h">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSRequestDrop.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.h">
+      <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomRequestDrop.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyGetMahjong.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterAskAction.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCAskAction.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterDrop.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerDrop.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerDrop.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h">
+      <Filter>Game\CommandSystem\CommandRoomManager</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCRequestDropRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h">
+      <Filter>Game\CommandSystem\CommandRoomManager</Filter>
     </ClInclude>
-    <ClInclude Include="Room\WaitActionInfo.h">
-      <Filter>Room</Filter>
+    <ClInclude Include="Game\Common\GameDefine.h">
+      <Filter>Game\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSConfirmAction.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Common\ServerConfig.h">
+      <Filter>Game\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomConfirmAction.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\DataBase\MySQL\MySQLDataBase.h">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterGang.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\MySQL\SQLAccount.h">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGang.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\MySQL\SQLCharacterData.h">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPass.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\MySQL\SQLTableBase.h">
+      <Filter>Game\DataBase\MySQL</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerPeng.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\ServerTable\Data.h">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPass.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\ServerTable\DataBase.h">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPeng.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\DataBase\ServerTable\DataDefine.h">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerGang.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\DataBase\ServerTable\DataFactory.h">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPeng.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\DataBase\ServerTable\DataPlayerInfo.h">
+      <Filter>Game\DataBase\ServerTable</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerGang.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\DebugSystem\DebugSystem.h">
+      <Filter>Game\DebugSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerHu.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\MahjongRobot\MahjongRobotManager.h">
+      <Filter>Game\MahjongRobot</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerPass.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Net\NetClient.h">
+      <Filter>Game\Net</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCPlayerPeng.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Net\NetServer.h">
+      <Filter>Game\Net</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerPass.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Room\HuInfo.h">
+      <Filter>Game\Room</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerAskAction.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Room\MahjongAction.h">
+      <Filter>Game\Room</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerAskDrop.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Room\Room.h">
+      <Filter>Game\Room</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Room\RoomManager.h">
+      <Filter>Game\Room</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Room\WaitActionInfo.h">
+      <Filter>Game\Room</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterPlayerHu.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCNotifyMahjongEnd.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSCheckAccount.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Room\HuInfo.h">
-      <Filter>Room</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSCheckName.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Net\NetClient.h">
-      <Filter>Net</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSConfirmAction.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Net\NetServer.h">
-      <Filter>Net</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSContinueGame.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSContinueGame.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSCreateRoom.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterContinueGame.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSDiceDone.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h">
-      <Filter>CommandSystem\CommandRoom</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSHeartBeat.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerContinueGame.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSJoinRoom.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCContinueGameRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSLeaveRoom.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerContinueGame.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSLogin.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSBackToMahjongHall.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSReady.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCBackToMahjongHallRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSRegister.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSRequestDrop.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCShowHua.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCAddMahjongRobotRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterShowHua.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCAskAction.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.h">
-      <Filter>CommandSystem\CommandCharacter</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCAskDrop.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCOtherPlayerShowHua.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCBackToMahjongHallRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\txMemoryCheck.h">
-      <Filter>Memory</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckAccountRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\txMemoryTrace.h">
-      <Filter>Memory</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckNameRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\txShareMemoryServer.h">
-      <Filter>Memory</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCContinueGameRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Serialize\txSerializedData.h">
-      <Filter>Serialize</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCCreateRoomRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Serialize\txSerializer.h">
-      <Filter>Serialize</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCDiceDoneRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Thread\CustomThread.h">
-      <Filter>Thread</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCHeartBeatRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Thread\ThreadLock.h">
-      <Filter>Thread</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCJoinRoomRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Thread\TimeLock.h">
-      <Filter>Thread</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCLeaveRoomRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="STL\txMap.h">
-      <Filter>STL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCLoginRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="STL\txSet.h">
-      <Filter>STL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyBanker.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="STL\txSTLBase.h">
-      <Filter>STL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetMahjong.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="STL\txVector.h">
-      <Filter>STL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetStartDone.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Utility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetStartMahjong.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\ServerUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyMahjongEnd.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\MemoryInfo.h">
-      <Filter>Memory</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyReorderMahjong.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\MemoryDefine.h">
-      <Filter>Memory</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerAskAction.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandPool.h">
-      <Filter>CommandSystem</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerAskDrop.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ServerEnum.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ServerCallback.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerContinueGame.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Common\StreamBuffer.h">
-      <Filter>Common</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerDrop.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\BinaryUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerGang.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="ServerFramework\FrameComponent.h">
-      <Filter>ServerFramework</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerJoinRoom.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Log\GameLog.h">
-      <Filter>Log</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerLeaveRoom.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Log\GameLogWrap.h">
-      <Filter>Log</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerOffline.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\FileUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerPass.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\MathUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerPeng.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\StringUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerReady.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\SystemUtility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerShowHua.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ClientServer\CSAddMahjongRobot.h">
-      <Filter>Socket\Packet\ClientServer</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCPlayerGang.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Socket\Packet\ServerClient\SCAddMahjongRobotRet.h">
-      <Filter>Socket\Packet\ServerClient</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCPlayerHu.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="MahjongRobot\MahjongRobotManager.h">
-      <Filter>MahjongRobot</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCPlayerPass.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Character\CharacterMahjongRobot.h">
-      <Filter>Character</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCPlayerPeng.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\MySQL\MySQLDataBase.h">
-      <Filter>DataBase\MySQL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCReadyRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\MySQL\SQLAccount.h">
-      <Filter>DataBase\MySQL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCRegisterRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\MySQL\SQLCharacterData.h">
-      <Filter>DataBase\MySQL</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCRequestDropRet.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\ServerTable\Data.h">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCShowHua.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\ServerTable\DataBase.h">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCStartGame.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\ServerTable\DataDefine.h">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClInclude Include="Game\Socket\Packet\Packet.h">
+      <Filter>Game\Socket\Packet</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\ServerTable\DataFactory.h">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClInclude Include="Game\Socket\Packet\PacketHeader.h">
+      <Filter>Game\Socket\Packet</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\ServerTable\DataPlayerInfo.h">
-      <Filter>DataBase\ServerTable</Filter>
+    <ClInclude Include="Game\Socket\PacketDefine.h">
+      <Filter>Game\Socket</Filter>
     </ClInclude>
-    <ClInclude Include="DataBase\MySQL\SQLTableBase.h">
-      <Filter>DataBase\MySQL</Filter>
+    <ClInclude Include="Game\Socket\PacketFactory.h">
+      <Filter>Game\Socket</Filter>
     </ClInclude>
-    <ClInclude Include="CommandSystem\CommandCharacterManager\CommandCharacterManagerRobotLogin.h">
-      <Filter>CommandSystem\CommandCharacterManager</Filter>
+    <ClInclude Include="Game\Socket\PacketFactoryManager.h">
+      <Filter>Game\Socket</Filter>
     </ClInclude>
-    <ClInclude Include="DebugSystem\DebugSystem.h">
-      <Filter>DebugSystem</Filter>
+    <ClInclude Include="Game\Utility\ServerUtility.h">
+      <Filter>Game\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
