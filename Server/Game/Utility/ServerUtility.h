@@ -2,12 +2,18 @@
 #define _SERVER_UTILITY_H_
 
 #include "GameDefine.h"
+#include "FrameComponent.h"
 
-class ServerUtility
+class ServerUtility : public FrameComponent
 {
 	static txMap<HU_TYPE, int> mMultipleList;
 public:
-	void init();
+	ServerUtility(const std::string& name)
+		:FrameComponent(name) {}
+	~ServerUtility() { destroy(); }
+	void destroy() {}
+	virtual void init();
+	virtual void update() {}
 	static bool isHua(MAHJONG mah){ return mah >= M_HUA_CHUN && mah <= M_HUA_JU; }
 	static bool canHu(txVector<MAHJONG>& handInMah, MAHJONG mah);
 	static bool canHu(txVector<MAHJONG>& handInMah);
@@ -23,10 +29,7 @@ public:
 	static void gangMahjong(txVector<MAHJONG>& handInMah, MAHJONG mah);
 	static txVector<HU_TYPE> generateHuType(txVector<MAHJONG>& handInMah, MAHJONG dropMah, txVector<PengGangInfo*>& gangPengList, bool isSelfGet, bool handInIncludeDrop);
 	static bool isQingYiSe(txVector<MAHJONG>& handInMah, txVector<MAHJONG>& pengList, txVector<MAHJONG>& gangList);
-	static int getHuMultiple(HU_TYPE type)
-	{
-		return mMultipleList.tryGet(type, 0);
-	}
+	static int getHuMultiple(HU_TYPE type){return mMultipleList.tryGet(type, 0);}
 };
 
 #endif

@@ -2,6 +2,8 @@
 #define _SC_START_GAME_H_
 
 #include "Packet.h"
+#include "GameDefine.h"
+#include "Utility.h"
 
 class SCStartGame : public Packet
 {
@@ -11,6 +13,10 @@ public:
 	virtual void fillParams()
 	{
 		pushArrayParam(mDice, 2);
+		pushParam(mPlayerCount);
+		pushArrayParam(mPlayerIDList, MAX_PLAYER);
+		pushArrayParam(mHandInList, MAX_PLAYER * MAX_HAND_IN_COUNT);
+		pushArrayParam(mHuaList, MAX_PLAYER * MAX_HUA_COUNT);
 	}
 	virtual std::string debugInfo()
 	{
@@ -21,8 +27,68 @@ public:
 		mDice[0] = dice0;
 		mDice[1] = dice1;
 	}
+	void setMahjongList(txVector<CHAR_GUID>& playerIDList, txVector<txVector<MAHJONG>>& handIn, txVector<txVector<MAHJONG>>& hua)
+	{
+		if (handIn.size() != hua.size() || handIn.size() != playerIDList.size())
+		{
+			LOG_ERROR("mahjong count not match hua count!");
+			return;
+		}
+		// 现将数组全部设置为无效值
+		for (int i = 0; i < MAX_PLAYER * MAX_HAND_IN_COUNT; ++i)
+		{
+			mHandInList[i] = M_MAX;
+		}
+		for (int i = 0; i < MAX_PLAYER * MAX_HUA_COUNT; ++i)
+		{
+			mHuaList[i] = M_MAX;
+		}
+		for (int i = 0; i < MAX_PLAYER; ++i)
+		{
+			mPlayerIDList[i] = INVALID_ID;
+		}
+		mPlayerCount = playerIDList.size();
+		FOR_STL(playerIDList, int i = 0; i < mPlayerCount; ++i)
+		{
+			mPlayerIDList[i] = playerIDList[i];
+		}
+		END_FOR_STL(playerIDList);
+		FOR_STL(handIn, int i = 0; i < mPlayerCount; ++i)
+		{
+			auto& playerHandIn = handIn[i];
+			int curHandInCount = playerHandIn.size();
+			FOR_STL(playerHandIn, int j = 0; j < curHandInCount; ++j)
+			{
+				if (playerHandIn[j] == M_MAX)
+				{
+					LOG_ERROR("start hand in mahjong error!");
+					return;
+				}
+				mHandInList[MAX_HAND_IN_COUNT * i + j] = playerHandIn[j];
+			}
+			END_FOR_STL(playerHandIn);
+			auto& playerHua = hua[i];
+			int curHuaCount = playerHua.size();
+			FOR_STL(playerHua, int j = 0; j < curHuaCount; ++j)
+			{
+				if (!ServerUtility::isHua(playerHua[j]))
+				{
+					LOG_ERROR("start hua mahjong error!");
+					return;
+				}
+				mHuaList[MAX_HUA_COUNT * i + j] = playerHua[j];
+			}
+			END_FOR_STL(playerHua);
+		}
+		END_FOR_STL(handIn);
+	}
 public:
 	char mDice[2];
+	char mPlayerCount;
+	CHAR_GUID mPlayerIDList[MAX_PLAYER];
+	// 以下数组是将二维数组合成了一维数组
+	char mHandInList[MAX_PLAYER * MAX_HAND_IN_COUNT];
+	char mHuaList[MAX_PLAYER * MAX_HUA_COUNT];
 };
 
 #endif

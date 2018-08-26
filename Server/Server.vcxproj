@@ -141,7 +141,6 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.cpp" />
@@ -168,7 +167,6 @@
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp" />
@@ -197,7 +195,6 @@
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSConfirmAction.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSContinueGame.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCreateRoom.cpp" />
-    <ClCompile Include="Game\Socket\Packet\ClientServer\CSDiceDone.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSHeartBeat.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSJoinRoom.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSLeaveRoom.cpp" />
@@ -277,7 +274,6 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h" />
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskDrop.h" />
@@ -304,7 +300,6 @@
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h" />
@@ -342,7 +337,6 @@
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSConfirmAction.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSContinueGame.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCreateRoom.h" />
-    <ClInclude Include="Game\Socket\Packet\ClientServer\CSDiceDone.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSHeartBeat.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSJoinRoom.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSLeaveRoom.h" />
@@ -360,7 +354,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckNameRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCContinueGameRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCreateRoomRet.h" />
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCDiceDoneRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCHeartBeatRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCJoinRoomRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCLeaveRoomRet.h" />

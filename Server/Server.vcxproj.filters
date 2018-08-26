@@ -229,9 +229,6 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
@@ -319,9 +316,6 @@
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
@@ -407,9 +401,6 @@
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCreateRoom.cpp">
-      <Filter>Game\Socket\Packet\ClientServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Socket\Packet\ClientServer\CSDiceDone.cpp">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSHeartBeat.cpp">
@@ -630,9 +621,6 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyDiceDone.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
@@ -718,9 +706,6 @@
       <Filter>Game\CommandSystem\CommandCharacterManager</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyDiceDone.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h">
@@ -831,9 +816,6 @@
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCreateRoom.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ClientServer\CSDiceDone.h">
-      <Filter>Game\Socket\Packet\ClientServer</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSHeartBeat.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
@@ -877,9 +859,6 @@
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCreateRoomRet.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCDiceDoneRet.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCHeartBeatRet.h">

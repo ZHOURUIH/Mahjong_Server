@@ -25,6 +25,7 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
 	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
 	REGISTE_FRAME_COMPONENT(DebugSystem);
+	REGISTE_FRAME_COMPONENT(ServerUtility);
 	ServerBase::notifyConstructDone();
 }
 

@@ -2,6 +2,7 @@
 #define _COMMAND_CHARACTER_START_GAME_H_
 
 #include "txCommand.h"
+#include "GameDefine.h"
 
 // 向玩家发送开始游戏(进入倒数)的消息
 class CommandCharacterStartGame : public txCommand
@@ -21,6 +22,9 @@ public:
 	}
 public:
 	char mDice[2];
+	txVector<CHAR_GUID> mPlayerIDList;
+	txVector<txVector<MAHJONG>> mHandInList;
+	txVector<txVector<MAHJONG>> mHuaList;
 };
 
 #endif

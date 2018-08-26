@@ -13,6 +13,7 @@
 #include "DataBase.h"
 #include "GameLog.h"
 #include "DebugSystem.h"
+#include "ServerUtility.h"
 
 #define GET_SYSTEM(type) getSystem<type>(TOSTRING(type))
 

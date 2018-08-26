@@ -21,7 +21,6 @@ public:
 	void joinRoom(CharacterPlayer* player);
 	void leaveRoom(CharacterPlayer* player);
 	void chooseContinueGame(CharacterPlayer* player, bool continueGame);
-	void notifyDiceDone(CHAR_GUID playerGUID);
 	void notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah);
 	void notifyPlayerGet(CharacterPlayer* player, MAHJONG mah);
 	void askPlayerAction(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah, const txVector<MahjongAction*>& actionList);
@@ -29,12 +28,11 @@ public:
 	CharacterPlayer* getMember(CHAR_GUID playerID);
 	CharacterPlayer* getMemberByPosition(CHAR_GUID playerID);
 	// 麻将相关
+	void generateStartMahjong(txVector<txVector<MAHJONG>>& handInMahjong, txVector<txVector<MAHJONG>>& huaMahjong);// 生成所有玩家开局拿的麻将
 	void setMahjongState(MAHJONG_PLAY_STATE state);
 	void requestDrop(CharacterPlayer* player, int index);
-	void notifyAllPlayerDiceDone();
 	bool isAllPlayerReady();
 	int getID()											{ return mID; }
-	bool isAllPlayerDiceDone()							{ return mDiceDoneCount == mMaxPlayer; }
 	bool isFull()										{ return (int)mPlayerList.size() >= mMaxPlayer; }
 	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
 	bool isPublic()										{ return mPublicRoom; }
@@ -65,7 +63,6 @@ protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限
 	bool mPublicRoom;									// 房间是否公开,公开的房间可以显示到房间列表中,不公开的房间只能通过输入房间号进入
-	int mDiceDoneCount;									// 骰子掷完的人数
 	txMap<CHAR_GUID, CharacterPlayer*> mPlayerList;		// 房间中的玩家列表
 	txMap<int, CharacterPlayer*> mPlayerPositionList;	// 房间中的玩家位置列列表,列表长度固定
 	MAHJONG_PLAY_STATE mPlayState;						// 当前麻将游戏的状态

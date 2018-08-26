@@ -27,7 +27,6 @@
 #include "CommandCharacterReorderMahjong.h"
 #include "CommandCharacterNotifyGetStartDone.h"
 #include "CommandCharacterAskDrop.h"
-#include "CommandCharacterNotifyDiceDone.h"
 #include "CommandCharacterGetMahjong.h"
 #include "CommandCharacterNotifyOtherPlayerGetMahjong.h"
 #include "CommandCharacterAskAction.h"

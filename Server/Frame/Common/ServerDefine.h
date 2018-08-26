@@ -121,7 +121,7 @@ if (thread != NULL_THREAD)		\
 #define INVALID_SOCKET (unsigned int)~0
 #endif
 
-#define INVALID_ID (unsigned long)~0
+#define INVALID_ID (unsigned int)~0
 #define INVALID_INT_ID -1
 
 #ifndef NULL
@@ -140,9 +140,9 @@ if (thread != NULL_THREAD)		\
 #define _FILE_LINE_ "File : " + std::string(__FILE__) + ", Line : " + LINE_STR(__LINE__)
 
 // 角色唯一ID
-typedef unsigned long CHAR_GUID;
+typedef unsigned int CHAR_GUID;
 // 每个客户端的唯一ID
-typedef unsigned long CLIENT_GUID;
+typedef unsigned int CLIENT_GUID;
 
 // 最大并发连接数为64
 #ifdef FD_SETSIZE

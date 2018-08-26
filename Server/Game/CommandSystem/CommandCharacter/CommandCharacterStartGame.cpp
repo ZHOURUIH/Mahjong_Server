@@ -9,6 +9,7 @@ void CommandCharacterStartGame::execute()
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	SCStartGame* startGamePacket = NetServer::createPacket(startGamePacket, PT_SC_START_GAME);
 	startGamePacket->setDice(mDice[0], mDice[1]);
+	startGamePacket->setMahjongList(mPlayerIDList, mHandInList, mHuaList);
 	mNetServer->sendMessage(startGamePacket, player);
 }
 

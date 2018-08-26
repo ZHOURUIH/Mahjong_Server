@@ -19,7 +19,6 @@ enum PACKET_TYPE
 	PT_CS_JOIN_ROOM,                        // 向服务器请求加入房间
 	PT_CS_READY,                            // 向服务器发送是否已准备
 	PT_CS_LEAVE_ROOM,                       // 向服务器请求离开房间
-	PT_CS_DICE_DONE,                        // 向服务器发送骰子
 	PT_CS_REQUEST_DROP,                     // 向服务器请求打出一张牌
 	PT_CS_CONFIRM_ACTION,                   // 向服务器确认麻将操作
 	PT_CS_CONTINUE_GAME,                    // 向服务器请求继续游戏
@@ -44,7 +43,6 @@ enum PACKET_TYPE
 	PT_SC_READY_RET,                        // 通知客户端玩家是否准备
 	PT_SC_OTHER_PLAYER_READY,               // 通知客户端有其他玩家准备
 	PT_SC_LEAVE_ROOM_RET,                   // 通知客户端离开房间的结果
-	PT_SC_DICE_DONE_RET,                    // 通知客户端掷骰子完毕,开始拿牌
 	PT_SC_NOTIFY_GET_START_MAHJONG,         // 通知客户端有玩家开局拿牌
 	PT_SC_NOTIFY_REORDER_MAHJONG,           // 通知客户端重新排列麻将
 	PT_SC_NOTIFY_GET_START_DONE,            // 通知客户端开局拿牌完毕
