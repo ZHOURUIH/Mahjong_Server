@@ -24,7 +24,7 @@ void CommandRoomNotifyPlayerJoin::execute()
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();
-	FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->second != joinPlayer)
 		{
@@ -33,7 +33,7 @@ void CommandRoomNotifyPlayerJoin::execute()
 			mCommandSystem->pushCommand(cmdJoin, iterPlayer->second);
 		}
 	}
-	END_FOR_STL(playerList);
+	END(playerList);
 	setResult(JRR_SUCCESS);
 }
 

@@ -31,7 +31,7 @@ void GameLog::update(float elapsedTime)
 {
 	LOCK(mLogDelayLock);
 	int logCount = mLogDelayBuffer.size();
-	FOR_STL(mLogDelayBuffer, int i = 0; i < logCount; ++i)
+	FOR(mLogDelayBuffer, int i = 0; i < logCount; ++i)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
 		if (mLog)
@@ -40,19 +40,19 @@ void GameLog::update(float elapsedTime)
 		}
 		log(mLogDelayBuffer[i]);
 	}
-	END_FOR_STL(mLogDelayBuffer);
+	END(mLogDelayBuffer);
 	mLogDelayBuffer.clear();
 	UNLOCK(mLogDelayLock);
 
 	LOCK(mErrorDelayLock);
 	int errorCount = mErrorDelayBuffer.size();
-	FOR_STL(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
+	FOR(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
 		SystemUtility::print((fullInfo + "\n").c_str());
 		error(mErrorDelayBuffer[i]);
 	}
-	END_FOR_STL(mErrorDelayBuffer);
+	END(mErrorDelayBuffer);
 	mErrorDelayBuffer.clear();
 	UNLOCK(mErrorDelayLock);
 }

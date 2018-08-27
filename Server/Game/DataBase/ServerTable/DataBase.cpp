@@ -21,11 +21,11 @@ void DataBase::destroyDataFactory()
 {
 	auto iterDataFactoryList = mDataFactoryList.begin();
 	auto iterDataFactoryListEnd = mDataFactoryList.end();
-	FOR_STL(mDataFactoryList, ; iterDataFactoryList != iterDataFactoryListEnd; ++iterDataFactoryList)
+	FOR(mDataFactoryList, ; iterDataFactoryList != iterDataFactoryListEnd; ++iterDataFactoryList)
 	{
 		TRACE_DELETE(iterDataFactoryList->second);
 	}
-	END_FOR_STL(mDataFactoryList);
+	END(mDataFactoryList);
 	mDataFactoryList.clear();
 }
 
@@ -96,19 +96,19 @@ void DataBase::loadAllDataFromFile()
 	// 读取配置文件，获得需要加载的所有数据列表
 	auto iter = mDataFactoryList.begin();
 	auto iterEnd = mDataFactoryList.end();
-	FOR_STL(mDataFactoryList, ; iter != iterEnd; ++iter)
+	FOR(mDataFactoryList, ; iter != iterEnd; ++iter)
 	{
 		const std::string& fileName = mDataDefineFile.tryGet(iter->first, EMPTY_STRING);
 		loadData(SystemUtility::getAvailableResourcePath(GAME_DATA_PATH) + fileName + ".table", true);
 	}
-	END_FOR_STL(mDataFactoryList);
+	END(mDataFactoryList);
 }
 
 void  DataBase::destroyAllData()
 {
 	auto iterStructList = mDataStructList.begin();
 	auto iterStructListEnd = mDataStructList.end();
-	FOR_STL(mDataStructList, ; iterStructList != iterStructListEnd; ++iterStructList)
+	FOR(mDataStructList, ; iterStructList != iterStructListEnd; ++iterStructList)
 	{
 		auto factory = getDataFactory(iterStructList->first);
 		if (factory != NULL)
@@ -125,7 +125,7 @@ void  DataBase::destroyAllData()
 			LOG_ERROR("error : can not find data factory : %d, DataBase::destroyAllData", (int)iterStructList->first);
 		}
 	}
-	END_FOR_STL(mDataStructList);
+	END(mDataStructList);
 	mDataStructList.clear();
 }
 
@@ -138,11 +138,11 @@ void DataBase::destroyData(DATA_TYPE type)
 		if (factory != NULL)
 		{
 			int dataCount = iterStructList->second.size();
-			FOR_STL(iterStructList->second, int i = 0; i < dataCount; ++i)
+			FOR(iterStructList->second, int i = 0; i < dataCount; ++i)
 			{
 				factory->destroyData((iterStructList->second)[i]);
 			}
-			END_FOR_STL(iterStructList->second);
+			END(iterStructList->second);
 			iterStructList->second.clear();
 		}
 		mDataStructList.erase(iterStructList);
@@ -227,11 +227,11 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	int dataSize = factory->getDataSize();
 	int writeBufferSize = dataSize * dataCount;
 	char* writeFileBuffer = TRACE_NEW_ARRAY(char, writeBufferSize, writeFileBuffer);
-	FOR_STL(iterData->second, int i = 0; i < dataCount; ++i)
+	FOR(iterData->second, int i = 0; i < dataCount; ++i)
 	{
 		iterData->second[i]->write(writeFileBuffer + i * dataSize, dataSize);
 	}
-	END_FOR_STL(iterData->second);
+	END(iterData->second);
 
 	// 将缓冲写入文件
 	auto iterDataDefine = mDataDefineFile.find(type);

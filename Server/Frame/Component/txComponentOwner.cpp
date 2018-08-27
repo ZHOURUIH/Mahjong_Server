@@ -15,7 +15,7 @@ void txComponentOwner::updatePreComponent(float elapsedTime)
 	if (mUsePreLateUpdate)
 	{
 		// 预更新基础类型组件
-		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+		FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
 			txComponent* component = mRootComponentList[i];
 			if (component->isNeedPreUpdate())
@@ -26,10 +26,10 @@ void txComponentOwner::updatePreComponent(float elapsedTime)
 				}
 			}
 		}
-		END_FOR_STL(mRootComponentList);
+		END(mRootComponentList);
 	}
 	// 更新基础类型组件
-	FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+	FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 	{
 		txComponent* component = mRootComponentList[i];
 		if (component->isNeedPreUpdate())
@@ -40,11 +40,11 @@ void txComponentOwner::updatePreComponent(float elapsedTime)
 			}
 		}
 	}
-	END_FOR_STL(mRootComponentList);
+	END(mRootComponentList);
 	if (mUsePreLateUpdate)
 	{
 		// 补充更新基础类型组件
-		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+		FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
 			txComponent* component = mRootComponentList[i];
 			if (component->isNeedPreUpdate())
@@ -63,7 +63,7 @@ void txComponentOwner::updatePreComponent(float elapsedTime)
 				}
 			}
 		}
-		END_FOR_STL(mRootComponentList);
+		END(mRootComponentList);
 	}
 }
 
@@ -77,7 +77,7 @@ void txComponentOwner::updateComponents(float elapsedTime)
 	if (mUsePreLateUpdate)
 	{
 		// 预更新基础类型组件
-		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+		FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
 			txComponent* component = mRootComponentList[i];
 			if (!component->isNeedPreUpdate())
@@ -88,10 +88,10 @@ void txComponentOwner::updateComponents(float elapsedTime)
 				}
 			}
 		}
-		END_FOR_STL(mRootComponentList);
+		END(mRootComponentList);
 	}
 	// 更新基础类型组件
-	FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+	FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 	{
 		txComponent* component = mRootComponentList[i];
 		if (!component->isNeedPreUpdate())
@@ -102,11 +102,11 @@ void txComponentOwner::updateComponents(float elapsedTime)
 			}
 		}
 	}
-	END_FOR_STL(mRootComponentList);
+	END(mRootComponentList);
 	if (mUsePreLateUpdate)
 	{
 		// 补充更新基础类型组件
-		FOR_STL(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
+		FOR(mRootComponentList, int i = 0; i < rootComponentCount; ++i)
 		{
 			txComponent* component = mRootComponentList[i];
 			if (!component->isNeedPreUpdate())
@@ -125,7 +125,7 @@ void txComponentOwner::updateComponents(float elapsedTime)
 				}
 			}
 		}
-		END_FOR_STL(mRootComponentList);
+		END(mRootComponentList);
 	}
 }
 
@@ -198,11 +198,11 @@ void txComponentOwner::destroyComponent(txComponent* component)
 	// 后序遍历销毁组件,从最底层组件开始销毁,此处不能用引用获得子组件列表,因为在销毁组件过程中会对列表进行修改
 	txVector<txComponent*> children = component->getChildComponentList();
 	int childCount = children.size();
-	FOR_STL(children, int i = 0; i < childCount; ++i)
+	FOR(children, int i = 0; i < childCount; ++i)
 	{
 		destroyComponent(children[i]);
 	}
-	END_FOR_STL(children);
+	END(children);
 	mComponentFactoryManager->getFactory(component->getType())->destroyComponent(component);
 }
 
@@ -220,7 +220,7 @@ void txComponentOwner::destroyAllComponents()
 {
 	auto iterType = mAllComponentTypeList.begin();
 	auto iterTypeEnd = mAllComponentTypeList.end();
-	FOR_STL(mAllComponentTypeList, ; iterType != iterTypeEnd; ++iterType)
+	FOR(mAllComponentTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
 		txComponentFactoryBase* factory = mComponentFactoryManager->getFactory(iterType->first);
 		if (factory == NULL)
@@ -231,13 +231,13 @@ void txComponentOwner::destroyAllComponents()
 		auto componentList = iterType->second;
 		auto iterCom = componentList.begin();
 		auto iterComEnd = componentList.end();
-		FOR_STL(componentList, ; iterCom != iterComEnd; ++iterCom)
+		FOR(componentList, ; iterCom != iterComEnd; ++iterCom)
 		{
 			factory->destroyComponent(iterCom->second);
 		}
-		END_FOR_STL(componentList);
+		END(componentList);
 	}
-	END_FOR_STL(mAllComponentTypeList);
+	END(mAllComponentTypeList);
 }
 
 txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::string& type)
@@ -248,7 +248,7 @@ txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::stri
 	{
 		auto iterTypeCom = iterBaseType->second.begin();
 		auto iterTypeComEnd = iterBaseType->second.end();
-		FOR_STL(iterBaseType->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
+		FOR(iterBaseType->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
 			if (component->isActive() && !component->isLockOneFrame())
@@ -256,7 +256,7 @@ txComponent* txComponentOwner::getFirstActiveComponentByBaseType(const std::stri
 				ret = component;
 			}
 		}
-		END_FOR_STL(iterBaseType->second);
+		END(iterBaseType->second);
 	}
 	return ret;
 }
@@ -269,7 +269,7 @@ txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 	{
 		auto iterTypeCom = iter->second.begin();
 		auto iterTypeComEnd = iter->second.end();
-		FOR_STL(iter->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
+		FOR(iter->second, ; iterTypeCom != iterTypeComEnd; ++iterTypeCom)
 		{
 			txComponent* component = iterTypeCom->second;
 			if (component->isActive() && !component->isLockOneFrame())
@@ -277,7 +277,7 @@ txComponent* txComponentOwner::getFirstActiveComponent(const std::string& type)
 				ret = component;
 			}
 		}
-		END_FOR_STL(iter->second);
+		END(iter->second);
 	}
 	return ret;
 }
@@ -337,7 +337,7 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 	if (component->getParentComponent() == NULL)
 	{
 		int componentCount = mRootComponentList.size();
-		FOR_STL(mRootComponentList, int i = 0; i < componentCount; ++i)
+		FOR(mRootComponentList, int i = 0; i < componentCount; ++i)
 		{
 			if (mRootComponentList[i] == component)
 			{
@@ -345,7 +345,7 @@ void txComponentOwner::removeComponentFromList(txComponent* component)
 				break;
 			}
 		}
-		END_FOR_STL(mRootComponentList);
+		END(mRootComponentList);
 	}
 
 	// 从所有组件列表中移除

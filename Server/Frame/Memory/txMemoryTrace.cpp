@@ -59,7 +59,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 		// 内存详细信息
 		auto iter = mMemoryInfo.begin();
 		auto iterEnd = mMemoryInfo.end();
-		FOR_STL(mMemoryInfo, ; iter != iterEnd; ++iter)
+		FOR(mMemoryInfo, ; iter != iterEnd; ++iter)
 		{
 			memorySize += iter->second.size;
 			if (!mShowDetail)
@@ -82,7 +82,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 			bool show = true;
 			auto iterKeyword = mIgnoreClassKeyword.begin();
 			auto iterKeywordEnd = mIgnoreClassKeyword.end();
-			FOR_STL (mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
+			FOR(mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
 			{
 				if (strstr(iter->second.type.c_str(), iterKeyword->c_str()) != NULL)
 				{
@@ -90,14 +90,14 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 					break;
 				}
 			}
-			END_FOR_STL(mIgnoreClassKeyword);
+			END(mIgnoreClassKeyword);
 
 			if (show)
 			{
 				LOG_INFO("size : %d, file : %s, line : %d, class : %s\n", iter->second.size, iter->second.file.c_str(), iter->second.line, iter->second.type.c_str());
 			}
 		}
-		END_FOR_STL(mMemoryInfo);
+		END(mMemoryInfo);
 		UNLOCK(mInfoLock);
 
 		if (mShowTotalCount)
@@ -109,7 +109,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 		{
 			auto iterType = mMemoryType.begin();
 			auto iterTypeEnd = mMemoryType.end();
-			FOR_STL (mMemoryType, ; iterType != iterTypeEnd; ++iterType)
+			FOR(mMemoryType, ; iterType != iterTypeEnd; ++iterType)
 			{
 				// 如果该类型已忽略,则不显示
 				if (mIgnoreClass.contains(iterType->first))
@@ -125,7 +125,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 				bool show = true;
 				auto iterKeyword = mIgnoreClassKeyword.begin();
 				auto iterKeywordEnd = mIgnoreClassKeyword.end();
-				FOR_STL (mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
+				FOR(mIgnoreClassKeyword, ; iterKeyword != iterKeywordEnd; ++iterKeyword)
 				{
 					if (strstr(iterType->first.c_str(), iterKeyword->c_str()) != NULL)
 					{
@@ -133,13 +133,13 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 						break;
 					}
 				}
-				END_FOR_STL(mIgnoreClassKeyword);
+				END(mIgnoreClassKeyword);
 				if (show)
 				{
 					LOG_INFO("%s : %d个, %.3fKB\n", iterType->first.c_str(), iterType->second.count, iterType->second.size / 1000.0f);
 				}
 			}
-			END_FOR_STL(mMemoryType);
+			END(mMemoryType);
 		}
 		LOG_INFO("---------------------------------------------memory info end-----------------------------------------------------------\n");
 	}
@@ -157,7 +157,7 @@ bool txMemoryTrace::writeMemoryTrace(void* args)
 	serializer.write(infoCount);
 	auto iterInfo = mMemoryInfo.begin();
 	auto iterInfoEnd = mMemoryInfo.end();
-	FOR_STL(mMemoryInfo, ; iterInfo != iterInfoEnd; ++iterInfo)
+	FOR(mMemoryInfo, ; iterInfo != iterInfoEnd; ++iterInfo)
 	{
 		serializer.write((int)iterInfo->first);						// 地址
 		serializer.write(iterInfo->second.size);				// 内存大小
@@ -165,20 +165,20 @@ bool txMemoryTrace::writeMemoryTrace(void* args)
 		serializer.write(iterInfo->second.line);				// 行号
 		serializer.writeString(iterInfo->second.type.c_str());	// 类型
 	}
-	END_FOR_STL(mMemoryInfo);
+	END(mMemoryInfo);
 
 	// 写入类型数量
 	int typeCount = mMemoryTypeIndex.size();
 	serializer.write(typeCount);
 	auto iterIndex = mMemoryTypeIndex.begin();
 	auto iterIndexEnd = mMemoryTypeIndex.end();
-	FOR_STL (mMemoryTypeIndex, ; iterIndex != iterIndexEnd; ++iterIndex)
+	FOR(mMemoryTypeIndex, ; iterIndex != iterIndexEnd; ++iterIndex)
 	{
 		serializer.writeString(mMemoryList[iterIndex->second].type.c_str());	// 类型名
 		serializer.write(mMemoryList[iterIndex->second].count);					// 个数
 		serializer.write(mMemoryList[iterIndex->second].size);					// 大小
 	}
-	END_FOR_STL(mMemoryTypeIndex);
+	END(mMemoryTypeIndex);
 	// 解锁列表
 	UNLOCK(mInfoLock);
 	DATA_HEADER header;

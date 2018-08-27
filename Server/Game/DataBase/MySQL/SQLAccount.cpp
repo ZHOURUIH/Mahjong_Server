@@ -122,7 +122,7 @@ bool SQLAccount::getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccoun
 			txVector<txMap<std::string, std::string>> resultDataList;
 			getResultData(resultDataList, result);
 			int count = resultDataList.size();
-			FOR_STL(resultDataList, int i = 0; i < count; ++i)
+			FOR(resultDataList, int i = 0; i < count; ++i)
 			{
 				AccountTable* accountData = TRACE_NEW(AccountTable, accountData);
 				accountData->mAccount = getColumn(resultDataList[i], COL_ACCOUNT);
@@ -131,7 +131,7 @@ bool SQLAccount::getAllRobotAccount(txMap<CHAR_GUID, AccountTable*>& robotAccoun
 				accountData->mIsRobot = StringUtility::stringToInt(getColumn(resultDataList[i], COL_IS_ROBOT)) > 0;
 				robotAccountList.insert(accountData->mGUID, accountData);
 			}
-			END_FOR_STL(resultDataList);
+			END(resultDataList);
 			ret = true;
 		}
 		// 释放结果资源

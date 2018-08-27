@@ -39,7 +39,7 @@ void FileUtility::findFiles(const std::string& path, txVector<std::string>& file
 #ifdef LOAD_FROM_ASSETMANAGER
 	txVector<std::string> fileName = ASS_getFileList((char*)path.c_str());
 	int fileCount = fileName.size();
-	FOR_STL(fileName, int i = 0; i < fileCount; ++i)
+	FOR(fileName, int i = 0; i < fileCount; ++i)
 	{
 		const std::string& fullName = fileName[i];
 		// 判断是否符合后缀过滤
@@ -60,7 +60,7 @@ void FileUtility::findFiles(const std::string& path, txVector<std::string>& file
 			files.push_back(fullName);
 		}
 	}
-	END_FOR_STL(fileName);
+	END(fileName);
 
 #else
 	DIR* pDir = opendir(path.c_str());

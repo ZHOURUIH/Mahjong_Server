@@ -19,7 +19,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 	{
 		auto iter = playerList.begin();
 		auto iterEnd = playerList.end();
-		FOR_STL(playerList, ; iter != iterEnd; ++iter)
+		FOR(playerList, ; iter != iterEnd; ++iter)
 		{
 			if (iter->second->getClientGUID() != INVALID_ID)
 			{
@@ -27,7 +27,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 				break;
 			}
 		}
-		END_FOR_STL(playerList);
+		END(playerList);
 	}
 	if (!isEmpty)
 	{
@@ -37,13 +37,13 @@ void CommandRoomNotifyPlayerLeave::execute()
 			auto& playerList = room->getPlayerList();
 			auto iterPlayer = playerList.begin();
 			auto iterPlayerEnd = playerList.end();
-			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+			FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD_INFO(cmdLeave);
 				cmdLeave->mLeavePlayerID = mPlayer->getGUID();
 				mCommandSystem->pushCommand(cmdLeave, iterPlayer->second);
 			}
-			END_FOR_STL(playerList);
+			END(playerList);
 		}
 	}
 	else
@@ -53,12 +53,12 @@ void CommandRoomNotifyPlayerLeave::execute()
 		auto tempList = playerList;
 		auto iter = tempList.begin();
 		auto iterEnd = tempList.end();
-		FOR_STL(tempList, ; iter != iterEnd; ++iter)
+		FOR(tempList, ; iter != iterEnd; ++iter)
 		{
 			CommandCharacterLeaveRoom* leave = NEW_CMD_INFO(leave);
 			mCommandSystem->pushCommand(leave, iter->second);
 		}
-		END_FOR_STL(tempList);
+		END(tempList);
 		// 销毁房间
 		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD_INFO(cmdDestroyRoom);
 		cmdDestroyRoom->mRoomID = room->getID();

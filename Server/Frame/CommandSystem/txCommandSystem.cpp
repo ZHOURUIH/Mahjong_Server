@@ -62,8 +62,9 @@ bool txCommandSystem::interruptCommand(int assignID)
 		return false;
 	}
 	syncCommandBuffer();
+	bool ret = false;
 	int count = mCommandBufferProcess.size();
-	FOR_STL(mCommandBufferProcess, int i = 0; i < count; ++i)
+	FOR(mCommandBufferProcess, int i = 0; i < count; ++i)
 	{
 		DelayCommand* delayInfo = mCommandBufferProcess[i];
 		if (delayInfo->mCommand->getAssignID() == assignID)
@@ -73,21 +74,27 @@ bool txCommandSystem::interruptCommand(int assignID)
 			mCommandPool->destroyCmd(delayInfo->mCommand);
 			mCommandBufferProcess.erase(mCommandBufferProcess.begin() + i);
 			TRACE_DELETE(delayInfo);
-			return true;
-		}
-	}
-	// 在即将执行的列表中查找
-	int count0 = mExecuteList.size();
-	FOR_STL(mExecuteList, int i = 0; i < count0; ++i)
-	{
-		if (mExecuteList[i]->mCommand->getAssignID() == assignID)
-		{
-			LOG_ERROR("cmd is in execute list! can not interrupt!");
+			ret = true;
 			break;
 		}
 	}
+	END(mCommandBufferProcess);
+	// 在即将执行的列表中查找
+	if (!ret)
+	{
+		int count0 = mExecuteList.size();
+		FOR(mExecuteList, int i = 0; i < count0; ++i)
+		{
+			if (mExecuteList[i]->mCommand->getAssignID() == assignID)
+			{
+				LOG_ERROR("cmd is in execute list! can not interrupt!");
+				break;
+			}
+		}
+		END(mExecuteList);
+	}
 	LOG_ERROR("not find cmd with assignID! %d", assignID);
-	return false;
+	return ret;
 }
 
 void txCommandSystem::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver)
@@ -168,12 +175,12 @@ void txCommandSystem::destroy()
 {
 	syncCommandBuffer();
 	int processSize = mCommandBufferProcess.size();
-	FOR_STL(mCommandBufferProcess, int i = 0; i < processSize; ++i)
+	FOR(mCommandBufferProcess, int i = 0; i < processSize; ++i)
 	{
 		mCommandPool->destroyCmd(mCommandBufferProcess[i]->mCommand);
 		TRACE_DELETE(mCommandBufferProcess[i]);
 	}
-	END_FOR_STL(mCommandBufferProcess);
+	END(mCommandBufferProcess);
 	mCommandBufferProcess.clear();
 
 	mCommandPool->destroy();
@@ -189,19 +196,20 @@ void txCommandSystem::notifyReceiverDestroied(txCommandReceiver* receiver)
 	// 先将命令
 	syncCommandBuffer();
 	// 同步列表中
-	for (int i = 0; i < mCommandBufferProcess.size(); ++i)
+	FOR (mCommandBufferProcess, int i = 0; i < mCommandBufferProcess.size(); ++i)
 	{
 		if (mCommandBufferProcess[i]->mReceiver == receiver)
 		{
 			mCommandPool->destroyCmd(mCommandBufferProcess[i]->mCommand);
 			TRACE_DELETE(mCommandBufferProcess[i]);
-			mCommandBufferProcess.erase(mCommandBufferProcess.begin() + i);
+			mCommandBufferProcess.erase(mCommandBufferProcess.begin() + i, false);
 			--i;
 		}
 	}
+	END(mCommandBufferProcess);
 	// 执行列表中
 	int count = mExecuteList.size();
-	for (int i = 0; i < count; ++i)
+	FOR (mExecuteList, int i = 0; i < count; ++i)
 	{
 		// 已执行或正在执行的命令不作判断,该列表无法删除元素,只能将接收者设置为null
 		if (mExecuteList[i] != NULL && mExecuteList[i]->mReceiver == receiver && mExecuteList[i]->mCommand->getExecuteState() == ES_NOT_EXECUTE)
@@ -209,6 +217,7 @@ void txCommandSystem::notifyReceiverDestroied(txCommandReceiver* receiver)
 			mExecuteList[i]->mReceiver = NULL;
 		}
 	}
+	END(mExecuteList);
 }
 
 void txCommandSystem::syncCommandBuffer()
@@ -217,10 +226,11 @@ void txCommandSystem::syncCommandBuffer()
 	int inputCount = mCommandBufferInput.size();
 	if (inputCount > 0)
 	{
-		for (int i = 0; i < inputCount; ++i)
+		FOR (mCommandBufferInput, int i = 0; i < inputCount; ++i)
 		{
 			mCommandBufferProcess.push_back(mCommandBufferInput[i]);
 		}
+		END(mCommandBufferInput);
 		mCommandBufferInput.clear();
 	}
 	UNLOCK(mBufferLock);

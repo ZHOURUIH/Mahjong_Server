@@ -9,7 +9,7 @@ void CommandRoomNotifyPlayerReady::execute()
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();
-	FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{
 		if (iterPlayer->first != mPlayerGUID)
 		{
@@ -19,7 +19,7 @@ void CommandRoomNotifyPlayerReady::execute()
 			mCommandSystem->pushCommand(cmd, iterPlayer->second);
 		}
 	}
-	END_FOR_STL(playerList);
+	END(playerList);
 	// 所有玩家都准备完毕后,通知房间开始游戏
 	if (room->isFull() && room->isAllPlayerReady())
 	{

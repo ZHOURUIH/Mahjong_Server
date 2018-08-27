@@ -56,7 +56,7 @@ public:
 		// 循环遍历,如果匹配到放入列表
 		auto itr = res.begin();
 		auto itrEnd = res.end();
-		FOR_STL(res, ; itr != itrEnd; ++itr)
+		FOR(res, ; itr != itrEnd; ++itr)
 		{
 			const std::string& name = itr->first;
 			if (findSubstr(name, dst, sensitive))
@@ -64,7 +64,7 @@ public:
 				retList.push_back(name);
 			}
 		}
-		END_FOR_STL(res);
+		END(res);
 		return retList;
 	}
 	static std::string checkString(const std::string& str, const std::string& valid);

@@ -11,11 +11,11 @@ void CommandCharacterMahjongEnd::execute()
 	txMap<CHAR_GUID, int> infoList;
 	auto iter = mMoneyDeltaList.begin();
 	auto iterEnd = mMoneyDeltaList.end();
-	FOR_STL(mMoneyDeltaList, ; iter != iterEnd; ++iter)
+	FOR(mMoneyDeltaList, ; iter != iterEnd; ++iter)
 	{
 		infoList.insert(iter->first->getGUID(), iter->second);
 	}
-	END_FOR_STL(mMoneyDeltaList);
+	END(mMoneyDeltaList);
 	SCNotifyMahjongEnd* mahjongEnd = NetServer::createPacket(mahjongEnd, PT_SC_NOTIFY_MAHJONG_END);
 	mahjongEnd->setList(infoList);
 	mNetServer->sendMessage(mahjongEnd, player);

@@ -48,39 +48,39 @@ public:
 			mPlayerIDList[i] = INVALID_ID;
 		}
 		mPlayerCount = playerIDList.size();
-		FOR_STL(playerIDList, int i = 0; i < mPlayerCount; ++i)
+		FOR(playerIDList, int i = 0; i < mPlayerCount; ++i)
 		{
 			mPlayerIDList[i] = playerIDList[i];
 		}
-		END_FOR_STL(playerIDList);
-		FOR_STL(handIn, int i = 0; i < mPlayerCount; ++i)
+		END(playerIDList);
+		FOR(handIn, int i = 0; i < mPlayerCount; ++i)
 		{
 			auto& playerHandIn = handIn[i];
 			int curHandInCount = playerHandIn.size();
-			FOR_STL(playerHandIn, int j = 0; j < curHandInCount; ++j)
+			FOR(playerHandIn, int j = 0; j < curHandInCount; ++j)
 			{
 				if (playerHandIn[j] == M_MAX)
 				{
 					LOG_ERROR("start hand in mahjong error!");
-					return;
+					break;
 				}
 				mHandInList[MAX_HAND_IN_COUNT * i + j] = playerHandIn[j];
 			}
-			END_FOR_STL(playerHandIn);
+			END(playerHandIn);
 			auto& playerHua = hua[i];
 			int curHuaCount = playerHua.size();
-			FOR_STL(playerHua, int j = 0; j < curHuaCount; ++j)
+			FOR(playerHua, int j = 0; j < curHuaCount; ++j)
 			{
 				if (!ServerUtility::isHua(playerHua[j]))
 				{
 					LOG_ERROR("start hua mahjong error!");
-					return;
+					break;
 				}
 				mHuaList[MAX_HUA_COUNT * i + j] = playerHua[j];
 			}
-			END_FOR_STL(playerHua);
+			END(playerHua);
 		}
-		END_FOR_STL(handIn);
+		END(handIn);
 	}
 public:
 	char mDice[2];

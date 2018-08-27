@@ -11,7 +11,7 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 	auto& playerChooseList = room->getPlayerChooseList();
 	auto iter = playerChooseList.begin();
 	auto iterEnd = playerChooseList.end();
-	FOR_STL(playerChooseList, ; iter != iterEnd; ++iter)
+	FOR(playerChooseList, ; iter != iterEnd; ++iter)
 	{
 		if (iter->second)
 		{
@@ -30,7 +30,7 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 			}
 		}
 	}
-	END_FOR_STL(playerChooseList);
+	END(playerChooseList);
 	// 不继续则玩家离开房间
 	if (!mContinue)
 	{

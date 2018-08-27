@@ -12,11 +12,11 @@ void RoomManager::update(float elapsedTime)
 {
 	auto iter = mRoomList.begin();
 	auto iterEnd = mRoomList.end();
-	FOR_STL(mRoomList, ; iter != iterEnd; ++iter)
+	FOR(mRoomList, ; iter != iterEnd; ++iter)
 	{
 		iter->second->update(elapsedTime);
 	}
-	END_FOR_STL(mRoomList);
+	END(mRoomList);
 }
 
 Room* RoomManager::createRoom()
@@ -46,10 +46,10 @@ void RoomManager::destroyAllRoom()
 {
 	auto iterRoom = mRoomList.begin();
 	auto iterRoomEnd = mRoomList.end();
-	FOR_STL(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
+	FOR(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 	{
 		TRACE_DELETE(iterRoom->second);
 	}
-	END_FOR_STL(mRoomList);
+	END(mRoomList);
 	mRoomList.clear();
 }

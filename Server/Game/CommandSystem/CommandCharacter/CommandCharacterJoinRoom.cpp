@@ -59,7 +59,7 @@ void CommandCharacterJoinRoom::execute()
 		auto& playerList = room->getPlayerList();
 		auto iter = playerList.begin();
 		auto iterEnd = playerList.end();
-		FOR_STL(playerList, ; iter != iterEnd; ++iter)
+		FOR(playerList, ; iter != iterEnd; ++iter)
 		{
 			// 玩家自己不再通知
 			if (iter->second != player)
@@ -69,7 +69,7 @@ void CommandCharacterJoinRoom::execute()
 				mCommandSystem->pushCommand(cmd, player);
 			}
 		}
-		END_FOR_STL(playerList);
+		END(playerList);
 	}
 }
 

@@ -18,7 +18,7 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 			txMap<CHAR_GUID, CharacterPlayer*>& playerList = room->getPlayerList();
 			auto iterPlayer = playerList.begin();
 			auto iterPlayerEnd = playerList.end();
-			FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+			FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				// 已经离线的玩家不作通知
 				if (iterPlayer->first != mPlayerID)
@@ -28,7 +28,7 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 					mCommandSystem->pushCommand(cmdPlayerOffline, iterPlayer->second);
 				}
 			}
-			END_FOR_STL(playerList);
+			END(playerList);
 			// 通知房间有玩家离线
 			CommandRoomNotifyPlayerOffline* cmdRoomOffline = NEW_CMD_INFO(cmdRoomOffline);
 			cmdRoomOffline->mOfflinePlayer = mPlayerID;

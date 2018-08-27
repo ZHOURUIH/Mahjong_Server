@@ -55,13 +55,13 @@ void DebugSystem::parseCmd(const std::string& param)
 		allInfo += "room count : " + StringUtility::intToString(roomList.size()) + "\r\n";
 		auto iterRoom = roomList.begin();
 		auto iterRoomEnd = roomList.end();
-		FOR_STL(roomList, ; iterRoom != iterRoomEnd; ++iterRoom)
+		FOR(roomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 		{
 			allInfo += "room id : " + StringUtility::intToString(iterRoom->second->getID()) + " -> ";
 			auto& playerList = iterRoom->second->getPlayerList();
 			auto iterPlayer = playerList.begin();
 			auto iterPlayerEnd = playerList.end();
-			FOR_STL(playerList, ;  iterPlayer != iterPlayerEnd; ++iterPlayer)
+			FOR(playerList, ;  iterPlayer != iterPlayerEnd; ++iterPlayer)
 			{
 				allInfo += "player id : " + StringUtility::intToString(iterPlayer->second->getCharacterData()->mGUID) + ", ";
 				allInfo += "player name : " + iterPlayer->second->getName() + ", ";
@@ -70,10 +70,10 @@ void DebugSystem::parseCmd(const std::string& param)
 				allInfo += "player ip : " + ip;
 				allInfo += ";  ";
 			}
-			END_FOR_STL(playerList);
+			END(playerList);
 			allInfo += "\r\n";
 		}
-		END_FOR_STL(roomList);
+		END(roomList);
 	}
 	else if (paramList[0] == PLAYER_LIST)
 	{
@@ -89,16 +89,16 @@ void DebugSystem::parseCmd(const std::string& param)
 		}
 		auto iterRobot = robotList.begin();
 		auto iterRobotEnd = robotList.end();
-		FOR_STL(robotList, ; iterRobot != iterRobotEnd; ++iterRobot)
+		FOR(robotList, ; iterRobot != iterRobotEnd; ++iterRobot)
 		{
 			playerList.insert(iterRobot->first, iterRobot->second);
 		}
-		END_FOR_STL(robotList);
+		END(robotList);
 
 		allInfo = "player count : " + StringUtility::intToString(playerList.size()) + "\r\n";
 		auto iterPlayer = playerList.begin();
 		auto iterPlayerEnd = playerList.end();
-		FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+		FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 		{
 			CharacterPlayer* player = static_cast<CharacterPlayer*>(iterPlayer->second);
 			allInfo += "player id : " + StringUtility::intToString(player->getCharacterData()->mGUID) + ", ";
@@ -108,7 +108,7 @@ void DebugSystem::parseCmd(const std::string& param)
 			allInfo += "player ip : " + ip;
 			allInfo += "\r\n";
 		}
-		END_FOR_STL(playerList);
+		END(playerList);
 	}
 	DATA_HEADER writeHeader;
 	writeHeader.mCmd = DEBUG_SYSTEM_CMD;

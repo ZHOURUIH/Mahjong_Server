@@ -74,7 +74,7 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 	// 将数据字符串拆分出来,放入valueList中
 	txMap<std::string, std::string> valueList;
 	int lineCount = lineList.size();
-	FOR_STL(lineList, int i = 0; i < lineCount; ++i)
+	FOR(lineList, int i = 0; i < lineCount; ++i)
 	{
 		const std::string& lineString = lineList[i];
 		// 首先去掉所有的空格和制表符
@@ -105,12 +105,12 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 			}
 		}
 	}
-	END_FOR_STL(lineList);
+	END(lineList);
 	TRACE_DELETE_ARRAY(tempBuffer);
 	// 解析valueList中的数据字符串
 	auto iterValue = valueList.begin();
 	auto iterValueEnd = valueList.end();
-	FOR_STL(valueList, ; iterValue != iterValueEnd; ++iterValue)
+	FOR(valueList, ; iterValue != iterValueEnd; ++iterValue)
 	{
 		if (floatParam)
 		{
@@ -129,5 +129,5 @@ void ServerConfig::readConfig(const std::string& fileName, bool floatParam)
 			}
 		}
 	}
-	END_FOR_STL(valueList);
+	END(valueList);
 }

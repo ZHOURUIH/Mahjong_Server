@@ -29,11 +29,11 @@ void NetServer::destroy()
 {
 	auto iterClient = mClientList.begin();
 	auto iterClientEnd = mClientList.end();
-	FOR_STL(mClientList, ; iterClient != iterClientEnd; ++iterClient)
+	FOR(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		TRACE_DELETE(iterClient->second);
 	}
-	END_FOR_STL(mClientList);
+	END(mClientList);
 	mClientList.clear();
 	TRACE_DELETE(mPacketFactoryManager);
 	TRACE_DELETE(mReceiveThread);
@@ -161,7 +161,7 @@ void NetServer::processSend()
 	{
 		auto iterClient = mClientList.begin();
 		auto iterClientEnd = mClientList.end();
-		FOR_STL(mClientList, ; iterClient != iterClientEnd;)
+		FOR(mClientList, ; iterClient != iterClientEnd;)
 		{
 			FD_ZERO(&fdwrite);
 			selectedClient.clear();
@@ -181,7 +181,7 @@ void NetServer::processSend()
 			if (selectRet > 0)
 			{
 				int selectedClientCount = selectedClient.size();
-				FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
+				FOR(selectedClient, int i = 0; i < selectedClientCount; ++i)
 				{
 					if (FD_ISSET(selectedClient[i]->getSocket(), &fdwrite))
 					{
@@ -208,10 +208,10 @@ void NetServer::processSend()
 						}
 					}
 				}
-				END_FOR_STL(selectedClient);
+				END(selectedClient);
 			}
 		}
-		END_FOR_STL(mClientList);
+		END(mClientList);
 	}
 	catch (std::exception e)
 	{
@@ -234,7 +234,7 @@ void NetServer::processRecv()
 	{
 		auto iterClient = mClientList.begin();
 		auto iterClientEnd = mClientList.end();
-		FOR_STL(mClientList, ; iterClient != iterClientEnd;)
+		FOR(mClientList, ; iterClient != iterClientEnd;)
 		{
 			FD_ZERO(&fdread);
 			selectedClient.clear();
@@ -249,7 +249,7 @@ void NetServer::processRecv()
 			if (selectRet > 0)
 			{
 				int selectedClientCount = selectedClient.size();
-				FOR_STL(selectedClient, int i = 0; i < selectedClientCount; ++i)
+				FOR(selectedClient, int i = 0; i < selectedClientCount; ++i)
 				{
 					if (!selectedClient[i]->isDeadClient() && FD_ISSET(selectedClient[i]->getSocket(), &fdread))
 					{
@@ -273,10 +273,10 @@ void NetServer::processRecv()
 						}
 					}
 				}
-				END_FOR_STL(selectedClient);
+				END(selectedClient);
 			}
 		}
-		END_FOR_STL(mClientList);
+		END(mClientList);
 	}
 	catch (std::exception e)
 	{
@@ -296,7 +296,7 @@ void NetServer::update(float elapsedTime)
 	txVector<CLIENT_GUID> logoutClientList;
 	auto iterClient = tempClientList.begin();
 	auto iterClientEnd = tempClientList.end();
-	FOR_STL(tempClientList, ; iterClient != iterClientEnd; ++iterClient)
+	FOR(tempClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
 		// 将已经死亡的客户端放入列表
@@ -305,14 +305,14 @@ void NetServer::update(float elapsedTime)
 			logoutClientList.push_back(iterClient->first);
 		}
 	}
-	END_FOR_STL(tempClientList);
+	END(tempClientList);
 
 	int logoutCount = logoutClientList.size();
-	FOR_STL(logoutClientList, int i = 0; i < logoutCount; ++i)
+	FOR(logoutClientList, int i = 0; i < logoutCount; ++i)
 	{
 		disconnectSocket(logoutClientList[i]);
 	}
-	END_FOR_STL(logoutClientList);
+	END(logoutClientList);
 	mCurServerHeartBeatTime += elapsedTime;
 	if (mCurServerHeartBeatTime >= mServerHeartBeatTimeout)
 	{

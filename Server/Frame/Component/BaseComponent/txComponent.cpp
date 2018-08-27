@@ -18,11 +18,11 @@ void txComponent::destroy()
 {
 	// 首先通知所有的子组件
 	int childCount = mChildComponentList.size();
-	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+	FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->notifyParentDestroied();
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 	mChildComponentList.clear();
 	mChildComponentMap.clear();
 
@@ -47,11 +47,11 @@ void txComponent::preUpdate(float elapsedTime)
 	}
 	// 预更新子组件
 	int childCount = mChildComponentList.size();
-	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+	FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->preUpdate(elapsedTime);
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 }
 
 void txComponent::update(float elapsedTime)
@@ -81,11 +81,11 @@ void txComponent::lateUpdate(float elapsedTime)
 	}
 	// 后更新子组件
 	int childCount = mChildComponentList.size();
-	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+	FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->lateUpdate(elapsedTime);
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 }
 
 bool txComponent::rename(const std::string& newName)
@@ -138,7 +138,7 @@ bool txComponent::removeChild(txComponent* component)
 	}
 	auto iterList = mChildComponentList.begin();
 	auto iterListEnd = mChildComponentList.end();
-	FOR_STL(mChildComponentList, ; iterList != iterListEnd; ++iterList)
+	FOR(mChildComponentList, ; iterList != iterListEnd; ++iterList)
 	{
 		if (*iterList == component)
 		{
@@ -146,7 +146,7 @@ bool txComponent::removeChild(txComponent* component)
 			break;
 		}
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 	return true;
 }
 
@@ -174,11 +174,11 @@ void txComponent::detachOwnerParentComponent(bool detachOwnerOnly)
 	}
 	// 使自己所有的子窗口都断开与布局的联系,但是不能打断子窗口的父子关系
 	int childCount = mChildComponentList.size();
-	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+	FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		mChildComponentList[i]->detachOwnerParentComponent(true);
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 }
 // 建立与布局和父窗口的联系,使该窗口成为布局中的一个窗口,该窗口下的所有子窗口也会重建与布局的联系,父子关系仍然存在
 void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, int childPos)
@@ -189,11 +189,11 @@ void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponen
 		mComponentOwner->notifyComponentAttached(this);
 		// 使自己所有的子窗口都建立与布局的联系
 		int childCount = mChildComponentList.size();
-		FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+		FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 		{
 			mChildComponentList[i]->attachOwnerParentComponent(owner, NULL, -1);
 		}
-		END_FOR_STL(mChildComponentList);
+		END(mChildComponentList);
 	}
 	if (parent != NULL && mParent == NULL)
 	{
@@ -211,7 +211,7 @@ int txComponent::getChildPos(txComponent* window)
 	// 首先查找当前窗口的位置
 	int index = -1;
 	int childCount = mChildComponentList.size();
-	FOR_STL(mChildComponentList, int i = 0; i < childCount; ++i)
+	FOR(mChildComponentList, int i = 0; i < childCount; ++i)
 	{
 		if (window == mChildComponentList[i])
 		{
@@ -219,7 +219,7 @@ int txComponent::getChildPos(txComponent* window)
 			break;
 		}
 	}
-	END_FOR_STL(mChildComponentList);
+	END(mChildComponentList);
 	return index;
 }
 

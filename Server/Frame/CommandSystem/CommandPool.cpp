@@ -7,31 +7,31 @@ void CommandPool::destroy()
 {
 	auto iterUse = mInusedList.begin();
 	auto iterUseEnd = mInusedList.end();
-	FOR_STL(mInusedList, ; iterUse != iterUseEnd; ++iterUse)
+	FOR(mInusedList, ; iterUse != iterUseEnd; ++iterUse)
 	{
 		int count = iterUse->second.size();
-		FOR_STL(iterUse->second, int i = 0; i < count; ++i)
+		FOR(iterUse->second, int i = 0; i < count; ++i)
 		{
 			TRACE_DELETE(iterUse->second[i]);
 		}
-		END_FOR_STL(iterUse->second);
+		END(iterUse->second);
 		iterUse->second.clear();
 	}
-	END_FOR_STL(mInusedList);
+	END(mInusedList);
 
 	auto iterUnuse = mUnusedList.begin();
 	auto iterUnuseEnd = mUnusedList.end();
-	FOR_STL(mUnusedList, ; iterUnuse != iterUnuseEnd; ++iterUnuse)
+	FOR(mUnusedList, ; iterUnuse != iterUnuseEnd; ++iterUnuse)
 	{
 		int count = iterUnuse->second.size();
-		FOR_STL(iterUnuse->second, int i = 0; i < count; ++i)
+		FOR(iterUnuse->second, int i = 0; i < count; ++i)
 		{
 			TRACE_DELETE(iterUnuse->second[i]);
 		}
-		END_FOR_STL(iterUnuse->second);
+		END(iterUnuse->second);
 		iterUnuse->second.clear();
 	}
-	END_FOR_STL(mUnusedList);
+	END(mUnusedList);
 }
 
 void CommandPool::destroyCmd(txCommand* cmd)

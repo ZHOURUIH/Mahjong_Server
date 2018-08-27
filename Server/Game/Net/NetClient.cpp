@@ -133,7 +133,7 @@ void NetClient::update(float elapsedTime)
 	}
 
 	int packetCount = packetList.size();
-	FOR_STL(packetList, int i = 0; i < packetCount; ++i)
+	FOR(packetList, int i = 0; i < packetCount; ++i)
 	{
 		Packet* packetReply = packetList[i];
 		if (NetServer::getOutputLog())
@@ -143,7 +143,7 @@ void NetClient::update(float elapsedTime)
 		packetReply->execute();
 		NetServer::destroyPacket(packetReply);
 	}
-	END_FOR_STL(packetList);
+	END(packetList);
 
 	mHeartBeatTime += elapsedTime;
 	mConnectTime += elapsedTime;

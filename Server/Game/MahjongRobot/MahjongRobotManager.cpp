@@ -22,12 +22,12 @@ void MahjongRobotManager::init()
 	// 登录全部机器人
 	auto iter = mRobotAccountList.begin();
 	auto iterEnd = mRobotAccountList.end();
-	FOR_STL(mRobotAccountList, ; iter != iterEnd; ++iter)
+	FOR(mRobotAccountList, ; iter != iterEnd; ++iter)
 	{
 		// 登录机器人
 		loginRobot(iter->first, false);
 	}
-	END_FOR_STL(mRobotAccountList);
+	END(mRobotAccountList);
 }
 
 CharacterMahjongRobot* MahjongRobotManager::createRobot()
@@ -36,7 +36,7 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 	// 查找是否有已经创建的没有在房间中的机器人
 	auto iter = mRobotList.begin();
 	auto iterEnd = mRobotList.end();
-	FOR_STL(mRobotList, ; iter != iterEnd; ++iter)
+	FOR(mRobotList, ; iter != iterEnd; ++iter)
 	{
 		if (iter->second->getCharacterData()->mRoomID == INVALID_INT_ID)
 		{
@@ -44,7 +44,7 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 			break;
 		}
 	}
-	END_FOR_STL(mRobotList);
+	END(mRobotList);
 
 	// 如果找不到可用的机器人,则注册新的机器人,因为启动时就登录了所有已注册的机器人,所以此处只能再注册新的机器人
 	if (robot == NULL)
@@ -61,7 +61,7 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 		}
 		txVector<CharacterMahjongRobot*> robotList;
 		int newRobotCount = newRobotGUIDList.size();
-		FOR_STL(newRobotGUIDList, int i = 0; i < newRobotCount; ++i)
+		FOR(newRobotGUIDList, int i = 0; i < newRobotCount; ++i)
 		{
 			CharacterMahjongRobot* robot = loginRobot(newRobotGUIDList[i]);
 			if (robot != NULL)
@@ -69,7 +69,7 @@ CharacterMahjongRobot* MahjongRobotManager::createRobot()
 				robotList.push_back(robot);
 			}
 		}
-		END_FOR_STL(newRobotGUIDList);
+		END(newRobotGUIDList);
 		if (robotList.size() > 0)
 		{
 			robot = robotList[0];
@@ -82,21 +82,21 @@ void MahjongRobotManager::destroy()
 {
 	auto iter = mRobotList.begin();
 	auto iterEnd = mRobotList.end();
-	FOR_STL(mRobotList, ; iter != iterEnd; ++iter)
+	FOR(mRobotList, ; iter != iterEnd; ++iter)
 	{
 		CommandCharacterManagerDestroyCharacter* cmd = NEW_CMD(cmd);
 		cmd->mGUID = iter->second->getGUID();
 		mCommandSystem->pushCommand(cmd, mCharacterManager);
 	}
-	END_FOR_STL(mRobotList);
+	END(mRobotList);
 
 	auto iterAccount = mRobotAccountList.begin();
 	auto iterAccountEnd = mRobotAccountList.end();
-	FOR_STL(mRobotAccountList, ; iterAccount != iterAccountEnd; ++iterAccount)
+	FOR(mRobotAccountList, ; iterAccount != iterAccountEnd; ++iterAccount)
 	{
 		TRACE_DELETE(iterAccount->second);
 	}
-	END_FOR_STL(mRobotAccountList);
+	END(mRobotAccountList);
 	mRobotAccountList.clear();
 }
 

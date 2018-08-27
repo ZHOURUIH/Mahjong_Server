@@ -27,7 +27,7 @@ void CharacterManager::update(float elapsedTime)
 	}
 	auto characterBegin = mCharacterList.begin();
 	auto characterEnd = mCharacterList.end();
-	FOR_STL(mCharacterList, ; characterBegin != characterEnd; ++characterBegin)
+	FOR(mCharacterList, ; characterBegin != characterEnd; ++characterBegin)
 	{
 		Character* character = characterBegin->second;
 		if (NULL != character)
@@ -35,25 +35,25 @@ void CharacterManager::update(float elapsedTime)
 			character->update(elapsedTime);
 		}
 	}
-	END_FOR_STL(mCharacterList);
+	END(mCharacterList);
 }
 
 void CharacterManager::destroy()
 {
 	auto iterType = mCharacterTypeList.begin();
 	auto iterTypeEnd = mCharacterTypeList.end();
-	FOR_STL(mCharacterTypeList, ; iterType != iterTypeEnd; ++iterType)
+	FOR(mCharacterTypeList, ; iterType != iterTypeEnd; ++iterType)
 	{
 		auto characterFactory = mCharacterFactoryManager->getFactory(iterType->first);
 		auto iterChar = iterType->second.begin();
 		auto iterCharEnd = iterType->second.end();
-		FOR_STL(iterType->second, ; iterChar != iterCharEnd; ++iterChar)
+		FOR(iterType->second, ; iterChar != iterCharEnd; ++iterChar)
 		{
 			characterFactory->destroyCharacter(iterChar->second);
 		}
-		END_FOR_STL(iterType->second);
+		END(iterType->second);
 	}
-	END_FOR_STL(mCharacterTypeList);
+	END(mCharacterTypeList);
 	mCharacterList.clear();
 	mCharacterTypeList.clear();
 }

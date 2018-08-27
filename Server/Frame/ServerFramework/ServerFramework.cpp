@@ -39,11 +39,11 @@ bool ServerFramework::init()
 	initComponentFactory();
 	// 初始化所有组件
 	int count = mFrameComponentVector.size();
-	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	FOR(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
 		mFrameComponentVector[i]->init();
 	}
-	END_FOR_STL(mFrameComponentVector);
+	END(mFrameComponentVector);
 	return true;
 }
 
@@ -51,11 +51,11 @@ void ServerFramework::update(float elapsedTime)
 {
 	LOCK(mLock);
 	int count = mFrameComponentVector.size();
-	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	FOR(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
 		mFrameComponentVector[i]->update(elapsedTime);
 	}
-	END_FOR_STL(mFrameComponentVector);
+	END(mFrameComponentVector);
 	UNLOCK(mLock);
 }
 
@@ -63,7 +63,7 @@ void ServerFramework::destroy()
 {
 	LOCK(mLock);
 	int count = mFrameComponentVector.size();
-	FOR_STL(mFrameComponentVector, int i = 0; i < count; ++i)
+	FOR(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
 		// 销毁顺序与初始化顺序相反
 		std::string componentName = mFrameComponentVector[count - 1 - i]->getName();
@@ -71,7 +71,7 @@ void ServerFramework::destroy()
 		mFrameComponentMap[componentName] = NULL;
 		ServerBase::notifyComponentDeconstruct();
 	}
-	END_FOR_STL(mFrameComponentVector);
+	END(mFrameComponentVector);
 	mFrameComponentVector.clear();
 	mFrameComponentMap.clear();
 	destroyComponentFactory();

@@ -15,11 +15,11 @@ public:
 	{
 		typename auto iter = mFactoryList.begin();
 		typename auto iterEnd = mFactoryList.end();
-		FOR_STL (mFactoryList, ; iter != iterEnd; ++iter)
+		FOR(mFactoryList, ; iter != iterEnd; ++iter)
 		{
 			TRACE_DELETE(iter->second);
 		}
-		END_FOR_STL(mFactoryList);
+		END(mFactoryList);
 		mFactoryList.clear();
 	}
 	Base* getFactory(const T& type)

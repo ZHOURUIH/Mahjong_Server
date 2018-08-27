@@ -47,7 +47,7 @@ void CharacterPlayer::gangMahjong(MAHJONG mahjong, CharacterPlayer* dropPlayer)
 	if (dropPlayer == this)
 	{
 		int handInCount = mCharacterData->mHandIn.size();
-		FOR_STL(mCharacterData->mHandIn, int i = 0; i < handInCount; ++i)
+		FOR(mCharacterData->mHandIn, int i = 0; i < handInCount; ++i)
 		{
 			if (mCharacterData->mHandIn[i] == mahjong)
 			{
@@ -55,7 +55,7 @@ void CharacterPlayer::gangMahjong(MAHJONG mahjong, CharacterPlayer* dropPlayer)
 				break;
 			}
 		}
-		END_FOR_STL(mCharacterData->mHandIn);
+		END(mCharacterData->mHandIn);
 	}
 }
 
@@ -73,11 +73,11 @@ void CharacterPlayer::clearMahjong()
 	mCharacterData->mReady = false;
 	mCharacterData->mGetStartDone = false;
 	int count = mCharacterData->mPengGangList.size();
-	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
+	FOR(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
 	{
 		TRACE_DELETE(mCharacterData->mPengGangList[i]);
 	}
-	END_FOR_STL(mCharacterData->mPengGangList);
+	END(mCharacterData->mPengGangList);
 	mCharacterData->mPengGangList.clear();
 }
 
@@ -101,7 +101,7 @@ bool CharacterPlayer::hasPeng(MAHJONG mahjong, int& pengIndex)
 {
 	pengIndex = -1;
 	int pengGangCount = mCharacterData->mPengGangList.size();
-	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < pengGangCount; ++i)
+	FOR(mCharacterData->mPengGangList, int i = 0; i < pengGangCount; ++i)
 	{
 		PengGangInfo* pengGangInfo = mCharacterData->mPengGangList[i];
 		if (pengGangInfo->mMahjong == mahjong && pengGangInfo->mType == AT_PENG)
@@ -110,6 +110,6 @@ bool CharacterPlayer::hasPeng(MAHJONG mahjong, int& pengIndex)
 			break;
 		}
 	}
-	END_FOR_STL(mCharacterData->mPengGangList);
+	END(mCharacterData->mPengGangList);
 	return pengIndex != -1;
 }
