@@ -27,69 +27,7 @@ Room::Room(const int& id)
 
 void Room::update(float elapsedTime)
 {
-	//// 开始拿牌时,需要由麻将系统给玩家分发牌
-	//if (mPlayState == MPS_GET_START)
-	//{
-	//	mCurInterval -= elapsedTime;
-	//	// 从庄家开始发牌
-	//	if (mCurInterval <= 0.0f)
-	//	{
-	//		mCurInterval = ASSIGN_MAHJONG_INTERVAL;
-	//		CharacterPlayer* curPlayer = mPlayerPositionList[mCurAssignPos];
-	//		if (curPlayer == NULL)
-	//		{
-	//			return;
-	//		}
-
-	//		// 给玩家发牌,如果摸到花牌,则需要将花牌拿出来,直到摸到一张不是花牌的
-	//		while (true)
-	//		{
-	//			MAHJONG curMahjong = requestGet();
-	//			playerGetStartMahjong(curMahjong, curPlayer);
-
-	//			// 检测是否是花牌,如果是花牌,则需要抽出来,重新摸一张牌
-	//			if (ServerUtility::isHua(curMahjong))
-	//			{
-	//				playerShowHua(curPlayer, curPlayer->getCharacterData()->mHandIn.size() - 1, curMahjong);
-	//			}
-	//			else
-	//			{
-	//				break;
-	//			}
-	//		}
-
-	//		// 判断是否已经拿够了
-	//		bool isDone = false;
-	//		int palyerHandInCount = curPlayer->getCharacterData()->mHandIn.size();
-	//		// 如果是庄家,需要拿够14张牌
-	//		if (mCurAssignPos == mBankerPos)
-	//		{
-	//			isDone = (palyerHandInCount == MAX_HAND_IN_COUNT);
-	//		}
-	//		// 不是庄家则拿13张牌
-	//		else
-	//		{
-	//			isDone = (palyerHandInCount == MAX_HAND_IN_COUNT - 1);
-	//		}
-	//		// 牌拿完时需要重新排列
-	//		if (isDone)
-	//		{
-	//			playerReorderMahjong(curPlayer);
-
-	//			// 如果是庄家拿完了牌,则进入正常游戏流程
-	//			if (mCurAssignPos == mBankerPos)
-	//			{
-	//				notifyAllPlayerGetStartDone();
-	//				setMahjongState(MPS_NORMAL_GAMING);
-
-	//				// 通知玩家打出一张牌
-	//				playerAskDrop(curPlayer);
-	//				return;
-	//			}
-	//		}
-	//		mCurAssignPos = (mCurAssignPos + 1) % mMaxPlayer;
-	//	}
-	//}
+	;
 }
 
 void Room::joinRoom(CharacterPlayer* player)
@@ -208,17 +146,33 @@ void Room::notifyPlayerDrop(CharacterPlayer* player, MAHJONG mah)
 			// 该下家摸牌
 			int nextPosition = (player->getCharacterData()->mPosition + 1) % MAX_PLAYER;
 			CharacterPlayer* nextPlayer = getMemberByPosition(nextPosition);
-			MAHJONG mahjong = requestGet();
-			if (mahjong != M_MAX)
+			// 直到摸到一张不是花牌的才停止摸牌
+			while (true)
 			{
-				playerGetMahjong(mahjong, nextPlayer);
-				notifyPlayerGet(nextPlayer, mahjong);
-			}
-			// 牌已经摸完了,则本局为平局
-			else
-			{
-				txMap<CharacterPlayer*, HuInfo*> temp;
-				endGame(temp);
+				MAHJONG mahjong = requestGet();
+				if (mahjong != M_MAX)
+				{
+					// 摸到花牌,继续摸牌
+					if (ServerUtility::isHua(mahjong))
+					{
+						// 刚摸的牌是放到末尾的,所以下标是最后一个
+						playerGetHua(player, mahjong);
+					}
+					// 不是花牌,则停止摸牌
+					else
+					{
+						playerGetMahjong(mahjong, nextPlayer);
+						notifyPlayerGet(nextPlayer, mahjong);
+						break;
+					}
+				}
+				// 牌已经摸完了,则本局为平局
+				else
+				{
+					txMap<CharacterPlayer*, HuInfo*> temp;
+					endGame(temp);
+					break;
+				}
 			}
 		}
 	}
@@ -229,27 +183,8 @@ void Room::notifyPlayerGet(CharacterPlayer* player, MAHJONG mah)
 	// 判断是否可胡或者可杠
 	CharacterData* data = player->getCharacterData();
 	txVector<MahjongAction*> actionList;
-	// 是否是花牌
-	if (ServerUtility::isHua(mah))
-	{
-		// 刚摸的牌是放到末尾的,所以下标是最后一个
-		playerGetHua(player, mah);
-		// 然后再摸一张牌
-		MAHJONG mahjong = requestGet();
-		if (mahjong != M_MAX)
-		{
-			playerGetMahjong(mahjong, player);
-			notifyPlayerGet(player, mahjong);
-		}
-		// 牌已经摸完了,则本局为平局
-		else
-		{
-			txMap<CharacterPlayer*, HuInfo*> temp;
-			endGame(temp);
-		}
-	}
 	// 是否可胡
-	else if (ServerUtility::canHu(data->mHandIn))
+	if (ServerUtility::canHu(data->mHandIn))
 	{
 		txVector<HU_TYPE> huList = ServerUtility::generateHuType(data->mHandIn, mah, data->mPengGangList, true, true);
 		MahjongAction* action = TRACE_NEW(MahjongAction, action, AT_HU, player, player, mah, huList);
@@ -374,10 +309,10 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 		// 如果全部玩家都已经确认操作了,允许优先级最高的操作进行
 		if (allConfirm)
 		{
-			// 先获得信息,因为在设置状态时会将列表清空
-			WaitActionInfo* info = mWaitList[highestActionPlayer];
 			// 游戏状态设置为正常游戏
 			setMahjongState(MPS_NORMAL_GAMING);
+			// 先获得信息,因为在设置状态时会将列表清空
+			WaitActionInfo* info = mWaitList[highestActionPlayer];
 			if (highestAction->mType == AT_GANG)
 			{
 				playerGang(info->mPlayer, info->mDroppedPlayer, info->mMahjong);
@@ -426,6 +361,8 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 					}
 				}
 			}
+			// 清空等待信息列表
+			clearWaitList();
 		}
 	}
 }
@@ -474,9 +411,10 @@ void Room::endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList)
 	FOR(huPlayerList, ; iterHu != iterHuEnd; ++iterHu)
 	{
 		int huCount = iterHu->second->mHuList.size();
+		int multiple = 0;
 		FOR(iterHu->second->mHuList, int i = 0; i < huCount; ++i)
 		{
-			huCount += ServerUtility::getHuMultiple(iterHu->second->mHuList[i]);
+			multiple += ServerUtility::getHuMultiple(iterHu->second->mHuList[i]);
 		}
 		END(iterHu->second->mHuList);
 		int money = 100 * huCount;
@@ -670,7 +608,7 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	}
 	else if (mPlayState == MPS_NORMAL_GAMING)
 	{
-		mWaitList.clear();
+		;
 	}
 	else if (mPlayState == MPS_WAIT_FOR_ACTION)
 	{
@@ -678,19 +616,7 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	}
 	else if (mPlayState == MPS_ENDING)
 	{
-		auto iter = mWaitList.begin();
-		auto iterEnd = mWaitList.end();
-		FOR(mWaitList, ; iter != iterEnd; ++iter)
-		{
-			int actionCount = iter->second->mActionList.size();
-			FOR(iter->second->mActionList, int i = 0; i < actionCount; ++i)
-			{
-				TRACE_DELETE(iter->second->mActionList[i]);
-			}
-			END(iter->second->mActionList);
-			TRACE_DELETE(iter->second);
-		}
-		END(mWaitList);
+		clearWaitList();
 	}
 }
 
@@ -722,10 +648,28 @@ void Room::requestDrop(CharacterPlayer* player, int index)
 void Room::reset()
 {
 	mMahjongPool.clear();
-	mWaitList.clear();
+	clearWaitList();
 	mPlayerChooseList.clear();
 	mBankerPos = -1;
 	mCurAssignPos = -1;
+}
+
+void Room::clearWaitList()
+{
+	auto iter = mWaitList.begin();
+	auto iterEnd = mWaitList.end();
+	FOR(mWaitList, ; iter != iterEnd; ++iter)
+	{
+		int actionCount = iter->second->mActionList.size();
+		FOR(iter->second->mActionList, int i = 0; i < actionCount; ++i)
+		{
+			TRACE_DELETE(iter->second->mActionList[i]);
+		}
+		END(iter->second->mActionList);
+		TRACE_DELETE(iter->second);
+	}
+	END(mWaitList);
+	mWaitList.clear();
 }
 
 void Room::resetMahjongPool(bool feng, int hua)
@@ -991,8 +935,6 @@ void Room::playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, M
 
 void Room::playerAskDrop(CharacterPlayer* player)
 {
-	CommandCharacterAskDrop* cmd = NEW_CMD_INFO(cmd);
-	mCommandSystem->pushCommand(cmd, player);
 	// 通知其他玩家
 	auto iterPlayer = mPlayerPositionList.begin();
 	auto iterPlayerEnd = mPlayerPositionList.end();
@@ -1006,13 +948,13 @@ void Room::playerAskDrop(CharacterPlayer* player)
 		}
 	}
 	END(mPlayerPositionList);
+	// 通知该玩家打出一张牌
+	CommandCharacterAskDrop* cmd = NEW_CMD_INFO(cmd);
+	mCommandSystem->pushCommand(cmd, player);
 }
 
 void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList)
 {
-	CommandCharacterAskAction* cmdAskAction = NEW_CMD_INFO(cmdAskAction);
-	cmdAskAction->mActionList = actionList;
-	mCommandSystem->pushCommand(cmdAskAction, player);
 	// 通知其他玩家
 	auto iterPlayer = mPlayerPositionList.begin();
 	auto iterPlayerEnd = mPlayerPositionList.end();
@@ -1026,6 +968,11 @@ void Room::playerAskAction(CharacterPlayer* player, const txVector<MahjongAction
 		}
 	}
 	END(mPlayerPositionList);
+
+	// 询问玩家操作
+	CommandCharacterAskAction* cmdAskAction = NEW_CMD_INFO(cmdAskAction);
+	cmdAskAction->mActionList = actionList;
+	mCommandSystem->pushCommand(cmdAskAction, player);
 }
 
 void Room::playerGetHua(CharacterPlayer* player, MAHJONG mah)

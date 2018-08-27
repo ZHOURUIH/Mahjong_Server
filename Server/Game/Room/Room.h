@@ -44,6 +44,7 @@ public:
 	txMap<CharacterPlayer*, bool>& getPlayerChooseList(){ return mPlayerChooseList; }
 protected:
 	void reset();
+	void clearWaitList();
 	void addPlayer(CharacterPlayer* player);
 	void removePlayer(CharacterPlayer* player);
 	void resetMahjongPool(bool feng, int hua);

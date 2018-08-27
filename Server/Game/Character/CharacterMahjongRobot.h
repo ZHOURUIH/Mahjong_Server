@@ -3,6 +3,7 @@
 
 #include "CharacterPlayer.h"
 
+class MahjongAction;
 class CharacterMahjongRobot : public CharacterPlayer
 {
 public:
@@ -13,6 +14,8 @@ public:
 	virtual ~CharacterMahjongRobot(){ destroy(); }
 	void destroy(){}
 	virtual void notifyStartGame();
+	virtual void notifyAskAction(txVector<MahjongAction*>& actionList);
+	virtual void notifyAskDrop();
 };
 
 #endif

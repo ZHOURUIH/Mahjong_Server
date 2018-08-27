@@ -9,6 +9,7 @@ void CommandRoomNotifyPlayerGetStartDone::execute()
 	if (room->isFull() && room->isAllPlayerGetStartDone())
 	{
 		room->notifyAllPlayerGetStartDone();
+		room->setMahjongState(MPS_NORMAL_GAMING);
 		// 通知庄家打出一张牌
 		room->playerAskDrop(room->getBanker());
 	}

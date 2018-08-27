@@ -138,11 +138,10 @@ struct MahInfo
 // 常量数字定义
 const int MAX_DICE = 6;									// 骰子的最大值
 const int MAX_PLAYER = 4;								// 房间中最大的玩家数量
-const float ASSIGN_MAHJONG_INTERVAL = 0.1f;
 const int MAX_SINGLE_COUNT = 4;
 const int MAX_HAND_IN_COUNT = 14;						// 每名玩家手里最多有14张牌,不包含碰,吃,杠
 const int MAX_HU_COUNT = 16;							// 胡牌类型的最大数量
-const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;			// 花牌的种类
+const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;	// 花牌的种类
 const int MAX_FENG_COUNT = M_FENG_BAI - M_FENG_DONG + 1;// 风牌的种类
 const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// 麻将中除了风和花的种类数量
 
@@ -151,11 +150,11 @@ const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// 麻将�
 // 所有麻将的名字
 const std::string MAHJONG_NAME[(int)M_MAX] = 
 {
-	"Tong0", "Tong1", "Tong2", "Tong3", "Tong4", "Tong5", "Tong6", "Tong7", "Tong8",
-	"Tiao0", "Tiao1", "Tiao2", "Tiao3", "Tiao4", "Tiao5", "Tiao6", "Tiao7", "Tiao8",
-	"Wan0", "Wan1", "Wan2", "Wan3", "Wan4", "Wan5", "Wan6", "Wan7", "Wan8",
-	"Feng0", "Feng1", "Feng2", "Feng3", "Feng4", "Feng5", "Feng6",
-	"Hua0", "Hua1", "Hua2", "Hua3", "Hua4", "Hua5", "Hua6", "Hua7"
+	"Tong1", "Tong2", "Tong3", "Tong4", "Tong5", "Tong6", "Tong7", "Tong8", "Tong9",
+	"Tiao1", "Tiao2", "Tiao3", "Tiao4", "Tiao5", "Tiao6", "Tiao7", "Tiao8", "Tiao9",
+	"Wan1", "Wan2", "Wan3", "Wan4", "Wan5", "Wan6", "Wan7", "Wan8", "Wan9",
+	"Dong", "Nan", "Xi", "Bei", "Zhong", "Fa", "Bai",
+	"Chun", "Xia", "Qiu", "Dong", "Mei", "Lan", "Zhu", "Ju"
 };
 
 #endif

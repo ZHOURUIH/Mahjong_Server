@@ -4,6 +4,7 @@
 #include "CharacterNPC.h"
 #include "GameDefine.h"
 
+class MahjongAction;
 class CharacterPlayer : public Character
 {
 public:
@@ -23,7 +24,10 @@ public:
 	void gangMahjong(MAHJONG mahjong, CharacterPlayer* dropPlayer);
 	void pengMahjong(MAHJONG mahjong);
 	void clearMahjong();
+	// 重载函数
 	virtual void notifyStartGame() {}
+	virtual void notifyAskAction(txVector<MahjongAction*>& actionList) {}
+	virtual void notifyAskDrop() {}
 protected:
 	void addPeng(MAHJONG mahjong);
 	void addGang(MAHJONG mahjong);
