@@ -6,10 +6,7 @@
 class CommandCharacterAskDrop : public txCommand
 {
 public:
-	virtual void reset()
-	{
-		;
-	}
+	virtual void reset(){}
 	virtual void execute();
 public:
 };

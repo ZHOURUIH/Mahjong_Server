@@ -24,11 +24,9 @@ void CharacterPlayer::dropMahjong(int index)
 	mCharacterData->mHandIn.erase(mCharacterData->mHandIn.begin() + index);
 }
 
-void CharacterPlayer::showHua(int index)
+void CharacterPlayer::getHua(MAHJONG hua)
 {
-	MAHJONG mah = mCharacterData->mHandIn[index];
-	mCharacterData->mHuaList.push_back(mah);
-	mCharacterData->mHandIn.erase(mCharacterData->mHandIn.begin() + index);
+	mCharacterData->mHuaList.push_back(hua);
 }
 
 // 杠指定牌
@@ -73,6 +71,7 @@ void CharacterPlayer::clearMahjong()
 	mCharacterData->mHuaList.clear();
 	mCharacterData->mDropList.clear();
 	mCharacterData->mReady = false;
+	mCharacterData->mGetStartDone = false;
 	int count = mCharacterData->mPengGangList.size();
 	FOR_STL(mCharacterData->mPengGangList, int i = 0; i < count; ++i)
 	{

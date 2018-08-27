@@ -12,6 +12,7 @@ public:
 	{}
 	virtual ~CharacterMahjongRobot(){ destroy(); }
 	void destroy(){}
+	virtual void notifyStartGame();
 };
 
 #endif

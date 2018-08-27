@@ -18,11 +18,12 @@ public:
 	CLIENT_GUID getClientGUID() { return mClientGUID; }
 	void reorderMahjong();
 	void getMahjong(MAHJONG mah);
-	void showHua(int index);
+	void CharacterPlayer::getHua(MAHJONG hua);
 	void dropMahjong(int index);
 	void gangMahjong(MAHJONG mahjong, CharacterPlayer* dropPlayer);
 	void pengMahjong(MAHJONG mahjong);
 	void clearMahjong();
+	virtual void notifyStartGame() {}
 protected:
 	void addPeng(MAHJONG mahjong);
 	void addGang(MAHJONG mahjong);

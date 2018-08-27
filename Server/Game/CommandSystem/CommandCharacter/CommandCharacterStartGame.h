@@ -4,7 +4,6 @@
 #include "txCommand.h"
 #include "GameDefine.h"
 
-// 向玩家发送开始游戏(进入倒数)的消息
 class CommandCharacterStartGame : public txCommand
 {
 public:
@@ -12,6 +11,9 @@ public:
 	{
 		mDice[0] = 0;
 		mDice[1] = 0;
+		mPlayerIDList.clear();
+		mHandInList.clear();
+		mHuaList.clear();
 	}
 	virtual void execute();
 	virtual std::string showDebugInfo();

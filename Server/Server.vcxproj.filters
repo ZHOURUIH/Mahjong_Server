@@ -214,9 +214,6 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetMahjong.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
@@ -227,9 +224,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp">
@@ -248,9 +242,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.cpp">
@@ -274,9 +265,6 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterPass.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
@@ -290,9 +278,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterShowHua.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp">
@@ -429,6 +414,27 @@
     </ClCompile>
     <ClCompile Include="Game\Utility\ServerUtility.cpp">
       <Filter>Game\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetHua.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetHua.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSCancelLogin.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyAllGetStartDone.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartDone.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -606,9 +612,6 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetMahjong.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartMahjong.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
@@ -619,9 +622,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyGetStartDone.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h">
@@ -640,9 +640,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetMahjong.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetStartMahjong.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerJoinRoom.h">
@@ -666,9 +663,6 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerReorderMahjong.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerShowHua.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterPass.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
@@ -682,9 +676,6 @@
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h">
-      <Filter>Game\CommandSystem\CommandCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterShowHua.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.h">
@@ -879,12 +870,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetMahjong.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetStartDone.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetStartMahjong.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyMahjongEnd.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
@@ -927,9 +912,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerReady.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerShowHua.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCPlayerGang.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
@@ -949,9 +931,6 @@
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCRequestDropRet.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCShowHua.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCStartGame.h">
@@ -974,6 +953,36 @@
     </ClInclude>
     <ClInclude Include="Game\Utility\ServerUtility.h">
       <Filter>Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetHua.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerGetHua.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerGetHua.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCGetHua.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSCancelLogin.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyAllGetStartDone.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyAllGetStartDone.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartDone.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

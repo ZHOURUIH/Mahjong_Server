@@ -15,6 +15,8 @@
 #include "CSContinueGame.h"
 #include "CSBackToMahjongHall.h"
 #include "CSAddMahjongRobot.h"
+#include "CSCancelLogin.h"
+#include "CSGetStartMahjongDone.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -31,9 +33,8 @@
 #include "SCReadyRet.h"
 #include "SCOtherPlayerReady.h"
 #include "SCLeaveRoomRet.h"
-#include "SCNotifyGetStartMahjong.h"
 #include "SCNotifyReorderMahjong.h"
-#include "SCNotifyGetStartDone.h"
+#include "SCNotifyAllGetStartDone.h"
 #include "SCAskDrop.h"
 #include "SCNotifyGetMahjong.h"
 #include "SCAskAction.h"
@@ -53,8 +54,8 @@
 #include "SCOtherPlayerContinueGame.h"
 #include "SCBackToMahjongHallRet.h"
 #include "SCOtherPlayerBackToMahjongHall.h"
-#include "SCShowHua.h"
-#include "SCOtherPlayerShowHua.h"
+#include "SCGetHua.h"
+#include "SCOtherPlayerGetHua.h"
 #include "SCAddMahjongRobotRet.h"
 
 #endif

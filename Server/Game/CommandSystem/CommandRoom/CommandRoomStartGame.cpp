@@ -3,6 +3,7 @@
 #include "CharacterPlayer.h"
 #include "CharacterData.h"
 #include "Utility.h"
+#include "CharacterMahjongRobot.h"
 
 void CommandRoomStartGame::execute()
 {
@@ -12,21 +13,37 @@ void CommandRoomStartGame::execute()
 	txVector<txVector<MAHJONG>> handInList;
 	txVector<txVector<MAHJONG>> huaList;
 	txVector<CHAR_GUID> playerIDList;
-	room->generateStartMahjong(handInList, huaList);
+	room->setMahjongState(MPS_GET_START);
+	room->generateStartMahjong(playerIDList, handInList, huaList);
+
+	// 玩家拿到开局的麻将
+	int playerCount = playerIDList.size();
+	FOR_STL(playerIDList, int i = 0; i < playerCount; ++i)
+	{
+		CharacterPlayer* player = static_cast<CharacterPlayer*>(room->getMember(playerIDList[i]));
+		// 手里的麻将
+		int mahjongCount = handInList[i].size();
+		FOR_STL(handInList[i], int j = 0; j < mahjongCount; ++j)
+		{
+			player->getMahjong(handInList[i][j]);
+		}
+		END_FOR_STL(handInList[i]);
+		// 花牌
+		int huaCount = huaList[i].size();
+		FOR_STL(huaList[i], int j = 0; j < huaCount; ++j)
+		{
+			player->getHua(huaList[i][j]);
+		}
+		END_FOR_STL(huaList[i]);
+	}
+	END_FOR_STL(playerIDList);
+
+	// 通知所有玩家开始游戏
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();
-	// 先获取房间内玩家ID列表
-	FOR_STL(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
-	{
-		playerIDList.push_back(iterPlayer->second->getCharacterData()->mGUID);
-	}
-	END_FOR_STL(playerList);
 	FOR_STL (playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
-	{
-		// 取消玩家的准备标记
-		iterPlayer->second->getCharacterData()->mReady = false;
-		// 通知玩家开始游戏
+	{	
 		CommandCharacterStartGame* cmdStartGame = NEW_CMD_INFO(cmdStartGame);
 		cmdStartGame->setDice(dice0, dice1);
 		cmdStartGame->mHandInList = handInList;
@@ -35,9 +52,4 @@ void CommandRoomStartGame::execute()
 		mCommandSystem->pushCommand(cmdStartGame, iterPlayer->second);
 	}
 	END_FOR_STL(playerList);
-}
-
-std::string CommandRoomStartGame::showDebugInfo()
-{
-	COMMAND_DEBUG(DEBUG_EMPTY);
 }

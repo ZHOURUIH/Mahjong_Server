@@ -12,7 +12,6 @@ public:
 		;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
 public:
 };
 

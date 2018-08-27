@@ -104,7 +104,6 @@ enum MAHJONG
 enum MAHJONG_PLAY_STATE
 {
 	MPS_WAITING,				// 正在等待玩家进入或准备
-	MPS_DICE,					// 正在掷骰子
 	MPS_GET_START,				// 正在开局拿牌
 	MPS_NORMAL_GAMING,			// 正在进行正常的麻将游戏
 	MPS_WAIT_FOR_ACTION,		// 正在等待玩家选择对当前打出牌的行为

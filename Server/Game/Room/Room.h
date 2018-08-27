@@ -28,10 +28,15 @@ public:
 	CharacterPlayer* getMember(CHAR_GUID playerID);
 	CharacterPlayer* getMemberByPosition(CHAR_GUID playerID);
 	// 麻将相关
-	void generateStartMahjong(txVector<txVector<MAHJONG>>& handInMahjong, txVector<txVector<MAHJONG>>& huaMahjong);// 生成所有玩家开局拿的麻将
+	// 生成所有玩家开局拿的麻将
+	void generateStartMahjong(txVector<CHAR_GUID>& playerIDList, txVector<txVector<MAHJONG>>& handInMahjong, txVector<txVector<MAHJONG>>& huaMahjong);
 	void setMahjongState(MAHJONG_PLAY_STATE state);
 	void requestDrop(CharacterPlayer* player, int index);
+	void notifyAllPlayerGetStartDone();
+	void playerAskDrop(CharacterPlayer* player);
 	bool isAllPlayerReady();
+	bool isAllPlayerGetStartDone();
+	CharacterPlayer* getBanker() { return mPlayerPositionList[mBankerPos]; }
 	int getID()											{ return mID; }
 	bool isFull()										{ return (int)mPlayerList.size() >= mMaxPlayer; }
 	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
@@ -45,10 +50,8 @@ protected:
 	MAHJONG requestGet();
 	void endGame(txMap<CharacterPlayer*, HuInfo*>& huPlayerList);
 	// 向所有玩家发送消息
-	void notifyAllPlayerGetStartDone();
 	void notifyAllPlayerBanker(CHAR_GUID banker);
 	void notifyAllPlayerMahjongEnd(txMap<CharacterPlayer*, int>& moneyDeltaList);
-	void playerGetStartMahjong(MAHJONG mah, CharacterPlayer* player);
 	void playerGetMahjong(MAHJONG mah, CharacterPlayer* player);
 	void playerReorderMahjong(CharacterPlayer* player);
 	// 可能同时会有多个玩家可以胡牌
@@ -56,9 +59,8 @@ protected:
 	void playerGang(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
 	void playerPeng(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
 	void playerPass(CharacterPlayer* player, CharacterPlayer* droppedPlayer, MAHJONG mah);
-	void playerAskDrop(CharacterPlayer* player);
 	void playerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
-	void playerShowHua(CharacterPlayer* player, int index, MAHJONG mah);
+	void playerGetHua(CharacterPlayer* player, MAHJONG mah);
 protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限

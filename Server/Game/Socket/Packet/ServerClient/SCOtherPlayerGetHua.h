@@ -1,21 +1,19 @@
-﻿#ifndef _SC_OTHER_PLAYER_SHOW_HUA_H_
-#define _SC_OTHER_PLAYER_SHOW_HUA_H_
+﻿#ifndef _SC_OTHER_PLAYER_GET_HUA_H_
+#define _SC_OTHER_PLAYER_GET_HUA_H_
 
 #include "Packet.h"
 
-class SCOtherPlayerShowHua : public Packet
+class SCOtherPlayerGetHua : public Packet
 {
 public:
-	SCOtherPlayerShowHua(PACKET_TYPE type)
+	SCOtherPlayerGetHua(PACKET_TYPE type)
 		:Packet(type) {}
 	virtual void fillParams()
 	{
-		pushParam(mIndex);
 		pushParam(mMahjong);
 		pushParam(mOtherPlayerGUID);
 	}
 public:
-	char mIndex;
 	char mMahjong;
 	int mOtherPlayerGUID;
 };
