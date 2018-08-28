@@ -8,8 +8,7 @@
 
 CharacterManager::CharacterManager(const std::string& name)
 :
-FrameComponent(name),
-mLockUpdate(false)
+FrameComponent(name)
 {
 	mCharacterFactoryManager = TRACE_NEW(CharacterFactoryManager, mCharacterFactoryManager);
 }
@@ -21,10 +20,6 @@ void CharacterManager::init()
 
 void CharacterManager::update(float elapsedTime)
 {
-	if (isLocked())
-	{
-		return;
-	}
 	auto characterBegin = mCharacterList.begin();
 	auto characterEnd = mCharacterList.end();
 	FOR(mCharacterList, ; characterBegin != characterEnd; ++characterBegin)

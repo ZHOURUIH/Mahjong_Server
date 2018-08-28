@@ -129,8 +129,10 @@ if (thread != NULL_THREAD)		\
 #endif
 
 // 再次封装后的容器的遍历宏
-#define FOR(stl, expression) stl.lock(__FILE__, __LINE__);for (expression)
-#define END(stl) stl.unlock();
+#define FOR(stl, expression) stl.lock(SL_WRITE, __FILE__, __LINE__);for (expression)
+#define FOR_R(stl, expression) stl.lock(SL_READ, __FILE__, __LINE__);for (expression)
+#define END(stl) stl.unlock(SL_WRITE);
+#define END_R(stl) stl.unlock(SL_READ);
 #define TOSTRING(t) #t
 #define LINE_STR(v) TOSTRING(v)
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节

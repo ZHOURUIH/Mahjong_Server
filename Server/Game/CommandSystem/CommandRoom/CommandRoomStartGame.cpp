@@ -42,7 +42,7 @@ void CommandRoomStartGame::execute()
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();
-	FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	FOR_R(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{	
 		CommandCharacterStartGame* cmdStartGame = NEW_CMD_INFO(cmdStartGame);
 		cmdStartGame->setDice(dice0, dice1);
@@ -51,5 +51,5 @@ void CommandRoomStartGame::execute()
 		cmdStartGame->mPlayerIDList = playerIDList;
 		mCommandSystem->pushCommand(cmdStartGame, iterPlayer->second);
 	}
-	END(playerList);
+	END_R(playerList);
 }

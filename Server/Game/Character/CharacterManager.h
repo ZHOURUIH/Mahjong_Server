@@ -16,9 +16,6 @@ public:
 	virtual void init();
 	virtual void update(float elapsedTime);
 	void destroy();
-	bool isLocked() { return mLockUpdate; }
-	void lock() { mLockUpdate = true; }
-	void unlock() { mLockUpdate = false; }
 	Character* createCharacter(const std::string& name, CHARACTER_TYPE type, CHAR_GUID guid, CLIENT_GUID client);
 	void destroyCharacter(const std::string& name);
 	void destroyCharacter(CHAR_GUID guid);
@@ -47,7 +44,6 @@ protected:
 	txMap<std::string, Character*> mCharacterList;
 	txMap<CHARACTER_TYPE, txMap<std::string, Character*> > mCharacterTypeList;	// 角色分类列表
 	txMap<CHAR_GUID, Character*> mCharacterIDList;		// 角色ID索引表
-	bool mLockUpdate;
 	CharacterFactoryManager* mCharacterFactoryManager;
 };
 

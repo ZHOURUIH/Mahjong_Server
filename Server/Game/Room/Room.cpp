@@ -734,7 +734,7 @@ bool Room::isAllPlayerGetStartDone()
 	bool allGetStartDone = true;
 	auto iter = mPlayerList.begin();
 	auto iterEnd = mPlayerList.end();
-	FOR (mPlayerList, ; iter != iterEnd; ++iter)
+	FOR_R (mPlayerList, ; iter != iterEnd; ++iter)
 	{
 		if (!iter->second->getCharacterData()->mGetStartDone)
 		{
@@ -742,7 +742,7 @@ bool Room::isAllPlayerGetStartDone()
 			break;
 		}
 	}
-	END(mPlayerList);
+	END_R(mPlayerList);
 	return allGetStartDone;
 }
 
