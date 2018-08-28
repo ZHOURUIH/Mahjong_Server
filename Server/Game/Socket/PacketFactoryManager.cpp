@@ -25,6 +25,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSAddMahjongRobot, PT_CS_ADD_MAHJONG_ROBOT);
 	ADD_PACKET_FACTORY(CSCancelLogin, PT_CS_CANCEL_LOGIN);
 	ADD_PACKET_FACTORY(CSGetStartMahjongDone, PT_CS_GET_START_MAHJONG_DONE);
+	ADD_PACKET_FACTORY(CSFreeMatch, PT_CS_FREE_MATCH);
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{

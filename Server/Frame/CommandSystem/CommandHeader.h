@@ -57,6 +57,8 @@
 #include "CommandRoomNotifyPlayerContinueGame.h"
 #include "CommandRoomNotifyPlayerGetStartDone.h"
 
+#include "CommandMatchSystemRequestMatch.h"
+
 #include "CommandServerNotifyAcceptedClient.h"
 
 #endif

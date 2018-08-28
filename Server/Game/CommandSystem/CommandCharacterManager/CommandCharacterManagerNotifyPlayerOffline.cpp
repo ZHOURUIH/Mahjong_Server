@@ -4,6 +4,7 @@
 #include "CharacterData.h"
 #include "RoomManager.h"
 #include "Room.h"
+#include "MatchSystem.h"
 
 void CommandCharacterManagerNotifyPlayerOffline::execute()
 {
@@ -34,6 +35,8 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 			cmdRoomOffline->mOfflinePlayer = mPlayerID;
 			mCommandSystem->pushCommand(cmdRoomOffline, room);
 		}
+		// 通知房间管理器有玩家离线
+		mMatchSystem->notifyPlayerOffline(offlinePlayer);
 	}
 
 	// 将角色销毁

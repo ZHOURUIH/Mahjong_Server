@@ -10,6 +10,7 @@
 int RoomManager::mRoomIDSeed = 0;
 void RoomManager::update(float elapsedTime)
 {
+	// 更新所有房间
 	auto iter = mRoomList.begin();
 	auto iterEnd = mRoomList.end();
 	FOR(mRoomList, ; iter != iterEnd; ++iter)
@@ -30,6 +31,20 @@ Room* RoomManager::createRoom()
 Room* RoomManager::getRoom(int id)
 {
 	return mRoomList.tryGet(id, NULL);
+}
+
+void RoomManager::getNotFullPublicRoomList(txVector<Room*>& roomList)
+{
+	auto iterRoom = mRoomList.begin();
+	auto iterRoomEnd = mRoomList.end();
+	FOR(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
+	{
+		if (!iterRoom->second->isFull() && iterRoom->second->isPublic())
+		{
+			roomList.push_back(iterRoom->second);
+		}
+	}
+	END(mRoomList);
 }
 
 void RoomManager::destroyRoom(int id)

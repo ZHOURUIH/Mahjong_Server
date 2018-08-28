@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/CommandSystem/CommandMatchSystem;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -163,6 +163,7 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetHua.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Game\MahjongRobot\MahjongRobotManager.cpp" />
     <ClCompile Include="Game\Net\NetClient.cpp" />
     <ClCompile Include="Game\Net\NetServer.cpp" />
+    <ClCompile Include="Game\Room\MatchSystem.cpp" />
     <ClCompile Include="Game\Room\Room.cpp" />
     <ClCompile Include="Game\Room\RoomManager.cpp" />
     <ClCompile Include="Game\Socket\PacketFactoryManager.cpp" />
@@ -196,6 +198,7 @@
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSConfirmAction.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSContinueGame.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCreateRoom.cpp" />
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSFreeMatch.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSHeartBeat.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSJoinRoom.cpp" />
@@ -298,6 +301,7 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetHua.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
+    <ClInclude Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h" />
@@ -326,6 +330,7 @@
     <ClInclude Include="Game\Net\NetServer.h" />
     <ClInclude Include="Game\Room\HuInfo.h" />
     <ClInclude Include="Game\Room\MahjongAction.h" />
+    <ClInclude Include="Game\Room\MatchSystem.h" />
     <ClInclude Include="Game\Room\Room.h" />
     <ClInclude Include="Game\Room\RoomManager.h" />
     <ClInclude Include="Game\Room\WaitActionInfo.h" />
@@ -340,6 +345,7 @@
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSConfirmAction.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSContinueGame.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCreateRoom.h" />
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSFreeMatch.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSHeartBeat.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSJoinRoom.h" />

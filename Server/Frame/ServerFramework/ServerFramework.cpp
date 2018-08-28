@@ -26,6 +26,7 @@ mStop(false)
 	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
 	REGISTE_FRAME_COMPONENT(DebugSystem);
 	REGISTE_FRAME_COMPONENT(ServerUtility);
+	REGISTE_FRAME_COMPONENT(MatchSystem);
 	ServerBase::notifyConstructDone();
 }
 

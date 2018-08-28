@@ -14,6 +14,7 @@
 #include "GameLog.h"
 #include "DebugSystem.h"
 #include "ServerUtility.h"
+#include "MatchSystem.h"
 
 #define GET_SYSTEM(type) getSystem<type>(TOSTRING(type))
 

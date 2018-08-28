@@ -100,6 +100,9 @@
     <Filter Include="Game\Utility">
       <UniqueIdentifier>{7fa713ec-918b-4fd0-9510-a1a9c4f1b139}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\CommandSystem\CommandMatchSystem">
+      <UniqueIdentifier>{a657c072-d477-4794-a25c-ee90b5bf9f5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -435,6 +438,15 @@
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.cpp">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSFreeMatch.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Room\MatchSystem.cpp">
+      <Filter>Game\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.cpp">
+      <Filter>Game\CommandSystem\CommandMatchSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -983,6 +995,15 @@
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSFreeMatch.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Room\MatchSystem.h">
+      <Filter>Game\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.h">
+      <Filter>Game\CommandSystem\CommandMatchSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

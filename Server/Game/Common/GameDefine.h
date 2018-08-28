@@ -144,6 +144,7 @@ const int MAX_HU_COUNT = 16;							// 胡牌类型的最大数量
 const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;	// 花牌的种类
 const int MAX_FENG_COUNT = M_FENG_BAI - M_FENG_DONG + 1;// 风牌的种类
 const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// 麻将中除了风和花的种类数量
+const float MAX_FREE_MATCH_WAIT_TIME = 5.0f;			// 随机匹配时等待的最大时间
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量字符串定义

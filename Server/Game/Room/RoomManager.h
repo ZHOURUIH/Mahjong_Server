@@ -16,14 +16,13 @@ public:
 	void destroy(){}
 	Room* createRoom();
 	Room* getRoom(int id);
+	void getNotFullPublicRoomList(txVector<Room*>& roomList);
 	void destroyRoom(int id);
 	void destroyAllRoom();
 	txMap<int, Room*>& getRoomList() { return mRoomList; }
 protected:
 	txMap<int, Room*> mRoomList;
 	static int mRoomIDSeed;
-	txMap<CHAR_GUID, CharacterPlayer*> mWaitPlayerMap;		// 等待匹配的玩家列表,用于查找
-	txVector<CharacterPlayer*>	mWaitPlayerList;	// 等待匹配的玩家列表,保存着玩家之间的先后顺序
 };
 
 #endif

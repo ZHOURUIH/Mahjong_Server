@@ -12,6 +12,7 @@ txComponentFactoryManager* ServerBase::mComponentFactoryManager = NULL;
 DataBase* ServerBase::mDataBase = NULL;
 GameLog* ServerBase::mGameLog = NULL;
 MahjongRobotManager* ServerBase::mMahjongRobotManager = NULL;
+MatchSystem* ServerBase::mMatchSystem = NULL;
 
 void ServerBase::notifyConstructDone()
 {
@@ -26,8 +27,8 @@ void ServerBase::notifyConstructDone()
 	mDataBase = mServerFramework->GET_SYSTEM(DataBase);
 	mGameLog = mServerFramework->GET_SYSTEM(GameLog);
 	mMahjongRobotManager = mServerFramework->GET_SYSTEM(MahjongRobotManager);
+	mMatchSystem = mServerFramework->GET_SYSTEM(MatchSystem);
 }
-
 
 void ServerBase::notifyComponentDeconstruct()
 {

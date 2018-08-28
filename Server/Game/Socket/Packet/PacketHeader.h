@@ -17,6 +17,7 @@
 #include "CSAddMahjongRobot.h"
 #include "CSCancelLogin.h"
 #include "CSGetStartMahjongDone.h"
+#include "CSFreeMatch.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"

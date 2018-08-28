@@ -12,6 +12,7 @@ class txComponentFactoryManager;
 class DataBase;
 class GameLog;
 class MahjongRobotManager;
+class MatchSystem;
 class ServerBase
 {
 public:
@@ -29,6 +30,7 @@ public:
 	static DataBase* mDataBase;
 	static GameLog* mGameLog;
 	static MahjongRobotManager* mMahjongRobotManager;
+	static MatchSystem* mMatchSystem;
 };
 
 #endif

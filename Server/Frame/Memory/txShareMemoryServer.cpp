@@ -315,7 +315,7 @@ bool txShareMemoryServer::WriteCmdData(const DATA_HEADER& header, const void* pB
 		SetLastError(m_dwLastError);
 		return false;
 	}
-	if (header.mDataSize + sizeof(DATA_HEADER) > getMappingSize())
+	if (header.mDataSize + (int)sizeof(DATA_HEADER) > getMappingSize())
 	{
 		m_dwLastError = ERROR_BUFFER_OVERFLOW;
 		SetLastError(m_dwLastError);
