@@ -16,7 +16,7 @@ void CommandRoomNotifyPlayerReady::execute()
 			CommandCharacterNotifyOtherPlayerReady* cmd = NEW_CMD_INFO(cmd);
 			cmd->mPlayerGUID = mPlayerGUID;
 			cmd->mReady = mReady;
-			mCommandSystem->pushCommand(cmd, iterPlayer->second);
+			pushCommand(cmd, iterPlayer->second);
 		}
 	}
 	END(playerList);
@@ -24,7 +24,7 @@ void CommandRoomNotifyPlayerReady::execute()
 	if (room->isFull() && room->isAllPlayerReady())
 	{
 		CommandRoomStartGame* cmd = NEW_CMD_INFO(cmd);
-		mCommandSystem->pushCommand(cmd, room);
+		pushCommand(cmd, room);
 	}
 }
 

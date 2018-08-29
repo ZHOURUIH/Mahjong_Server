@@ -133,7 +133,7 @@ bool NetServer::acceptSocket(void* args)
 	CommandServerNotifyAcceptedClient* cmdAccepted = NEW_CMD_DELAY(cmdAccepted);
 	cmdAccepted->mSocket = sClient;
 	cmdAccepted->mIP = ip;
-	mCommandSystem->pushDelayCommand(cmdAccepted, netManager);
+	pushDelayCommand(cmdAccepted, netManager);
 	return true;
 }
 

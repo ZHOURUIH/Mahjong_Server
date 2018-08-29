@@ -8,10 +8,10 @@
 void CommandCharacterPass::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCPlayerPass* pass = NetServer::createPacket(pass, PT_SC_PLAYER_PASS);
+	SCPlayerPass* pass = NEW_PACKET(pass, PT_SC_PLAYER_PASS);
 	pass->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	pass->mMahjong = mMahjong;
-	mNetServer->sendMessage(pass, player);
+	sendMessage(pass, player);
 }
 
 std::string CommandCharacterPass::showDebugInfo()

@@ -9,15 +9,15 @@ void CommandCharacterNotifyOtherPlayerContinueGame::execute()
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	if (mContinue)
 	{
-		SCOtherPlayerContinueGame* otherContinue = NetServer::createPacket(otherContinue, PT_SC_OTHER_PLAYER_CONTINUE_GAME);
+		SCOtherPlayerContinueGame* otherContinue = NEW_PACKET(otherContinue, PT_SC_OTHER_PLAYER_CONTINUE_GAME);
 		otherContinue->mOtherPlayerGUID = mOtherPlayer->getGUID();
 		otherContinue->mBanker = mOtherPlayer->getCharacterData()->mBanker;
-		mNetServer->sendMessage(otherContinue, player);
+		sendMessage(otherContinue, player);
 	}
 	else
 	{
-		SCOtherPlayerBackToMahjongHall* otherBack = NetServer::createPacket(otherBack, PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL);
+		SCOtherPlayerBackToMahjongHall* otherBack = NEW_PACKET(otherBack, PT_SC_OTHER_PLAYER_BACK_TO_MAHJONG_HALL);
 		otherBack->mOtherPlayerGUID = mOtherPlayer->getGUID();
-		mNetServer->sendMessage(otherBack, player);
+		sendMessage(otherBack, player);
 	}
 }

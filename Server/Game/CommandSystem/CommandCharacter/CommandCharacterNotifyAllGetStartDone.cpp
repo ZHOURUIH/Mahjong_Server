@@ -7,6 +7,6 @@
 void CommandCharacterNotifyAllGetStartDone::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCNotifyAllGetStartDone* getStartDone = NetServer::createPacket(getStartDone, PT_SC_NOTIFY_ALL_GET_START_DONE);
-	mNetServer->sendMessage(getStartDone, player);
+	SCNotifyAllGetStartDone* getStartDone = NEW_PACKET(getStartDone, PT_SC_NOTIFY_ALL_GET_START_DONE);
+	sendMessage(getStartDone, player);
 }

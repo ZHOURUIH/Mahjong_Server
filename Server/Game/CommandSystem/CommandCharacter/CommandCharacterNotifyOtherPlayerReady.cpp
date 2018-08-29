@@ -7,10 +7,10 @@ void CommandCharacterNotifyOtherPlayerReady::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	// 发送有玩家准备的消息
-	SCOtherPlayerReady* playerReady = NetServer::createPacket(playerReady, PT_SC_OTHER_PLAYER_READY);
+	SCOtherPlayerReady* playerReady = NEW_PACKET(playerReady, PT_SC_OTHER_PLAYER_READY);
 	playerReady->mPlayerGUID = mPlayerGUID;
 	playerReady->mReady = mReady;
-	mNetServer->sendMessage(playerReady, player);
+	sendMessage(playerReady, player);
 }
 
 std::string CommandCharacterNotifyOtherPlayerReady::showDebugInfo()

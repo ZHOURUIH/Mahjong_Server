@@ -16,7 +16,7 @@ void CommandCharacterMahjongEnd::execute()
 		infoList.insert(iter->first->getGUID(), iter->second);
 	}
 	END(mMoneyDeltaList);
-	SCNotifyMahjongEnd* mahjongEnd = NetServer::createPacket(mahjongEnd, PT_SC_NOTIFY_MAHJONG_END);
+	SCNotifyMahjongEnd* mahjongEnd = NEW_PACKET(mahjongEnd, PT_SC_NOTIFY_MAHJONG_END);
 	mahjongEnd->setList(infoList);
-	mNetServer->sendMessage(mahjongEnd, player);
+	sendMessage(mahjongEnd, player);
 }

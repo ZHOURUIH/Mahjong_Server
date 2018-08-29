@@ -11,9 +11,8 @@
 
 void CSBackToMahjongHall::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
-	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
 	CommandCharacterContinueGame* cmdContinue = NEW_CMD_INFO(cmdContinue);
 	cmdContinue->mContinue = false;
-	mCommandSystem->pushCommand(cmdContinue, character);
+	pushCommand(cmdContinue, character);
 }

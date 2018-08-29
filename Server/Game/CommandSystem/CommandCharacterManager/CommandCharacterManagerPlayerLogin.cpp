@@ -12,8 +12,8 @@ void CommandCharacterManagerPlayerLogin::execute()
 	cmdCreate->mCharGUID = mGUID;
 	cmdCreate->mName = mName;
 	cmdCreate->mType = CT_PLAYER;
-	cmdCreate->mClientGUID = mClient;
-	mCommandSystem->pushCommand(cmdCreate, mReceiver);
+	cmdCreate->mClientGUID = mClientID;
+	pushCommand(cmdCreate, mReceiver);
 
 	// 玩家登陆后,设置玩家属性
 	Character* player = mCharacterManager->getCharacter(mGUID);
@@ -26,15 +26,15 @@ void CommandCharacterManagerPlayerLogin::execute()
 	data->mReady = false;
 
 	// 玩家登陆成功后, 发回登陆成功的消息
-	SCLoginRet* loginRet = NetServer::createPacket(loginRet, PT_SC_LOGIN_RET);
+	SCLoginRet* loginRet = NEW_PACKET(loginRet, PT_SC_LOGIN_RET);
 	loginRet->mLoginRet = 0;
 	loginRet->mGUID = mGUID;
 	loginRet->mMoney = mMoney;
 	loginRet->mHead = mHead;
 	loginRet->setName(mName);
-	mNetServer->sendMessage(loginRet, mClient);
+	sendMessage(loginRet, mClientID);
 
-	NetClient* client = mNetServer->getClient(mClient);
+	NetClient* client = mNetServer->getClient(mClientID);
 	if (client != NULL)
 	{
 		client->notifyPlayerLogin(mGUID);

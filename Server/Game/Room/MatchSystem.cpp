@@ -33,7 +33,7 @@ void MatchSystem::update(float elapsedTime)
 			int index = MathUtility::randomInt(0, notFullRoomList.size() - 1);
 			CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 			cmdJoin->mRoomID = notFullRoomList[index]->getID();
-			mCommandSystem->pushCommand(cmdJoin, (*iterMatch)->mPlayer);
+			pushCommand(cmdJoin, (*iterMatch)->mPlayer);
 			mFreeMatchPoolMap.tryErase((*iterMatch)->mPlayer->getCharacterData()->mGUID);
 			iterMatch = mFreeMatchPool.erase(iterMatch, false);
 		}
@@ -52,22 +52,22 @@ void MatchSystem::update(float elapsedTime)
 				Room* room = NULL;
 				CommandRoomManagerCreateRoom* cmdCreatRoom = NEW_CMD_INFO(cmdCreatRoom);
 				cmdCreatRoom->mRoomPtr = &room;
-				mCommandSystem->pushCommand(cmdCreatRoom, mRoomManager);
+				pushCommand(cmdCreatRoom, mRoomManager);
 				if (room != NULL)
 				{
 					// 将机器人加入到房间中,需要首先加入一个机器人,作为房主
 					CharacterMahjongRobot* robot = mMahjongRobotManager->createRobot();
 					CommandCharacterJoinRoom* cmdJoin0 = NEW_CMD_INFO(cmdJoin0);
 					cmdJoin0->mRoomID = room->getID();
-					mCommandSystem->pushCommand(cmdJoin0, robot);
+					pushCommand(cmdJoin0, robot);
 					// 机器人默认准备状态
 					CommandCharacterReady* cmdReady = NEW_CMD_INFO(cmdReady);
 					cmdReady->mReady = true;
-					mCommandSystem->pushCommand(cmdReady, robot);
+					pushCommand(cmdReady, robot);
 					// 再加入玩家
 					CommandCharacterJoinRoom* cmdJoin1 = NEW_CMD_INFO(cmdJoin1);
 					cmdJoin1->mRoomID = room->getID();
-					mCommandSystem->pushCommand(cmdJoin1, info->mPlayer);
+					pushCommand(cmdJoin1, info->mPlayer);
 					// 再加入机器人将房间填满
 					while (true)
 					{
@@ -78,11 +78,11 @@ void MatchSystem::update(float elapsedTime)
 						CharacterMahjongRobot* robot0 = mMahjongRobotManager->createRobot();
 						CommandCharacterJoinRoom* cmdJoin2 = NEW_CMD_INFO(cmdJoin2);
 						cmdJoin2->mRoomID = room->getID();
-						mCommandSystem->pushCommand(cmdJoin2, robot0);
+						pushCommand(cmdJoin2, robot0);
 						// 机器人默认准备状态
 						CommandCharacterReady* cmdReady0 = NEW_CMD_INFO(cmdReady0);
 						cmdReady0->mReady = true;
-						mCommandSystem->pushCommand(cmdReady0, robot0);
+						pushCommand(cmdReady0, robot0);
 					}
 					mFreeMatchPoolMap.tryErase((*iterMatch)->mPlayer->getCharacterData()->mGUID);
 					iterMatch = mFreeMatchPool.erase(iterMatch, false);

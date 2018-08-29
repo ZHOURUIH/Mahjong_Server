@@ -12,7 +12,7 @@ void CommandCharacterAskDrop::execute()
 	// 如果是真实玩家,则需要发送消息到客户端
 	if (player->getType() == CT_PLAYER)
 	{
-		SCAskDrop* getStartDone = NetServer::createPacket(getStartDone, PT_SC_ASK_DROP);
-		mNetServer->sendMessage(getStartDone, player);
+		SCAskDrop* getStartDone = NEW_PACKET(getStartDone, PT_SC_ASK_DROP);
+		sendMessage(getStartDone, player);
 	}
 }

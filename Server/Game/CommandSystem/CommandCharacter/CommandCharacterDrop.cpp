@@ -11,15 +11,15 @@ void CommandCharacterDrop::execute()
 
 	if (player->getType() == CT_PLAYER)
 	{
-		SCRequestDropRet* requestDropRet = NetServer::createPacket(requestDropRet, PT_SC_REQUEST_DROP_RET);
+		SCRequestDropRet* requestDropRet = NEW_PACKET(requestDropRet, PT_SC_REQUEST_DROP_RET);
 		requestDropRet->mIndex = mIndex;
 		requestDropRet->mMahjong = mMahjong;
-		mNetServer->sendMessage(requestDropRet, player);
+		sendMessage(requestDropRet, player);
 	}
 
 	// 打出一张牌后,需要重新排列
 	CommandCharacterReorderMahjong* cmd = NEW_CMD_INFO(cmd);
-	mCommandSystem->pushCommand(cmd, player);
+	pushCommand(cmd, player);
 }
 
 std::string CommandCharacterDrop::showDebugInfo()

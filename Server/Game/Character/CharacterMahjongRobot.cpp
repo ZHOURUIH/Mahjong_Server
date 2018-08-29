@@ -13,7 +13,7 @@ void CharacterMahjongRobot::update(float elapsedTime)
 void CharacterMahjongRobot::notifyStartGame()
 {
 	CommandCharacterGetStartDone* cmdStartDone = NEW_CMD_INFO(cmdStartDone);
-	mCommandSystem->pushCommand(cmdStartDone, this);
+	pushCommand(cmdStartDone, this);
 }
 
 void CharacterMahjongRobot::notifyAskAction(txVector<MahjongAction*>& actionList)
@@ -30,7 +30,7 @@ void CharacterMahjongRobot::notifyAskAction(txVector<MahjongAction*>& actionList
 		cmd->mPlayerGUID = mCharacterData->mGUID;
 		cmd->mAction = actionList[0]->mType;
 		cmd->addStartCommandCallback(onCmdStart, this);
-		mCommandSystem->pushDelayCommand(cmd, mRoomManager->getRoom(mCharacterData->mRoomID));
+		pushDelayCommand(cmd, mRoomManager->getRoom(mCharacterData->mRoomID));
 		mAskAcitonCmdID = cmd->getAssignID();
 	}
 }
@@ -47,7 +47,7 @@ void CharacterMahjongRobot::notifyAskDrop()
 	cmd->mPlayerGUID = mCharacterData->mGUID;
 	cmd->mIndex = mCharacterData->mHandIn.size() - 1;
 	cmd->addStartCommandCallback(onCmdStart, this);
-	mCommandSystem->pushDelayCommand(cmd, mRoomManager->getRoom(mCharacterData->mRoomID));
+	pushDelayCommand(cmd, mRoomManager->getRoom(mCharacterData->mRoomID));
 	mRequestDropCmdID = cmd->getAssignID();
 }
 

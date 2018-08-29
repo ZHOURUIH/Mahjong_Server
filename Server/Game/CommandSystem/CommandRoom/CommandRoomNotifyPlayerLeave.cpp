@@ -41,7 +41,7 @@ void CommandRoomNotifyPlayerLeave::execute()
 			{
 				CommandCharacterNotifyOtherPlayerLeaveRoom* cmdLeave = NEW_CMD_INFO(cmdLeave);
 				cmdLeave->mLeavePlayerID = mPlayer->getGUID();
-				mCommandSystem->pushCommand(cmdLeave, iterPlayer->second);
+				pushCommand(cmdLeave, iterPlayer->second);
 			}
 			END(playerList);
 		}
@@ -56,13 +56,13 @@ void CommandRoomNotifyPlayerLeave::execute()
 		FOR(tempList, ; iter != iterEnd; ++iter)
 		{
 			CommandCharacterLeaveRoom* leave = NEW_CMD_INFO(leave);
-			mCommandSystem->pushCommand(leave, iter->second);
+			pushCommand(leave, iter->second);
 		}
 		END(tempList);
 		// 销毁房间
 		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD_INFO(cmdDestroyRoom);
 		cmdDestroyRoom->mRoomID = room->getID();
-		mCommandSystem->pushCommand(cmdDestroyRoom, mRoomManager);
+		pushCommand(cmdDestroyRoom, mRoomManager);
 	}
 }
 

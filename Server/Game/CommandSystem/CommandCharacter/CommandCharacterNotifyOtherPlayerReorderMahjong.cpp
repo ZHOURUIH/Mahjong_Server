@@ -7,9 +7,9 @@
 void CommandCharacterNotifyOtherPlayerReorderMahjong::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCNotifyReorderMahjong* reorderMahjong = NetServer::createPacket(reorderMahjong, PT_SC_NOTIFY_REORDER_MAHJONG);
+	SCNotifyReorderMahjong* reorderMahjong = NEW_PACKET(reorderMahjong, PT_SC_NOTIFY_REORDER_MAHJONG);
 	reorderMahjong->mPlayerGUID = mPlayerGUID;
-	mNetServer->sendMessage(reorderMahjong, player);
+	sendMessage(reorderMahjong, player);
 }
 
 std::string CommandCharacterNotifyOtherPlayerReorderMahjong::showDebugInfo()

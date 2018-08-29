@@ -7,9 +7,9 @@
 void CommandCharacterNotifyOtherPlayerGang::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCOtherPlayerGang* otherGang = NetServer::createPacket(otherGang, PT_SC_OTHER_PLAYER_GANG);
+	SCOtherPlayerGang* otherGang = NEW_PACKET(otherGang, PT_SC_OTHER_PLAYER_GANG);
 	otherGang->mOtherPlayerGUID = mOtherPlayer->getGUID();
 	otherGang->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	otherGang->mMahjong = mMahjong;
-	mNetServer->sendMessage(otherGang, player);
+	sendMessage(otherGang, player);
 }

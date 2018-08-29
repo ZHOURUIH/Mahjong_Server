@@ -10,8 +10,7 @@
 
 void CSJoinRoom::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
 	CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 	cmdJoin->mRoomID = mRoomID;
-	mCommandSystem->pushCommand(cmdJoin, mCharacterManager->getCharacter(client->getCharGUID()));
+	pushCommand(cmdJoin, mCharacterManager->getCharacter(mClient->getCharGUID()));
 }

@@ -12,9 +12,8 @@
 
 void CSFreeMatch::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
-	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(client->getCharGUID()));
+	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mClient->getCharGUID()));
 	CommandMatchSystemRequestMatch* cmd = NEW_CMD_INFO(cmd);
 	cmd->mPlayer = player;
-	mCommandSystem->pushCommand(cmd, mMatchSystem);
+	pushCommand(cmd, mMatchSystem);
 }

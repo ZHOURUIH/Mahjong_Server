@@ -15,15 +15,15 @@ void CommandCharacterLeaveRoom::execute()
 		// 通知房间有玩家离开
 		CommandRoomNotifyPlayerLeave* cmdLeave = NEW_CMD_INFO(cmdLeave);
 		cmdLeave->mPlayer = player;
-		mCommandSystem->pushCommand(cmdLeave, room);
+		pushCommand(cmdLeave, room);
 	}
 	player->notifyLeaveRoom();
 
 	if (player->getType() == CT_PLAYER)
 	{
-		SCLeaveRoomRet* leaveRet = NetServer::createPacket(leaveRet, PT_SC_LEAVE_ROOM_RET);
+		SCLeaveRoomRet* leaveRet = NEW_PACKET(leaveRet, PT_SC_LEAVE_ROOM_RET);
 		leaveRet->mResult = (room != NULL);
 		// 发送消息通知客户端离开房间的结果
-		mNetServer->sendMessage(leaveRet, player);
+		sendMessage(leaveRet, player);
 	}
 }

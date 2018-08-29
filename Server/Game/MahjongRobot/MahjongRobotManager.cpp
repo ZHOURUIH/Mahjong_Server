@@ -86,7 +86,7 @@ void MahjongRobotManager::destroy()
 	{
 		CommandCharacterManagerDestroyCharacter* cmd = NEW_CMD(cmd);
 		cmd->mGUID = iter->second->getGUID();
-		mCommandSystem->pushCommand(cmd, mCharacterManager);
+		pushCommand(cmd, mCharacterManager);
 	}
 	END(mRobotList);
 
@@ -137,7 +137,7 @@ CharacterMahjongRobot* MahjongRobotManager::loginRobot(CHAR_GUID guid, bool show
 	cmdLogin->mName = data->mName;
 	cmdLogin->mMoney = data->mMoney;
 	cmdLogin->mHead = data->mHead;
-	mCommandSystem->pushCommand(cmdLogin, mCharacterManager);
+	pushCommand(cmdLogin, mCharacterManager);
 	CharacterMahjongRobot* robot = static_cast<CharacterMahjongRobot*>(mCharacterManager->getCharacter(guid));
 	mRobotList.insert(guid, robot);
 	TRACE_DELETE(data);

@@ -16,9 +16,9 @@ void CommandCharacterReady::execute()
 	}
 	data->mReady = mReady;
 	// 发消息通知客户端
-	SCReadyRet* readyRet = NetServer::createPacket(readyRet, PT_SC_READY_RET);
+	SCReadyRet* readyRet = NEW_PACKET(readyRet, PT_SC_READY_RET);
 	readyRet->mReady = mReady;
-	mNetServer->sendMessage(readyRet, player);
+	sendMessage(readyRet, player);
 	// 通知房间有玩家准备
 	Room* room = mRoomManager->getRoom(data->mRoomID);
 	if (room != NULL)
@@ -26,7 +26,7 @@ void CommandCharacterReady::execute()
 		CommandRoomNotifyPlayerReady* cmd = NEW_CMD_INFO(cmd);
 		cmd->mReady = mReady;
 		cmd->mPlayerGUID = data->mGUID;
-		mCommandSystem->pushCommand(cmd, room);
+		pushCommand(cmd, room);
 	}
 }
 

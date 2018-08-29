@@ -30,7 +30,7 @@ void CommandRoomNotifyPlayerJoin::execute()
 		{
 			CommandCharacterNotifyOtherPlayerJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 			cmdJoin->mJoinPlayer = joinPlayer;
-			mCommandSystem->pushCommand(cmdJoin, iterPlayer->second);
+			pushCommand(cmdJoin, iterPlayer->second);
 		}
 	}
 	END(playerList);

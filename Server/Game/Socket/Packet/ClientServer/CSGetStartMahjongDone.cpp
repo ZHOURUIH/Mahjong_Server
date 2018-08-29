@@ -13,8 +13,7 @@
 
 void CSGetStartMahjongDone::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
-	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
 	CommandCharacterGetStartDone* cmd = NEW_CMD_INFO(cmd);
-	mCommandSystem->pushCommand(cmd, character);
+	pushCommand(cmd, character);
 }

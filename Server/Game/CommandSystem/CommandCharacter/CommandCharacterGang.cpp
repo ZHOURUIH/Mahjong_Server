@@ -8,8 +8,8 @@ void CommandCharacterGang::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->gangMahjong(mMahjong, mDroppedPlayer);
-	SCPlayerGang* gang = NetServer::createPacket(gang, PT_SC_PLAYER_GANG);
+	SCPlayerGang* gang = NEW_PACKET(gang, PT_SC_PLAYER_GANG);
 	gang->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
 	gang->mMahjong = mMahjong;
-	mNetServer->sendMessage(gang, player);
+	sendMessage(gang, player);
 }

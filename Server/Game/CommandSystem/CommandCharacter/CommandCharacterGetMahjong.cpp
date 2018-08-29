@@ -8,10 +8,10 @@ void CommandCharacterGetMahjong::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->getMahjong(mMahjong);
-	SCNotifyGetMahjong* getStartMahjong = NetServer::createPacket(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
+	SCNotifyGetMahjong* getStartMahjong = NEW_PACKET(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
 	getStartMahjong->mPlayerGUID = player->getGUID();
 	getStartMahjong->mMahjong = mMahjong;
-	mNetServer->sendMessage(getStartMahjong, player);
+	sendMessage(getStartMahjong, player);
 }
 
 std::string CommandCharacterGetMahjong::showDebugInfo()

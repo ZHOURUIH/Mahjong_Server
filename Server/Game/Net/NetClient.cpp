@@ -34,7 +34,7 @@ void NetClient::destroy()
 	{
 		CommandCharacterManagerNotifyPlayerOffline* cmdOffline = NEW_CMD_DELAY_INFO(cmdOffline);
 		cmdOffline->mPlayerID = mCharGUID;
-		mCommandSystem->pushDelayCommand(cmdOffline, mCharacterManager);
+		pushDelayCommand(cmdOffline, mCharacterManager);
 	}
 	TRACE_DELETE_ARRAY(mTempBuffer0);
 	TRACE_DELETE_ARRAY(mTempBuffer1);
@@ -76,7 +76,8 @@ PARSE_RESULT NetClient::parsePacket(int& index, Packet*& packet)
 			packet = NULL;
 			return PR_ERROR;
 		}
-		packet->mClient = mClientGUID;
+		packet->mClientID = mClientGUID;
+		packet->mClient = this;
 		index += packetSize;
 	}
 	// 未接收完全,等待下次接收
@@ -212,7 +213,7 @@ bool NetClient::sendPacketCheck(Packet* packet)
 		return false;
 	}
 	// 不需要设置消息包中的客户端ID
-	if (packet->mClient != INVALID_ID)
+	if (packet->mClientID != INVALID_ID)
 	{
 		LOG_ERROR("error : packet's client ID should be none!");
 		return false;

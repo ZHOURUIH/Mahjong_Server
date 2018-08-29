@@ -12,14 +12,14 @@ void CommandCharacterContinueGame::execute()
 	// 先向客户端发回是否继续游戏的结果
 	if (mContinue)
 	{
-		SCContinueGameRet* continueRet = NetServer::createPacket(continueRet, PT_SC_CONTINUE_GAME_RET);
+		SCContinueGameRet* continueRet = NEW_PACKET(continueRet, PT_SC_CONTINUE_GAME_RET);
 		continueRet->mBanker = player->getCharacterData()->mBanker;
-		mNetServer->sendMessage(continueRet, player);
+		sendMessage(continueRet, player);
 	}
 	else
 	{
-		SCBackToMahjongHallRet* backRet = NetServer::createPacket(backRet, PT_SC_BACK_TO_MAHJONG_HALL_RET);
-		mNetServer->sendMessage(backRet, player);
+		SCBackToMahjongHallRet* backRet = NEW_PACKET(backRet, PT_SC_BACK_TO_MAHJONG_HALL_RET);
+		sendMessage(backRet, player);
 	}
 
 	// 通知房间有玩家选择是否继续游戏
@@ -27,5 +27,5 @@ void CommandCharacterContinueGame::execute()
 	CommandRoomNotifyPlayerContinueGame* cmdPlayerContinue = NEW_CMD_INFO(cmdPlayerContinue);
 	cmdPlayerContinue->mPlayer = player;
 	cmdPlayerContinue->mContinue = mContinue;
-	mCommandSystem->pushCommand(cmdPlayerContinue, curRoom);
+	pushCommand(cmdPlayerContinue, curRoom);
 }

@@ -11,11 +11,10 @@
 
 void CSConfirmAction::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
-	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
 	CommandRoomConfirmAction* cmd = NEW_CMD_INFO(cmd);
 	cmd->mPlayerGUID = character->getGUID();
 	cmd->mAction = (ACTION_TYPE)mAction;
-	mCommandSystem->pushCommand(cmd, room);
+	pushCommand(cmd, room);
 }

@@ -13,8 +13,8 @@ void CommandCharacterAskAction::execute()
 	// 如果是真实玩家,则需要发送消息到客户端
 	if (player->getType() == CT_PLAYER)
 	{
-		SCAskAction* askAction = NetServer::createPacket(askAction, PT_SC_ASK_ACTION);
+		SCAskAction* askAction = NEW_PACKET(askAction, PT_SC_ASK_ACTION);
 		askAction->setActionList(mActionList);
-		mNetServer->sendMessage(askAction, player);
+		sendMessage(askAction, player);
 	}
 }

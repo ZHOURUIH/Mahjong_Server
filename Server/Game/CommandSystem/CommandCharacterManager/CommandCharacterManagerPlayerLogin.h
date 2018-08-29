@@ -11,7 +11,7 @@ public:
 	{
 		mGUID = INVALID_ID;
 		mName = EMPTY_STRING;
-		mClient = INVALID_ID;
+		mClientID = INVALID_ID;
 		mMoney = 0;
 		mHead = 0;
 	}
@@ -20,7 +20,7 @@ public:
 public:
 	CHAR_GUID mGUID;
 	std::string mName;
-	CLIENT_GUID mClient;
+	CLIENT_GUID mClientID;
 	int mMoney;
 	short mHead;
 };

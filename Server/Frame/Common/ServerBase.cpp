@@ -35,3 +35,29 @@ void ServerBase::notifyComponentDeconstruct()
 	// 重新再获取一下所有组件
 	notifyConstructDone();
 }
+
+// 在任意线程中发送立即执行的命令,则该命令将在该线程中执行
+void ServerBase::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver)
+{
+	mCommandSystem->pushCommand(cmd, cmdReceiver);
+}
+// 延迟执行的命令都会在主线程中执行
+void ServerBase::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdReceiver, float delayExecute)
+{
+	mCommandSystem->pushDelayCommand(cmd, cmdReceiver, delayExecute);
+}
+
+void ServerBase::sendMessage(Packet* packet, CharacterPlayer* player, bool destroyPacketEndSend)
+{
+	mNetServer->sendMessage(packet, player, destroyPacketEndSend);
+}
+
+void ServerBase::sendMessage(Packet* packet, CLIENT_GUID clientGUID, bool destroyPacketEndSend)
+{
+	mNetServer->sendMessage(packet, clientGUID, destroyPacketEndSend);
+}
+
+void ServerBase::sendMessage(Packet* packet, NetClient* client, bool destroyPacketEndSend)
+{
+	mNetServer->sendMessage(packet, client, destroyPacketEndSend);
+}

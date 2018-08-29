@@ -16,10 +16,10 @@ void CommandCharacterStartGame::execute()
 	if (player->getType() == CT_PLAYER)
 	{
 		// 发送开局麻将的信息
-		SCStartGame* startGamePacket = NetServer::createPacket(startGamePacket, PT_SC_START_GAME);
+		SCStartGame* startGamePacket = NEW_PACKET(startGamePacket, PT_SC_START_GAME);
 		startGamePacket->setDice(mDice[0], mDice[1]);
 		startGamePacket->setMahjongList(mPlayerIDList, mHandInList, mHuaList);
-		mNetServer->sendMessage(startGamePacket, player);
+		sendMessage(startGamePacket, player);
 	}
 }
 

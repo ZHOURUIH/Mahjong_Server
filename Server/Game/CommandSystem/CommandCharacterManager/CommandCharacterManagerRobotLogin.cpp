@@ -21,7 +21,7 @@ void CommandCharacterManagerRobotLogin::execute()
 	cmdCreate->mName = mName;
 	cmdCreate->mType = CT_MAHJONG_ROBOT;
 	cmdCreate->mClientGUID = INVALID_ID;
-	mCommandSystem->pushCommand(cmdCreate, mReceiver);
+	pushCommand(cmdCreate, mReceiver);
 
 	// 玩家登陆后,设置玩家属性
 	Character* player = mCharacterManager->getCharacter(mGUID);

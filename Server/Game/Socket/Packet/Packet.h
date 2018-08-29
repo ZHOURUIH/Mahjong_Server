@@ -8,6 +8,7 @@
 #include "ServerBase.h"
 #endif
 
+class NetClient;
 class Packet : public txSerializedData
 #ifdef _SERVER
 	, public ServerBase
@@ -17,7 +18,7 @@ public:
 	Packet(PACKET_TYPE type)
 		:
 		mType(type),
-		mClient(INVALID_ID)
+		mClientID(INVALID_ID)
 	{}
 	virtual void init()
 	{
@@ -32,7 +33,8 @@ public:
 	}
 public:
 	PACKET_TYPE mType;
-	CLIENT_GUID mClient;	// 客户端ID
+	CLIENT_GUID mClientID;	// 客户端ID
+	NetClient* mClient;
 };
 
 #endif

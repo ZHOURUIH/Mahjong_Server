@@ -1,5 +1,4 @@
 ﻿#include "PacketHeader.h"
-#ifdef _SERVER
 #include "NetServer.h"
 #include "DataPlayerInfo.h"
 #include "CharacterManager.h"
@@ -7,11 +6,9 @@
 #include "MySQLDataBase.h"
 #include "SQLAccount.h"
 #include "SQLCharacterData.h"
-#endif
 
 void CSLogin::execute()
 {
-#ifdef _SERVER
 	// 玩家登陆成功后,通知网络管理器有玩家登陆
 	// 查询数据库
 	AccountTable* accountData = TRACE_NEW(AccountTable, accountData);
@@ -33,9 +30,9 @@ void CSLogin::execute()
 	// 如果登陆失败,则立即发送消息
 	if (ret != 0)
 	{
-		SCLoginRet* loginRet = NetServer::createPacket(loginRet, PT_SC_LOGIN_RET);
+		SCLoginRet* loginRet = NEW_PACKET(loginRet, PT_SC_LOGIN_RET);
 		loginRet->mLoginRet = ret;
-		mNetServer->sendMessage(loginRet, mClient);
+		sendMessage(loginRet, mClient);
 	}
 	// 登陆成功,则先创建角色,角色创建完成后再发送消息
 	else
@@ -43,14 +40,13 @@ void CSLogin::execute()
 		CharacterDataTable* characterData = TRACE_NEW(CharacterDataTable, characterData);
 		mMySQLDataBase->queryCharacterData(accountData->mGUID, characterData);
 		CommandCharacterManagerPlayerLogin* cmdLogin = NEW_CMD_INFO(cmdLogin);
-		cmdLogin->mClient = mClient;
+		cmdLogin->mClientID = mClientID;
 		cmdLogin->mGUID = accountData->mGUID;
 		cmdLogin->mName = characterData->mName;
 		cmdLogin->mMoney = characterData->mMoney;
 		cmdLogin->mHead = characterData->mHead;
-		mCommandSystem->pushCommand(cmdLogin, mCharacterManager);
+		pushCommand(cmdLogin, mCharacterManager);
 		TRACE_DELETE(characterData);
 	}
 	TRACE_DELETE(accountData);
-#endif
 }

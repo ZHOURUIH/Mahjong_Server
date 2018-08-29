@@ -20,7 +20,7 @@ void CSRegister::execute()
 	TRACE_DELETE(dataAccount);
 	TRACE_DELETE(dataCharacterData);
 	// 直接发回注册结果
-	SCRegisterRet* registerRet = NetServer::createPacket(registerRet, PT_SC_REGISTER_RET);
+	SCRegisterRet* registerRet = NEW_PACKET(registerRet, PT_SC_REGISTER_RET);
 	registerRet->mResult = ret;
-	mNetServer->sendMessage(registerRet, mClient);
+	sendMessage(registerRet, mClient);
 }

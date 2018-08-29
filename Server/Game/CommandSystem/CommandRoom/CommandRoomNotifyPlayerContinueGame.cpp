@@ -19,14 +19,14 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 			CommandCharacterNotifyOtherPlayerContinueGame* cmdOtherContinue = NEW_CMD_INFO(cmdOtherContinue);
 			cmdOtherContinue->mOtherPlayer = mPlayer;
 			cmdOtherContinue->mContinue = mContinue;
-			mCommandSystem->pushCommand(cmdOtherContinue, iter->first);
+			pushCommand(cmdOtherContinue, iter->first);
 			// 通知刚选择继续游戏的玩家其他玩家的信息,只有选择了继续游戏,才会发送其他玩家的选择
 			if (mContinue)
 			{
 				CommandCharacterNotifyOtherPlayerContinueGame* cmdNotifyPlayer = NEW_CMD_INFO(cmdNotifyPlayer);
 				cmdNotifyPlayer->mOtherPlayer = iter->first;
 				cmdNotifyPlayer->mContinue = mContinue;
-				mCommandSystem->pushCommand(cmdNotifyPlayer, mPlayer);
+				pushCommand(cmdNotifyPlayer, mPlayer);
 			}
 		}
 	}
@@ -37,7 +37,7 @@ void CommandRoomNotifyPlayerContinueGame::execute()
 		CommandRoomNotifyPlayerLeave* cmdLeave = NEW_CMD_INFO(cmdLeave);
 		cmdLeave->mPlayer = mPlayer;
 		cmdLeave->mNotifyOtherPlayer = false;
-		mCommandSystem->pushCommand(cmdLeave, room);
+		pushCommand(cmdLeave, room);
 	}
 	// 玩家选择是否继续游戏
 	room->chooseContinueGame(mPlayer, mContinue);

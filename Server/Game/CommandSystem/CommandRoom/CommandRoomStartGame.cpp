@@ -49,7 +49,7 @@ void CommandRoomStartGame::execute()
 		cmdStartGame->mHandInList = handInList;
 		cmdStartGame->mHuaList = huaList;
 		cmdStartGame->mPlayerIDList = playerIDList;
-		mCommandSystem->pushCommand(cmdStartGame, iterPlayer->second);
+		pushCommand(cmdStartGame, iterPlayer->second);
 	}
 	END_R(playerList);
 }

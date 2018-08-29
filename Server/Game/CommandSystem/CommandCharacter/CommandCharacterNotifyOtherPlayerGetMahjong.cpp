@@ -7,10 +7,10 @@
 void CommandCharacterNotifyOtherPlayerGetMahjong::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
-	SCNotifyGetMahjong* getStartMahjong = NetServer::createPacket(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
+	SCNotifyGetMahjong* getStartMahjong = NEW_PACKET(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
 	getStartMahjong->mPlayerGUID = mPlayerGUID;
 	getStartMahjong->mMahjong = mMahjong;
-	mNetServer->sendMessage(getStartMahjong, player);
+	sendMessage(getStartMahjong, player);
 }
 
 std::string CommandCharacterNotifyOtherPlayerGetMahjong::showDebugInfo()

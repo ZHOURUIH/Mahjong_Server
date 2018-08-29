@@ -13,8 +13,7 @@
 
 void CSAddMahjongRobot::execute()
 {
-	NetClient* client = mNetServer->getClient(mClient);
-	Character* character = mCharacterManager->getCharacter(client->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
 	// 查看玩家所在的房间人有没有满
 	bool addRet = false;
 	CharacterMahjongRobot* robot = NULL;
@@ -24,18 +23,18 @@ void CSAddMahjongRobot::execute()
 		robot = mMahjongRobotManager->createRobot();
 		CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 		cmdJoin->mRoomID = room->getID();
-		mCommandSystem->pushCommand(cmdJoin, robot);
+		pushCommand(cmdJoin, robot);
 		addRet = true;
 	}
-	SCAddMahjongRobotRet* addRobotRet = NetServer::createPacket(addRobotRet, PT_SC_ADD_MAHJONG_ROBOT_RET);
+	SCAddMahjongRobotRet* addRobotRet = NEW_PACKET(addRobotRet, PT_SC_ADD_MAHJONG_ROBOT_RET);
 	addRobotRet->mResult = addRet;
-	mNetServer->sendMessage(addRobotRet, client);
+	sendMessage(addRobotRet, mClient);
 
 	// 机器人加入后默认立即准备
 	if (addRet)
 	{
 		CommandCharacterReady* cmdReady = NEW_CMD_INFO(cmdReady);
 		cmdReady->mReady = true;
-		mCommandSystem->pushCommand(cmdReady, robot);
+		pushCommand(cmdReady, robot);
 	}
 }
