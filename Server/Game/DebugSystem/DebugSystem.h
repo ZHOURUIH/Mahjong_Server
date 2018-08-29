@@ -6,6 +6,7 @@
 const int DEBUG_SYSTEM_CMD = 2;
 const std::string ROOM_LIST = "RoomList";
 const std::string PLAYER_LIST = "PlayerList";
+const std::string MATCH_POOL = "MatchPool";
 
 class txShareMemoryServer;
 class DebugSystem : public FrameComponent

@@ -34,6 +34,7 @@ void MatchSystem::update(float elapsedTime)
 			CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 			cmdJoin->mRoomID = notFullRoomList[index]->getID();
 			mCommandSystem->pushCommand(cmdJoin, (*iterMatch)->mPlayer);
+			mFreeMatchPoolMap.tryErase((*iterMatch)->mPlayer->getCharacterData()->mGUID);
 			iterMatch = mFreeMatchPool.erase(iterMatch, false);
 		}
 		END(mFreeMatchPool);
@@ -83,6 +84,7 @@ void MatchSystem::update(float elapsedTime)
 						cmdReady0->mReady = true;
 						mCommandSystem->pushCommand(cmdReady0, robot0);
 					}
+					mFreeMatchPoolMap.tryErase((*iterMatch)->mPlayer->getCharacterData()->mGUID);
 					iterMatch = mFreeMatchPool.erase(iterMatch, false);
 					removed = true;
 				}

@@ -27,6 +27,7 @@ public:
 	virtual void update(float elapsedTime);
 	void requestFreeMatch(CharacterPlayer* player);
 	void notifyPlayerOffline(CharacterPlayer* player);
+	txVector<MatchInfo*>& getFreeMatchPool() { return mFreeMatchPool; }
 protected:
 	txMap<CHAR_GUID, MatchInfo*> mFreeMatchPoolMap;	// 等待匹配的玩家列表,用于查找
 	txVector<MatchInfo*>	mFreeMatchPool;				// 等待匹配的玩家列表,保存着玩家之间的先后顺序

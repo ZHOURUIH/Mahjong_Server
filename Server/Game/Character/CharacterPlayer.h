@@ -28,6 +28,7 @@ public:
 	virtual void notifyStartGame() {}
 	virtual void notifyAskAction(txVector<MahjongAction*>& actionList) {}
 	virtual void notifyAskDrop() {}
+	virtual void notifyLeaveRoom() {}
 protected:
 	void addPeng(MAHJONG mahjong);
 	void addGang(MAHJONG mahjong);

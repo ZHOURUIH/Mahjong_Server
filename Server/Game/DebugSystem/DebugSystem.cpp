@@ -10,6 +10,7 @@
 #include "NetServer.h"
 #include "NetClient.h"
 #include "CharacterManager.h"
+#include "MatchSystem.h"
 
 DebugSystem::DebugSystem(const std::string& name)
 	:FrameComponent(name)
@@ -109,6 +110,21 @@ void DebugSystem::parseCmd(const std::string& param)
 			allInfo += "\r\n";
 		}
 		END(playerList);
+	}
+	else if (paramList[0] == MATCH_POOL)
+	{
+		auto& freeMatchPool = mMatchSystem->getFreeMatchPool();
+		int count = freeMatchPool.size();
+		allInfo = "match pool size : " + StringUtility::intToString(count) + "\r\n";
+		FOR(freeMatchPool, int i = 0; i < count; ++i)
+		{
+			MatchInfo* info = freeMatchPool[i];
+			allInfo += "player id : " + StringUtility::intToString(info->mPlayer->getCharacterData()->mGUID) + ", ";
+			allInfo += "player id : " + info->mPlayer->getName() + ", ";
+			allInfo += "wait time : " + StringUtility::floatToString(info->mWaitTime);
+			allInfo += "\r\n";
+		}
+		END(freeMatchPool);
 	}
 	DATA_HEADER writeHeader;
 	writeHeader.mCmd = DEBUG_SYSTEM_CMD;

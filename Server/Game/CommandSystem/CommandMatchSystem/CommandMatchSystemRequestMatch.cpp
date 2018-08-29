@@ -11,5 +11,5 @@ void CommandMatchSystemRequestMatch::execute()
 
 std::string CommandMatchSystemRequestMatch::showDebugInfo()
 {
-	COMMAND_DEBUG("player name : %s, id : %d", mPlayer->getName(), mPlayer->getCharacterData()->mGUID);
+	COMMAND_DEBUG("player name : %s, id : %d", mPlayer->getName().c_str(), mPlayer->getCharacterData()->mGUID);
 }
