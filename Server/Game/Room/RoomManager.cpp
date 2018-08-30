@@ -47,6 +47,20 @@ void RoomManager::getNotFullPublicRoomList(txVector<Room*>& roomList)
 	END(mRoomList);
 }
 
+void RoomManager::getNotGamingPublicRoomList(txVector<Room*>& roomList)
+{
+	auto iterRoom = mRoomList.begin();
+	auto iterRoomEnd = mRoomList.end();
+	FOR(mRoomList, ; iterRoom != iterRoomEnd; ++iterRoom)
+	{
+		if (iterRoom->second->getMahjongState() == MPS_WAITING && iterRoom->second->isPublic())
+		{
+			roomList.push_back(iterRoom->second);
+		}
+	}
+	END(mRoomList);
+}
+
 void RoomManager::destroyRoom(int id)
 {
 	auto iterRoom = mRoomList.find(id);

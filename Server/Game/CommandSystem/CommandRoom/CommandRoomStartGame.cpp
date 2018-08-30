@@ -49,6 +49,7 @@ void CommandRoomStartGame::execute()
 		cmdStartGame->mHandInList = handInList;
 		cmdStartGame->mHuaList = huaList;
 		cmdStartGame->mPlayerIDList = playerIDList;
+		cmdStartGame->mBankerPos = room->getBankerPos();
 		pushCommand(cmdStartGame, iterPlayer->second);
 	}
 	END_R(playerList);

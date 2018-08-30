@@ -17,6 +17,7 @@ public:
 	Room* createRoom();
 	Room* getRoom(int id);
 	void getNotFullPublicRoomList(txVector<Room*>& roomList);
+	void getNotGamingPublicRoomList(txVector<Room*>& roomList);
 	void destroyRoom(int id);
 	void destroyAllRoom();
 	txMap<int, Room*>& getRoomList() { return mRoomList; }

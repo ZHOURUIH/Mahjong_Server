@@ -18,7 +18,7 @@ void CommandCharacterStartGame::execute()
 		// 发送开局麻将的信息
 		SCStartGame* startGamePacket = NEW_PACKET(startGamePacket, PT_SC_START_GAME);
 		startGamePacket->setDice(mDice[0], mDice[1]);
-		startGamePacket->setMahjongList(mPlayerIDList, mHandInList, mHuaList);
+		startGamePacket->setMahjongList(mPlayerIDList, mHandInList, mHuaList, mBankerPos);
 		sendMessage(startGamePacket, player);
 	}
 }

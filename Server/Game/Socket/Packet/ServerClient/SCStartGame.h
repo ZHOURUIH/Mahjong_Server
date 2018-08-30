@@ -13,6 +13,7 @@ public:
 	virtual void fillParams()
 	{
 		pushArrayParam(mDice, 2);
+		pushParam(mBankerPos);
 		pushParam(mPlayerCount);
 		pushArrayParam(mPlayerIDList, MAX_PLAYER);
 		pushArrayParam(mHandInList, MAX_PLAYER * MAX_HAND_IN_COUNT);
@@ -27,13 +28,14 @@ public:
 		mDice[0] = dice0;
 		mDice[1] = dice1;
 	}
-	void setMahjongList(txVector<CHAR_GUID>& playerIDList, txVector<txVector<MAHJONG>>& handIn, txVector<txVector<MAHJONG>>& hua)
+	void setMahjongList(txVector<CHAR_GUID>& playerIDList, txVector<txVector<MAHJONG>>& handIn, txVector<txVector<MAHJONG>>& hua, int bankerPos)
 	{
 		if (handIn.size() != hua.size() || handIn.size() != playerIDList.size())
 		{
 			LOG_ERROR("mahjong count not match hua count!");
 			return;
 		}
+		mBankerPos = bankerPos;
 		// 现将数组全部设置为无效值
 		for (int i = 0; i < MAX_PLAYER * MAX_HAND_IN_COUNT; ++i)
 		{
@@ -84,6 +86,7 @@ public:
 	}
 public:
 	char mDice[2];
+	char mBankerPos;
 	char mPlayerCount;
 	CHAR_GUID mPlayerIDList[MAX_PLAYER];
 	// 以下数组是将二维数组合成了一维数组

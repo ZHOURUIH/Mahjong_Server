@@ -58,7 +58,18 @@ void DebugSystem::parseCmd(const std::string& param)
 		auto iterRoomEnd = roomList.end();
 		FOR(roomList, ; iterRoom != iterRoomEnd; ++iterRoom)
 		{
-			allInfo += "room id : " + StringUtility::intToString(iterRoom->second->getID()) + " -> ";
+			allInfo += "room id : " + StringUtility::intToString(iterRoom->second->getID()) + ", ";
+			allInfo += "banker pos : " + StringUtility::intToString(iterRoom->second->getBankerPos()) + ", ";
+			CHAR_GUID bankerGUID = INVALID_ID;
+			std::string bankerName = EMPTY_STRING;
+			CharacterPlayer* banker = iterRoom->second->getBanker();
+			if (banker != NULL)
+			{
+				bankerGUID = banker->getCharacterData()->mGUID;
+				bankerName = banker->getName();
+			}
+			allInfo += "banker id : " + StringUtility::intToString(bankerGUID) + ", ";
+			allInfo += "banker name : " + bankerName + ", ";
 			auto& playerList = iterRoom->second->getPlayerList();
 			auto iterPlayer = playerList.begin();
 			auto iterPlayerEnd = playerList.end();

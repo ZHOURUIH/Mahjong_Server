@@ -14,7 +14,7 @@ Room::Room(const int& id)
 	mID(id),
 	mMaxPlayer(MAX_PLAYER),
 	mPublicRoom(true),
-	mPlayState(MPS_WAITING),
+	mPlayState(MPS_NONE),
 	mBankerPos(-1),
 	mCurAssignPos(-1),
 	mCurInterval(0.0f)
@@ -32,11 +32,20 @@ void Room::update(float elapsedTime)
 
 void Room::joinRoom(CharacterPlayer* player)
 {
-	CharacterData* data = player->getCharacterData();
-	// 第一个加入房间的玩家为庄家
-	data->mBanker = (mPlayerList.size() == 0);
 	// 加入房间的玩家列表,并且在其中设置玩家的位置
 	addPlayer(player);
+	// 第一个加入房间的玩家为庄家
+	if (mPlayerList.size() == 1)
+	{
+		// 当第一个玩家加入房间时,设置为等待状态
+		setMahjongState(MPS_WAITING);
+		setBanker(player);
+	}
+	else
+	{
+		CharacterData* data = player->getCharacterData();
+		data->mBanker = false;
+	}
 }
 
 void Room::leaveRoom(CharacterPlayer* player)
@@ -56,12 +65,7 @@ void Room::leaveRoom(CharacterPlayer* player)
 			{
 				if (iterNext->second != NULL)
 				{
-					iterNext->second->getCharacterData()->mBanker = true;
-					// 通知房间中的所有玩家有庄家变化
-					if (mPlayState == MPS_WAITING)
-					{
-						notifyAllPlayerBanker(iterNext->second->getGUID());
-					}
+					setBanker(iterNext->second);
 					break;
 				}
 				else
@@ -474,6 +478,17 @@ CharacterPlayer* Room::getMemberByPosition(CHAR_GUID playerID)
 	return mPlayerPositionList.tryGet(playerID, NULL);
 }
 
+void Room::setBanker(CharacterPlayer* player)
+{
+	player->getCharacterData()->mBanker = true;
+	// 通知房间中的所有玩家有庄家变化
+	if (mPlayState == MPS_WAITING)
+	{
+		notifyAllPlayerBanker(player->getGUID());
+	}
+	mBankerPos = player->getCharacterData()->mPosition;
+}
+
 void Room::addPlayer(CharacterPlayer* player)
 {
 	int playerID = player->getGUID();
@@ -524,15 +539,22 @@ void Room::generateStartMahjong(txVector<CHAR_GUID>& playerIDList, txVector<txVe
 	{
 		return;
 	}
-	auto iterPos = mPlayerPositionList.begin();
-	auto iterPosEnd = mPlayerPositionList.end();
-	FOR(mPlayerPositionList, ; iterPos != iterPosEnd; ++iterPos)
+	// 需要从庄家开始发牌
+	int curCount = 0;
+	int curPos = mBankerPos;
+	while (true)
 	{
-		playerIDList.push_back(iterPos->second->getCharacterData()->mGUID);
+		playerIDList.push_back(mPlayerPositionList[curPos]->getCharacterData()->mGUID);
 		handInMahjong.push_back(txVector<MAHJONG>());
 		huaMahjong.push_back(txVector<MAHJONG>());
+		curPos = (curPos + 1) % mMaxPlayer;
+		++curCount;
+		if (curCount == mMaxPlayer)
+		{
+			break;
+		}
 	}
-	END(mPlayerPositionList);
+	mCurAssignPos = mBankerPos;
 	while (true)
 	{
 		// 给玩家发牌,如果摸到花牌,则需要将花牌拿出来,直到摸到一张不是花牌的
@@ -588,23 +610,6 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	else if (mPlayState == MPS_GET_START)
 	{
 		resetMahjongPool(true, true);
-		// 判断当前谁是庄家
-		auto iter = mPlayerPositionList.begin();
-		auto iterEnd = mPlayerPositionList.end();
-		FOR(mPlayerPositionList, ; iter != iterEnd; ++iter)
-		{
-			if (iter->second->getCharacterData()->mBanker)
-			{
-				mBankerPos = iter->first;
-				mCurAssignPos = mBankerPos;
-				break;
-			}
-		}
-		END(mPlayerPositionList);
-		if (mBankerPos == -1)
-		{
-			LOG_ERROR("not find banker!");
-		}
 	}
 	else if (mPlayState == MPS_NORMAL_GAMING)
 	{

@@ -448,6 +448,9 @@
     <ClCompile Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.cpp">
       <Filter>Game\CommandSystem\CommandMatchSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.cpp">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame\CommandSystem\CommandDefine.h">
@@ -1004,6 +1007,12 @@
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.h">
       <Filter>Game\CommandSystem\CommandMatchSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCRoomList.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.h">
+      <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

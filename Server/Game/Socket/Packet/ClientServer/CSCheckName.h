@@ -2,6 +2,7 @@
 #define _CS_CHECK_NAME_H_
 
 #include "Packet.h"
+#include "GameDefine.h"
 
 class CSCheckName : public Packet
 {
@@ -10,7 +11,7 @@ public:
 		:Packet(type) {}
 	virtual void fillParams()
 	{
-		pushArrayParam(mName, 16);
+		pushArrayParam(mName, MAX_NAME_LENGTH);
 	}
 	virtual void execute();
 	virtual std::string debugInfo()
@@ -18,7 +19,7 @@ public:
 		PACKET_DEBUG("name : %s", mName);
 	}
 public:
-	char mName[16];
+	char mName[MAX_NAME_LENGTH];
 };
 
 #endif

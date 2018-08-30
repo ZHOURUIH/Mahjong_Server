@@ -26,6 +26,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(CSCancelLogin, PT_CS_CANCEL_LOGIN);
 	ADD_PACKET_FACTORY(CSGetStartMahjongDone, PT_CS_GET_START_MAHJONG_DONE);
 	ADD_PACKET_FACTORY(CSFreeMatch, PT_CS_FREE_MATCH);
+	ADD_PACKET_FACTORY(CSRequestRoomList, PT_CS_REQUEST_ROOM_LIST);
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{
@@ -71,6 +72,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCGetHua, PT_SC_GET_HUA);
 	ADD_PACKET_FACTORY(SCOtherPlayerGetHua, PT_SC_OTHER_PLAYER_GET_HUA);
 	ADD_PACKET_FACTORY(SCAddMahjongRobotRet, PT_SC_ADD_MAHJONG_ROBOT_RET);
+	ADD_PACKET_FACTORY(SCRoomList, PT_SC_ROOM_LIST);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{

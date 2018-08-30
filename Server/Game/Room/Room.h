@@ -42,9 +42,13 @@ public:
 	txMap<CHAR_GUID, CharacterPlayer*>& getPlayerList()	{ return mPlayerList; }
 	bool isPublic()										{ return mPublicRoom; }
 	txMap<CharacterPlayer*, bool>& getPlayerChooseList(){ return mPlayerChooseList; }
+	MAHJONG_PLAY_STATE getMahjongState()				{ return mPlayState; }
+	int getMaxPlayerCount()								{ return mMaxPlayer;}
+	int getBankerPos()									{ return mBankerPos;}
 protected:
 	void reset();
 	void clearWaitList();
+	void setBanker(CharacterPlayer* player);
 	void addPlayer(CharacterPlayer* player);
 	void removePlayer(CharacterPlayer* player);
 	void resetMahjongPool(bool feng, int hua);

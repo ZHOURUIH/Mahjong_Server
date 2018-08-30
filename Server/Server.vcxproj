@@ -207,6 +207,7 @@
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSReady.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSRegister.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSRequestDrop.cpp" />
+    <ClCompile Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.cpp" />
     <ClCompile Include="Game\Utility\ServerUtility.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -354,6 +355,7 @@
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSReady.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSRegister.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSRequestDrop.h" />
+    <ClInclude Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.h" />
     <ClInclude Include="Game\Socket\Packet\Packet.h" />
     <ClInclude Include="Game\Socket\Packet\PacketHeader.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCAddMahjongRobotRet.h" />
@@ -394,6 +396,7 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCRegisterRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCRequestDropRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCGetHua.h" />
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCRoomList.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCStartGame.h" />
     <ClInclude Include="Game\Utility\ServerUtility.h" />
   </ItemGroup>

@@ -18,6 +18,7 @@
 #include "CSCancelLogin.h"
 #include "CSGetStartMahjongDone.h"
 #include "CSFreeMatch.h"
+#include "CSRequestRoomList.h"
 
 #include "SCLoginRet.h"
 #include "SCHeartBeatRet.h"
@@ -58,5 +59,6 @@
 #include "SCGetHua.h"
 #include "SCOtherPlayerGetHua.h"
 #include "SCAddMahjongRobotRet.h"
+#include "SCRoomList.h"
 
 #endif

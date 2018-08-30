@@ -103,6 +103,7 @@ enum MAHJONG
 // 本局麻将的状态
 enum MAHJONG_PLAY_STATE
 {
+	MPS_NONE,
 	MPS_WAITING,				// 正在等待玩家进入或准备
 	MPS_GET_START,				// 正在开局拿牌
 	MPS_NORMAL_GAMING,			// 正在进行正常的麻将游戏
@@ -145,6 +146,8 @@ const int MAX_HUA_COUNT = M_HUA_JU - M_HUA_CHUN + 1;	// 花牌的种类
 const int MAX_FENG_COUNT = M_FENG_BAI - M_FENG_DONG + 1;// 风牌的种类
 const int MAX_MAHJONG_COUNT = M_MAX - MAX_HUA_COUNT - MAX_FENG_COUNT;	// 麻将中除了风和花的种类数量
 const float MAX_FREE_MATCH_WAIT_TIME = 5.0f;			// 随机匹配时等待的最大时间
+const int MAX_REQUEST_ROOM_COUNT = 9;
+const int MAX_NAME_LENGTH = 16;							// 名字最大的长度
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量字符串定义

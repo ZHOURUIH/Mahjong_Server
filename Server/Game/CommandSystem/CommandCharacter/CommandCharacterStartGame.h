@@ -11,6 +11,7 @@ public:
 	{
 		mDice[0] = 0;
 		mDice[1] = 0;
+		mBankerPos = -1;
 		mPlayerIDList.clear();
 		mHandInList.clear();
 		mHuaList.clear();
@@ -24,6 +25,7 @@ public:
 	}
 public:
 	char mDice[2];
+	int mBankerPos;
 	txVector<CHAR_GUID> mPlayerIDList;
 	txVector<txVector<MAHJONG>> mHandInList;
 	txVector<txVector<MAHJONG>> mHuaList;
