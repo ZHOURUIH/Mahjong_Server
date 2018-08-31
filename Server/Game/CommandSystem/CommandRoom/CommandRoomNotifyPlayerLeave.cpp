@@ -46,23 +46,28 @@ void CommandRoomNotifyPlayerLeave::execute()
 			END(playerList);
 		}
 	}
-	else
+	// 房间已经没人,或者玩家离开后只剩机器人
+	else 
 	{
-		// 使全部机器人退出房间
-		// 复制一份列表,避免迭代器失效
-		auto tempList = playerList;
-		auto iter = tempList.begin();
-		auto iterEnd = tempList.end();
-		FOR(tempList, ; iter != iterEnd; ++iter)
+		// 真实玩家退出时才会判断是否将全部的机器人退出去,然后销毁房间
+		if (mPlayer->getType() == CT_PLAYER)
 		{
-			CommandCharacterLeaveRoom* leave = NEW_CMD_INFO(leave);
-			pushCommand(leave, iter->second);
+			// 使全部机器人退出房间
+			// 复制一份列表,避免迭代器失效
+			auto tempList = playerList;
+			auto iter = tempList.begin();
+			auto iterEnd = tempList.end();
+			FOR(tempList, ; iter != iterEnd; ++iter)
+			{
+				CommandCharacterLeaveRoom* leave = NEW_CMD_INFO(leave);
+				pushCommand(leave, iter->second);
+			}
+			END(tempList);
+			// 销毁房间
+			CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD_INFO(cmdDestroyRoom);
+			cmdDestroyRoom->mRoomID = room->getID();
+			pushCommand(cmdDestroyRoom, mRoomManager);
 		}
-		END(tempList);
-		// 销毁房间
-		CommandRoomManagerDestroyRoom* cmdDestroyRoom = NEW_CMD_INFO(cmdDestroyRoom);
-		cmdDestroyRoom->mRoomID = room->getID();
-		pushCommand(cmdDestroyRoom, mRoomManager);
 	}
 }
 
