@@ -70,6 +70,7 @@ void PacketFactoryManager::init()
 	ADD_PACKET_FACTORY(SCOtherPlayerGetHua, PT_SC_OTHER_PLAYER_GET_HUA);
 	ADD_PACKET_FACTORY(SCAddMahjongRobotRet, PT_SC_ADD_MAHJONG_ROBOT_RET);
 	ADD_PACKET_FACTORY(SCRoomList, PT_SC_ROOM_LIST);
+	ADD_PACKET_FACTORY(SCMahjongPoolSize, PT_SC_MAHJONG_POOL_SIZE);
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{

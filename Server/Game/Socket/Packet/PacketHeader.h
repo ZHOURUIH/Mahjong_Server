@@ -57,5 +57,6 @@
 #include "SCOtherPlayerGetHua.h"
 #include "SCAddMahjongRobotRet.h"
 #include "SCRoomList.h"
+#include "SCMahjongPoolSize.h"
 
 #endif

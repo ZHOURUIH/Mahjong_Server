@@ -183,6 +183,8 @@ void Room::requestMahjong(CharacterPlayer* player)
 			break;
 		}
 	}
+	// 每次摸了一张牌以后都需要通知一下所有玩家当前麻将池中的个数
+	notifyAllPlayerMahjongPoolSize(mMahjongPool.size());
 }
 
 void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
@@ -528,6 +530,8 @@ void Room::setMahjongState(MAHJONG_PLAY_STATE state)
 	else if (mPlayState == MPS_GET_START)
 	{
 		resetMahjongPool(true, true);
+		// 通知一下所有玩家当前麻将池中的数量
+		notifyAllPlayerMahjongPoolSize(mMahjongPool.size());
 	}
 	else if (mPlayState == MPS_NORMAL_GAMING)
 	{
@@ -663,6 +667,8 @@ bool Room::isAllPlayerReady()
 
 void Room::allPlayerGetStartDone()
 {
+	// 所有玩家都拿完牌,在开始打出第一张牌前通知一下所有玩家当前麻将池中的数量
+	notifyAllPlayerMahjongPoolSize(mMahjongPool.size());
 	notifyAllPlayerGetStartDone();
 	setMahjongState(MPS_NORMAL_GAMING);
 	// 通知庄家打出一张牌
@@ -1210,6 +1216,19 @@ void Room::notifyAllPlayerAskAction(CharacterPlayer* player, const txVector<Mahj
 			cmdOtherAskAction->mOtherPlayer = player;
 			pushCommand(cmdOtherAskAction, iterPlayer->second);
 		}
+	}
+	END(mPlayerPositionList);
+}
+
+void Room::notifyAllPlayerMahjongPoolSize(int count)
+{
+	auto iterPlayer = mPlayerPositionList.begin();
+	auto iterPlayerEnd = mPlayerPositionList.end();
+	FOR(mPlayerPositionList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	{
+		CommandCharacterMahjongPoolSize* cmdMahjongPoolSize = NEW_CMD_INFO(cmdMahjongPoolSize);
+		cmdMahjongPoolSize->mCount = count;
+		pushCommand(cmdMahjongPoolSize, iterPlayer->second);
 	}
 	END(mPlayerPositionList);
 }

@@ -46,6 +46,7 @@
 #include "CommandCharacterGetHua.h"
 #include "CommandCharacterNotifyOtherPlayerGetHua.h"
 #include "CommandCharacterGetStartDone.h"
+#include "CommandCharacterMahjongPoolSize.h"
 
 #include "CommandRoomPlayerLeave.h"
 #include "CommandRoomNotifyPlayerJoin.h"

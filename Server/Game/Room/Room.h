@@ -88,6 +88,7 @@ protected:
 	void notifyAllPlayerAskDrop(CharacterPlayer* player);
 	void notifyAllPlayerGetHua(CharacterPlayer* player, MAHJONG mah);
 	void notifyAllPlayerAskAction(CharacterPlayer* player, const txVector<MahjongAction*>& actionList);
+	void notifyAllPlayerMahjongPoolSize(int count);
 protected:
 	int mID;											// 房间ID
 	int mMaxPlayer;										// 房间人数上限

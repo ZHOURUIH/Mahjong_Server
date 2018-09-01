@@ -448,6 +448,9 @@
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.cpp">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame\CommandSystem\CommandDefine.h">
@@ -1001,6 +1004,12 @@
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCMahjongPoolSize.h">
+      <Filter>Game\Socket\Packet\ServerClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.h">
+      <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

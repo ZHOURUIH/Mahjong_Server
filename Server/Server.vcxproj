@@ -140,6 +140,7 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyAllGetStartDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterJoinRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterLeaveRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongEnd.h" />
+    <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyBanker.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyAllGetStartDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterNotifyOtherPlayerAskAction.h" />
@@ -367,6 +369,7 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCJoinRoomRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCLeaveRoomRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCLoginRet.h" />
+    <ClInclude Include="Game\Socket\Packet\ServerClient\SCMahjongPoolSize.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyBanker.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyGetMahjong.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyAllGetStartDone.h" />
