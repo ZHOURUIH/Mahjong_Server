@@ -61,9 +61,10 @@ void MatchSystem::update(float elapsedTime)
 					cmdJoin0->mRoomID = room->getID();
 					pushCommand(cmdJoin0, robot);
 					// 机器人默认准备状态
-					CommandCharacterReady* cmdReady = NEW_CMD_INFO(cmdReady);
+					CommandRoomPlayerReady* cmdReady = NEW_CMD_INFO(cmdReady);
 					cmdReady->mReady = true;
-					pushCommand(cmdReady, robot);
+					cmdReady->mPlayerGUID = robot->getGUID();
+					pushCommand(cmdReady, room);
 					// 再加入玩家
 					CommandCharacterJoinRoom* cmdJoin1 = NEW_CMD_INFO(cmdJoin1);
 					cmdJoin1->mRoomID = room->getID();
@@ -80,9 +81,10 @@ void MatchSystem::update(float elapsedTime)
 						cmdJoin2->mRoomID = room->getID();
 						pushCommand(cmdJoin2, robot0);
 						// 机器人默认准备状态
-						CommandCharacterReady* cmdReady0 = NEW_CMD_INFO(cmdReady0);
+						CommandRoomPlayerReady* cmdReady0 = NEW_CMD_INFO(cmdReady0);
 						cmdReady0->mReady = true;
-						pushCommand(cmdReady0, robot0);
+						cmdReady0->mPlayerGUID = robot0->getGUID();
+						pushCommand(cmdReady0, room);
 					}
 					mFreeMatchPoolMap.tryErase((*iterMatch)->mPlayer->getCharacterData()->mGUID);
 					iterMatch = mFreeMatchPool.erase(iterMatch, false);

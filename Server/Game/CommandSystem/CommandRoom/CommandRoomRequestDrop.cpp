@@ -10,7 +10,6 @@ void CommandRoomRequestDrop::execute()
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mPlayerGUID));
 	MAHJONG mahjong = player->getCharacterData()->mHandIn[mIndex];
 	room->requestDrop(player, mIndex);
-	room->notifyPlayerDrop(player, mahjong);
 }
 
 std::string CommandRoomRequestDrop::showDebugInfo()

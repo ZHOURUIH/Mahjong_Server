@@ -9,8 +9,12 @@ public:
 	CSContinueGame(PACKET_TYPE type)
 		:Packet(type) {}
 	virtual void execute();
-	virtual void fillParams(){}
+	virtual void fillParams()
+	{
+		pushParam(mContinue);
+	}
 public:
+	bool mContinue;
 };
 
 #endif

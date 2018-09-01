@@ -8,8 +8,11 @@ void CommandCharacterGang::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->gangMahjong(mMahjong, mDroppedPlayer);
-	SCPlayerGang* gang = NEW_PACKET(gang, PT_SC_PLAYER_GANG);
-	gang->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
-	gang->mMahjong = mMahjong;
-	sendMessage(gang, player);
+	if (player->getType() == CT_PLAYER)
+	{
+		SCPlayerGang* gang = NEW_PACKET(gang, PT_SC_PLAYER_GANG);
+		gang->mDroppedPlayerGUID = mDroppedPlayer->getGUID();
+		gang->mMahjong = mMahjong;
+		sendMessage(gang, player);
+	}
 }

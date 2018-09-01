@@ -5,9 +5,13 @@
 #include "NetClient.h"
 #include "CharacterManager.h"
 #include "Character.h"
+#include "CharacterData.h"
+#include "RoomManager.h"
 
 void CSLeaveRoom::execute()
 {
-	CommandCharacterLeaveRoom* cmd = NEW_CMD_INFO(cmd);
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
+	CommandRoomPlayerLeave* cmd = NEW_CMD_INFO(cmd);
 	pushCommand(cmd, mCharacterManager->getCharacter(mClient->getCharGUID()));
 }

@@ -5,10 +5,15 @@
 #include "NetClient.h"
 #include "CharacterManager.h"
 #include "Character.h"
+#include "CharacterData.h"
+#include "RoomManager.h"
 
 void CSReady::execute()
 {
-	CommandCharacterReady* cmd = NEW_CMD_INFO(cmd);
+	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
+	CommandRoomPlayerReady* cmd = NEW_CMD_INFO(cmd);
 	cmd->mReady = mReady;
-	pushCommand(cmd, mCharacterManager->getCharacter(mClient->getCharGUID()));
+	cmd->mPlayerGUID = character->getGUID();
+	pushCommand(cmd, room);
 }

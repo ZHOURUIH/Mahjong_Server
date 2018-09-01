@@ -8,10 +8,14 @@ void CommandCharacterGetMahjong::execute()
 {
 	CharacterPlayer* player = static_cast<CharacterPlayer*>(mReceiver);
 	player->getMahjong(mMahjong);
-	SCNotifyGetMahjong* getStartMahjong = NEW_PACKET(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
-	getStartMahjong->mPlayerGUID = player->getGUID();
-	getStartMahjong->mMahjong = mMahjong;
-	sendMessage(getStartMahjong, player);
+	// 是真实玩家,则发送消息通知客户端
+	if (player->getType() == CT_PLAYER)
+	{
+		SCNotifyGetMahjong* getStartMahjong = NEW_PACKET(getStartMahjong, PT_SC_NOTIFY_GET_MAHJONG);
+		getStartMahjong->mPlayerGUID = player->getGUID();
+		getStartMahjong->mMahjong = mMahjong;
+		sendMessage(getStartMahjong, player);
+	}
 }
 
 std::string CommandCharacterGetMahjong::showDebugInfo()

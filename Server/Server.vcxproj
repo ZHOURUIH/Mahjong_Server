@@ -167,12 +167,12 @@
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerContinueGame.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp" />
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.cpp" />
     <ClCompile Include="Game\Common\ServerConfig.cpp" />
@@ -191,7 +191,6 @@
     <ClCompile Include="Game\Room\RoomManager.cpp" />
     <ClCompile Include="Game\Socket\PacketFactoryManager.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.cpp" />
-    <ClCompile Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCancelLogin.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCheckAccount.cpp" />
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCheckName.cpp" />
@@ -306,12 +305,12 @@
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.h" />
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerContinueGame.h" />
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h" />
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h" />
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.h" />
     <ClInclude Include="Game\Common\GameDefine.h" />
@@ -339,7 +338,6 @@
     <ClInclude Include="Game\Socket\PacketFactory.h" />
     <ClInclude Include="Game\Socket\PacketFactoryManager.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.h" />
-    <ClInclude Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCancelLogin.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCheckAccount.h" />
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCheckName.h" />
@@ -361,7 +359,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCAddMahjongRobotRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCAskAction.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCAskDrop.h" />
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCBackToMahjongHallRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckAccountRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckNameRet.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCContinueGameRet.h" />
@@ -377,7 +374,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCNotifyReorderMahjong.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerAskAction.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerAskDrop.h" />
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerContinueGame.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerDrop.h" />
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerGang.h" />

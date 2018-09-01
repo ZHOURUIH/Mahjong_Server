@@ -5,7 +5,7 @@
 
 // 通知房间有玩家离开
 class CharacterPlayer;
-class CommandRoomNotifyPlayerLeave : public txCommand
+class CommandRoomPlayerLeave : public txCommand
 {
 public:
 	virtual void reset()

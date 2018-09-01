@@ -12,8 +12,9 @@ void CharacterMahjongRobot::update(float elapsedTime)
 
 void CharacterMahjongRobot::notifyStartGame()
 {
-	CommandCharacterGetStartDone* cmdStartDone = NEW_CMD_INFO(cmdStartDone);
-	pushCommand(cmdStartDone, this);
+	CommandRoomPlayerGetStartDone* cmd = NEW_CMD_INFO(cmd);
+	cmd->mPlayerGUID = mCharacterData->mGUID;
+	pushCommand(cmd, mRoomManager->getRoom(mCharacterData->mRoomID));
 }
 
 void CharacterMahjongRobot::notifyAskAction(txVector<MahjongAction*>& actionList)

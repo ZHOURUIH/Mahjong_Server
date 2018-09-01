@@ -47,15 +47,15 @@
 #include "CommandCharacterNotifyOtherPlayerGetHua.h"
 #include "CommandCharacterGetStartDone.h"
 
-#include "CommandRoomNotifyPlayerReady.h"
-#include "CommandRoomNotifyPlayerLeave.h"
+#include "CommandRoomPlayerLeave.h"
 #include "CommandRoomNotifyPlayerJoin.h"
 #include "CommandRoomStartGame.h"
 #include "CommandRoomNotifyPlayerOffline.h"
 #include "CommandRoomRequestDrop.h"
 #include "CommandRoomConfirmAction.h"
-#include "CommandRoomNotifyPlayerContinueGame.h"
-#include "CommandRoomNotifyPlayerGetStartDone.h"
+#include "CommandRoomPlayerContinueGame.h"
+#include "CommandRoomPlayerGetStartDone.h"
+#include "CommandRoomPlayerReady.h"
 
 #include "CommandMatchSystemRequestMatch.h"
 

@@ -8,12 +8,9 @@ class CommandCharacterContinueGame : public txCommand
 {
 public:
 	virtual void reset()
-	{
-		mContinue = false;
-	}
+	{}
 	virtual void execute();
 public:
-	bool mContinue;
 };
 
 #endif

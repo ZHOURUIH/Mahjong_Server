@@ -304,19 +304,10 @@
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp">
@@ -371,9 +362,6 @@
       <Filter>Game\Room</Filter>
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.cpp">
-      <Filter>Game\Socket\Packet\ClientServer</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.cpp">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSCheckAccount.cpp">
@@ -433,9 +421,6 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartDone.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.cpp">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClCompile>
@@ -450,6 +435,18 @@
     </ClCompile>
     <ClCompile Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.cpp">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerContinueGame.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.cpp">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -714,19 +711,10 @@
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomConfirmAction.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerContinueGame.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerLeave.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerReady.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.h">
@@ -804,9 +792,6 @@
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSAddMahjongRobot.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ClientServer\CSBackToMahjongHall.h">
-      <Filter>Game\Socket\Packet\ClientServer</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSCheckAccount.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
@@ -852,9 +837,6 @@
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCAskDrop.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCBackToMahjongHallRet.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCCheckAccountRet.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
@@ -895,9 +877,6 @@
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerAskDrop.h">
-      <Filter>Game\Socket\Packet\ServerClient</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerBackToMahjongHall.h">
       <Filter>Game\Socket\Packet\ServerClient</Filter>
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ServerClient\SCOtherPlayerContinueGame.h">
@@ -993,9 +972,6 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetStartDone.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerGetStartDone.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSGetStartMahjongDone.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
     </ClInclude>
@@ -1013,6 +989,18 @@
     </ClInclude>
     <ClInclude Include="Game\Socket\Packet\ClientServer\CSRequestRoomList.h">
       <Filter>Game\Socket\Packet\ClientServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerContinueGame.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.h">
+      <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

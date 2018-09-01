@@ -19,15 +19,6 @@ void CommandCharacterReady::execute()
 	SCReadyRet* readyRet = NEW_PACKET(readyRet, PT_SC_READY_RET);
 	readyRet->mReady = mReady;
 	sendMessage(readyRet, player);
-	// 通知房间有玩家准备
-	Room* room = mRoomManager->getRoom(data->mRoomID);
-	if (room != NULL)
-	{
-		CommandRoomNotifyPlayerReady* cmd = NEW_CMD_INFO(cmd);
-		cmd->mReady = mReady;
-		cmd->mPlayerGUID = data->mGUID;
-		pushCommand(cmd, room);
-	}
 }
 
 std::string CommandCharacterReady::showDebugInfo()

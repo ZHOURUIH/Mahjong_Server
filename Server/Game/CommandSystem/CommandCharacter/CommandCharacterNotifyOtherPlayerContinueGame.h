@@ -11,12 +11,10 @@ public:
 	virtual void reset()
 	{
 		mOtherPlayer = NULL;
-		mContinue = false;
 	}
 	virtual void execute();
 public:
 	CharacterPlayer* mOtherPlayer;
-	bool mContinue;
 };
 
 #endif
