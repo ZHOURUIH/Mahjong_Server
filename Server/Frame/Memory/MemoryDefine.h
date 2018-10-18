@@ -1,91 +1,100 @@
 ﻿#ifndef _MEMORY_DEFINE_H_
 #define _MEMORY_DEFINE_H_
 
-//#define TRACE_MEMORY
-//#define CHECK_MEMORY
-
 #include "ServerDefine.h"
 #include "GameLog.h"
-#include "txMemoryCheck.h"
-
-// 无论什么平台都需要定义以下正常的内存申请宏
-#define NEW_MEMORY(className, ptr, check, ...)		\
-NULL;												\
-try													\
-{													\
-	ptr = new className(__VA_ARGS__);				\
-	if (check)										\
-	{												\
-		txMemoryCheck::usePtr(ptr);					\
-	}												\
-}													\
-catch (...)											\
-{													\
-	ptr = NULL;										\
-	LOG_ERROR("error : can not alloc memory!");	\
-}
-
-// 正常的申请数组内存
-#define NEW_MEMORY_ARRAY(className, count, ptr, check)		\
-NULL;														\
-if (count <= 0)												\
-{															\
-	ptr = NULL;												\
-}															\
-else														\
-{															\
-	try														\
-	{														\
-		ptr = new className[count];							\
-		memset(ptr, 0, sizeof(className)* count);			\
-		if (check)											\
-		{													\
-			txMemoryCheck::usePtr(ptr);						\
-		}													\
-	}														\
-	catch (...)												\
-	{														\
-		ptr = NULL;											\
-		LOG_ERROR("error : can not alloc memory array!"); \
-	}														\
-}															\
-
-// 正常的释放内存
-#define DELETE_MEMORY(ptr, check)		\
-if (ptr != NULL)						\
-{										\
-	if (check)							\
-	{									\
-		txMemoryCheck::unusePtr(ptr);	\
-	}									\
-	delete ptr;							\
-	ptr = NULL;							\
-}
-
-// 正常的释放数组内存
-#define DELETE_MEMORY_ARRAY(ptr, check)	\
-if (ptr != NULL)						\
-{										\
-	if (check)							\
-	{									\
-		txMemoryCheck::unusePtr(ptr);	\
-	}									\
-	delete[] ptr;						\
-	ptr = NULL;							\
-}
+#include "StringUtility.h"
 
 #ifdef CHECK_MEMORY
 // 带内存合法检测的常规内存申请和释放
-#define NORMAL_NEW(className, ptr, ...)			NEW_MEMORY(className, ptr, true, __VA_ARGS__)
-#define NORMAL_NEW_ARRAY(className, count, ptr)	NEW_MEMORY_ARRAY(className, count, ptr, true)
-#define NORMAL_DELETE(ptr)						DELETE_MEMORY(ptr, true)
-#define NORMAL_DELETE_ARRAY(ptr)				DELETE_MEMORY_ARRAY(ptr, true)
+#define NORMAL_NEW(className, ptr, ...)	\
+NULL;									\
+try										\
+{										\
+	ptr = new className(__VA_ARGS__);	\
+	txMemoryCheck::usePtr(ptr);			\
+}										\
+catch (...)								\
+{										\
+	ptr = NULL;							\
+	LOG_ERROR(std::string("can not alloc memory! ") + \
+	"className : " + TOSTRING(className));	\
+}
+
+#define NORMAL_NEW_ARRAY(className, count, ptr)	\
+NULL;											\
+try												\
+{												\
+	ptr = new className[count];					\
+	memset(ptr, 0, sizeof(className)* count);	\
+	txMemoryCheck::usePtr(ptr);					\
+}												\
+catch (...)										\
+{												\
+	ptr = NULL;									\
+	LOG_ERROR(std::string("can not alloc memory array! ") + \
+	"className : " + TOSTRING(className) + \
+	", count : " + StringUtility::intToString(count));	\
+}
+
+#define NORMAL_DELETE(ptr)			\
+if (ptr != NULL)					\
+{									\
+	txMemoryCheck::unusePtr(ptr);	\
+	delete ptr;						\
+	ptr = NULL;						\
+}
+
+#define NORMAL_DELETE_ARRAY(ptr)	\
+if (ptr != NULL)					\
+{									\
+	txMemoryCheck::unusePtr(ptr);	\
+	delete[] ptr;					\
+	ptr = NULL;						\
+}
 #else
 // 不带内存合法检测的常规内存申请和释放
-#define NORMAL_NEW(className, ptr, ...)			NEW_MEMORY(className, ptr, false, __VA_ARGS__)
-#define NORMAL_NEW_ARRAY(className, count, ptr)	NEW_MEMORY_ARRAY(className, count, ptr, false)
-#define NORMAL_DELETE(ptr)						DELETE_MEMORY(ptr, false)
-#define NORMAL_DELETE_ARRAY(ptr)				DELETE_MEMORY_ARRAY(ptr, false)
+#define NORMAL_NEW(className, ptr, ...)	\
+NULL;									\
+try										\
+{										\
+	ptr = new className(__VA_ARGS__);	\
+}										\
+catch (...)								\
+{										\
+	ptr = NULL;							\
+	LOG_ERROR(std::string("can not alloc memory! ") + \
+	"className : " + TOSTRING(className));	\
+}
+
+#define NORMAL_NEW_ARRAY(className, count, ptr)	\
+NULL;											\
+try												\
+{												\
+	ptr = new className[count];					\
+	memset(ptr, 0, sizeof(className) * count);	\
+}												\
+catch (...)										\
+{												\
+	ptr = NULL;									\
+	LOG_ERROR(std::string("can not alloc memory array! ") + \
+	"className : " + TOSTRING(className) + \
+	", count : " + StringUtility::intToString(count));	\
+}
+
+#define NORMAL_DELETE(ptr)	\
+if (ptr != NULL)			\
+{							\
+	delete ptr;				\
+	ptr = NULL;				\
+}
+
+#define NORMAL_DELETE_ARRAY(ptr)\
+if (ptr != NULL)				\
+{								\
+	delete[] ptr;				\
+	ptr = NULL;					\
+}
 #endif
 
 #ifdef TRACE_MEMORY

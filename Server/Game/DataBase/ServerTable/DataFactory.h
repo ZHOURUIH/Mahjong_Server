@@ -21,7 +21,7 @@ public:
 	{
 		if (mCount != 0)
 		{
-			LOG_INFO("error : there is data left! count : %d, type : %d", mCount, (int)mType);
+			LOG_INFO("there is data left! count : " + StringUtility::intToString(mCount) + ", type : " + StringUtility::intToString(mType));
 		}
 	}
 	virtual Data* createData() = 0;
@@ -35,12 +35,12 @@ public:
 	{
 		if (data == NULL)
 		{
-			LOG_ERROR("error : can not destroy NULL data!");
+			LOG_ERROR("can not destroy NULL data!");
 			return;
 		}
 		if (data->getType() != mType)
 		{
-			LOG_ERROR("error : destroy wrong type data! factory type : %d, data type : %d", mType, data->getType());
+			LOG_ERROR("destroy wrong type data! factory type : " + StringUtility::intToString(mType) + ", data type : " + StringUtility::intToString(data->getType()));
 			return;
 		}
 		TRACE_DELETE(data);

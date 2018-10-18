@@ -11,9 +11,9 @@
 
 void CSRequestDrop::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	CommandRoomRequestDrop* cmd = NEW_CMD_INFO(cmd);
-	cmd->mPlayerGUID = mClient->getCharGUID();
+	cmd->mPlayerGUID = character->getGUID();
 	cmd->mIndex = mIndex;
 	pushCommand(cmd, mRoomManager->getRoom(character->getCharacterData()->mRoomID));
 }

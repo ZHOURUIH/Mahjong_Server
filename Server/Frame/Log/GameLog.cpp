@@ -12,7 +12,7 @@ GameLog::GameLog(const std::string& name)
 	mLog = true;
 	mLogFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "log.txt");
 	mErrorFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "error.txt");
-	mLogThread = TRACE_NEW(CustomThread, mLogThread, "LogThread");
+	TRACE_NEW(CustomThread, mLogThread, "LogThread");
 }
 
 void GameLog::init()
@@ -36,7 +36,7 @@ void GameLog::update(float elapsedTime)
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
 		if (mLog)
 		{
-			SystemUtility::print((fullInfo + "\n").c_str());
+			SystemUtility::print((fullInfo).c_str());
 		}
 		log(mLogDelayBuffer[i]);
 	}
@@ -49,7 +49,7 @@ void GameLog::update(float elapsedTime)
 	FOR(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
-		SystemUtility::print((fullInfo + "\n").c_str());
+		SystemUtility::print((fullInfo).c_str());
 		error(mErrorDelayBuffer[i]);
 	}
 	END(mErrorDelayBuffer);
@@ -142,7 +142,7 @@ void GameLog::logError(const std::string& info, bool delay)
 	if (!delay)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
-		SystemUtility::print((fullInfo + "\n").c_str());
+		SystemUtility::print((fullInfo).c_str());
 		if (mGameLog != NULL)
 		{
 			mGameLog->error(fullInfo);
@@ -163,7 +163,7 @@ void GameLog::logInfo(const std::string& info, bool delay)
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
 		if (mLog)
 		{
-			SystemUtility::print((fullInfo + "\n").c_str());
+			SystemUtility::print((fullInfo).c_str());
 		}
 		if (mGameLog != NULL)
 		{

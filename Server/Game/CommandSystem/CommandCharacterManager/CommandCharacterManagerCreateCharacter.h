@@ -2,6 +2,7 @@
 #define _COMMAND_CHARACTER_MANAGER_CREATE_CHARACTER_H_
 
 #include "txCommand.h"
+#include "CharacterDefine.h"
 
 // 创建角色
 class Character;

@@ -103,6 +103,9 @@
     <Filter Include="Game\CommandSystem\CommandMatchSystem">
       <UniqueIdentifier>{a657c072-d477-4794-a25c-ee90b5bf9f5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Frame\Math">
+      <UniqueIdentifier>{bd810139-d1be-4cdc-a390-a16e5929dab0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -451,12 +454,15 @@
     <ClCompile Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.cpp">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
     </ClCompile>
+    <ClCompile Include="Frame\Common\StreamBuffer.cpp">
+      <Filter>Frame\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame\STL\txSTLBase.cpp">
+      <Filter>Frame\STL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame\CommandSystem\CommandDefine.h">
-      <Filter>Frame\CommandSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Frame\CommandSystem\CommandHeader.h">
       <Filter>Frame\CommandSystem</Filter>
     </ClInclude>
     <ClInclude Include="Frame\CommandSystem\CommandPool.h">
@@ -1010,6 +1016,15 @@
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterMahjongPoolSize.h">
       <Filter>Game\CommandSystem\CommandCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\Math\Vector2.h">
+      <Filter>Frame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame\CommandSystem\CommandHeaderBase.h">
+      <Filter>Frame\CommandSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CommandSystem\CommandHeader.h">
+      <Filter>Game\CommandSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

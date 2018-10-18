@@ -46,17 +46,17 @@ protected:
 		// 如果是只写的,则不能读取
 		if (mWriteFlag)
 		{
-			LOG_ERROR("error : the buffer is write only, can not read!");
+			LOG_ERROR("the buffer is write only, can not read!");
 			return false;
 		}
 		if (mBuffer == NULL)
 		{
-			LOG_ERROR("error : buffer is NULL! can not read");
+			LOG_ERROR("buffer is NULL! can not read");
 			return false;
 		}
 		if (mIndex + readLen > mBufferSize)
 		{
-			LOG_ERROR("error : read buffer out of range! cur index : %d, buffer size : %d, read length : %d", mIndex, mBufferSize, readLen);
+			LOG_ERROR("read buffer out of range! cur index : " + StringUtility::intToString(mIndex) + ", buffer size : " + StringUtility::intToString(mBufferSize) + ", read length : " + StringUtility::intToString(readLen));
 			return false;
 		}
 		return true;
@@ -66,7 +66,7 @@ protected:
 		// 如果是只读的,则不能写入
 		if (!mWriteFlag)
 		{
-			LOG_ERROR("error : the buffer is read only, can not write!");
+			LOG_ERROR("the buffer is read only, can not write!");
 			return false;
 		}
 		// 如果缓冲区为空,则创建缓冲区

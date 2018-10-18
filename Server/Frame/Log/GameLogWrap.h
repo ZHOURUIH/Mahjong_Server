@@ -6,36 +6,13 @@
 class GameLogWrap
 {
 public:
-	static void logError(const std::string& info, bool delay);
-	static void logInfo(const std::string& info, bool delay);
+	static void logError(const std::string& info, bool delayShow);
+	static void logInfo(const std::string& info, bool delayShow);
 };
 
-#define LOG_ERROR(...)												\
-{																	\
-	char buffer[2048];												\
-	SPRINTF(buffer, 2048, __VA_ARGS__);								\
-	GameLogWrap::logError(std::string(buffer) + " | " + _FILE_LINE_, false);\
-}
-
-#define LOG_ERROR_DELAY(...)												\
-{																	\
-	char buffer[2048];												\
-	SPRINTF(buffer, 2048, __VA_ARGS__);								\
-	GameLogWrap::logError(std::string(buffer) + " | " + _FILE_LINE_, true);\
-}
-
-#define LOG_INFO(...)						\
-{											\
-	char buffer[2048];						\
-	SPRINTF(buffer, 2048, __VA_ARGS__);		\
-	GameLogWrap::logInfo(std::string(buffer), false);	\
-}
-
-#define LOG_INFO_DELAY(...)						\
-{											\
-	char buffer[2048];						\
-	SPRINTF(buffer, 2048, __VA_ARGS__);		\
-	GameLogWrap::logInfo(std::string(buffer), true);	\
-}
+#define LOG_ERROR(info)			GameLogWrap::logError(info, false);
+#define LOG_ERROR_DELAY(info)	GameLogWrap::logError(info, true);
+#define LOG_INFO(info)			GameLogWrap::logInfo(info, false);
+#define LOG_INFO_DELAY(info)	GameLogWrap::logInfo(info, true);
 
 #endif

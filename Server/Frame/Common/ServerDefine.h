@@ -1,12 +1,12 @@
-ï»¿#ifndef _SERVER_DEFINE_H_
+#ifndef _SERVER_DEFINE_H_
 #define _SERVER_DEFINE_H_
 
-// å¹³å°æ ‡è¯†å®
+// Æ½Ì¨±êÊ¶ºê
 #define PLATFORM_WINDOWS 0
 #define PLATFORM_LINUX 1
 #define PLATFORM_ANDROID PLATFORM_LINUX
 
-// æ­£åœ¨è¿è¡Œçš„å¹³å°æ ‡è¯†
+// ÕıÔÚÔËĞĞµÄÆ½Ì¨±êÊ¶
 #ifdef WINDOWS
 #define RUN_PLATFORM PLATFORM_WINDOWS
 #endif
@@ -18,6 +18,12 @@
 #ifndef RUN_PLATFORM
 #define RUN_PLATFORM -1
 #error "wrong platform!"
+#endif
+
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "winmm.lib")
+#pragma warning(disable: 4005)
 #endif
 
 #if RUN_PLATFORM == PLATFORM_WINDOWS
@@ -69,7 +75,7 @@
 #include "ServerCallback.h"
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-// å®å®šä¹‰
+// ºê¶¨Òå
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 #define _USE_SAFE_API
 #define TX_THREAD HANDLE
@@ -128,56 +134,57 @@ if (thread != NULL_THREAD)		\
 #define NULL 0
 #endif
 
-// å†æ¬¡å°è£…åçš„å®¹å™¨çš„éå†å®
-#define FOR(stl, expression) stl.lock(SL_WRITE, __FILE__, __LINE__);for (expression)
-#define FOR_R(stl, expression) stl.lock(SL_READ, __FILE__, __LINE__);for (expression)
+// ÔÙ´Î·â×°ºóµÄÈİÆ÷µÄ±éÀúºê
+#define FOR(stl, expression)stl.lock(SL_WRITE, __FILE__, __LINE__);for (expression)
 #define END(stl) stl.unlock(SL_WRITE);
-#define END_R(stl) stl.unlock(SL_READ);
 #define TOSTRING(t) #t
 #define LINE_STR(v) TOSTRING(v)
-// è®¾ç½®valueçš„æŒ‡å®šä½ç½®posçš„å­—èŠ‚çš„å€¼ä¸ºbyte,å¹¶ä¸”ä¸å½±å“å…¶ä»–å­—èŠ‚
-#define SET_BYTE(value, byte, pos) value = (value & ~(0x000000ff << (8 * pos))) | (byte << (8 * pos))
-// è·å¾—valueçš„æŒ‡å®šä½ç½®posçš„å­—èŠ‚çš„å€¼
-#define GET_BYTE(value, pos) (value & (0x000000ff << (8 * pos))) >> (8 * pos)
+// ÉèÖÃvalueµÄÖ¸¶¨Î»ÖÃposµÄ×Ö½ÚµÄÖµÎªbyte,²¢ÇÒ²»Ó°ÏìÆäËû×Ö½Ú
+#define SET_BYTE(value, byte, pos) value = (value & ~(0xFF << (8 * pos))) | (byte << (8 * pos))
+// »ñµÃvalueµÄÖ¸¶¨Î»ÖÃposµÄ×Ö½ÚµÄÖµ
+#define GET_BYTE(value, pos) (value & (0xFF << (8 * pos))) >> (8 * pos)
 #define _FILE_LINE_ "File : " + std::string(__FILE__) + ", Line : " + LINE_STR(__LINE__)
 #define NEW_PACKET(packet, type) NetServer::createPacket(packet, type);
 
-// è§’è‰²å”¯ä¸€ID
+// ½ÇÉ«Î¨Ò»ID
 typedef unsigned int CHAR_GUID;
-// æ¯ä¸ªå®¢æˆ·ç«¯çš„å”¯ä¸€ID
+// Ã¿¸ö¿Í»§¶ËµÄÎ¨Ò»ID
 typedef unsigned int CLIENT_GUID;
 
-// æœ€å¤§å¹¶å‘è¿æ¥æ•°ä¸º64
+// ×î´ó²¢·¢Á¬½ÓÊıÎª64
 #ifdef FD_SETSIZE
 #undef FD_SETSIZE
 #define FD_SETSIZE 64
 #endif
 
 #define LOCK(l) \
-l.waitForUnlock(__FILE__, __LINE__);\
+(l).waitForUnlock(__FILE__, __LINE__);\
 try\
 {
 
 #define UNLOCK(l) \
 }catch(...){}\
-l.unlock()
+(l).unlock()
 
 #include "GameLogWrap.h"
 #include "txVector.h"
 #include "txMap.h"
 #include "txSet.h"
+#include "Vector2.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// ç»“æ„ä½“å®šä¹‰
+// ½á¹¹Ìå¶¨Òå
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// å¸¸é‡æ•°å­—å®šä¹‰
-const int CLIENT_TEMP_BUFFER_SIZE = 2 * 1024;	// å®¢æˆ·ç«¯ä¸´æ—¶ç¼“å†²åŒºå¤§å°,åº”è¯¥ä¸å°äºå•ä¸ªæ¶ˆæ¯åŒ…æœ€å¤§çš„å¤§å°
-const int CLIENT_BUFFER_SIZE = 512 * 1024;		// å®¢æˆ·ç«¯å‘é€å’Œæ¥æ”¶æ•°æ®ç¼“å†²åŒºå¤§å°
-const int HEADER_SIZE = sizeof(short) + sizeof(short);
+// ³£Á¿Êı×Ö¶¨Òå
+const int CLIENT_TEMP_BUFFER_SIZE = 11 * 1024;	// ¿Í»§¶ËÁÙÊ±»º³åÇø´óĞ¡,Ó¦¸Ã²»Ğ¡ÓÚµ¥¸öÏûÏ¢°ü×î´óµÄ´óĞ¡
+const int CLIENT_SEND_BUFFER_SIZE = 8 * 1024 * 1024;// ¿Í»§¶Ë·¢ËÍÊı¾İ»º³åÇø´óĞ¡,8MB
+const int CLIENT_RECV_BUFFER_SIZE = 8 * 1024 * 1024;// ¿Í»§¶Ë½ÓÊÕÊı¾İ»º³åÇø´óĞ¡,8MB
+const int SERVER_RECV_BUFFER_SIZE = 8 * 1024 * 1024;	// ´Ósocket½ÓÊÕÊı¾İÊ±Ê¹ÓÃµÄ»º³åÇø,8MB
+const int HEADER_SIZE = sizeof(int) + sizeof(int);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
-// å¸¸é‡å­—ç¬¦ä¸²å®šä¹‰
+// ³£Á¿×Ö·û´®¶¨Òå
 const std::string MEDIA_PATH = "../media";
 const std::string GAME_DATA_PATH = "GameDataFile/";
 const std::string CONFIG_PATH = "Config/";

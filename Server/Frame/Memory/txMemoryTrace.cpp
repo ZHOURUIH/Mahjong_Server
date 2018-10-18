@@ -30,8 +30,8 @@ txMemoryTrace::txMemoryTrace(const std::string& name)
 	mShowTotalCount = true;
 	mShowAll = true;
 	mWriteOrDebug = true;
-	mShareMemoryServer = TRACE_NEW(txShareMemoryServer, mShareMemoryServer);
-	mThread = TRACE_NEW(CustomThread, mThread, "MemoryTrace");
+	TRACE_NEW(txShareMemoryServer, mShareMemoryServer);
+	TRACE_NEW(CustomThread, mThread, "MemoryTrace");
 }
 
 txMemoryTrace::~txMemoryTrace()
@@ -94,7 +94,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 			if (show)
 			{
-				LOG_INFO("size : %d, file : %s, line : %d, class : %s\n", iter->second.size, iter->second.file.c_str(), iter->second.line, iter->second.type.c_str());
+				LOG_INFO("size : " + StringUtility::intToString(iter->second.size) + " file : " + iter->second.file + ", line : " + StringUtility::intToString(iter->second.line) + ", class : " + iter->second.type + "\n");
 			}
 		}
 		END(mMemoryInfo);
@@ -102,7 +102,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 		if (mShowTotalCount)
 		{
-			LOG_INFO("-------------------------------------------------memory count : %d, total size : %.3fKB\n", memoryCount, memorySize / 1000.0f);
+			LOG_INFO("-------------------------------------------------memory count : " + StringUtility::intToString(memoryCount) + ", total size : " + StringUtility::floatToString(memorySize / 1000.0f, 3) + "KB\n");
 		}
 		// 显示统计数据
 		if (mShowStatistics)
@@ -136,7 +136,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 				END(mIgnoreClassKeyword);
 				if (show)
 				{
-					LOG_INFO("%s : %d个, %.3fKB\n", iterType->first.c_str(), iterType->second.count, iterType->second.size / 1000.0f);
+					LOG_INFO(iterType->first + " : " + StringUtility::intToString(iterType->second.count) + "个, " + StringUtility::floatToString(iterType->second.size / 1000.0f, 3) + "KB\n");
 				}
 			}
 			END(mMemoryType);
@@ -210,7 +210,7 @@ void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 		mMemoryType.insert(info.type, MemoryType(info.type, 1, info.size));
 	}
 
-	if(mWriteOrDebug)
+	if (mWriteOrDebug)
 	{
 		// 在类型下标列表中查找该类型,如果有,则更新类型信息
 		auto iterIndex = mMemoryTypeIndex.find(info.type);
@@ -231,7 +231,7 @@ void txMemoryTrace::insertPtr(void* ptr, MemoryInfo& info)
 			}
 		}
 	}
-	
+
 	// 解锁列表
 	UNLOCK(mInfoLock);
 }
@@ -260,7 +260,7 @@ void txMemoryTrace::erasePtr(void* ptr)
 		}
 		--(iterType->second.count);
 		iterType->second.size -= size;
-		if(mWriteOrDebug)
+		if (mWriteOrDebug)
 		{
 			// 在下标列表中查找该类型的下标,如果有,则将类型信息中的信息清空
 			auto iterIndex = mMemoryTypeIndex.find(type);

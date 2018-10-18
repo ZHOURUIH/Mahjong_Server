@@ -12,7 +12,7 @@
 
 void CSFreeMatch::execute()
 {
-	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mClient->getCharGUID()));
+	CharacterPlayer* player = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mClient->getCharacterGUID()));
 	CommandMatchSystemRequestMatch* cmd = NEW_CMD_INFO(cmd);
 	cmd->mPlayer = player;
 	pushCommand(cmd, mMatchSystem);

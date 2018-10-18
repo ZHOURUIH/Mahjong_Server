@@ -192,7 +192,7 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 	auto iterWait = mWaitList.find(player);
 	if (iterWait == mWaitList.end())
 	{
-		LOG_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
+		LOG_ERROR("player has no action : name : " + player->getName() + ", action : " + StringUtility::intToString(type));
 		return;
 	}
 	MahjongAction* action = NULL;
@@ -636,7 +636,7 @@ bool Room::isAllPlayerGetStartDone()
 	bool allGetStartDone = true;
 	auto iter = mPlayerList.begin();
 	auto iterEnd = mPlayerList.end();
-	FOR_R (mPlayerList, ; iter != iterEnd; ++iter)
+	FOR (mPlayerList, ; iter != iterEnd; ++iter)
 	{
 		if (!iter->second->getCharacterData()->mGetStartDone)
 		{
@@ -644,7 +644,7 @@ bool Room::isAllPlayerGetStartDone()
 			break;
 		}
 	}
-	END_R(mPlayerList);
+	END(mPlayerList);
 	return allGetStartDone;
 }
 

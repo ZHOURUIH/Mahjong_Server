@@ -42,7 +42,7 @@ void CommandRoomStartGame::execute()
 	auto& playerList = room->getPlayerList();
 	auto iterPlayer = playerList.begin();
 	auto iterPlayerEnd = playerList.end();
-	FOR_R(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
+	FOR(playerList, ; iterPlayer != iterPlayerEnd; ++iterPlayer)
 	{	
 		CommandCharacterStartGame* cmdStartGame = NEW_CMD_INFO(cmdStartGame);
 		cmdStartGame->setDice(dice0, dice1);
@@ -52,5 +52,5 @@ void CommandRoomStartGame::execute()
 		cmdStartGame->mBankerPos = room->getBankerPos();
 		pushCommand(cmdStartGame, iterPlayer->second);
 	}
-	END_R(playerList);
+	END(playerList);
 }

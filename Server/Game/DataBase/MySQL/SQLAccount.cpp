@@ -16,7 +16,7 @@ bool SQLAccount::queryData(AccountTable* tableData)
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query login error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("query login error!   " + std::string(mysql_error(mMySQL)));
 		return false;
 	}
 	// 获得查询结果
@@ -48,7 +48,7 @@ int SQLAccount::getMaxGUID()
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query max GUID error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("query max GUID error!   " + std::string(mysql_error(mMySQL)));
 		return -1;
 	}
 	// 获得查询结果
@@ -100,7 +100,7 @@ bool SQLAccount::registerAccount(AccountTable* tableData)
 	int ret = mysql_query(mMySQL, insertAccountBuffer);
 	if (ret != 0)
 	{
-		LOG_ERROR("insert account error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("insert account error!   " + std::string(mysql_error(mMySQL)));
 		return false;
 	}
 	return true;

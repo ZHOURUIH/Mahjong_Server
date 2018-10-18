@@ -41,6 +41,11 @@ public:
 		mSet.clear();
 	}
 	int size() const{return mSet.size();}
+	void clone(txSet<T>& temp)
+	{
+		temp = *this;
+		temp.resetLock();
+	}
 protected:
 	std::set<T> mSet;
 };

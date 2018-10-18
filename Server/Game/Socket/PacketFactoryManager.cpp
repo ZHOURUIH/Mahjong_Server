@@ -29,7 +29,7 @@ void PacketFactoryManager::init()
 	int needCSCount = PT_CS_MAX - PT_CS_MIN - 1;
 	if (mFactoryList.size() != needCSCount)
 	{
-		LOG_ERROR("not all CS packet registered! cur count : %d, need count : %d", mFactoryList.size(), needCSCount);
+		LOG_ERROR("not all CS packet registered! cur count : " + StringUtility::intToString(mFactoryList.size()) + ", need count : " + StringUtility::intToString(needCSCount));
 	}
 	// Server->Client
 	ADD_PACKET_FACTORY(SCHeartBeatRet, PT_SC_HEART_BEAT_RET);
@@ -74,6 +74,6 @@ void PacketFactoryManager::init()
 	int needSCCount = PT_SC_MAX - PT_SC_MIN - 1;
 	if (mFactoryList.size() - needCSCount != needSCCount)
 	{
-		LOG_ERROR("not all SC packet registered! cur count : %d, need count : %d", (mFactoryList.size() - needCSCount), needSCCount);
+		LOG_ERROR("not all SC packet registered! cur count : " + StringUtility::intToString(mFactoryList.size() - needCSCount) + ", need count : " + StringUtility::intToString(needSCCount));
 	}
 }

@@ -15,7 +15,7 @@ bool SQLCharacterData::queryCharacterData(CHAR_GUID guid, CharacterDataTable* ta
 	int ret = mysql_query(mMySQL, queryStr);
 	if (ret != 0)
 	{
-		LOG_ERROR("query character data error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("query character data error!   " + std::string(mysql_error(mMySQL)));
 		return false;
 	}
 	// 获得查询结果
@@ -27,7 +27,7 @@ bool SQLCharacterData::queryCharacterData(CHAR_GUID guid, CharacterDataTable* ta
 		{
 			if (result->row_count != 1)
 			{
-				LOG_ERROR("find more than 1 row character data! guid : %d", guid);
+				LOG_ERROR("find more than 1 row character data! guid : " + StringUtility::intToString(guid));
 			}
 			txVector<txMap<std::string, std::string>> resultData;
 			getResultData(resultData, result);
@@ -75,7 +75,7 @@ bool SQLCharacterData::registeAccount(CharacterDataTable* data)
 	int ret = mysql_query(mMySQL, insertCharacterDataBuffer);
 	if (ret != 0)
 	{
-		LOG_ERROR("insert character data error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("insert character data error!   " + std::string(mysql_error(mMySQL)));
 		return false;
 	}
 	return true;

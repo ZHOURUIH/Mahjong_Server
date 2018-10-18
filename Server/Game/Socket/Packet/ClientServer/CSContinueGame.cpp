@@ -11,7 +11,7 @@
 
 void CSContinueGame::execute()
 {
-	CharacterPlayer* character = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mClient->getCharGUID()));
+	CharacterPlayer* character = static_cast<CharacterPlayer*>(mCharacterManager->getCharacter(mClient->getCharacterGUID()));
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
 	CommandRoomPlayerContinueGame* cmdContinue = NEW_CMD_INFO(cmdContinue);
 	cmdContinue->mContinue = mContinue;

@@ -1,5 +1,5 @@
-﻿#ifndef _TX_UTILITY_H_
-#define _TX_UTILITY_H_
+﻿#ifndef _SYSTEM_UTILITY_H_
+#define _SYSTEM_UTILITY_H_
 
 #include "txMemoryTrace.h"
 #include "ThreadLock.h"
@@ -46,22 +46,39 @@ public:
 		return std::string(inet_ntoa(addr_conn.sin_addr));
 	}
 
-	static void print(const std::string& str)
+	static void print(const std::string& str, bool nextLine = true)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 		std::cout << str;
+		if (nextLine)
+		{
+			std::cout << std::endl;
+		}
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		printf(str.c_str());
+		if (nextLine)
+		{
+			printf("\n");
+		}
 #endif
 	}
 	static void input(std::string& str)
 	{
-		scanf_s(str.c_str());
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-		//std::cin >> str;
+		std::cin >> str;
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		scanf(str.c_str());
 #endif
+	}
+	
+	static int getThreadID()
+	{
+#if RUN_PLATFORM == PLATFORM_WINDOWS
+		int threadID = GetCurrentThreadId();
+#elif RUN_PLATFORM == PLATFORM_ANDROID
+		int threadID = pthread_self();
+#endif
+		return threadID;
 	}
 };
 

@@ -20,13 +20,13 @@ ServerConfig::ServerConfig(const std::string& name)
 	ADD_FLOAT_PARAM(SDF_OUTPUT_NET_LOG);
 	if (mFloatParamDefineList.size() != SDF_MAX)
 	{
-		LOG_ERROR("error : not all float parameters init! init count : %d, , max count : %d", (int)mFloatParamDefineList.size(), SDF_MAX);
+		LOG_ERROR("not all float parameters init! init count : " + StringUtility::intToString(mFloatParamDefineList.size()) + ", max count : " + StringUtility::intToString(SDF_MAX));
 	}
 
 	ADD_STRING_PARAM(SDS_DOMAIN_NAME);
 	if (mStringParamDefineList.size() != SDS_MAX)
 	{
-		LOG_ERROR("error : not all string parameters init! init count : %d, , max count : %d", (int)mStringParamDefineList.size(), SDS_MAX);
+		LOG_ERROR("not all string parameters init! init count : " + StringUtility::intToString(mStringParamDefineList.size()) + ", max count : " + StringUtility::intToString(SDS_MAX));
 	}
 }
 

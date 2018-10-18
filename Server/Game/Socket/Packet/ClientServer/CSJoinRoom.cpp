@@ -12,5 +12,5 @@ void CSJoinRoom::execute()
 {
 	CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 	cmdJoin->mRoomID = mRoomID;
-	pushCommand(cmdJoin, mCharacterManager->getCharacter(mClient->getCharGUID()));
+	pushCommand(cmdJoin, mCharacterManager->getCharacter(mClient->getCharacterGUID()));
 }

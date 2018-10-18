@@ -14,6 +14,6 @@ void CharacterFactoryManager::init()
 
 	if (mFactoryList.size() < CT_MAX)
 	{
-		LOG_ERROR("error : not all character factory registered! registered count : %d, max count : %d", (int)mFactoryList.size(), CT_MAX);
+		LOG_ERROR("not all character factory registered! registered count : %d, max count : %d", (int)mFactoryList.size(), CT_MAX);
 	}
 }

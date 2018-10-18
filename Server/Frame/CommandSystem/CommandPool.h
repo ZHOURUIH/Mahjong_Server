@@ -37,7 +37,7 @@ public:
 		// 没有找到可以用的,则创建一个
 		if (cmd == NULL)
 		{
-			cmd = TRACE_NEW(T, cmd);
+			TRACE_NEW(T, cmd);
 			cmd->setID(mIDSeed++);
 			cmd->init();
 			cmd->setType(type);

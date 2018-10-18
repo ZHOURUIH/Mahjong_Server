@@ -9,7 +9,6 @@ public:
 	TimeLock(long frameTimeMS, long forceSleep = 5);
 	// 返回值表示上一帧经过的时间
 	long update();
-	void setForceSleep(long forceTimeMS){mForceSleep = forceTimeMS;}
 protected:
 	long mFrameTimeMS;
 	long mLastTime;

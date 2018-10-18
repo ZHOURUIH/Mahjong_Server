@@ -56,7 +56,7 @@ public:
 		// 循环遍历,如果匹配到放入列表
 		auto itr = res.begin();
 		auto itrEnd = res.end();
-		FOR(res, ; itr != itrEnd; ++itr)
+		for( ; itr != itrEnd; ++itr)
 		{
 			const std::string& name = itr->first;
 			if (findSubstr(name, dst, sensitive))
@@ -64,7 +64,6 @@ public:
 				retList.push_back(name);
 			}
 		}
-		END(res);
 		return retList;
 	}
 	static std::string checkString(const std::string& str, const std::string& valid);
@@ -72,7 +71,7 @@ public:
 	static std::string checkIntString(const std::string& str, const std::string& valid = "");
 	static std::string charToHexString(unsigned char byte, bool upper = true);
 	static int getCharCount(const std::string& str, char key);
-	std::string charArrayToHexString(unsigned char* data, int dataCount, bool addSpace = true, bool upper = true);
+	static std::string charArrayToHexString(unsigned char* data, int dataCount, bool addSpace = true, bool upper = true);
 };
 
 #endif

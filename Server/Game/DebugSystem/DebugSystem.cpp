@@ -36,7 +36,7 @@ void DebugSystem::update(float elapsedTime)
 	int ret = mMemoryServer->ReadCmdData(header, mBuffer);
 	if (ret < 0)
 	{
-		LOG_ERROR("read share memory error : %d", GetLastError());
+		LOG_ERROR("read share memory error : " + StringUtility::intToString(GetLastError()));
 	}
 	else if(ret > 0)
 	{
@@ -46,7 +46,7 @@ void DebugSystem::update(float elapsedTime)
 
 void DebugSystem::parseCmd(const std::string& param)
 {
-	LOG_INFO("从控制台收到数据 : %s", param.c_str());
+	LOG_INFO("从控制台收到数据 : " + param);
 	txVector<std::string> paramList;
 	StringUtility::split(param, "-", paramList);
 	std::string allInfo;

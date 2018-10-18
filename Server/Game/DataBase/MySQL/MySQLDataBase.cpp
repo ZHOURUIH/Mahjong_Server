@@ -40,13 +40,13 @@ bool MySQLDataBase::connectDataBase(const std::string& dataBase)
 	if (!mysql_real_connect(mMySQL, mHost.c_str(), mUser.c_str(), mPassword.c_str(), dataBase.c_str(), mPort, NULL, 0))
 	{
 		const char* error = mysql_error(mMySQL);
-		LOG_ERROR("can not connect DataBase %s!   %s", dataBase.c_str(), error);
+		LOG_ERROR("can not connect DataBase " + dataBase + "!   " + std::string(error));
 		return false;
 	}
 	int ret = mysql_query(mMySQL, "SET NAMES UTF8"); //设置编码格式
 	if (ret != 0)
 	{
-		LOG_ERROR("set names error!   %s", mysql_error(mMySQL));
+		LOG_ERROR("set names error!   " + std::string(mysql_error(mMySQL)));
 		return false;
 	}
 	mConnectedDataBase = dataBase;

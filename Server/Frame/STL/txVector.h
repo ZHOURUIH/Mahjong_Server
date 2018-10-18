@@ -62,7 +62,7 @@ public:
 	{
 		if (i < 0 || i >= size())
 		{
-			LOG_ERROR("%s", "error : vector index out of range!");
+			//directError("vector index out of range!");
 		}
 		return mVector[i];
 	}
@@ -70,7 +70,7 @@ public:
 	{
 		if (i < 0 || i >= size())
 		{
-			LOG_ERROR("%s", "error : vector index out of range!");
+			directError("vector index out of range!");
 		}
 		return mVector[i];
 	}
@@ -83,7 +83,11 @@ public:
 	{
 		return std::find(begin(), end(), value) != end();
 	}
-protected:
+	void clone(txVector<T>& temp)
+	{
+		temp = *this;
+		temp.resetLock();
+	}
 protected:
 	std::vector<T> mVector;
 };

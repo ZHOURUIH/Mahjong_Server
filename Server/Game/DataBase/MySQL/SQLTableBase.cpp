@@ -25,7 +25,7 @@ const std::string& SQLTableBase::getColumn(txMap<std::string, std::string>& rowD
 {
 	if (rowData.find(col) == rowData.end())
 	{
-		LOG_ERROR("can not find %s", col.c_str());
+		LOG_ERROR("can not find " + col);
 		return EMPTY_STRING;
 	}
 	else

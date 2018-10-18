@@ -16,7 +16,7 @@ public:
 	reverse_iterator rend(){return mMap.rend();}
 	iterator begin(){return mMap.begin();}
 	iterator end(){return mMap.end();}
-	Value tryGet(const Key& k, Value defaultValue)
+	const Value& tryGet(const Key& k, const Value& defaultValue)
 	{
 		iterator iter = find(k);
 		if (iter != end())
@@ -28,7 +28,7 @@ public:
 			return defaultValue;
 		}
 	}
-	void trySet(const Key& k, Value value)
+	void trySet(const Key& k, const Value& value)
 	{
 		auto iter = find(k);
 		if (iter != end())
@@ -47,7 +47,7 @@ public:
 		checkLock();
 		return mMap.insert(std::make_pair(k, v));
 	}
-	iterator tryInsert(const Key& k, Value value)
+	iterator tryInsert(const Key& k, const Value& value)
 	{
 		auto iter = find(k);
 		if (iter == end())
@@ -82,6 +82,11 @@ public:
 	}
 	int size(){return (int)mMap.size();}
 	Value& operator[](const Key& k){return mMap[k];}
+	void clone(txMap<Key, Value>& temp)
+	{
+		temp = *this;
+		temp.resetLock();
+	}
 protected:
 	std::map<Key, Value> mMap;
 };

@@ -9,13 +9,14 @@ void CommandPool::destroy()
 	auto iterUseEnd = mInusedList.end();
 	FOR(mInusedList, ; iterUse != iterUseEnd; ++iterUse)
 	{
-		int count = iterUse->second.size();
-		FOR(iterUse->second, int i = 0; i < count; ++i)
+		auto& list = iterUse->second;
+		int count = list.size();
+		FOR(list, int i = 0; i < count; ++i)
 		{
-			TRACE_DELETE(iterUse->second[i]);
+			TRACE_DELETE(list[i]);
 		}
-		END(iterUse->second);
-		iterUse->second.clear();
+		END(list);
+		list.clear();
 	}
 	END(mInusedList);
 
@@ -23,13 +24,14 @@ void CommandPool::destroy()
 	auto iterUnuseEnd = mUnusedList.end();
 	FOR(mUnusedList, ; iterUnuse != iterUnuseEnd; ++iterUnuse)
 	{
-		int count = iterUnuse->second.size();
-		FOR(iterUnuse->second, int i = 0; i < count; ++i)
+		auto& list = iterUnuse->second;
+		int count = list.size();
+		FOR(list, int i = 0; i < count; ++i)
 		{
-			TRACE_DELETE(iterUnuse->second[i]);
+			TRACE_DELETE(list[i]);
 		}
-		END(iterUnuse->second);
-		iterUnuse->second.clear();
+		END(list);
+		list.clear();
 	}
 	END(mUnusedList);
 }

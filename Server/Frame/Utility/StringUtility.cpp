@@ -559,14 +559,13 @@ txVector<std::string> StringUtility::findSubstr(txVector<std::string>& res, cons
 {
 	txVector<std::string> retList;
 	int listSize = res.size();
-	FOR(res, int i = 0; i < listSize; ++i)
+	for(int i = 0; i < listSize; ++i)
 	{
 		if (findSubstr(res[i], dst, sensitive))
 		{
 			retList.push_back(res[i]);
 		}
 	}
-	END(res);
 	return retList;
 }
 

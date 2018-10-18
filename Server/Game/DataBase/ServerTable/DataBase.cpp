@@ -122,7 +122,7 @@ void  DataBase::destroyAllData()
 		}
 		else
 		{
-			LOG_ERROR("error : can not find data factory : %d, DataBase::destroyAllData", (int)iterStructList->first);
+			LOG_ERROR("can not find data factory : " + StringUtility::intToString(iterStructList->first) + ", DataBase::destroyAllData");
 		}
 	}
 	END(mDataStructList);
@@ -156,7 +156,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 	auto fileDefine = mDataFileDefine.tryGet(fileName, DT_MIN);
 	if(fileDefine == DT_MIN)
 	{
-		LOG_ERROR("error : can not find data file define, file name : %s, filePath : %s", fileName.c_str(), filePath.c_str());
+		LOG_ERROR("can not find data file define, file name : " + fileName + ", filePath : " + filePath);
 		return;
 	}
 
@@ -178,7 +178,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 	DataFactoryBase* factory = getDataFactory(fileDefine);
 	if(factory == NULL)
 	{
-		LOG_ERROR("error : can not find factory, type : %d, filename : %s, filePath : %s", (int)fileDefine, fileName.c_str(), filePath.c_str());
+		LOG_ERROR("can not find factory, type : " + StringUtility::intToString(fileDefine) + ", filename : " + fileName + ", filePath : " + filePath);
 		return;
 	}
 
@@ -196,7 +196,7 @@ void DataBase::loadData(const std::string& filePath, bool forceCover)
 		if (newData == NULL)
 		{
 			TRACE_DELETE_ARRAY(fileBuffer);
-			LOG_ERROR("error : can not create data ,type : %d", factory->getType());
+			LOG_ERROR("can not create data ,type : " + StringUtility::intToString(factory->getType()));
 			return;
 		}
 		if(newData->read(fileBuffer + i * dataSize, dataSize))
@@ -219,7 +219,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	auto factory = getDataFactory(type);
 	if (factory == NULL)
 	{
-		LOG_ERROR("error : can not find data factory! type : %d", type);
+		LOG_ERROR("can not find data factory! type : " + StringUtility::intToString(type));
 		return false;
 	}
 
@@ -237,7 +237,7 @@ bool DataBase::writeBinaryFile(DATA_TYPE type)
 	auto iterDataDefine = mDataDefineFile.find(type);
 	if (iterDataDefine == mDataDefineFile.end())
 	{
-		LOG_ERROR("error : can not find data type in data define file list! type : %d", type);
+		LOG_ERROR("can not find data type in data define file list! type : " + StringUtility::intToString(type));
 		return false;
 	}
 	FileUtility::writeFile(SystemUtility::getAvailableResourcePath(GAME_DATA_PATH + iterDataDefine->second + ".table"), writeFileBuffer, writeBufferSize);

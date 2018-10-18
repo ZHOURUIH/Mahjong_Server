@@ -13,7 +13,7 @@
 
 void CSAddMahjongRobot::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	// 查看玩家所在的房间人有没有满
 	bool addRet = false;
 	CharacterMahjongRobot* robot = NULL;

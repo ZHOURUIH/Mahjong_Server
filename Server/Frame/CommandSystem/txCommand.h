@@ -5,14 +5,26 @@
 
 #include "CommandDefine.h"
 #include "ServerDefine.h"
-#include "CharacterDefine.h"
 #include "ServerBase.h"
 
 class txCommandReceiver;
 class txCommand : public ServerBase
 {
 public:
-	txCommand(){}
+	txCommand()
+	{
+		mReceiver = NULL;	// 命令接受者
+		mShowDebugInfo = true;			// 是否显示调试信息
+		mDelayCommand = false;				// 是否是延迟执行的命令
+		mValid = false;					// 是否为有效命令
+		mExecuteState = ES_NOT_EXECUTE;	// 命令执行状态
+		mType = "";				// 命令类型
+		mFile = "";				// 命令发出时所在的文件名
+		mLine = 0;						// 命令发出时所在的行号
+		mCmdID = 0;						// 命令唯一ID,在命令被创建时设置
+		mAssignID = 0;					// 被分配为延迟命令时的唯一ID,每次分配都会设置一个新的唯一执行ID
+		mResult = NULL;					// 命令的执行结果,只用于部分需要知道执行结果的命令使用
+	}
 	virtual ~txCommand(){}
 	virtual void init();
 	virtual void reset() = 0;
@@ -21,7 +33,7 @@ public:
 	// 调试信息，由CommandSystem调用
 	virtual std::string showDebugInfo()
 	{
-		COMMAND_DEBUG(DEBUG_EMPTY);
+		COMMAND_DEBUG("");
 	}
 	bool getShowDebugInfo()						{ return mShowDebugInfo; }
 	bool isDelayCommand()						{ return mDelayCommand; }

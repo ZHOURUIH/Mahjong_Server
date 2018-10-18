@@ -13,6 +13,7 @@ CustomThread::CustomThread(const std::string& name)
 	mTimeLock = NULL;
 	mPause = false;
 	mIsBackground = true;
+	mArgs = NULL;
 }
 
 CustomThread::~CustomThread()
@@ -25,32 +26,30 @@ void CustomThread::destroy()
 	stop();
 }
 
-void CustomThread::start(CustomThreadCallback callback, void* args, int frameTimeMS)
+void CustomThread::start(CustomThreadCallback callback, void* args, int frameTimeMS, int forceSleep)
 {
-	LOG_INFO("准备启动线程 : %s", mName.c_str());
 	if (mThread != NULL_THREAD)
 	{
-		LOG_ERROR("线程已经启动 : %s", mName.c_str());
+		LOG_ERROR("线程已经启动 : " + mName);
 		return;
 	}
-	mTimeLock = TRACE_NEW(TimeLock, mTimeLock, frameTimeMS);
+	TRACE_NEW(TimeLock, mTimeLock, frameTimeMS, forceSleep);
 	mRunning = true;
 	mCallback = callback;
 	mArgs = args;
 	CREATE_THREAD(mThread, run, this);
-	LOG_INFO("线程启动成功 : %s", mName.c_str());
+	LOG_INFO("线程启动成功 : " + mName);
 }
 
 void CustomThread::stop()
 {
-	LOG_INFO("准备退出线程 : %s", mName.c_str());
 	mRunning = false;
 	mPause = false;
 	while (!mIsBackground && !mFinish) {}
 	CLOSE_THREAD(mThread);
 	mCallback = NULL;
 	TRACE_DELETE(mTimeLock);
-	LOG_INFO("线程退出完成! 线程名 : %s", mName.c_str());
+	LOG_INFO("线程退出完成! 线程名 : " + mName);
 }
 
 void CustomThread::updateThread()
@@ -72,7 +71,7 @@ void CustomThread::updateThread()
 		}
 		catch (...)
 		{
-			LOG_INFO("捕获线程异常! 线程名 : %s", mName.c_str());
+			LOG_INFO("捕获线程异常! 线程名 : " + mName);
 		}
 	}
 	mFinish = true;

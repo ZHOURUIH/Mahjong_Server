@@ -59,7 +59,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/CommandSystem/CommandMatchSystem;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/CommandSystem/CommandMatchSystem;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Math;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -80,7 +80,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_SERVER;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./Game;./Game/Character;./Game/CommandSystem;./Game/CommandSystem/CommandCharacter;./Game/CommandSystem/CommandCharacterManager;./Game/CommandSystem/CommandRoom;./Game/CommandSystem/CommandRoomManager;./Game/CommandSystem/CommandMatchSystem;./Game/Common;./Game/DataBase;./Game/DataBase/MySQL;./Game/DataBase/ServerTable;./Game/DebugSystem;./Game/MahjongRobot;./Game/Net;./Game/Room;./Game/Socket;./Game/Socket/Packet;./Game/Socket/Packet/ClientServer;./Game/Socket/Packet/ServerClient;./Game/Utility;./Frame;./Frame/CommandSystem;./Frame/CommandSystem/CommandServer;./Frame/Common;./Frame/Component;./Frame/Component/BaseComponent;./Frame/Log;./Frame/Memory;./Frame/Serialize;./Frame/ServerFramework;./Frame/STL;./Frame/Thread;./Frame/Math;./Frame/Utility;$(MYSQL_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/wd4819 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -100,6 +100,7 @@
     <ClCompile Include="Frame\CommandSystem\txCommandReceiver.cpp" />
     <ClCompile Include="Frame\CommandSystem\txCommandSystem.cpp" />
     <ClCompile Include="Frame\Common\ServerBase.cpp" />
+    <ClCompile Include="Frame\Common\StreamBuffer.cpp" />
     <ClCompile Include="Frame\Component\BaseComponent\txComponent.cpp" />
     <ClCompile Include="Frame\Component\txComponentFactoryManager.cpp" />
     <ClCompile Include="Frame\Component\txComponentOwner.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Frame\Serialize\txSerializedData.cpp" />
     <ClCompile Include="Frame\Serialize\txSerializer.cpp" />
     <ClCompile Include="Frame\ServerFramework\ServerFramework.cpp" />
+    <ClCompile Include="Frame\STL\txSTLBase.cpp" />
     <ClCompile Include="Frame\Thread\CustomThread.cpp" />
     <ClCompile Include="Frame\Thread\ThreadLock.cpp" />
     <ClCompile Include="Frame\Thread\TimeLock.cpp" />
@@ -213,7 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame\CommandSystem\CommandDefine.h" />
-    <ClInclude Include="Frame\CommandSystem\CommandHeader.h" />
+    <ClInclude Include="Frame\CommandSystem\CommandHeaderBase.h" />
     <ClInclude Include="Frame\CommandSystem\CommandPool.h" />
     <ClInclude Include="Frame\CommandSystem\CommandServer\CommandServerNotifyAcceptedClient.h" />
     <ClInclude Include="Frame\CommandSystem\txCommand.h" />
@@ -233,6 +235,7 @@
     <ClInclude Include="Frame\Component\txComponentOwner.h" />
     <ClInclude Include="Frame\Log\GameLog.h" />
     <ClInclude Include="Frame\Log\GameLogWrap.h" />
+    <ClInclude Include="Frame\Math\Vector2.h" />
     <ClInclude Include="Frame\Memory\MemoryDefine.h" />
     <ClInclude Include="Frame\Memory\MemoryInfo.h" />
     <ClInclude Include="Frame\Memory\txMemoryCheck.h" />
@@ -303,6 +306,7 @@
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterReorderMahjong.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterGetHua.h" />
     <ClInclude Include="Game\CommandSystem\CommandCharacter\CommandCharacterStartGame.h" />
+    <ClInclude Include="Game\CommandSystem\CommandHeader.h" />
     <ClInclude Include="Game\CommandSystem\CommandMatchSystem\CommandMatchSystemRequestMatch.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerCreateRoom.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoomManager\CommandRoomManagerDestroyRoom.h" />

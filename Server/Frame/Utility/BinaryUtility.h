@@ -22,25 +22,12 @@ public:
 		{
 			return 0;
 		}
-		txVector<int> bytes;
+		T finalValue;
+		char* ptr = (char*)&finalValue;
 		for (int i = 0; i < valueSize; ++i)
 		{
-			bytes.push_back((int)(0xFF & buffer[index++]));
-		}
-		short finalValue = 0;
-		if (inverse)
-		{
-			for (int i = 0; i < valueSize; ++i)
-			{
-				finalValue |= (bytes[i] << (8 * (valueSize - 1 - i)));
-			}
-		}
-		else
-		{
-			for (int i = 0; i < valueSize; ++i)
-			{
-				finalValue |= (bytes[i] << (8 * i));
-			}
+			int byteOffset = inverse ? (valueSize - 1 - i) : i;
+			ptr[byteOffset] = buffer[index++];
 		}
 		return finalValue;
 	}
@@ -60,19 +47,11 @@ public:
 		{
 			return false;
 		}
-		if (inverse)
+		char* ptr = (char*)&value;
+		for (int i = 0; i < writeSize; ++i)
 		{
-			for (int i = 0; i < writeSize; ++i)
-			{
-				buffer[index++] = ((0xFF << ((writeSize - 1 - i) * 8)) & value) >> ((writeSize - 1 - i) * 8);
-			}
-		}
-		else
-		{
-			for (int i = 0; i < writeSize; ++i)
-			{
-				buffer[index++] = ((0xFF << (i * 8)) & value) >> (i * 8);
-			}
+			int byteOffset = inverse ? (writeSize - 1 - i) : i;
+			buffer[index++] = ptr[byteOffset];
 		}
 		return true;
 	}
@@ -100,8 +79,8 @@ public:
 	template<typename T>
 	static void swapByte(T& value, int pos0, int pos1)
 	{
-		char byte0 = (value & (0xff << (8 * pos0))) >> (8 * pos0);
-		char byte1 = (value & (0xff << (8 * pos1))) >> (8 * pos1);
+		char byte0 = GET_BYTE(value, pos0);
+		char byte1 = GET_BYTE(value, pos1);
 		SET_BYTE(value, byte0, pos1);
 		SET_BYTE(value, byte1, pos0);
 	}

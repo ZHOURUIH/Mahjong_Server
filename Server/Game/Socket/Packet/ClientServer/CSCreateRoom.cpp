@@ -26,7 +26,7 @@ void CSCreateRoom::execute()
 		// 将玩家加入房间
 		CommandCharacterJoinRoom* cmdJoin = NEW_CMD_INFO(cmdJoin);
 		cmdJoin->mRoomID = room->getID();
-		pushCommand(cmdJoin, mCharacterManager->getCharacter(mClient->getCharGUID()));
+		pushCommand(cmdJoin, mCharacterManager->getCharacter(mClient->getCharacterGUID()));
 	}
 	else
 	{

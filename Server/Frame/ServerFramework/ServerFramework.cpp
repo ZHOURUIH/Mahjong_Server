@@ -85,7 +85,7 @@ void ServerFramework::launch()
 	NetServer* server = GET_SYSTEM(NetServer);
 	if (server != NULL && server->isAvailable())
 	{
-		LOG_INFO("启动服务器, 端口 : %d", server->getPort());
+		LOG_INFO("启动服务器, 端口 : " + StringUtility::intToString(server->getPort()));
 	}
 	else
 	{

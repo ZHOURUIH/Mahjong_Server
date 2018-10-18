@@ -3,11 +3,12 @@
 #include "txCommandReceiver.h"
 #include "txCommand.h"
 #include "GameLog.h"
+#include "MemoryDefine.h"
 
 txCommandSystem::txCommandSystem(const std::string& name)
 	:FrameComponent(name)
 {
-	mCommandPool = TRACE_NEW(CommandPool, mCommandPool);
+	TRACE_NEW(CommandPool, mCommandPool);
 	mSystemDestroy = false;
 }
 
@@ -58,7 +59,7 @@ bool txCommandSystem::interruptCommand(int assignID)
 	}
 	if (assignID < 0)
 	{
-		LOG_ERROR("assignID invalid! : %d", assignID);
+		LOG_ERROR("assignID invalid! : " + StringUtility::intToString(assignID));
 		return false;
 	}
 	syncCommandBuffer();
@@ -69,7 +70,7 @@ bool txCommandSystem::interruptCommand(int assignID)
 		DelayCommand* delayInfo = mCommandBufferProcess[i];
 		if (delayInfo->mCommand->getAssignID() == assignID)
 		{
-			LOG_INFO("CommandSystem : interrupt command : %d, %s, receiver : %s", assignID, delayInfo->mCommand->showDebugInfo().c_str(), delayInfo->mReceiver->getName().c_str());
+			LOG_INFO("CommandSystem : interrupt command : " + StringUtility::intToString(assignID) + ", " + delayInfo->mCommand->showDebugInfo() + ", receiver : " + delayInfo->mReceiver->getName());
 			// 销毁回收命令
 			mCommandPool->destroyCmd(delayInfo->mCommand);
 			mCommandBufferProcess.erase(mCommandBufferProcess.begin() + i);
@@ -93,7 +94,7 @@ bool txCommandSystem::interruptCommand(int assignID)
 		}
 		END(mExecuteList);
 	}
-	LOG_ERROR("not find cmd with assignID! %d", assignID);
+	LOG_ERROR("not find cmd with assignID! " + StringUtility::intToString(assignID));
 	return ret;
 }
 
@@ -102,29 +103,29 @@ void txCommandSystem::pushCommand(txCommand* cmd, txCommandReceiver* cmdReceiver
 	if (cmd == NULL)
 	{
 		std::string receiverName = (cmdReceiver != NULL) ? cmdReceiver->getName() : EMPTY_STRING;
-		LOG_ERROR("cmd is null! receiver : %s", receiverName.c_str());
+		LOG_ERROR("cmd is null! receiver : " + receiverName);
 		return;
 	}
 	if (cmdReceiver == NULL)
 	{
 		std::string cmdName = (cmd != NULL) ? cmd->getType() : EMPTY_STRING;
-		LOG_ERROR("receiver is null! cmd : %s", cmdName.c_str());
+		LOG_ERROR("receiver is null! cmd : " + cmdName);
 		return;
 	}
 	if (!cmd->isValid())
 	{
-		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushCommand cmd type : %s, assign id : %d", cmd->getType().c_str(), cmd->getAssignID());
+		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushCommand cmd type : " + cmd->getType() + ", assign id : " + StringUtility::intToString(cmd->getAssignID()));
 		return;
 	}
 	if (cmd->isDelayCommand())
 	{
-		LOG_ERROR("cmd is a delay cmd! can not use pushCommand! assign id : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str());
+		LOG_ERROR("cmd is a delay cmd! can not use pushCommand! assign id : " + StringUtility::intToString(cmd->getAssignID()) + ", info : " + cmd->showDebugInfo());
 		return;
 	}
 	cmd->setReceiver(cmdReceiver);
 	if (cmd->getShowDebugInfo())
 	{
-		LOG_INFO("CommandSystem : %d, %s, receiver : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str());
+		LOG_INFO("CommandSystem : " + StringUtility::intToString(cmd->getAssignID()) + ", " + cmd->showDebugInfo() + ", receiver : " + cmdReceiver->getName());
 	}
 	cmdReceiver->receiveCommand(cmd);
 
@@ -137,23 +138,23 @@ void txCommandSystem::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdRec
 	if (cmd == NULL)
 	{
 		std::string receiverName = (cmdReceiver != NULL) ? cmdReceiver->getName() : EMPTY_STRING;
-		LOG_ERROR("cmd is null! receiver : %s", receiverName.c_str());
+		LOG_ERROR("cmd is null! receiver : " + receiverName);
 		return;
 	}
 	if (cmdReceiver == NULL)
 	{
 		std::string cmdName = (cmd != NULL) ? cmd->getType() : EMPTY_STRING;
-		LOG_ERROR("receiver is null! cmd : %s", cmdName.c_str());
+		LOG_ERROR("receiver is null! cmd : " + cmdName);
 		return;
 	}
 	if (!cmd->isValid())
 	{
-		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushDelayCommand cmd type : %s, assign id : %d", cmd->getType().c_str(), cmd->getAssignID());
+		LOG_ERROR("cmd is invalid! make sure create cmd use CommandSystem.newCmd! pushDelayCommand cmd type : " + cmd->getType() + ", assign id : " + StringUtility::intToString(cmd->getAssignID()));
 		return;
 	}
 	if (!cmd->isDelayCommand())
 	{
-		LOG_ERROR("cmd is not a delay command, Command : %d, info : %s", cmd->getAssignID(), cmd->showDebugInfo().c_str());
+		LOG_ERROR("cmd is not a delay command, Command : " + StringUtility::intToString(cmd->getAssignID()) + ", info : " + cmd->showDebugInfo());
 		return;
 	}
 	if (delayExecute < 0.0f)
@@ -162,7 +163,7 @@ void txCommandSystem::pushDelayCommand(txCommand* cmd, txCommandReceiver* cmdRec
 	}
 	if (cmd->getShowDebugInfo())
 	{
-		LOG_INFO("CommandSystem : delay cmd : %d, %.2f, info : %s, receiver : %s", cmd->getAssignID(), delayExecute, cmd->showDebugInfo().c_str(), cmdReceiver->getName().c_str());
+		LOG_INFO("CommandSystem : delay cmd : " + StringUtility::intToString(cmd->getAssignID()) + ", " + StringUtility::floatToString(delayExecute, 2) + ", info : " + cmd->showDebugInfo() + ", receiver : " + cmdReceiver->getName());
 	}
 	DelayCommand* delayCommand = TRACE_NEW(DelayCommand, delayCommand, delayExecute, cmd, cmdReceiver);
 

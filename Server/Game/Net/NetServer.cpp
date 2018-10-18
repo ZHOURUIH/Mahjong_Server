@@ -15,18 +15,25 @@ PacketFactoryManager* NetServer::mPacketFactoryManager = NULL;
 NetServer::NetServer(const std::string& name)
 :FrameComponent(name)
 {
-	mReceiveThread = TRACE_NEW(CustomThread, mReceiveThread, "ReceiveSocket");
-	mAcceptThread = TRACE_NEW(CustomThread, mAcceptThread, "AcceptSocket");
+	TRACE_NEW(CustomThread, mReceiveThread, "ReceiveSocket");
+	TRACE_NEW(CustomThread, mAcceptThread, "AcceptSocket");
+	TRACE_NEW(CustomThread, mParseThread, "ParseSocket");
 	mSocket = INVALID_SOCKET;
 	mPort = 0;
 	mMaxSocket = 0;
 	mServerHeartBeatTimeout = 10.0f;
 	mCurServerHeartBeatTime = 0.0f;
-	mPacketFactoryManager = TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
+	TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
+	TRACE_NEW_ARRAY(char, SERVER_RECV_BUFFER_SIZE, mRecvBuffer);
 }
 
 void NetServer::destroy()
 {
+	// 先停止所有子线程
+	TRACE_DELETE(mReceiveThread);
+	TRACE_DELETE(mAcceptThread);
+	TRACE_DELETE(mParseThread);
+	// 销毁所有客户端
 	auto iterClient = mClientList.begin();
 	auto iterClientEnd = mClientList.end();
 	FOR(mClientList, ; iterClient != iterClientEnd; ++iterClient)
@@ -36,12 +43,11 @@ void NetServer::destroy()
 	END(mClientList);
 	mClientList.clear();
 	TRACE_DELETE(mPacketFactoryManager);
-	TRACE_DELETE(mReceiveThread);
-	TRACE_DELETE(mAcceptThread);
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	WSACleanup();
 #endif
 	CLOSE_SOCKET(mSocket);
+	TRACE_DELETE_ARRAY(mRecvBuffer);
 }
 
 void NetServer::init()
@@ -99,6 +105,8 @@ void NetServer::init()
 	}
 	mReceiveThread->start(receiveSendSocket, this);
 	mAcceptThread->start(acceptSocket, this);
+	mParseThread->start(parseSocket, this, 1, 1);
+	mParseThread->setBackground(false);
 }
 
 bool NetServer::acceptSocket(void* args)
@@ -114,7 +122,7 @@ bool NetServer::acceptSocket(void* args)
 	TX_SOCKET sClient = accept(netManager->mSocket, (struct sockaddr*)&addr, &nLen);
 	if (sClient == (TX_SOCKET)INVALID_SOCKET)
 	{
-		LOG_ERROR("error : accept failed!");
+		LOG_ERROR("accept failed!");
 		return true;
 	}
 	// 获得客户端IP,然后通知已经接收到一个客户端的连接
@@ -143,9 +151,11 @@ bool NetServer::receiveSendSocket(void* args)
 	// 有客户端连接到了服务器,才接收数据和发送数据
 	if (netManager->getClientCount() > 0)
 	{
+		LOCK(netManager->mClientRecvLock);
 		netManager->processRecv();
 		// 处理发送socket消息
 		netManager->processSend();
+		UNLOCK(netManager->mClientRecvLock);
 	}
 	return true;
 }
@@ -155,13 +165,16 @@ void NetServer::processSend()
 	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdwrite;
-	// 等待发送列表解锁,然后锁定发送列表
-	LOCK(mClientLock);
+	// 复制一份列表,避免容器出现锁定报错
+	txMap<CLIENT_GUID, NetClient*> tempList;
+	LOCK(mClientListLock);
+	mClientList.clone(tempList);
+	UNLOCK(mClientListLock);
 	try
 	{
-		auto iterClient = mClientList.begin();
-		auto iterClientEnd = mClientList.end();
-		FOR(mClientList, ; iterClient != iterClientEnd;)
+		auto iterClient = tempList.begin();
+		auto iterClientEnd = tempList.end();
+		for(; iterClient != iterClientEnd;)
 		{
 			FD_ZERO(&fdwrite);
 			selectedClient.clear();
@@ -181,14 +194,10 @@ void NetServer::processSend()
 			if (selectRet > 0)
 			{
 				int selectedClientCount = selectedClient.size();
-				FOR(selectedClient, int i = 0; i < selectedClientCount; ++i)
+				for(int i = 0; i < selectedClientCount; ++i)
 				{
 					if (FD_ISSET(selectedClient[i]->getSocket(), &fdwrite))
 					{
-						if (mOutputLog)
-						{
-							LOG_INFO("send to client : %s", selectedClient[i]->getIP());
-						}
 						int sendedCount = send(selectedClient[i]->getSocket(), selectedClient[i]->getSendData(), selectedClient[i]->getSendDataCount(), 0);
 						// 检查是否send有错误
 						if (sendedCount < 0)
@@ -208,33 +217,30 @@ void NetServer::processSend()
 						}
 					}
 				}
-				END(selectedClient);
 			}
 		}
-		END(mClientList);
 	}
 	catch (std::exception e)
 	{
-		LOG_ERROR("exception : %s", e.what());
+		LOG_ERROR("exception : " + std::string(e.what()));
 	}
-	// 解锁发送列表
-	UNLOCK(mClientLock);
 }
 
 void NetServer::processRecv()
 {
-	static char buff[CLIENT_BUFFER_SIZE];
-	memset(buff, 0, CLIENT_BUFFER_SIZE);
 	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
-	// 等待解锁accept列表的读写,并锁定accept列表
-	LOCK(mClientLock);
+	// 复制一份列表,避免容器出现锁定报错
+	txMap<CLIENT_GUID, NetClient*> tempList;
+	LOCK(mClientListLock);
+	mClientList.clone(tempList);
+	UNLOCK(mClientListLock);
 	try
 	{
-		auto iterClient = mClientList.begin();
-		auto iterClientEnd = mClientList.end();
-		FOR(mClientList, ; iterClient != iterClientEnd;)
+		auto iterClient = tempList.begin();
+		auto iterClientEnd = tempList.end();
+		for(; iterClient != iterClientEnd;)
 		{
 			FD_ZERO(&fdread);
 			selectedClient.clear();
@@ -249,11 +255,11 @@ void NetServer::processRecv()
 			if (selectRet > 0)
 			{
 				int selectedClientCount = selectedClient.size();
-				FOR(selectedClient, int i = 0; i < selectedClientCount; ++i)
+				for(int i = 0; i < selectedClientCount; ++i)
 				{
 					if (!selectedClient[i]->isDeadClient() && FD_ISSET(selectedClient[i]->getSocket(), &fdread))
 					{
-						int nRecv = recv(selectedClient[i]->getSocket(), buff, CLIENT_BUFFER_SIZE, 0);
+						int nRecv = recv(selectedClient[i]->getSocket(), mRecvBuffer, SERVER_RECV_BUFFER_SIZE, 0);
 						if (nRecv <= 0)
 						{
 							if (errno == EPIPE)
@@ -269,34 +275,48 @@ void NetServer::processRecv()
 						}
 						else
 						{
-							selectedClient[i]->notifyRecvData(buff, nRecv);
+							selectedClient[i]->notifyRecvData(mRecvBuffer, nRecv);
 						}
 					}
 				}
-				END(selectedClient);
 			}
 		}
-		END(mClientList);
 	}
 	catch (std::exception e)
 	{
-		LOG_ERROR("exception : %s", e.what());
+		LOG_ERROR("exception : " + std::string(e.what()));
 	}
-	// 解锁accept列表
-	UNLOCK(mClientLock);
+}
+
+bool NetServer::parseSocket(void* args)
+{
+	NetServer* netManager = (NetServer*)(args);
+
+	// 客户端解析各自的数据
+	LOCK(netManager->mClientParseLock);
+	// 复制一份列表,避免容器出现锁定报错
+	txMap<CLIENT_GUID, NetClient*> tempList;
+	LOCK(netManager->mClientListLock);
+	netManager->mClientList.clone(tempList);
+	UNLOCK(netManager->mClientListLock);
+	auto iterClient = tempList.begin();
+	auto iterClientEnd = tempList.end();
+	for(; iterClient != iterClientEnd; ++iterClient)
+	{
+		iterClient->second->parseData();
+	}
+	UNLOCK(netManager->mClientParseLock);
+	return true;
 }
 
 void NetServer::update(float elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
-	txMap<CLIENT_GUID, NetClient*> tempClientList;
-	LOCK(mClientLock);
-	tempClientList = mClientList;
-	UNLOCK(mClientLock);
 	txVector<CLIENT_GUID> logoutClientList;
-	auto iterClient = tempClientList.begin();
-	auto iterClientEnd = tempClientList.end();
-	FOR(tempClientList, ; iterClient != iterClientEnd; ++iterClient)
+	LOCK(mClientListLock);
+	auto iterClient = mClientList.begin();
+	auto iterClientEnd = mClientList.end();
+	FOR(mClientList, ; iterClient != iterClientEnd; ++iterClient)
 	{
 		iterClient->second->update(elapsedTime);
 		// 将已经死亡的客户端放入列表
@@ -305,35 +325,39 @@ void NetServer::update(float elapsedTime)
 			logoutClientList.push_back(iterClient->first);
 		}
 	}
-	END(tempClientList);
+	END(mClientList);
+	UNLOCK(mClientListLock);
 
+	// 断开死亡客户端,需要等待所有线程的当前帧都执行完毕,否则在此处直接销毁客户端会导致其他线程报错
 	int logoutCount = logoutClientList.size();
-	FOR(logoutClientList, int i = 0; i < logoutCount; ++i)
+	for(int i = 0; i < logoutCount; ++i)
 	{
 		disconnectSocket(logoutClientList[i]);
 	}
-	END(logoutClientList);
+
+	// 服务器心跳
 	mCurServerHeartBeatTime += elapsedTime;
 	if (mCurServerHeartBeatTime >= mServerHeartBeatTimeout)
 	{
 		mCurServerHeartBeatTime -= mServerHeartBeatTimeout;
-		LOG_INFO("服务器心跳 : %d", mServerHeartBeat++);
+		LOG_INFO("服务器心跳 : " + StringUtility::intToString(mServerHeartBeat++));
 	}
 }
 
 CLIENT_GUID NetServer::notifyAcceptClient(TX_SOCKET socket, const char* ip)
 {
-	// 等待解锁accept列表的读写,并锁定accept列表
 	CLIENT_GUID clientGUID = 0;
-	LOCK(mClientLock);
+	LOCK(mClientParseLock);
+	LOCK(mClientRecvLock);
 	clientGUID = generateSocketGUID();
 	if (!mClientList.contains(clientGUID))
 	{
 		NetClient* client = TRACE_NEW(NetClient, client, clientGUID, socket, ip);
+		client->init();
 		mClientList.insert(clientGUID, client);
 		if (mOutputLog)
 		{
-			LOG_INFO("client : %s connect to server! connect count : %d", ip, (int)mClientList.size());
+			LOG_INFO("client : " + std::string(ip) + " connect to server! connect count : " + StringUtility::intToString(mClientList.size()));
 		}
 		if (socket > mMaxSocket)
 		{
@@ -344,36 +368,35 @@ CLIENT_GUID NetServer::notifyAcceptClient(TX_SOCKET socket, const char* ip)
 	{
 		LOG_ERROR("error : client insert to accept list failed!");
 	}
-	// 解锁accept列表
-	UNLOCK(mClientLock);
+	UNLOCK(mClientRecvLock);
+	UNLOCK(mClientParseLock);
 	return clientGUID;
 }
 
 void NetServer::disconnectSocket(CLIENT_GUID client)
 {
-	// 等待解锁accept列表的读写,并锁定accept列表,将该客户端从接收列表中移除,并且断开该客户端
-	LOCK(mClientLock);
+	LOCK(mClientParseLock);
+	LOCK(mClientRecvLock);
 	auto iterClient = mClientList.find(client);
 	if (iterClient != mClientList.end())
 	{
-		CHAR_GUID guid = iterClient->second->getCharGUID();
 		TRACE_DELETE(iterClient->second);
 		mClientList.erase(iterClient);
 		if (mOutputLog)
 		{
-			LOG_INFO("客户端断开连接, GUID : %d, 剩余连接数 : %d", (int)guid, getClientCount());
+			LOG_INFO("客户端断开连接, 剩余连接数 : " + StringUtility::intToString(getClientCount()));
 		}
 	}
-	// 解锁accept列表
-	UNLOCK(mClientLock);
+	UNLOCK(mClientParseLock);
+	UNLOCK(mClientRecvLock);
 }
 
 NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 {
 	NetClient* client = NULL;
-	LOCK(mClientLock);
+	LOCK(mClientListLock);
 	client = mClientList.tryGet(clientGUID, NULL);
-	UNLOCK(mClientLock);
+	UNLOCK(mClientListLock);
 	return client;
 }
 
@@ -409,7 +432,7 @@ Packet* NetServer::createPacket(PACKET_TYPE type)
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(type);
 	if (factory == NULL)
 	{
-		LOG_ERROR("error : can not find packet factory : %d", (int)type);
+		LOG_ERROR("can not find packet factory : " + StringUtility::intToString(type));
 		return NULL;
 	}
 	return factory->createPacket();
@@ -424,7 +447,7 @@ void NetServer::destroyPacket(Packet* packet)
 	PacketFactoryBase* factory = mPacketFactoryManager->getFactory(packet->getPacketType());
 	if (factory == NULL)
 	{
-		LOG_ERROR("error : can not find packet factory : %d", (int)packet->getPacketType());
+		LOG_ERROR("can not find packet factory : " + StringUtility::intToString(packet->getPacketType()));
 	}
 	factory->destroyPacket(packet);
 }
@@ -432,9 +455,17 @@ void NetServer::destroyPacket(Packet* packet)
 #if RUN_PLATFORM == PLATFORM_LINUX
 void NetServer::signalProcess(int signalNum)
 {
-	if(signalNum == SIGPIPE)
+	if (signalNum == SIGPIPE)
 	{
-		LOG_INFO("process signal : SINGPIPE");
+		LOG_INFO("process signal : SIGPIPE");
+	}
+	else if (signalNum == SIGBUS)
+	{
+		LOG_INFO("process signal : SIGBUS");
+	}
+	else if (signalNum == SIGSEGV)
+	{
+		LOG_INFO("process signal : SIGSEGV");
 	}
 }
 #endif

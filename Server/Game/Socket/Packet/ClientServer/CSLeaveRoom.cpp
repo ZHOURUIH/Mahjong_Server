@@ -10,8 +10,8 @@
 
 void CSLeaveRoom::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
 	CommandRoomPlayerLeave* cmd = NEW_CMD_INFO(cmd);
-	pushCommand(cmd, mCharacterManager->getCharacter(mClient->getCharGUID()));
+	pushCommand(cmd, character);
 }

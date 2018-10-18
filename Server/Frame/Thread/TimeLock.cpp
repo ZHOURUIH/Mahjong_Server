@@ -4,7 +4,7 @@
 TimeLock::TimeLock(long frameTimeMS, long forceSleep)
 {
 	mFrameTimeMS = frameTimeMS;
-	mForceSleep = 5;
+	mForceSleep = forceSleep;
 	mLastTime = SystemUtility::getTimeMS();
 	mCurTime = mLastTime;
 }

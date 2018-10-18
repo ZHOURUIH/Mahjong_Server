@@ -10,7 +10,7 @@
 
 void CSReady::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
 	CommandRoomPlayerReady* cmd = NEW_CMD_INFO(cmd);
 	cmd->mReady = mReady;

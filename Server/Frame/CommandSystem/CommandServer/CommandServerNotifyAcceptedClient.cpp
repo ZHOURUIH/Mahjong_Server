@@ -1,4 +1,4 @@
-﻿#include "CommandHeader.h"
+﻿#include "CommandHeaderBase.h"
 #include "NetServer.h"
 
 void CommandServerNotifyAcceptedClient::execute()

@@ -13,7 +13,7 @@
 
 void CSGetStartMahjongDone::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	CommandRoomPlayerGetStartDone* cmd = NEW_CMD_INFO(cmd);
 	cmd->mPlayerGUID = character->getGUID();
 	pushCommand(cmd, mRoomManager->getRoom(character->getCharacterData()->mRoomID));

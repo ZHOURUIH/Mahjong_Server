@@ -39,7 +39,7 @@ void FileUtility::findFiles(const std::string& path, txVector<std::string>& file
 #ifdef LOAD_FROM_ASSETMANAGER
 	txVector<std::string> fileName = ASS_getFileList((char*)path.c_str());
 	int fileCount = fileName.size();
-	FOR(fileName, int i = 0; i < fileCount; ++i)
+	for(int i = 0; i < fileCount; ++i)
 	{
 		const std::string& fullName = fileName[i];
 		// 判断是否符合后缀过滤
@@ -60,7 +60,6 @@ void FileUtility::findFiles(const std::string& path, txVector<std::string>& file
 			files.push_back(fullName);
 		}
 	}
-	END(fileName);
 
 #else
 	DIR* pDir = opendir(path.c_str());
@@ -343,12 +342,12 @@ bool FileUtility::writeFile(std::string filePath, const char* buffer, int length
 	// 检查参数
 	if (length < 0 || buffer == NULL)
 	{
-		LOG_ERROR("error : file length error! can not write file! file path : %s", filePath.c_str());
+		LOG_ERROR("file length error! can not write file! file path : " + filePath);
 		return false;
 	}
 	if (length > 0 && buffer == NULL)
 	{
-		LOG_ERROR("error : buffer is NULL! can not write file! file path : %s", filePath.c_str());
+		LOG_ERROR("buffer is NULL! can not write file! file path : " + filePath);
 		return false;
 	}
 	// 检查路径
@@ -359,7 +358,7 @@ bool FileUtility::writeFile(std::string filePath, const char* buffer, int length
 		std::string dirPath = filePath.substr(0, pos);
 		if (!createFolder(dirPath))
 		{
-			LOG_ERROR("error : can not create folder, name : %s", dirPath.c_str());
+			LOG_ERROR("can not create folder, name : " + dirPath);
 			return false;
 		}
 	}
@@ -369,16 +368,16 @@ bool FileUtility::writeFile(std::string filePath, const char* buffer, int length
 
 bool FileUtility::writeFileSimple(const std::string& fileName, const char* buffer, int writeCount, bool append)
 {
-	char* accesMode = append ? "ab+" : "wb+";
+	const char* accesMode = append ? "ab+" : "wb+";
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 	FILE* pFile = NULL;
 	fopen_s(&pFile, fileName.c_str(), accesMode);
 #elif RUN_PLATFORM == PLATFORM_LINUX
-	FILE* pFile = fopen(filePath.c_str(), accesMode);
+	FILE* pFile = fopen(fileName.c_str(), accesMode);
 #endif
 	if (pFile == NULL)
 	{
-		LOG_ERROR("error : can not write file, name : %s", fileName.c_str());
+		LOG_ERROR("can not write file, name : " + fileName);
 		return false;
 	}
 	fwrite(buffer, sizeof(char), writeCount, pFile);

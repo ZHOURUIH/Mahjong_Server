@@ -18,7 +18,7 @@ public:
 	{
 		if (mCurCount != 0)
 		{
-			LOG_ERROR("error : there is character left! count : %d", mCurCount);
+			LOG_ERROR("there is character left! count : " + StringUtility::intToString(mCurCount));
 		}
 	}
 	virtual Character* createCharacter(const std::string& name) = 0;
@@ -26,12 +26,12 @@ public:
 	{
 		if (character == NULL)
 		{
-			LOG_ERROR("error : can not destroy NULL character!");
+			LOG_ERROR("can not destroy NULL character!");
 			return;
 		}
 		if (character->getType() != mType)
 		{
-			LOG_ERROR("error : destroy wrong type character! factory type : %d, character type : %d", (int)mType, (int)character->getType());
+			LOG_ERROR("destroy wrong type character! factory type : " + StringUtility::intToString(mType) + ", character type : " + StringUtility::intToString(character->getType()));
 		}
 		TRACE_DELETE(character);
 		--mCurCount;

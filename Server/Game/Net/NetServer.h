@@ -41,6 +41,7 @@ public:
 protected:
 	static bool acceptSocket(void* args);
 	static bool receiveSendSocket(void* args);
+	static bool parseSocket(void* args);
 	void processSend();
 	void processRecv();
 	CLIENT_GUID generateSocketGUID() { return mSocketGUIDSeed++; }
@@ -53,7 +54,10 @@ protected:
 	TX_SOCKET mSocket;
 	CustomThread* mAcceptThread;
 	CustomThread* mReceiveThread;
-	ThreadLock mClientLock;
+	CustomThread* mParseThread;
+	ThreadLock mClientParseLock;	// 解析线程的锁,用于判断解析线程是否还在使用客户端列表
+	ThreadLock mClientRecvLock;		// 接收线程的锁,用于判断接收线程是否还在使用客户端列表
+	ThreadLock mClientListLock;
 	txMap<CLIENT_GUID, NetClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;
@@ -62,6 +66,7 @@ protected:
 	float mServerHeartBeatTimeout;	// 服务器自身心跳间隔时间
 	float mCurServerHeartBeatTime;
 	int mServerHeartBeat;			// 服务器自身的心跳,用于判断服务器是否还在继续运行
+	char* mRecvBuffer;
 };
 
 #endif

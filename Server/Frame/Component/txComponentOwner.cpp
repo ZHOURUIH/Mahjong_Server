@@ -164,7 +164,7 @@ txComponent* txComponentOwner::createIndependentComponent(const std::string& nam
 	txComponentFactoryBase* factory = mComponentFactoryManager->getFactory(type);
 	if (factory == NULL)
 	{
-		LOG_ERROR("error : can not find component factory! type : %s", type.c_str());
+		LOG_ERROR("can not find component factory! type : " + type);
 		return NULL;
 	}
 	// 创建组件并且设置拥有者,然后初始化
@@ -181,7 +181,7 @@ txComponent* txComponentOwner::addComponent(const std::string& name, const std::
 	// 不能创建重名的组件
 	if (mAllComponentList.contains(name))
 	{
-		LOG_ERROR("error : there is component named : %s in the list", name.c_str());
+		LOG_ERROR("there is component named : " + name + " in the list");
 		return NULL;
 	}
 	txComponent* component = createIndependentComponent(name, type, false);

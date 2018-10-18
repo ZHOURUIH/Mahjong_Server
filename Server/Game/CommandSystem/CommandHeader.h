@@ -1,8 +1,7 @@
 ﻿#ifndef _COMMAND_HEADER_H_
 #define _COMMAND_HEADER_H_
 
-#include "txCommandSystem.h"
-#include "txCommand.h"
+#include "CommandHeaderBase.h"
 
 #include "CommandCharacterManagerPlayerLogin.h"
 #include "CommandCharacterManagerCreateCharacter.h"
@@ -59,7 +58,5 @@
 #include "CommandRoomPlayerReady.h"
 
 #include "CommandMatchSystemRequestMatch.h"
-
-#include "CommandServerNotifyAcceptedClient.h"
 
 #endif

@@ -11,7 +11,7 @@
 
 void CSConfirmAction::execute()
 {
-	Character* character = mCharacterManager->getCharacter(mClient->getCharGUID());
+	Character* character = mCharacterManager->getCharacter(mClient->getCharacterGUID());
 	Room* room = mRoomManager->getRoom(character->getCharacterData()->mRoomID);
 	CommandRoomConfirmAction* cmd = NEW_CMD_INFO(cmd);
 	cmd->mPlayerGUID = character->getGUID();
