@@ -2,6 +2,7 @@
 #define _TX_MEMORY_CHECK_H_
 
 #include "ThreadLock.h"
+#include "ServerDefine.h"
 
 class txMemoryCheck
 {

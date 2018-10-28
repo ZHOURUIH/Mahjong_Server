@@ -23,6 +23,7 @@ NetServer::NetServer(const std::string& name)
 	mMaxSocket = 0;
 	mServerHeartBeatTimeout = 10.0f;
 	mCurServerHeartBeatTime = 0.0f;
+	mServerHeartBeat = 0;
 	TRACE_NEW(PacketFactoryManager, mPacketFactoryManager);
 	TRACE_NEW_ARRAY(char, SERVER_RECV_BUFFER_SIZE, mRecvBuffer);
 }
@@ -54,6 +55,8 @@ void NetServer::init()
 {
 #if RUN_PLATFORM == PLATFORM_LINUX
 	signal(SIGPIPE, signalProcess);
+	signal(SIGBUS, signalProcess);
+	signal(SIGSEGV, signalProcess);
 #endif
 	mPort = (int)ServerConfig::getFloatParam(SDF_SOCKET_PORT);
 	mHeartBeatTimeOut = ServerConfig::getFloatParam(SDF_HEART_BEAT_TIME_OUT);
@@ -103,9 +106,9 @@ void NetServer::init()
 		LOG_ERROR("listen failed!");
 		return;
 	}
-	mReceiveThread->start(receiveSendSocket, this);
+	mReceiveThread->start(receiveSendSocket, this, 10);
 	mAcceptThread->start(acceptSocket, this);
-	mParseThread->start(parseSocket, this, 1, 1);
+	mParseThread->start(parseSocket, this, 1);
 	mParseThread->setBackground(false);
 }
 
@@ -165,13 +168,11 @@ void NetServer::processSend()
 	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdwrite;
-	// 复制一份列表,避免容器出现锁定报错
-	txMap<CLIENT_GUID, NetClient*> tempList;
-	LOCK(mClientListLock);
-	mClientList.clone(tempList);
-	UNLOCK(mClientListLock);
 	try
 	{
+		// 克隆一份客户端列表,避免多线程访问容器可能出现的错误
+		txMap<CLIENT_GUID, NetClient*> tempList;
+		mClientList.clone(tempList);
 		auto iterClient = tempList.begin();
 		auto iterClientEnd = tempList.end();
 		for(; iterClient != iterClientEnd;)
@@ -231,13 +232,11 @@ void NetServer::processRecv()
 	txVector<NetClient*> selectedClient;
 	timeval tv = { 0, 0 };	// select查看后立即返回
 	fd_set fdread;
-	// 复制一份列表,避免容器出现锁定报错
-	txMap<CLIENT_GUID, NetClient*> tempList;
-	LOCK(mClientListLock);
-	mClientList.clone(tempList);
-	UNLOCK(mClientListLock);
 	try
 	{
+		// 克隆一份客户端列表,避免多线程访问容器可能出现的错误
+		txMap<CLIENT_GUID, NetClient*> tempList;
+		mClientList.clone(tempList);
 		auto iterClient = tempList.begin();
 		auto iterClientEnd = tempList.end();
 		for(; iterClient != iterClientEnd;)
@@ -291,14 +290,11 @@ void NetServer::processRecv()
 bool NetServer::parseSocket(void* args)
 {
 	NetServer* netManager = (NetServer*)(args);
-
 	// 客户端解析各自的数据
 	LOCK(netManager->mClientParseLock);
-	// 复制一份列表,避免容器出现锁定报错
+	// 克隆一份客户端列表,避免多线程访问容器可能出现的错误
 	txMap<CLIENT_GUID, NetClient*> tempList;
-	LOCK(netManager->mClientListLock);
 	netManager->mClientList.clone(tempList);
-	UNLOCK(netManager->mClientListLock);
 	auto iterClient = tempList.begin();
 	auto iterClientEnd = tempList.end();
 	for(; iterClient != iterClientEnd; ++iterClient)
@@ -313,7 +309,6 @@ void NetServer::update(float elapsedTime)
 {
 	// 更新客户端,找出是否有客户端需要断开连接
 	txVector<CLIENT_GUID> logoutClientList;
-	LOCK(mClientListLock);
 	auto iterClient = mClientList.begin();
 	auto iterClientEnd = mClientList.end();
 	FOR(mClientList, ; iterClient != iterClientEnd; ++iterClient)
@@ -326,13 +321,15 @@ void NetServer::update(float elapsedTime)
 		}
 	}
 	END(mClientList);
-	UNLOCK(mClientListLock);
 
 	// 断开死亡客户端,需要等待所有线程的当前帧都执行完毕,否则在此处直接销毁客户端会导致其他线程报错
 	int logoutCount = logoutClientList.size();
-	for(int i = 0; i < logoutCount; ++i)
+	if (logoutCount > 0)
 	{
-		disconnectSocket(logoutClientList[i]);
+		for(int i = 0; i < logoutCount; ++i)
+		{
+			disconnectSocket(logoutClientList[i]);
+		}
 	}
 
 	// 服务器心跳
@@ -393,10 +390,7 @@ void NetServer::disconnectSocket(CLIENT_GUID client)
 
 NetClient* NetServer::getClient(CLIENT_GUID clientGUID)
 {
-	NetClient* client = NULL;
-	LOCK(mClientListLock);
-	client = mClientList.tryGet(clientGUID, NULL);
-	UNLOCK(mClientListLock);
+	NetClient* client = mClientList.tryGet(clientGUID, NULL);
 	return client;
 }
 

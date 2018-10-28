@@ -57,7 +57,6 @@ protected:
 	CustomThread* mParseThread;
 	ThreadLock mClientParseLock;	// 解析线程的锁,用于判断解析线程是否还在使用客户端列表
 	ThreadLock mClientRecvLock;		// 接收线程的锁,用于判断接收线程是否还在使用客户端列表
-	ThreadLock mClientListLock;
 	txMap<CLIENT_GUID, NetClient*> mClientList;	// 客户端列表
 	static CLIENT_GUID mSocketGUIDSeed;
 	static PacketFactoryManager* mPacketFactoryManager;

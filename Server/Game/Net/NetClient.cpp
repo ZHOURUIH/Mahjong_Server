@@ -233,7 +233,7 @@ bool NetClient::sendPacketCheck(Packet* packet)
 		return false;
 	}
 	// 保存发送数据
-	short packetSize = packet->getSize();
+	int packetSize = packet->getSize();
 	int sendSize = HEADER_SIZE + packetSize;
 	// 判断临时缓冲区大小是否足够
 	if (sendSize > CLIENT_TEMP_BUFFER_SIZE)

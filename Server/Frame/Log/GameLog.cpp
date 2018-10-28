@@ -1,8 +1,9 @@
 ﻿#include "ServerDefine.h"
 #include "GameLog.h"
 #include "Utility.h"
+#include "txMemoryTrace.h"
 
-volatile std::atomic<bool> GameLog::mLog = true;
+volatile std::atomic<bool> GameLog::mLog(true);
 std::string GameLog::mLogFileName;
 std::string GameLog::mErrorFileName;
 
@@ -33,10 +34,10 @@ void GameLog::update(float elapsedTime)
 	int logCount = mLogDelayBuffer.size();
 	FOR(mLogDelayBuffer, int i = 0; i < logCount; ++i)
 	{
-		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
 		if (mLog)
 		{
-			SystemUtility::print((fullInfo).c_str());
+			std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
+			SystemUtility::print(fullInfo);
 		}
 		log(mLogDelayBuffer[i]);
 	}
@@ -49,7 +50,7 @@ void GameLog::update(float elapsedTime)
 	FOR(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
-		SystemUtility::print((fullInfo).c_str());
+		SystemUtility::print(fullInfo);
 		error(mErrorDelayBuffer[i]);
 	}
 	END(mErrorDelayBuffer);
@@ -137,12 +138,12 @@ void GameLog::errorDelay(const std::string& info)
 	UNLOCK(mErrorDelayLock);
 }
 
-void GameLog::logError(const std::string& info, bool delay)
+void GameLog::logError(const std::string& info, bool delayShow)
 {
-	if (!delay)
+	if (!delayShow)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
-		SystemUtility::print((fullInfo).c_str());
+		SystemUtility::print(fullInfo);
 		if (mGameLog != NULL)
 		{
 			mGameLog->error(fullInfo);
@@ -156,14 +157,14 @@ void GameLog::logError(const std::string& info, bool delay)
 		}
 	}
 }
-void GameLog::logInfo(const std::string& info, bool delay)
+void GameLog::logInfo(const std::string& info, bool delayShow)
 {
-	if (!delay)
+	if (!delayShow)
 	{
 		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
 		if (mLog)
 		{
-			SystemUtility::print((fullInfo).c_str());
+			SystemUtility::print(fullInfo);
 		}
 		if (mGameLog != NULL)
 		{

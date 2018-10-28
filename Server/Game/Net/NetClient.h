@@ -56,7 +56,7 @@ protected:
 	char mIP[16];				// 客户端的IP地址
 	float mHeartBeatTime;		// 客户端上一次的心跳到当前的时间,秒
 	float mConnectTime;			// 客户端连接到服务器的时间,秒
-	bool mIsDeadClient;			// 该客户端是否已经断开连接或者心跳超时
+	std::atomic<bool> mIsDeadClient;// 该客户端是否已经断开连接或者心跳超时
 	ThreadLock mSendLock;		// 发送的线程锁
 	ThreadLock mTempRecvLock;	// 接收的线程锁
 	ThreadLock mExecuteIndexLock;

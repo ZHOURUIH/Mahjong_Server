@@ -28,7 +28,6 @@ struct DelayCommand
 typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 
 #define CMD_CAST static_cast
-#define DEBUG_EMPTY "%s", ""
 #define CMD_PARAM __FILE__, __LINE__
 
 #define NEW_CMD(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, false);
@@ -38,27 +37,25 @@ typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 
 // 命令调试信息宏
 #if RUN_PLATFORM == PLATFROM_WINDOWS
-#define COMMAND_DEBUG(...)															\
+#define COMMAND_DEBUG(info)															\
 {																					\
-	char strBuf[1024];																\
-	SPRINTF(strBuf, 1024, __VA_ARGS__);												\
 	std::string cmdName = typeid(*this).name();										\
 	cmdName = cmdName.substr(strlen("class "), cmdName.length() - strlen("class "));\
-	if (strlen(strBuf) > 0)															\
+	std::string tempInfo = info;													\
+	if (tempInfo.length() > 0)														\
 	{																				\
-		cmdName += std::string(" : ") + strBuf;										\
+		cmdName += std::string(" : ") + tempInfo;									\
 	}																				\
 	return cmdName;																	\
 }
 #elif RUN_PLATFORM == PLATFORM_LINUX
-#define COMMAND_DEBUG(...)															\
+#define COMMAND_DEBUG(info)															\
 {																					\
-	char strBuf[1024];																\
-	SPRINTF(strBuf, 1024, __VA_ARGS__);												\
 	std::string cmdName = typeid(*this).name();										\
-	if (strlen(strBuf) > 0)															\
+	std::string tempInfo = info;													\
+	if (tempInfo.length() > 0)														\
 	{																				\
-		cmdName += std::string(" : ") + strBuf;										\
+		cmdName += std::string(" : ") + tempInfo;									\
 	}																				\
 	return cmdName;																	\
 }

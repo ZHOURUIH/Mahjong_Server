@@ -27,12 +27,12 @@ public:
 	static std::string mLogFileName;
 	static std::string mErrorFileName;
 	CustomThread* mLogThread;
-	txVector<std::string> mLogBuffer;
-	txVector<std::string> mErrorBuffer;
+	txVector<std::string> mLogBuffer;			// 立即显示的提示信息
+	txVector<std::string> mErrorBuffer;			// 立即显示的错误信息
 	txVector<std::string> mLogWriteBuffer;
 	txVector<std::string> mErrorWriteBuffer;
-	txVector<std::string> mLogDelayBuffer;
-	txVector<std::string> mErrorDelayBuffer;
+	txVector<std::string> mLogDelayBuffer;		// 延迟显示的提示信息
+	txVector<std::string> mErrorDelayBuffer;	// 延迟显示的错误信息
 	ThreadLock mLogBufferLock;
 	ThreadLock mErrorBufferLock;
 	ThreadLock mLogDelayLock;
