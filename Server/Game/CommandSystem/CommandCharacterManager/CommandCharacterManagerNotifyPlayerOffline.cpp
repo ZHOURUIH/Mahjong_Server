@@ -30,10 +30,11 @@ void CommandCharacterManagerNotifyPlayerOffline::execute()
 				}
 			}
 			END(playerList);
-			// 通知房间有玩家离线
-			CommandRoomNotifyPlayerOffline* cmdRoomOffline = NEW_CMD_INFO(cmdRoomOffline);
-			cmdRoomOffline->mOfflinePlayer = mPlayerID;
-			pushCommand(cmdRoomOffline, room);
+			// 通知房间有玩家离开(此处离线等同于离开房间)
+			CommandRoomPlayerLeave* cmd = NEW_CMD_INFO(cmd);
+			cmd->mPlayer = offlinePlayer;
+			cmd->mNotifyOtherPlayer = true;
+			pushCommand(cmd, room);
 		}
 		// 通知房间管理器有玩家离线
 		mMatchSystem->notifyPlayerOffline(offlinePlayer);

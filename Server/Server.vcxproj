@@ -174,7 +174,6 @@
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.cpp" />
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp" />
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.cpp" />
@@ -315,7 +314,6 @@
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerGetStartDone.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerLeave.h" />
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomPlayerReady.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.h" />
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomStartGame.h" />

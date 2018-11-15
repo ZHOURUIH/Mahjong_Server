@@ -310,9 +310,6 @@
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.cpp">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.cpp">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClCompile>
@@ -721,9 +718,6 @@
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerJoin.h">
-      <Filter>Game\CommandSystem\CommandRoom</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomNotifyPlayerOffline.h">
       <Filter>Game\CommandSystem\CommandRoom</Filter>
     </ClInclude>
     <ClInclude Include="Game\CommandSystem\CommandRoom\CommandRoomRequestDrop.h">

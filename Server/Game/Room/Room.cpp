@@ -165,7 +165,7 @@ void Room::requestMahjong(CharacterPlayer* player)
 			if (ServerUtility::isHua(mahjong))
 			{
 				// 刚摸的牌是放到末尾的,所以下标是最后一个
-				notifyAllPlayerGetHua(player, mahjong);
+				playerGetHua(player, mahjong);
 			}
 			// 不是花牌,则停止摸牌
 			else
@@ -192,7 +192,7 @@ void Room::playerConfirmAction(CharacterPlayer* player, ACTION_TYPE type)
 	auto iterWait = mWaitList.find(player);
 	if (iterWait == mWaitList.end())
 	{
-		LOG_ERROR("player has no action : name : " + player->getName() + ", action : " + StringUtility::intToString(type));
+		LOG_ERROR("player has no action : name : %s, action : %d", player->getName().c_str(), type);
 		return;
 	}
 	MahjongAction* action = NULL;
@@ -636,7 +636,7 @@ bool Room::isAllPlayerGetStartDone()
 	bool allGetStartDone = true;
 	auto iter = mPlayerList.begin();
 	auto iterEnd = mPlayerList.end();
-	FOR (mPlayerList, ; iter != iterEnd; ++iter)
+	FOR_R (mPlayerList, ; iter != iterEnd; ++iter)
 	{
 		if (!iter->second->getCharacterData()->mGetStartDone)
 		{
@@ -644,7 +644,7 @@ bool Room::isAllPlayerGetStartDone()
 			break;
 		}
 	}
-	END(mPlayerList);
+	END_R(mPlayerList);
 	return allGetStartDone;
 }
 

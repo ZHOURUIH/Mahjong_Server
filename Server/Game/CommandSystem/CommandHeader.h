@@ -50,7 +50,6 @@
 #include "CommandRoomPlayerLeave.h"
 #include "CommandRoomNotifyPlayerJoin.h"
 #include "CommandRoomStartGame.h"
-#include "CommandRoomNotifyPlayerOffline.h"
 #include "CommandRoomRequestDrop.h"
 #include "CommandRoomConfirmAction.h"
 #include "CommandRoomPlayerContinueGame.h"
