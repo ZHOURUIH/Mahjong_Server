@@ -2,7 +2,7 @@
 #include "GameLog.h"
 #include "Utility.h"
 
-txComponent::txComponent(const std::string& typeName, const std::string& name)
+txComponent::txComponent(const string& typeName, const string& name)
 :
 mComponentOwner(NULL),
 mBaseType(""),
@@ -88,13 +88,13 @@ void txComponent::lateUpdate(float elapsedTime)
 	END(mChildComponentList);
 }
 
-bool txComponent::rename(const std::string& newName)
+bool txComponent::rename(const string& newName)
 {
 	if (mName == newName)
 	{
 		return false;
 	}
-	std::string oldName = mName;
+	string oldName = mName;
 	mName = newName;
 	if (mComponentOwner != NULL)
 	{
@@ -181,7 +181,7 @@ void txComponent::detachOwnerParentComponent(bool detachOwnerOnly)
 	END(mChildComponentList);
 }
 // 建立与布局和父窗口的联系,使该窗口成为布局中的一个窗口,该窗口下的所有子窗口也会重建与布局的联系,父子关系仍然存在
-void txComponent::attachOwnerParentComponent(txComponentOwner* owner, txComponent* parent, int childPos)
+void txComponent::attachOwnerParentComponent(ComponentOwner* owner, txComponent* parent, int childPos)
 {
 	if (owner != NULL && mComponentOwner == NULL)
 	{
@@ -240,12 +240,12 @@ bool txComponent::moveChildPos(txComponent* component, int destPos)
 	return true;
 }
 
-bool txComponent::moveChildPos(const std::string& name, int destPos)
+bool txComponent::moveChildPos(const string& name, int destPos)
 {
 	return moveChildPos(getChildComponent(name), destPos);
 }
 
-void txComponent::notifyChildNameChanged(const std::string& oldName, txComponent* component)
+void txComponent::notifyChildNameChanged(const string& oldName, txComponent* component)
 {
 	// 修改全部子窗口查找列表中的名字
 	auto iterAll = mChildComponentMap.find(oldName);
@@ -259,7 +259,7 @@ void txComponent::notifyChildNameChanged(const std::string& oldName, txComponent
 		}
 		else
 		{
-			LOG_ERROR("there is a child named : " + component->mName);
+			LOG_ERROR("error : there is a child named : " + component->mName);
 		}
 	}
 }

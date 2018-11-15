@@ -7,7 +7,7 @@ template<typename T>
 class txVector : public txSTLBase
 {
 public:
-	typedef typename std::vector<T>::iterator iterator;
+	typedef typename vector<T>::iterator iterator;
 public:
 	txVector()
 	{}
@@ -81,7 +81,7 @@ public:
 	}
 	bool contains(const T& value)
 	{
-		return std::find(begin(), end(), value) != end();
+		return find(begin(), end(), value) != end();
 	}
 	void clone(txVector<T>& temp)
 	{
@@ -89,7 +89,7 @@ public:
 		temp.resetLock();
 	}
 protected:
-	std::vector<T> mVector;
+	vector<T> mVector;
 };
 
 #endif

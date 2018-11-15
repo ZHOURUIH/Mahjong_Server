@@ -5,16 +5,16 @@
 #include "CustomThread.h"
 
 txMap<void*, MemoryInfo> txMemoryTrace::mMemoryInfo;
-txMap<std::string, MemoryType> txMemoryTrace::mMemoryType;
-txSet<std::string> txMemoryTrace::mIgnoreClass;
-txSet<std::string> txMemoryTrace::mIgnoreClassKeyword;
-txSet<std::string> txMemoryTrace::mShowOnlyDetailClass;
-txSet<std::string> txMemoryTrace::mShowOnlyStatisticsClass;
+txMap<string, MemoryType> txMemoryTrace::mMemoryType;
+txSet<string> txMemoryTrace::mIgnoreClass;
+txSet<string> txMemoryTrace::mIgnoreClassKeyword;
+txSet<string> txMemoryTrace::mShowOnlyDetailClass;
+txSet<string> txMemoryTrace::mShowOnlyStatisticsClass;
 bool txMemoryTrace::mShowDetail = true;
 bool txMemoryTrace::mShowStatistics = true;
 bool txMemoryTrace::mShowTotalCount = true;
 bool txMemoryTrace::mShowAll = true;
-txMap<std::string, int> txMemoryTrace::mMemoryTypeIndex;
+txMap<string, int> txMemoryTrace::mMemoryTypeIndex;
 MemoryType txMemoryTrace::mMemoryList[MAX_COUNT];
 int txMemoryTrace::mMemoryCount = 0;
 txShareMemoryServer* txMemoryTrace::mShareMemoryServer = NULL;
@@ -22,7 +22,7 @@ ThreadLock txMemoryTrace::mInfoLock;
 bool txMemoryTrace::mWriteOrDebug = false;
 CustomThread* txMemoryTrace::mThread = NULL;
 
-txMemoryTrace::txMemoryTrace(const std::string& name)
+txMemoryTrace::txMemoryTrace(const string& name)
 	:FrameComponent(name)
 {
 	mShowDetail = true;
@@ -94,7 +94,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 			if (show)
 			{
-				LOG_INFO("size : " + StringUtility::intToString(iter->second.size) + " file : " + iter->second.file + ", line : " + StringUtility::intToString(iter->second.line) + ", class : " + iter->second.type + "\n");
+				LOG_INFO("size : " + intToString(iter->second.size) + " file : " + iter->second.file + ", line : " + intToString(iter->second.line) + ", class : " + iter->second.type + "\n");
 			}
 		}
 		END(mMemoryInfo);
@@ -102,7 +102,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 
 		if (mShowTotalCount)
 		{
-			LOG_INFO("-------------------------------------------------memory count : " + StringUtility::intToString(memoryCount) + ", total size : " + StringUtility::floatToString(memorySize / 1000.0f, 3) + "KB\n");
+			LOG_INFO("-------------------------------------------------memory count : " + intToString(memoryCount) + ", total size : " + floatToString(memorySize / 1000.0f, 3) + "KB\n");
 		}
 		// 显示统计数据
 		if (mShowStatistics)
@@ -136,7 +136,7 @@ bool txMemoryTrace::debugMemoryTrace(void* args)
 				END(mIgnoreClassKeyword);
 				if (show)
 				{
-					LOG_INFO(iterType->first + " : " + StringUtility::intToString(iterType->second.count) + "个, " + StringUtility::floatToString(iterType->second.size / 1000.0f, 3) + "KB\n");
+					LOG_INFO(iterType->first + " : " + intToString(iterType->second.count) + "个, " + floatToString(iterType->second.size / 1000.0f, 3) + "KB\n");
 				}
 			}
 			END(mMemoryType);
@@ -249,7 +249,7 @@ void txMemoryTrace::erasePtr(void* ptr)
 		{
 			break;
 		}
-		std::string type = iterTrace->second.type;
+		string type = iterTrace->second.type;
 		int size = iterTrace->second.size;
 		mMemoryInfo.erase(iterTrace);
 		// 从内存类型列表中移除

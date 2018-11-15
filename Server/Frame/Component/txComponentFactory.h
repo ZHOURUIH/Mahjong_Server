@@ -4,11 +4,12 @@
 #include "Utility.h"
 #include "txComponent.h"
 #include "GameLog.h"
+#include "FrameBase.h"
 
-class txComponentFactoryBase
+class txComponentFactoryBase : public FrameBase
 {
 public:
-	txComponentFactoryBase(const std::string& type)
+	txComponentFactoryBase(const string& type)
 		:
 		mType(type),
 		mCount(0),
@@ -18,12 +19,12 @@ public:
 	{
 		if (mCount != 0)
 		{
-			LOG_ERROR("there are components left! count : " + StringUtility::intToString(mCount) + ", type : " + mType);
+			LOG_ERROR("there are components left! count : " + intToString(mCount) + ", type : " + mType);
 		}
 	}
-	virtual txComponent* createComponent(const std::string& name) = 0;
+	virtual txComponent* createComponent(const string& name) = 0;
 	template <typename T>
-	static txComponentFactoryBase* createFactory(const std::string& type)
+	static txComponentFactoryBase* createFactory(const string& type)
 	{
 		T* newFacotry = TRACE_NEW(T, newFacotry, type);
 		return newFacotry;
@@ -42,13 +43,13 @@ public:
 		TRACE_DELETE(component);
 		--mCount;
 	}
-	const std::string& getType() { return mType; }
-	std::string createUniqueName()
+	const string& getType() { return mType; }
+	string createUniqueName()
 	{
-		return mType + StringUtility::intToString(mNameCount++);
+		return mType + intToString(mNameCount++);
 	}
 protected:
-	std::string mType;
+	string mType;
 	int mCount;
 	int mNameCount;	// 用于生成唯一名字
 };
@@ -57,11 +58,11 @@ template<class T>
 class txComponentFactory : public txComponentFactoryBase
 {
 public:
-	txComponentFactory(const std::string& type)
+	txComponentFactory(const string& type)
 	:
 	txComponentFactoryBase(type)
 	{}
-	txComponent* createComponent(const std::string& name)
+	txComponent* createComponent(const string& name)
 	{
 		T* newComponent = NULL;
 		if (name == EMPTY_STRING)

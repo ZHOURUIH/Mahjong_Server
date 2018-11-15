@@ -36,7 +36,7 @@ void MathUtility::checkInt(float& value, float precision)
 	else if (value < 0.0f)
 	{
 		// 如果原值减去整数值的结果的绝对值小于0.5f,则表示原值可能接近于整数值
-		if (std::abs(value - (float)intValue) < 0.5f)
+		if (abs(value - (float)intValue) < 0.5f)
 		{
 			if (isFloatZero(value - intValue, precision))
 			{
@@ -70,25 +70,18 @@ int MathUtility::getGreaterPowerValue(int value, int pow)
 
 int MathUtility::getForwardInt(float value)
 {
+	int intValue = (int)(value);
 	if (value >= 0.0f)
-	{
-		int intValue = (int)(value);
+	{	
 		if (value - intValue > 0.0f)
 		{
-			return intValue + 1;
-		}
-		else
-		{
-			return (int)value;
+			++intValue;
 		}
 	}
-	else
-	{
-		return (int)value;
-	}
+	return intValue;
 }
 
-bool MathUtility::replaceKeywordAndCalculate(std::string& str, const std::string& keyword, int replaceValue, bool floatOrInt)
+bool MathUtility::replaceKeywordAndCalculate(string& str, const string& keyword, int replaceValue, bool floatOrInt)
 {
 	// 如果最后的表达式中存在i,则需要把i替换为i具体的值,然后计算出最后的表达式的值
 	bool replaced = false;
@@ -96,35 +89,35 @@ bool MathUtility::replaceKeywordAndCalculate(std::string& str, const std::string
 	while ((iPos = str.find_first_of(keyword)) != -1)
 	{
 		replaced = true;
-		str = StringUtility::strReplace(str, iPos, iPos + keyword.length(), StringUtility::intToString(replaceValue));
+		str = strReplace(str, iPos, iPos + keyword.length(), intToString(replaceValue));
 	}
 	if (floatOrInt)
 	{
-		str = StringUtility::floatToString(calculateFloat(str), 4);
+		str = floatToString(calculateFloat(str), 4);
 	}
 	else
 	{
-		str = StringUtility::intToString(calculateInt(str));
+		str = intToString(calculateInt(str));
 	}
 	return replaced;
 }
 
-bool MathUtility::replaceStringKeyword(std::string& str, const std::string& keyword, int keyValue, bool floatOrInt)
+bool MathUtility::replaceStringKeyword(string& str, const string& keyword, int keyValue, bool floatOrInt)
 {
 	bool replaced = false;
 	int expressionBegin = -1;
 	int expressionEnd = -1;
 	// 倒序寻找
-	while (StringUtility::findSubstr(str, std::string("\\("), true, &expressionBegin, 0, false))
+	while (findSubstr(str, string("\\("), true, &expressionBegin, 0, false))
 	{
 		replaced = true;
 		// 找到匹配的)
-		StringUtility::findSubstr(str, std::string(")"), true, &expressionEnd, 0, false);
+		findSubstr(str, string(")"), true, &expressionEnd, 0, false);
 		// expressionBegin + 1 去掉 /
-		std::string calculateValue = str.substr(expressionBegin + 1, expressionEnd - expressionBegin + 1);
+		string calculateValue = str.substr(expressionBegin + 1, expressionEnd - expressionBegin + 1);
 		replaceKeywordAndCalculate(calculateValue, keyword, keyValue, floatOrInt);
 		// 替换掉最后一个\\()之间的内容
-		str = StringUtility::strReplace(str, expressionBegin, expressionEnd + 1, calculateValue);
+		str = strReplace(str, expressionBegin, expressionEnd + 1, calculateValue);
 	}
 	return replaced;
 }
@@ -140,12 +133,12 @@ float MathUtility::powerFloat(float f, int p)
 	return ret;
 }
 
-float MathUtility::calculateFloat(std::string str)
+float MathUtility::calculateFloat(string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	StringUtility::checkString(str, "0123456789.+-*/()");
+	checkString(str, "0123456789.+-*/()");
 	// 判断左右括号数量是否相等
-	if (StringUtility::getCharCount(str, '(') != StringUtility::getCharCount(str, ')'))
+	if (getCharCount(str, '(') != getCharCount(str, ')'))
 	{
 		return 0;
 	}
@@ -154,10 +147,10 @@ float MathUtility::calculateFloat(std::string str)
 	while (true)
 	{
 		// 先判断有没有括号，如果有括号就先算括号里的,如果没有就退出while循环
-		if (str.find_first_of("(") != std::string::npos || str.find_first_of(")") != std::string::npos)
+		if (str.find_first_of("(") != string::npos || str.find_first_of(")") != string::npos)
 		{
 			int curpos = str.find_last_of("(");
-			std::string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);
+			string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);
 			strInBracket = strInBracket.substr(0, strInBracket.find_first_of(")"));
 			float ret = calculateFloat(strInBracket);
 			// 如果括号中的计算结果是负数,则标记为负数
@@ -168,8 +161,8 @@ float MathUtility::calculateFloat(std::string str)
 				isMinus = true;
 			}
 			// 将括号中的计算结果替换原来的表达式,包括括号也一起替换
-			std::string floatStr = StringUtility::floatToString(ret, 4);
-			str = StringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, floatStr);
+			string floatStr = floatToString(ret, 4);
+			str = strReplace(str, curpos, curpos + strInBracket.length() + 2, floatStr);
 			if (isMinus)
 			{
 				// 如果括号中计算出来是负数,则将负号提取出来,将左边的第一个加减号改为相反的符号
@@ -193,7 +186,7 @@ float MathUtility::calculateFloat(std::string str)
 						}
 						else
 						{
-							str = StringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
+							str = strReplace(str, i, i + 1, EMPTY_STRING);
 						}
 						changeMark = true;
 						break;
@@ -222,8 +215,8 @@ float MathUtility::calculateFloat(std::string str)
 		// 遍历到了最后一个字符,则直接把最后一个数字放入列表,然后退出循环
 		if (i == strLen - 1)
 		{
-			std::string num = str.substr(beginpos, strLen - beginpos);
-			numbers.push_back(StringUtility::stringToFloat(num));
+			string num = str.substr(beginpos, strLen - beginpos);
+			numbers.push_back(stringToFloat(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -231,8 +224,8 @@ float MathUtility::calculateFloat(std::string str)
 		{
 			if (i != 0)
 			{
-				std::string num = str.substr(beginpos, i - beginpos);
-				numbers.push_back(StringUtility::stringToFloat(num));
+				string num = str.substr(beginpos, i - beginpos);
+				numbers.push_back(stringToFloat(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else
@@ -333,12 +326,12 @@ float MathUtility::calculateFloat(std::string str)
 	}
 }
 
-int MathUtility::calculateInt(std::string str)
+int MathUtility::calculateInt(string str)
 {
 	// 判断字符串是否含有非法字符,也就是除数字,小数点,运算符以外的字符
-	StringUtility::checkString(str, "0123456789+-*/%()");
+	checkString(str, "0123456789+-*/%()");
 	// 判断左右括号数量是否相等
-	if (StringUtility::getCharCount(str, '(') != StringUtility::getCharCount(str, ')'))
+	if (getCharCount(str, '(') != getCharCount(str, ')'))
 	{
 		return 0;
 	}
@@ -347,10 +340,10 @@ int MathUtility::calculateInt(std::string str)
 	while (true)
 	{
 		// 先判断有没有括号，如果有括号就先算括号里的,如果没有就退出while循环
-		if (str.find_first_of("(") != std::string::npos || str.find_first_of(")") != std::string::npos)
+		if (str.find_first_of("(") != string::npos || str.find_first_of(")") != string::npos)
 		{
 			int curpos = str.find_last_of("(");
-			std::string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);
+			string strInBracket = str.substr(curpos + 1, str.length() - curpos - 1);
 			strInBracket = strInBracket.substr(0, strInBracket.find_first_of(")"));
 			int ret = calculateInt(strInBracket);
 			// 如果括号中的计算结果是负数,则标记为负数
@@ -361,8 +354,8 @@ int MathUtility::calculateInt(std::string str)
 				isMinus = true;
 			}
 			// 将括号中的计算结果替换原来的表达式,包括括号也一起替换
-			std::string intStr = StringUtility::intToString(ret, 4);
-			str = StringUtility::strReplace(str, curpos, curpos + strInBracket.length() + 2, intStr);
+			string intStr = intToString(ret, 4);
+			str = strReplace(str, curpos, curpos + strInBracket.length() + 2, intStr);
 			if (isMinus)
 			{
 				// 如果括号中计算出来是负数,则将负号提取出来,将左边的第一个加减号改为相反的符号
@@ -386,7 +379,7 @@ int MathUtility::calculateInt(std::string str)
 						}
 						else
 						{
-							str = StringUtility::strReplace(str, i, i + 1, EMPTY_STRING);
+							str = strReplace(str, i, i + 1, EMPTY_STRING);
 						}
 						changeMark = true;
 						break;
@@ -415,8 +408,8 @@ int MathUtility::calculateInt(std::string str)
 		// 遍历到了最后一个字符,则直接把最后一个数字放入列表,然后退出循环
 		if (i == strLen - 1)
 		{
-			std::string num = str.substr(beginpos, strLen - beginpos);
-			numbers.push_back(StringUtility::stringToInt(num));
+			string num = str.substr(beginpos, strLen - beginpos);
+			numbers.push_back(stringToInt(num));
 			break;
 		}
 		// 找到第一个运算符
@@ -424,8 +417,8 @@ int MathUtility::calculateInt(std::string str)
 		{
 			if (i != 0)
 			{
-				std::string num = str.substr(beginpos, i - beginpos);
-				numbers.push_back(StringUtility::stringToInt(num));
+				string num = str.substr(beginpos, i - beginpos);
+				numbers.push_back(stringToInt(num));
 			}
 			// 如果在表达式的开始就发现了运算符,则表示第一个数是负数,那就处理为0减去这个数的绝对值
 			else

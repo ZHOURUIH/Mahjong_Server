@@ -2,38 +2,18 @@
 #define _SERVER_FRAMEWORK_H_
 
 #include "txSingleton.h"
-#include "ServerConfig.h"
-#include "CharacterManager.h"
-#include "txCommandSystem.h"
-#include "NetServer.h"
-#include "RoomManager.h"
-#include "MySQLDataBase.h"
-#include "txComponentFactoryManager.h"
-#include "MahjongRobotManager.h"
-#include "DataBase.h"
-#include "GameLog.h"
-#include "DebugSystem.h"
-#include "ServerUtility.h"
-#include "MatchSystem.h"
-
-#define GET_SYSTEM(type) getSystem<type>(TOSTRING(type))
-
-#define REGISTE_FRAME_COMPONENT(type)								\
-	{type* component = TRACE_NEW(type, component, TOSTRING(type));	\
-	mFrameComponentVector.push_back(component);						\
-	mFrameComponentMap.insert(TOSTRING(type), component);}
+#include "ThreadLock.h"
 
 class FrameComponent;
-class txShareMemoryServer;
 class ServerFramework : public txSingleton<ServerFramework>
 {
 public:
 	ServerFramework();
 	virtual ~ServerFramework();
-	bool init();
-	void update(float elapsedTime);
+	virtual bool init();
+	virtual void update(float elapsedTime);
 	void destroy();
-	void launch();
+	virtual void launch();
 	bool isStop() { return mStop; }
 	void stop() { mStop = true; }
 	// 获得成员变量
@@ -41,21 +21,28 @@ public:
 	const unsigned long& getStartMiliTime() {return mStartMiliTime;}
 #endif
 	template<typename T>
-	T* getSystem(const std::string& name)
+	T* getSystem(const string& name)
 	{
 		return static_cast<T*>(mFrameComponentMap.tryGet(name, NULL));
+	}
+	template<typename T>
+	void getSystem(const string& name, T*& component)
+	{
+		component = static_cast<T*>(mFrameComponentMap.tryGet(name, NULL));
 	}
 protected:
 	void initComponentFactory();
 	void destroyComponentFactory();
+	virtual void registeComponent();
+	virtual void notifyBase(bool construct);
 protected:
 #if RUN_PLATFORM == PLATFORM_LINUX
 	unsigned long mStartMiliTime;
 #endif
-	std::atomic<bool> mStop;
+	atomic<bool> mStop;
 	ThreadLock mLock;
 	txVector<FrameComponent*> mFrameComponentVector;
-	txMap<std::string, FrameComponent*> mFrameComponentMap;
+	txMap<string, FrameComponent*> mFrameComponentMap;
 };
 
 #endif

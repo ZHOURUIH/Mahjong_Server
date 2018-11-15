@@ -1,64 +1,70 @@
 ﻿#ifndef _STRING_UTILITY_H_
 #define _STRING_UTILITY_H_
 
-#include "ServerDefine.h"
+#include "BinaryUtility.h"
 
-class StringUtility
+class StringUtility : public BinaryUtility
 {
 public:
-	static std::string removeSuffix(const std::string& str);
+	static string removeSuffix(const string& str);
 	// 去掉最后一个逗号
-	static void removeLastComma(std::string& stream);
-	static std::string getFileName(std::string str);
-	static std::string getFileNameNoSuffix(std::string str);
-	static std::string getFilePath(std::string dir);
-	static std::string getFileSuffix(const std::string& fileName);
+	static void removeLastComma(string& stream);
+	static string getFileName(string str);
+	static string getFileNameNoSuffix(string str);
+	static string getFilePath(string dir);
+	static string getFileSuffix(const string& fileName);
 	// 获得字符串最后不是数字的下标
-	static int getLastNotNumberPos(const std::string& str);
+	static int getLastNotNumberPos(const string& str);
 	// 获得字符串结尾的数字
-	static int getLastNumber(const std::string& str);
-	static void split(std::string str, const std::string& deli, txVector<std::string>& vec);
-	static std::string boolToString(bool value) { return value ? "True" : "False"; }
-	static bool stringToBool(const std::string& str) { return str == "True" || str == "true"; }
+	static int getLastNumber(const string& str);
+	static void split(string str, const string& deli, txVector<string>& vec, bool removeEmpty = true);
+	static string boolToString(bool value) { return value ? "True" : "False"; }
+	static bool stringToBool(const string& str) { return str == "True" || str == "true"; }
 	// 将str中的[begin,end)替换为reStr
-	static std::string strReplace(const std::string& str, int begin, int end, const std::string& reStr);
+	static string strReplace(const string& str, int begin, int end, const string& reStr);
 	// limitLen是字符串的最小长度,如果整数的位数不足最小长度,则会在前面加0
-	static std::string intToString(int i, int limitLen = 0); 
-	static int stringToInt(const std::string& str){return atoi(str.c_str());}
+	static string intToString(int i, int limitLen = 0); 
+	static string intArrayToString(txVector<int> valueList, const string& seperate = ",", int limitLen = 0);
+	static string intArrayToString(int* valueList, int arrayLen, const string& seperate = ",", int limitLen = 0);
+	static int stringToInt(const string& str){return atoi(str.c_str());}
+	static void stringToIntArray(const string& str, txVector<int>& valueList, const string& seperate = ",");
 	//precision为精度,保留的小数的位数,removeZero为是否去除末尾无用的0
-	static std::string floatToString(float f, int precision = 4, bool removeZero = true);
-	static float stringToFloat(const std::string& str){return (float)atof(str.c_str());}
+	static string floatToString(float f, int precision = 4, bool removeZero = true);
+	static float stringToFloat(const string& str){return (float)atof(str.c_str());}
+	static string vector2ToString(const Vector2& vec, int precision = 4, const string& seperate = ",");
+	static Vector2 stringToVector2(const string& str, const string& seperate = ",");
 	// 判断oriString是否以pattern结尾,sensitive为是否大小写敏感
-	static bool endWith(const std::string& oriString, const std::string& pattern, bool sensitive = true);
+	static bool endWith(const string& oriString, const string& pattern, bool sensitive = true);
 	// 判断oriString是否以pattern开头,sensitive为是否大小写敏感
-	static bool startWith(const std::string& oriString, const std::string& pattern, bool sensitive = true);
-	static std::wstring ANSIToUnicode(const std::string& str);
-	static std::string UnicodeToANSI(const std::wstring& str);
-	static std::string UnicodeToUTF8(const std::wstring& str);
-	static std::wstring UTF8ToUnicode(const std::string& str);
-	static std::string ANSIToUTF8(const std::string& str, bool addBOM = false);
-	static std::string UTF8ToANSI(const std::string& str, bool removeBOM = false);
+	static bool startWith(const string& oriString, const string& pattern, bool sensitive = true);
+	static string stringListToArray(txVector<string>& strList, const string& seperate = ",");
+	static wstring ANSIToUnicode(const string& str);
+	static string UnicodeToANSI(const wstring& str);
+	static string UnicodeToUTF8(const wstring& str);
+	static wstring UTF8ToUnicode(const string& str);
+	static string ANSIToUTF8(const string& str, bool addBOM = false);
+	static string UTF8ToANSI(const string& str, bool removeBOM = false);
 	// json
-	static void jsonStartArray(std::string& str, int preTableCount = 0, bool returnLine = false);
-	static void jsonEndArray(std::string& str, int preTableCount = 0, bool returnLine = false);
-	static void jsonStartStruct(std::string& str, int preTableCount = 0, bool returnLine = false);
-	static void jsonEndStruct(std::string& str, int preTableCount = 0, bool returnLine = false);
-	static void jsonAddPair(std::string& str, const std::string& name, const std::string& value, int preTableCount = 0, bool returnLine = false);
-	static void strToLower(std::string& str);
-	static void strToUpper(std::string& str);
-	static void rightToLeft(std::string& str);
-	static bool findSubstr(std::string res, std::string dst, bool sensitive, int* pos = NULL, int startPose = 0, bool firstOrLast = true);
-	static txVector<std::string> findSubstr(txVector<std::string>& res, const std::string& dst, bool sensitive = true);
+	static void jsonStartArray(string& str, int preTableCount = 0, bool returnLine = false);
+	static void jsonEndArray(string& str, int preTableCount = 0, bool returnLine = false);
+	static void jsonStartStruct(string& str, int preTableCount = 0, bool returnLine = false);
+	static void jsonEndStruct(string& str, int preTableCount = 0, bool returnLine = false);
+	static void jsonAddPair(string& str, const string& name, const string& value, int preTableCount = 0, bool returnLine = false);
+	static void strToLower(string& str);
+	static void strToUpper(string& str);
+	static void rightToLeft(string& str);
+	static bool findSubstr(string res, string dst, bool sensitive, int* pos = NULL, int startPose = 0, bool firstOrLast = true);
+	static txVector<string> findSubstr(txVector<string>& res, const string& dst, bool sensitive = true);
 	template<typename T>
-	static txVector<std::string> findSubstr(txMap<std::string, T>& res, const std::string& dst, bool sensitive = true)
+	static txVector<string> findSubstr(txMap<string, T>& res, const string& dst, bool sensitive = true)
 	{
-		txVector<std::string> retList;
+		txVector<string> retList;
 		// 循环遍历,如果匹配到放入列表
 		auto itr = res.begin();
 		auto itrEnd = res.end();
 		for( ; itr != itrEnd; ++itr)
 		{
-			const std::string& name = itr->first;
+			const string& name = itr->first;
 			if (findSubstr(name, dst, sensitive))
 			{
 				retList.push_back(name);
@@ -66,12 +72,12 @@ public:
 		}
 		return retList;
 	}
-	static std::string checkString(const std::string& str, const std::string& valid);
-	static std::string checkFloatString(const std::string& str, const std::string& valid = "");
-	static std::string checkIntString(const std::string& str, const std::string& valid = "");
-	static std::string charToHexString(unsigned char byte, bool upper = true);
-	static int getCharCount(const std::string& str, char key);
-	static std::string charArrayToHexString(unsigned char* data, int dataCount, bool addSpace = true, bool upper = true);
+	static string checkString(const string& str, const string& valid);
+	static string checkFloatString(const string& str, const string& valid = "");
+	static string checkIntString(const string& str, const string& valid = "");
+	static string charToHexString(unsigned char byte, bool upper = true);
+	static int getCharCount(const string& str, char key);
+	static string charArrayToHexString(unsigned char* data, int dataCount, bool addSpace = true, bool upper = true);
 };
 
 #endif

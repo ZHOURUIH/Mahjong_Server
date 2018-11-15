@@ -7,14 +7,14 @@ template<typename T>
 class txSet : public txSTLBase
 {
 public:
-	typedef typename std::set<T>::iterator iterator;
+	typedef typename set<T>::iterator iterator;
 public:
 	txSet(){}
 	virtual ~txSet(){ clear(); }
 	iterator find(const T& elem) const{return mSet.find(elem);}
 	iterator begin() const{return mSet.begin();}
 	iterator end() const{return mSet.end();}
-	std::pair<iterator, bool> insert(const T& elem)
+	pair<iterator, bool> insert(const T& elem)
 	{
 		checkLock();
 		return mSet.insert(elem);
@@ -47,7 +47,7 @@ public:
 		temp.resetLock();
 	}
 protected:
-	std::set<T> mSet;
+	set<T> mSet;
 };
 
 #endif

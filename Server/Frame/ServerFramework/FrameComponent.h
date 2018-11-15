@@ -1,13 +1,13 @@
 #ifndef _FRAME_COMPONENT_H_
 #define _FRAME_COMPONENT_H_
 
-#include "txCommandReceiver.h"
+#include "CommandReceiver.h"
 
-class FrameComponent : public txCommandReceiver
+class FrameComponent : public CommandReceiver
 {
 public:
-	FrameComponent(const std::string& name)
-		:txCommandReceiver(name) {}
+	FrameComponent(const string& name)
+		:CommandReceiver(name) {}
 	virtual void init() {}
 	virtual void update(float elapsedTime) {}
 };

@@ -1,5 +1,5 @@
 ﻿#include "txCommand.h"
-#include "txCommandReceiver.h"
+#include "CommandReceiver.h"
 
 void txCommand::init()
 {

@@ -2,13 +2,13 @@
 #define _COMMAND_POOL_H_
 
 #include "ServerDefine.h"
-#include "ServerBase.h"
+#include "FrameBase.h"
 #include "txCommand.h"
 #include "ThreadLock.h"
 #include "Utility.h"
 #include "GameLog.h"
 
-class CommandPool : ServerBase
+class CommandPool : public FrameBase
 {
 public:
 	CommandPool()
@@ -26,7 +26,7 @@ public:
 		T* cmd = NULL;
 		LOCK(mNewCmdLock); 
 		// 首先从未使用的列表中获取,获取不到再重新创建一个
-		std::string type = typeid(T).name();
+		string type = typeid(T).name();
 		auto iterUnuse = mUnusedList.find(type);
 		if (iterUnuse != mUnusedList.end() && iterUnuse->second.size() > 0)
 		{
@@ -61,8 +61,8 @@ protected:
 	void removeInuse(txCommand* cmd);
 	void removeUnuse(txCommand* cmd);
 protected:
-	txMap<std::string, txVector<txCommand*>> mInusedList;
-	txMap<std::string, txVector<txCommand*>> mUnusedList;
+	txMap<string, txVector<txCommand*>> mInusedList;
+	txMap<string, txVector<txCommand*>> mUnusedList;
 	ThreadLock mInuseLock;
 	ThreadLock mUnuseLock;
 	ThreadLock mNewCmdLock;	// 只需要添加创建命令的锁就可以,只要不分配出重复的命令,回收命令时就不会发生冲突

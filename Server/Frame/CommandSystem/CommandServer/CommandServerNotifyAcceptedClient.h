@@ -12,10 +12,10 @@ public:
 		mIP = EMPTY_STRING;
 	}
 	virtual void execute();
-	virtual std::string showDebugInfo();
+	virtual string showDebugInfo();
 public:
 	TX_SOCKET mSocket;
-	std::string mIP;
+	string mIP;
 };
 
 #endif

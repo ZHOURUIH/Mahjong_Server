@@ -7,5 +7,6 @@
 #include "StringUtility.h"
 #include "ServerUtility.h"
 #include "BinaryUtility.h"
+#include "txMemoryTrace.h"
 
 #endif

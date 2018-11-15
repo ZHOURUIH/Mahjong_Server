@@ -1,10 +1,10 @@
 ﻿#ifndef _SYSTEM_UTILITY_H_
 #define _SYSTEM_UTILITY_H_
 
-#include "txMemoryTrace.h"
 #include "ThreadLock.h"
+#include "FileUtility.h"
 
-class SystemUtility
+class SystemUtility : public FileUtility
 {
 	static ThreadLock mTimeLock;
 public:
@@ -13,14 +13,14 @@ public:
 	static long getTimeMS();
 	static const char* getTime();
 	// 返回media的路径,不带/
-	static const std::string& getMediaPath()
+	static const string& getMediaPath()
 	{
 		return MEDIA_PATH;
 	}
 	// 通过一个media下的相对路径,或者绝对路径,转化为一个可直接打开的路径
-	static std::string getAvailableResourcePath(std::string name)
+	static string getAvailableResourcePath(string name)
 	{
-		std::string mediaPath = getMediaPath();
+		string mediaPath = getMediaPath();
 		// 如果文件名已经是不带media路径并且不是绝对路径
 		if (mediaPath != "" && (name.length() <= mediaPath.length() || name.substr(0, mediaPath.length()) != mediaPath) && (name.length() > 1 && name[1] != ':'))
 		{
@@ -29,7 +29,7 @@ public:
 		return name;
 	}
 
-	static std::string getIPFromSocket(const TX_SOCKET& socket)
+	static string getIPFromSocket(const TX_SOCKET& socket)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
 		SOCKADDR_IN addr_conn;
@@ -43,16 +43,16 @@ public:
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		getpeername(socket, (struct sockaddr *)(&addr_conn), (socklen_t*)&nSize);
 #endif
-		return std::string(inet_ntoa(addr_conn.sin_addr));
+		return string(inet_ntoa(addr_conn.sin_addr));
 	}
 
-	static void print(const std::string& str, bool nextLine = true)
+	static void print(const string& str, bool nextLine = true)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cout << str;
+		cout << str;
 		if (nextLine)
 		{
-			std::cout << std::endl;
+			cout << endl;
 		}
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		printf(str.c_str());
@@ -62,10 +62,10 @@ public:
 		}
 #endif
 	}
-	static void input(std::string& str)
+	static void input(string& str)
 	{
 #if RUN_PLATFORM == PLATFORM_WINDOWS
-		std::cin >> str;
+		cin >> str;
 #elif RUN_PLATFORM == PLATFORM_LINUX
 		scanf(str.c_str());
 #endif

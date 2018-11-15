@@ -2,8 +2,9 @@
 #define _TIME_LOCK_H_
 
 #include "ServerDefine.h"
+#include "FrameBase.h"
 
-class TimeLock
+class TimeLock : public FrameBase
 {
 public:
 	TimeLock(long frameTimeMS, long forceSleep = 5);

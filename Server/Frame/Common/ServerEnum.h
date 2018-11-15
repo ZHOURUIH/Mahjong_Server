@@ -2,20 +2,20 @@
 #define _SERVER_ENUM_H_
 
 // 服务器配置文件浮点数参数定义
-enum SERVER_DEFINE_FLOAT
+enum FRAME_DEFINE_FLOAT
 {
-	SDF_HEART_BEAT_TIME_OUT,	// 心跳超时时间
-	SDF_SOCKET_PORT,			// socket端口号
-	SDF_BACK_LOG,				// 连接请求队列的最大长度
-	SDF_SHOW_COMMAND_DEBUG_INFO,// 是否显示命令调试信息
-	SDF_OUTPUT_NET_LOG,			// 是否显示网络日志信息
-	SDF_MAX,
+	FDF_HEART_BEAT_TIME_OUT,	// 心跳超时时间
+	FDF_SOCKET_PORT,			// socket端口号
+	FDF_BACK_LOG,				// 连接请求队列的最大长度
+	FDF_SHOW_COMMAND_DEBUG_INFO,// 是否显示命令调试信息
+	FDF_OUTPUT_NET_LOG,			// 是否显示网络日志信息
+	FDF_MAX,
 };
 // 服务器配置文件字符串参数定义
-enum SERVER_DEFINE_STRING
+enum FRAME_DEFINE_STRING
 {
-	SDS_DOMAIN_NAME,			// 连接的服务器域名
-	SDS_MAX,
+	FDS_DOMAIN_NAME,			// 连接的服务器域名
+	FDS_MAX,
 };
 
 enum PARSE_RESULT

@@ -17,7 +17,7 @@ try										\
 catch (...)								\
 {										\
 	ptr = NULL;							\
-	LOG_ERROR(std::string("can not alloc memory! ") + \
+	LOG_ERROR(string("can not alloc memory! ") + \
 	"className : " + TOSTRING(className));	\
 }
 
@@ -32,7 +32,7 @@ try												\
 catch (...)										\
 {												\
 	ptr = NULL;									\
-	LOG_ERROR(std::string("can not alloc memory array! ") + \
+	LOG_ERROR(string("can not alloc memory array! ") + \
 	"className : " + TOSTRING(className) + \
 	", count : " + StringUtility::intToString(count));	\
 }
@@ -63,7 +63,7 @@ try										\
 catch (...)								\
 {										\
 	ptr = NULL;							\
-	LOG_ERROR(std::string("can not alloc memory! ") + \
+	LOG_ERROR(string("can not alloc memory! ") + \
 	"className : " + TOSTRING(className));	\
 }
 
@@ -77,7 +77,7 @@ try												\
 catch (...)										\
 {												\
 	ptr = NULL;									\
-	LOG_ERROR(std::string("can not alloc memory array! ") + \
+	LOG_ERROR(string("can not alloc memory array! ") + \
 	"className : " + TOSTRING(className) + \
 	", count : " + StringUtility::intToString(count));	\
 }

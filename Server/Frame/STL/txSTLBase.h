@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 enum STL_LOCK
 {
 	SL_NONE,
@@ -18,17 +20,17 @@ public:
 	txSTLBase();
 	virtual ~txSTLBase();
 	// 循环遍历列表之前必须锁定
-	void lock(STL_LOCK lockType, const std::string& file, int line);
+	void lock(STL_LOCK lockType, const string& file, int line);
 	// 循环遍历列表结束以后必须解锁
 	void unlock(STL_LOCK lockType);
 protected:
 	void checkLock();
-	void directError(const std::string& info);
+	void directError(const string& info);
 	void resetLock();
 protected:
 	STL_LOCK mLock;
 	int mReadLockCount;		// 读锁定的次数,读锁定可以叠加,计算读锁定的次数,当读锁定次数为0时,取消锁定
-	std::string mFile;
+	string mFile;
 	int mLine;
 };
 

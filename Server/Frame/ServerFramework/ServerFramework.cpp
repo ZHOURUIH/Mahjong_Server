@@ -1,6 +1,13 @@
 ﻿#include "Utility.h"
 #include "txComponentFactory.h"
 #include "ServerFramework.h"
+#include "FrameConfig.h"
+#include "CharacterManager.h"
+#include "CommandSystem.h"
+#include "NetServer.h"
+#include "ComponentFactoryManager.h"
+#include "GameLog.h"
+#include "InputSystem.h"
 
 template<>ServerFramework *txSingleton<ServerFramework>::ms_Singleton = 0;
 
@@ -13,21 +20,31 @@ mStop(false)
 	gettimeofday(&startTime, NULL);
 	mStartMiliTime = startTime.tv_sec * 1000 + startTime.tv_usec / 1000;
 #endif
-	REGISTE_FRAME_COMPONENT(ServerConfig);
+}
+
+void ServerFramework::registeComponent()
+{
+	REGISTE_FRAME_COMPONENT(FrameConfig);
 	REGISTE_FRAME_COMPONENT(GameLog);
 	REGISTE_FRAME_COMPONENT(CharacterManager);
-	REGISTE_FRAME_COMPONENT(txCommandSystem);
+	REGISTE_FRAME_COMPONENT(CommandSystem);
 	REGISTE_FRAME_COMPONENT(NetServer);
-	REGISTE_FRAME_COMPONENT(RoomManager);
-	REGISTE_FRAME_COMPONENT(MySQLDataBase);
-	REGISTE_FRAME_COMPONENT(txComponentFactoryManager);
-	REGISTE_FRAME_COMPONENT(DataBase);
+	REGISTE_FRAME_COMPONENT(ComponentFactoryManager);
 	REGISTE_FRAME_COMPONENT(txMemoryTrace);
-	REGISTE_FRAME_COMPONENT(MahjongRobotManager);
-	REGISTE_FRAME_COMPONENT(DebugSystem);
-	REGISTE_FRAME_COMPONENT(ServerUtility);
-	REGISTE_FRAME_COMPONENT(MatchSystem);
-	ServerBase::notifyConstructDone();
+}
+
+void ServerFramework::notifyBase(bool construct)
+{
+	FrameBase* frameBase = TRACE_NEW(FrameBase, frameBase);
+	if (construct)
+	{
+		frameBase->notifyConstructDone();
+	}
+	else
+	{
+		frameBase->notifyComponentDeconstruct();
+	}
+	TRACE_DELETE(frameBase);
 }
 
 ServerFramework::~ServerFramework()
@@ -37,6 +54,10 @@ ServerFramework::~ServerFramework()
 
 bool ServerFramework::init()
 {
+	registeComponent();
+	// 输入系统需要最后注册
+	REGISTE_FRAME_COMPONENT(InputSystem);
+	notifyBase(true);
 	initComponentFactory();
 	// 初始化所有组件
 	int count = mFrameComponentVector.size();
@@ -67,10 +88,10 @@ void ServerFramework::destroy()
 	FOR(mFrameComponentVector, int i = 0; i < count; ++i)
 	{
 		// 销毁顺序与初始化顺序相反
-		std::string componentName = mFrameComponentVector[count - 1 - i]->getName();
+		string componentName = mFrameComponentVector[count - 1 - i]->getName();
 		TRACE_DELETE(mFrameComponentVector[count - 1 - i]);
 		mFrameComponentMap[componentName] = NULL;
-		ServerBase::notifyComponentDeconstruct();
+		notifyBase(false);
 	}
 	END(mFrameComponentVector);
 	mFrameComponentVector.clear();
@@ -82,10 +103,9 @@ void ServerFramework::destroy()
 
 void ServerFramework::launch()
 {
-	NetServer* server = GET_SYSTEM(NetServer);
-	if (server != NULL && server->isAvailable())
+	if (FrameBase::mNetServer != NULL && FrameBase::mNetServer->isAvailable())
 	{
-		LOG_INFO("启动服务器, 端口 : " + StringUtility::intToString(server->getPort()));
+		LOG_INFO("启动服务器, 端口 : " + StringUtility::intToString(FrameBase::mNetServer->getPort()));
 	}
 	else
 	{

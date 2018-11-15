@@ -73,6 +73,9 @@
 
 #include "ServerEnum.h"
 #include "ServerCallback.h"
+#include "sqlite3.h"
+
+using namespace std;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // 宏定义
@@ -140,11 +143,15 @@ if (thread != NULL_THREAD)		\
 #define TOSTRING(t) #t
 #define LINE_STR(v) TOSTRING(v)
 // 设置value的指定位置pos的字节的值为byte,并且不影响其他字节
-#define SET_BYTE(value, byte, pos) value = (value & ~(0xFF << (8 * pos))) | (byte << (8 * pos))
+#define SET_BYTE(value, b, pos) value = (value & ~(0x000000FF << (8 * pos))) | (b << (8 * pos))
 // 获得value的指定位置pos的字节的值
-#define GET_BYTE(value, pos) (value & (0xFF << (8 * pos))) >> (8 * pos)
-#define _FILE_LINE_ "File : " + std::string(__FILE__) + ", Line : " + LINE_STR(__LINE__)
-#define NEW_PACKET(packet, type) NetServer::createPacket(packet, type);
+#define GET_BYTE(value, pos) (value & (0x000000FF << (8 * pos))) >> (8 * pos)
+#define GET_BIT(value, pos) (((value & (1 << (pos))) >> (pos)) & 1)
+#define SET_BIT(value, pos, bit) value = value & ~(1 << (pos)) | ((bit) << (pos))
+#define GET_HIGHEST_BIT(value) GET_BIT(value, sizeof(value) * 8 - 1)
+#define SET_HIGHEST_BIT(value, bit) SET_BIT(value, sizeof(value) * 8 - 1, bit);
+#define _FILE_LINE_ "File : " + string(__FILE__) + ", Line : " + LINE_STR(__LINE__)
+#define NEW_PACKET(packet) NetServer::createPacket(packet);
 
 // 角色唯一ID
 typedef unsigned int CHAR_GUID;
@@ -166,6 +173,13 @@ try\
 }catch(...){}\
 (l).unlock()
 
+#define GET_SYSTEM(type) getSystem<type>(TOSTRING(type), m##type)
+
+#define REGISTE_FRAME_COMPONENT(type)								\
+	{type* component = TRACE_NEW(type, component, TOSTRING(type));	\
+	mFrameComponentVector.push_back(component);						\
+	mFrameComponentMap.insert(TOSTRING(type), component);}
+
 #include "GameLogWrap.h"
 #include "txVector.h"
 #include "txMap.h"
@@ -185,10 +199,15 @@ const int HEADER_SIZE = sizeof(int) + sizeof(int);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 // 常量字符串定义
-const std::string MEDIA_PATH = "../media";
-const std::string GAME_DATA_PATH = "GameDataFile/";
-const std::string CONFIG_PATH = "Config/";
-const std::string LOG_PATH = "Log/";
-const std::string EMPTY_STRING = "";
+const string MEDIA_PATH = "../media";
+const string CONFIG_PATH = "Config/";
+const string LOG_PATH = "Log/";
+const string EMPTY_STRING = "";
+
+class IClient
+{
+public:
+	virtual CLIENT_GUID getClientGUID() = 0;
+};
 
 #endif

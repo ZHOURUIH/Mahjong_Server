@@ -7,8 +7,8 @@ template<typename Key, typename Value>
 class txMap : public txSTLBase
 {
 public:
-	typedef typename std::map<Key, Value>::iterator iterator;
-	typedef typename std::map<Key, Value>::reverse_iterator reverse_iterator;
+	typedef typename map<Key, Value>::iterator iterator;
+	typedef typename map<Key, Value>::reverse_iterator reverse_iterator;
 public:
 	txMap(){}
 	virtual ~txMap(){ clear(); }
@@ -42,10 +42,10 @@ public:
 	}
 	iterator find(const Key& k){return mMap.find(k);}
 	bool contains(const Key& key){return mMap.find(key) != mMap.end();}
-	std::pair<iterator, bool> insert(const Key& k, const Value& v)
+	pair<iterator, bool> insert(const Key& k, const Value& v)
 	{
 		checkLock();
-		return mMap.insert(std::make_pair(k, v));
+		return mMap.insert(make_pair(k, v));
 	}
 	iterator tryInsert(const Key& k, const Value& value)
 	{
@@ -88,7 +88,7 @@ public:
 		temp.resetLock();
 	}
 protected:
-	std::map<Key, Value> mMap;
+	map<Key, Value> mMap;
 };
 
 #endif

@@ -4,9 +4,10 @@
 #include "ServerDefine.h"
 #include "GameLog.h"
 #include "Utility.h"
+#include "FrameBase.h"
 
 // 用于生成二进制文件的
-class txSerializer
+class txSerializer : public FrameBase
 {
 public:
 	txSerializer(bool traceMemery = true);
@@ -34,7 +35,7 @@ public:
 	void readBuffer(char* buffer, int readLen);
 	void writeString(const char* str);
 	void readString(char* str);
-	void writeToFile(const std::string& fullName);
+	void writeToFile(const string& fullName);
 	const char* getBuffer() const { return mBuffer; }
 	int getBufferSize() { return mBufferSize; }
 	int getDataSize() { return mIndex; }
@@ -56,7 +57,7 @@ protected:
 		}
 		if (mIndex + readLen > mBufferSize)
 		{
-			LOG_ERROR("read buffer out of range! cur index : " + StringUtility::intToString(mIndex) + ", buffer size : " + StringUtility::intToString(mBufferSize) + ", read length : " + StringUtility::intToString(readLen));
+			LOG_ERROR("read buffer out of range! cur index : " + intToString(mIndex) + ", buffer size : " + intToString(mBufferSize) + ", read length : " + intToString(readLen));
 			return false;
 		}
 		return true;

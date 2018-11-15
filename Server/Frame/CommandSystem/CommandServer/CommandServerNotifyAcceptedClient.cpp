@@ -1,4 +1,4 @@
-﻿#include "CommandHeaderBase.h"
+﻿#include "CommandHeader.h"
 #include "NetServer.h"
 
 void CommandServerNotifyAcceptedClient::execute()
@@ -7,7 +7,7 @@ void CommandServerNotifyAcceptedClient::execute()
 	gameServer->notifyAcceptClient(mSocket, mIP.c_str());
 }
 
-std::string CommandServerNotifyAcceptedClient::showDebugInfo()
+string CommandServerNotifyAcceptedClient::showDebugInfo()
 {
-	COMMAND_DEBUG("socket : %d, ip : %s", mSocket, mIP.c_str());
+	COMMAND_DEBUG("socket : " + intToString(mSocket) + ", ip : " + mIP);
 }

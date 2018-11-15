@@ -3,23 +3,23 @@
 #include "Utility.h"
 #include "txMemoryTrace.h"
 
-volatile std::atomic<bool> GameLog::mLog(true);
-std::string GameLog::mLogFileName;
-std::string GameLog::mErrorFileName;
+volatile atomic<bool> GameLog::mLog(true);
+string GameLog::mLogFileName;
+string GameLog::mErrorFileName;
 
-GameLog::GameLog(const std::string& name)
+GameLog::GameLog(const string& name)
 	:FrameComponent(name)
 {
 	mLog = true;
-	mLogFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "log.txt");
-	mErrorFileName = SystemUtility::getAvailableResourcePath(LOG_PATH + "error.txt");
+	mLogFileName = getAvailableResourcePath(LOG_PATH + "log.txt");
+	mErrorFileName = getAvailableResourcePath(LOG_PATH + "error.txt");
 	TRACE_NEW(CustomThread, mLogThread, "LogThread");
 }
 
 void GameLog::init()
 {
-	FileUtility::deleteFile(mLogFileName);
-	FileUtility::deleteFile(mErrorFileName);
+	deleteFile(mLogFileName);
+	deleteFile(mErrorFileName);
 	mLogThread->start(writeLogFile, this);
 }
 
@@ -36,8 +36,8 @@ void GameLog::update(float elapsedTime)
 	{
 		if (mLog)
 		{
-			std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + mLogDelayBuffer[i];
-			SystemUtility::print(fullInfo);
+			string fullInfo = string(getTime()) + "\t| : " + mLogDelayBuffer[i];
+			print(fullInfo);
 		}
 		log(mLogDelayBuffer[i]);
 	}
@@ -49,8 +49,8 @@ void GameLog::update(float elapsedTime)
 	int errorCount = mErrorDelayBuffer.size();
 	FOR(mErrorDelayBuffer, int i = 0; i < errorCount; ++i)
 	{
-		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
-		SystemUtility::print(fullInfo);
+		string fullInfo = string(getTime()) + "\t| 程序错误 : " + mErrorDelayBuffer[i];
+		print(fullInfo);
 		error(mErrorDelayBuffer[i]);
 	}
 	END(mErrorDelayBuffer);
@@ -79,7 +79,7 @@ bool GameLog::writeLogFile(void* args)
 	{
 		for (int i = 0; i < writeLogCount; ++i)
 		{
-			FileUtility::writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
+			writeFile(mLogFileName, mGameLog->mLogWriteBuffer[i] + "\r\n", true);
 		}
 		mGameLog->mLogWriteBuffer.clear();
 	}
@@ -103,47 +103,47 @@ bool GameLog::writeLogFile(void* args)
 	{
 		for (int i = 0; i < writeErrorCount; ++i)
 		{
-			FileUtility::writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
+			writeFile(mErrorFileName, mGameLog->mErrorWriteBuffer[i] + "\r\n", true);
 		}
 		mGameLog->mErrorWriteBuffer.clear();
 	}
 	return true;
 }
 
-void GameLog::log(const std::string& info)
+void GameLog::log(const string& info)
 {
 	LOCK(mLogBufferLock);
 	mLogBuffer.push_back(info);
 	UNLOCK(mLogBufferLock);
 }
 
-void GameLog::error(const std::string& info)
+void GameLog::error(const string& info)
 {
 	LOCK(mErrorBufferLock);
 	mErrorBuffer.push_back(info);
 	UNLOCK(mErrorBufferLock);
 }
 
-void GameLog::logDelay(const std::string& info)
+void GameLog::logDelay(const string& info)
 {
 	LOCK(mLogDelayLock);
 	mLogDelayBuffer.push_back(info);
 	UNLOCK(mLogDelayLock);
 }
 
-void GameLog::errorDelay(const std::string& info)
+void GameLog::errorDelay(const string& info)
 {
 	LOCK(mErrorDelayLock);
 	mErrorDelayBuffer.push_back(info);
 	UNLOCK(mErrorDelayLock);
 }
 
-void GameLog::logError(const std::string& info, bool delayShow)
+void GameLog::logError(const string& info, bool delayShow)
 {
 	if (!delayShow)
 	{
-		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| 程序错误 : " + info;
-		SystemUtility::print(fullInfo);
+		string fullInfo = string(getTime()) + "\t| 程序错误 : " + info;
+		print(fullInfo);
 		if (mGameLog != NULL)
 		{
 			mGameLog->error(fullInfo);
@@ -157,14 +157,14 @@ void GameLog::logError(const std::string& info, bool delayShow)
 		}
 	}
 }
-void GameLog::logInfo(const std::string& info, bool delayShow)
+void GameLog::logInfo(const string& info, bool delayShow)
 {
 	if (!delayShow)
 	{
-		std::string fullInfo = std::string(SystemUtility::getTime()) + "\t| : " + info;
+		string fullInfo = string(getTime()) + "\t| : " + info;
 		if (mLog)
 		{
-			SystemUtility::print(fullInfo);
+			print(fullInfo);
 		}
 		if (mGameLog != NULL)
 		{

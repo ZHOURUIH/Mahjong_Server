@@ -1,9 +1,9 @@
 ﻿#ifndef _MATH_UTILITY_H_
 #define _MATH_UTILITY_H_
 
-#include "ServerDefine.h"
+#include "StringUtility.h"
 
-class MathUtility
+class MathUtility : public StringUtility
 {
 public:
 	static const float MATH_PI;
@@ -15,6 +15,8 @@ public:
 	static int getGreaterPowerValue(int value, int pow);
 	// 得到数轴上浮点数右边的第一个整数,向上取整
 	static int getForwardInt(float value);
+	static float getLength(const Vector2& vec) { return sqrt(vec.x * vec.x + vec.y * vec.y); }
+	static float getSquaredLength(const Vector2& vec) { return vec.x * vec.x + vec.y * vec.y; }
 	template<typename T>
 	static void clamp(T& value, T minValue, T maxValue)
 	{
@@ -124,7 +126,7 @@ public:
 		clamp(t, 0.0f, 1.0f);
 		float value = start + (end - start) * t;
 		// 如果值已经在end的一定范围内了,则直接设置为end
-		if (std::abs(value - end) <= minAbsDelta)
+		if (abs(value - end) <= minAbsDelta)
 		{
 			value = end;
 		}
@@ -135,12 +137,12 @@ public:
 		return (value - a) / (b - a);
 	}
 	// 将表达式str中的keyword替换为replaceValue,然后计算str的值,返回值表示str中是否有被替换的值,str只能是算术表达式
-	static bool replaceKeywordAndCalculate(std::string& str, const std::string& keyword, int replaceValue, bool floatOrInt);
+	static bool replaceKeywordAndCalculate(string& str, const string& keyword, int replaceValue, bool floatOrInt);
 	// 将表达式str中的所有\\()包含的部分中的keyword替换为keyValue,并且计算包含的表达式,返回值表示str中是否有被替换的部分,str可以是任意表达式
-	static bool replaceStringKeyword(std::string& str, const std::string& keyword, int keyValue, bool floatOrInt);
+	static bool replaceStringKeyword(string& str, const string& keyword, int keyValue, bool floatOrInt);
 	static float powerFloat(float f, int p);
-	static float calculateFloat(std::string str);	// 以浮点数的计算法则计算一个表达式,只支持加减乘除和括号
-	static int calculateInt(std::string str);		// 以整数的计算法则计算一个表达式,支持取余,加减乘除和括号
+	static float calculateFloat(string str);	// 以浮点数的计算法则计算一个表达式,只支持加减乘除和括号
+	static int calculateInt(string str);		// 以整数的计算法则计算一个表达式,支持取余,加减乘除和括号
 	// 秒数转换为分数和秒数
 	static void secondsToMinutesSeconds(int seconds, int& outMin, int& outSec);
 	static void secondsToHoursMinutesSeconds(int seconds, int& outHour, int& outMin, int& outSec);

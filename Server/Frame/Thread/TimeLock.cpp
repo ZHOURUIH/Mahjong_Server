@@ -5,23 +5,23 @@ TimeLock::TimeLock(long frameTimeMS, long forceSleep)
 {
 	mFrameTimeMS = frameTimeMS;
 	mForceSleep = forceSleep;
-	mLastTime = SystemUtility::getTimeMS();
+	mLastTime = getTimeMS();
 	mCurTime = mLastTime;
 }
 
 long TimeLock::update()
 {
-	long endTime = SystemUtility::getTimeMS();
+	long endTime = getTimeMS();
 	long remainMS = mFrameTimeMS - (endTime - mCurTime);
 	if (remainMS > 0)
 	{
-		SystemUtility::sleep(remainMS);
+		sleep(remainMS);
 	}
 	else if (mForceSleep > 0)
 	{
-		SystemUtility::sleep(mForceSleep);
+		sleep(mForceSleep);
 	}
-	mCurTime = SystemUtility::getTimeMS();
+	mCurTime = getTimeMS();
 	long frameTime = mCurTime - mLastTime;
 	mLastTime = mCurTime;
 	return frameTime;

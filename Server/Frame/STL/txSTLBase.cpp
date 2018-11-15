@@ -13,7 +13,7 @@ txSTLBase::~txSTLBase()
 	;
 }
 // 循环遍历列表之前必须锁定
-void txSTLBase::lock(STL_LOCK lockType, const std::string& file, int line)
+void txSTLBase::lock(STL_LOCK lockType, const string& file, int line)
 {
 	// 当前为锁定写入,则不允许再加任何锁,或者当前为读锁定,则不能添加写锁定
 	if (mLock == SL_WRITE || (mLock == SL_READ && lockType != SL_READ) || lockType == SL_NONE)
@@ -60,7 +60,7 @@ void txSTLBase::checkLock()
 		directError("error : stl is locked! can not modify stl!");
 	}
 }
-void txSTLBase::directError(const std::string& info)
+void txSTLBase::directError(const string& info)
 {
 	LOG_ERROR(info);
 }

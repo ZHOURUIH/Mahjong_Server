@@ -11,13 +11,13 @@ enum EXECUTE_STATE
 };
 
 class txCommand;
-class txCommandReceiver;
+class CommandReceiver;
 struct DelayCommand
 {
 	float mDelayTime;
 	txCommand* mCommand;
-	txCommandReceiver* mReceiver;
-	DelayCommand(const float& delayTime, txCommand* cmd, txCommandReceiver* receiver)
+	CommandReceiver* mReceiver;
+	DelayCommand(const float& delayTime, txCommand* cmd, CommandReceiver* receiver)
 		:
 		mDelayTime(delayTime),
 		mCommand(cmd),
@@ -32,6 +32,7 @@ typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 
 #define NEW_CMD(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, false);
 #define NEW_CMD_INFO(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, true, false);
+#define NEW_CMD_SHOW(cmd, showInfo) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, showInfo, false);
 #define NEW_CMD_DELAY(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, false, true);
 #define NEW_CMD_DELAY_INFO(cmd) mCommandSystem->newCmd(cmd, __FILE__, __LINE__, true, true);
 
@@ -39,23 +40,23 @@ typedef void(*CommandCallback) (txCommand* cmd, void* user_data);
 #if RUN_PLATFORM == PLATFROM_WINDOWS
 #define COMMAND_DEBUG(info)															\
 {																					\
-	std::string cmdName = typeid(*this).name();										\
+	string cmdName = typeid(*this).name();										\
 	cmdName = cmdName.substr(strlen("class "), cmdName.length() - strlen("class "));\
-	std::string tempInfo = info;													\
+	string tempInfo = info;													\
 	if (tempInfo.length() > 0)														\
 	{																				\
-		cmdName += std::string(" : ") + tempInfo;									\
+		cmdName += string(" : ") + tempInfo;									\
 	}																				\
 	return cmdName;																	\
 }
 #elif RUN_PLATFORM == PLATFORM_LINUX
 #define COMMAND_DEBUG(info)															\
 {																					\
-	std::string cmdName = typeid(*this).name();										\
-	std::string tempInfo = info;													\
+	string cmdName = typeid(*this).name();										\
+	string tempInfo = info;													\
 	if (tempInfo.length() > 0)														\
 	{																				\
-		cmdName += std::string(" : ") + tempInfo;									\
+		cmdName += string(" : ") + tempInfo;									\
 	}																				\
 	return cmdName;																	\
 }

@@ -6,12 +6,12 @@
 class GameLogWrap
 {
 public:
-	static void logError(const std::string& info, bool delayShow);
-	static void logInfo(const std::string& info, bool delayShow);
+	static void logError(const string& info, bool delayShow);
+	static void logInfo(const string& info, bool delayShow);
 };
 
-#define LOG_ERROR(info)			GameLogWrap::logError(info, false);
-#define LOG_ERROR_DELAY(info)	GameLogWrap::logError(info, true);
+#define LOG_ERROR(info)			GameLogWrap::logError(info + string(" | ") + _FILE_LINE_, false);
+#define LOG_ERROR_DELAY(info)	GameLogWrap::logError(info + string(" | ") + _FILE_LINE_, true);
 #define LOG_INFO(info)			GameLogWrap::logInfo(info, false);
 #define LOG_INFO_DELAY(info)	GameLogWrap::logInfo(info, true);
 
